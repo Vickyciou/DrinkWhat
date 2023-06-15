@@ -19,6 +19,8 @@
 		FA7179502A3ABC46002C407C /* VoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA71794F2A3ABC46002C407C /* VoteViewController.swift */; };
 		FA7179522A3ABC99002C407C /* OrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7179512A3ABC99002C407C /* OrderViewController.swift */; };
 		FA7179542A3ABD01002C407C /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7179532A3ABD01002C407C /* ProfileViewController.swift */; };
+		FA7179562A3AE557002C407C /* VoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7179552A3AE557002C407C /* VoteCell.swift */; };
+		FA7179592A3AEBDA002C407C /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7179582A3AEBDA002C407C /* UIFont+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +40,8 @@
 		FA71794F2A3ABC46002C407C /* VoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteViewController.swift; sourceTree = "<group>"; };
 		FA7179512A3ABC99002C407C /* OrderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderViewController.swift; sourceTree = "<group>"; };
 		FA7179532A3ABD01002C407C /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		FA7179552A3AE557002C407C /* VoteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteCell.swift; sourceTree = "<group>"; };
+		FA7179582A3AEBDA002C407C /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,10 +96,11 @@
 			children = (
 				FA7179322A3A9DF7002C407C /* AppDelegate.swift */,
 				FA7179342A3A9DF7002C407C /* SceneDelegate.swift */,
+				FA7179572A3AEB22002C407C /* Extension */,
+				FA71795A2A3AED81002C407C /* VotePage */,
 				FA7179492A3AB994002C407C /* TabBarViewController.swift */,
 				FA7179362A3A9DF7002C407C /* HomeViewController.swift */,
 				FA71794D2A3ABB8A002C407C /* FavoriteViewController.swift */,
-				FA71794F2A3ABC46002C407C /* VoteViewController.swift */,
 				FA7179512A3ABC99002C407C /* OrderViewController.swift */,
 				FA7179532A3ABD01002C407C /* ProfileViewController.swift */,
 				FA7179382A3A9DF7002C407C /* Main.storyboard */,
@@ -104,6 +109,23 @@
 				FA7179402A3A9DF8002C407C /* Info.plist */,
 			);
 			path = DrinkWhat;
+			sourceTree = "<group>";
+		};
+		FA7179572A3AEB22002C407C /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				FA7179582A3AEBDA002C407C /* UIFont+Extension.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		FA71795A2A3AED81002C407C /* VotePage */ = {
+			isa = PBXGroup;
+			children = (
+				FA71794F2A3ABC46002C407C /* VoteViewController.swift */,
+				FA7179552A3AE557002C407C /* VoteCell.swift */,
+			);
+			path = VotePage;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -222,6 +244,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA7179562A3AE557002C407C /* VoteCell.swift in Sources */,
 				FA71794A2A3AB994002C407C /* TabBarViewController.swift in Sources */,
 				FA7179502A3ABC46002C407C /* VoteViewController.swift in Sources */,
 				FA7179372A3A9DF7002C407C /* HomeViewController.swift in Sources */,
@@ -229,6 +252,7 @@
 				FA71794E2A3ABB8A002C407C /* FavoriteViewController.swift in Sources */,
 				FA7179352A3A9DF7002C407C /* SceneDelegate.swift in Sources */,
 				FA7179542A3ABD01002C407C /* ProfileViewController.swift in Sources */,
+				FA7179592A3AEBDA002C407C /* UIFont+Extension.swift in Sources */,
 				FA7179522A3ABC99002C407C /* OrderViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
