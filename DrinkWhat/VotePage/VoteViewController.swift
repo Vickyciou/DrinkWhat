@@ -9,6 +9,7 @@ import UIKit
 
 class VoteViewController: UIViewController {
     private lazy var tableView: UITableView = makeTableView()
+    private var user = ["Vicky"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,14 +21,14 @@ class VoteViewController: UIViewController {
         setupTableView()
     }
     private func setNavController() {
-        let appearance = UINavigationBarAppearance()
-        appearance.backgroundColor = UIColor.white
-        appearance.titleTextAttributes = [.foregroundColor: UIColor.black]
-        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
-        appearance.shadowColor = UIColor.clear
-        navigationController?.navigationBar.standardAppearance = appearance
-        navigationController?.navigationBar.scrollEdgeAppearance = appearance
-        navigationItem.title = "投票首頁"
+//        let appearance = UINavigationBarAppearance()
+//        appearance.backgroundColor = UIColor.white
+//        appearance.titleTextAttributes = [.foregroundColor: UIColor.black]
+//        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
+//        appearance.shadowColor = UIColor.clear
+//        navigationController?.navigationBar.standardAppearance = appearance
+//        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        self.title = "投票首頁"
         tabBarController?.tabBar.backgroundColor = .white
     }
     private func setupTableView() {
@@ -57,12 +58,14 @@ extension VoteViewController {
 
 extension VoteViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        2
+        user.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "VoteCell", for: indexPath) as? VoteCell
         else { fatalError("Cannot created VoteCell") }
-        cell.setupVoteCell(profileImage: UIImage(systemName: "person.circle.fill"), shopName: "白巷子", voteState: "進行中")
+        cell.setupVoteCell(profileImage: UIImage(systemName: "person.circle.fill"),
+                           shopName: user[indexPath.row],
+                           voteState: "進行中")
         return cell
     }
 }

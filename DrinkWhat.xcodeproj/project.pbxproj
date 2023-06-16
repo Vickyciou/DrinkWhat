@@ -24,6 +24,7 @@
 		FA71795C2A3C0B91002C407C /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA71795B2A3C0B91002C407C /* UIColor+Extension.swift */; };
 		FA71795E2A3C13BB002C407C /* ShopListToVoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA71795D2A3C13BB002C407C /* ShopListToVoteViewController.swift */; };
 		FA7179602A3C141A002C407C /* ShopListToVoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA71795F2A3C1419002C407C /* ShopListToVoteCell.swift */; };
+		FA7179632A3C545C002C407C /* DWTNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7179622A3C545C002C407C /* DWTNavigationController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		FA71795B2A3C0B91002C407C /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		FA71795D2A3C13BB002C407C /* ShopListToVoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopListToVoteViewController.swift; sourceTree = "<group>"; };
 		FA71795F2A3C1419002C407C /* ShopListToVoteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopListToVoteCell.swift; sourceTree = "<group>"; };
+		FA7179622A3C545C002C407C /* DWTNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DWTNavigationController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,11 +102,11 @@
 		FA7179312A3A9DF7002C407C /* DrinkWhat */ = {
 			isa = PBXGroup;
 			children = (
+				FA7179612A3C543D002C407C /* Base */,
 				FA7179322A3A9DF7002C407C /* AppDelegate.swift */,
 				FA7179342A3A9DF7002C407C /* SceneDelegate.swift */,
 				FA7179572A3AEB22002C407C /* Extension */,
 				FA71795A2A3AED81002C407C /* VotePage */,
-				FA7179492A3AB994002C407C /* TabBarViewController.swift */,
 				FA7179362A3A9DF7002C407C /* HomeViewController.swift */,
 				FA71794D2A3ABB8A002C407C /* FavoriteViewController.swift */,
 				FA7179512A3ABC99002C407C /* OrderViewController.swift */,
@@ -135,6 +137,15 @@
 				FA71795F2A3C1419002C407C /* ShopListToVoteCell.swift */,
 			);
 			path = VotePage;
+			sourceTree = "<group>";
+		};
+		FA7179612A3C543D002C407C /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				FA7179622A3C545C002C407C /* DWTNavigationController.swift */,
+				FA7179492A3AB994002C407C /* TabBarViewController.swift */,
+			);
+			path = Base;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -266,6 +277,7 @@
 				FA7179542A3ABD01002C407C /* ProfileViewController.swift in Sources */,
 				FA7179592A3AEBDA002C407C /* UIFont+Extension.swift in Sources */,
 				FA7179522A3ABC99002C407C /* OrderViewController.swift in Sources */,
+				FA7179632A3C545C002C407C /* DWTNavigationController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

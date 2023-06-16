@@ -11,6 +11,7 @@ class ShopListToVoteViewController: UIViewController {
     private lazy var tableView: UITableView = makeTableView()
     private lazy var submitButton: UIButton = makeSubmitButton()
     private var selectIndex: Int?
+    private var shopList = ["白巷子", "50嵐", "方最", "龜記", "木衛二"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,12 +80,13 @@ extension ShopListToVoteViewController {
 
 extension ShopListToVoteViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        2
+        shopList.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "ShopListToVoteCell", for: indexPath)
                 as? ShopListToVoteCell else { fatalError("Cannot created VoteCell") }
-        cell.setupVoteCell(shopImage: UIImage(systemName: "bag"), shopName: "白巷子")
+        let shop = shopList[indexPath.row]
+        cell.setupVoteCell(shopImage: UIImage(systemName: "bag"), shopName: shop)
         cell.delegate = self
         if selectIndex == indexPath.row {
             cell.chooseButton.isSelected = true
