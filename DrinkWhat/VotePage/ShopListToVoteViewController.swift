@@ -10,6 +10,7 @@ import UIKit
 class ShopListToVoteViewController: UIViewController {
     private lazy var tableView: UITableView = makeTableView()
     private lazy var submitButton: UIButton = makeSubmitButton()
+    private var selectIndex: Int?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,9 +82,25 @@ extension ShopListToVoteViewController: UITableViewDataSource {
         2
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "ShopListToVoteCell", for: indexPath) as? ShopListToVoteCell
-        else { fatalError("Cannot created VoteCell") }
-        cell.setupVoteCell(shopImage: UIImage(systemName: "bag"), shopName: "白巷子", description: "新鮮水果超好喝")
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "ShopListToVoteCell", for: indexPath)
+                as? ShopListToVoteCell else { fatalError("Cannot created VoteCell") }
+        cell.setupVoteCell(shopImage: UIImage(systemName: "bag"), shopName: "白巷子")
+        cell.delegate = self
+        if selectIndex == indexPath.row {
+            cell.chooseButton.isSelected = true
+        } else {
+            cell.chooseButton.isSelected = false
+        }
         return cell
+    }
+}
+extension ShopListToVoteViewController: ShopListToVoteCellDelegate {
+    func didPressedViewMenuButton(_ cell: ShopListToVoteCell, button: UIButton) {
+        print("ViewMenu")
+    }
+    func didSelectedChooseButton(_ cell: ShopListToVoteCell, button: UIButton) {
+        let indexPath = tableView.indexPath(for: cell)
+        selectIndex = indexPath?.row
+        tableView.reloadData()
     }
 }
