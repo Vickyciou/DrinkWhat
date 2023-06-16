@@ -21,6 +21,9 @@
 		FA7179542A3ABD01002C407C /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7179532A3ABD01002C407C /* ProfileViewController.swift */; };
 		FA7179562A3AE557002C407C /* VoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7179552A3AE557002C407C /* VoteCell.swift */; };
 		FA7179592A3AEBDA002C407C /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7179582A3AEBDA002C407C /* UIFont+Extension.swift */; };
+		FA71795C2A3C0B91002C407C /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA71795B2A3C0B91002C407C /* UIColor+Extension.swift */; };
+		FA71795E2A3C13BB002C407C /* ShopListToVoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA71795D2A3C13BB002C407C /* ShopListToVoteViewController.swift */; };
+		FA7179602A3C141A002C407C /* ShopListToVoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA71795F2A3C1419002C407C /* ShopListToVoteCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +45,9 @@
 		FA7179532A3ABD01002C407C /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		FA7179552A3AE557002C407C /* VoteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteCell.swift; sourceTree = "<group>"; };
 		FA7179582A3AEBDA002C407C /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
+		FA71795B2A3C0B91002C407C /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
+		FA71795D2A3C13BB002C407C /* ShopListToVoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopListToVoteViewController.swift; sourceTree = "<group>"; };
+		FA71795F2A3C1419002C407C /* ShopListToVoteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopListToVoteCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +121,7 @@
 			isa = PBXGroup;
 			children = (
 				FA7179582A3AEBDA002C407C /* UIFont+Extension.swift */,
+				FA71795B2A3C0B91002C407C /* UIColor+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -123,7 +130,9 @@
 			isa = PBXGroup;
 			children = (
 				FA71794F2A3ABC46002C407C /* VoteViewController.swift */,
+				FA71795D2A3C13BB002C407C /* ShopListToVoteViewController.swift */,
 				FA7179552A3AE557002C407C /* VoteCell.swift */,
+				FA71795F2A3C1419002C407C /* ShopListToVoteCell.swift */,
 			);
 			path = VotePage;
 			sourceTree = "<group>";
@@ -247,6 +256,9 @@
 				FA7179562A3AE557002C407C /* VoteCell.swift in Sources */,
 				FA71794A2A3AB994002C407C /* TabBarViewController.swift in Sources */,
 				FA7179502A3ABC46002C407C /* VoteViewController.swift in Sources */,
+				FA71795E2A3C13BB002C407C /* ShopListToVoteViewController.swift in Sources */,
+				FA7179602A3C141A002C407C /* ShopListToVoteCell.swift in Sources */,
+				FA71795C2A3C0B91002C407C /* UIColor+Extension.swift in Sources */,
 				FA7179372A3A9DF7002C407C /* HomeViewController.swift in Sources */,
 				FA7179332A3A9DF7002C407C /* AppDelegate.swift in Sources */,
 				FA71794E2A3ABB8A002C407C /* FavoriteViewController.swift in Sources */,

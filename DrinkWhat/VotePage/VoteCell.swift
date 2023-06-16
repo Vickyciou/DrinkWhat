@@ -41,8 +41,8 @@ class VoteCell: UITableViewCell {
         profileImageView.layer.cornerRadius = 30
         shopNameLabel.font = .medium(size: 18)
         voteStateLabel.font = .regular(size: 14)
-        shopNameLabel.textColor = .darkGray
-        voteStateLabel.textColor = .lightGray
+        shopNameLabel.textColor = UIColor.darkBrown
+        voteStateLabel.textColor = UIColor.lightBrown
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

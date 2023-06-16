@@ -46,10 +46,11 @@ extension VoteViewController {
         let tableView = UITableView(frame: .zero)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.dataSource = self
+        tableView.delegate = self
         tableView.register(VoteCell.self, forCellReuseIdentifier: "VoteCell")
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.separatorStyle = .none
-        tableView.allowsSelection = false
+//        tableView.allowsSelection = false
         return tableView
     }
 }
@@ -66,6 +67,10 @@ extension VoteViewController: UITableViewDataSource {
     }
 }
 
+// 這邊要寫section header
 extension VoteViewController: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let shopListToVoteVC = ShopListToVoteViewController()
+        present(shopListToVoteVC, animated: true)
+    }
 }
