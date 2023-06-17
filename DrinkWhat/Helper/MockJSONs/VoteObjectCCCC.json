@@ -10,14 +10,14 @@
             "UUID9999",
             "UUID1010"
         ],
-        "voteList": [
+        "voteResult": [
             {
                 "shopObject": {
                     "imageURL": "https://image.com",
-                    "name": "迷客夏",
+                    "name": "甘蔗媽媽",
                     "id": "UUID8"
                 },
-                "voteUsers": [
+                "voteUsersID": [
                     "UUID6666",
                     "UUID7777"
                 ]
@@ -28,7 +28,7 @@
                     "name": "50嵐",
                     "id": "UUID11"
                 },
-                "voteUsers": [
+                "voteUsersID": [
                     "UUID8888"
                 ]
             },
@@ -38,7 +38,7 @@
                     "name": "春水堂",
                     "id": "UUID10"
                 },
-                "voteUsers": [
+                "voteUsersID": [
                     "UUID9999",
                     "UUID1010"
                 ]
@@ -46,10 +46,10 @@
             {
                 "shopObject": {
                     "imageURL": "https://image.com",
-                    "name": "春水堂",
+                    "name": "老賴茶棧",
                     "id": "UUID6"
                 },
-                "voteUsers": [
+                "voteUsersID": [
                     ""
                 ]
             }

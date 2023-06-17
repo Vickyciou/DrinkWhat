@@ -109,7 +109,8 @@ extension ShopListToVoteViewController: UITableViewDataSource {
         let shop = newVoteResults[indexPath.row].voteResult
         cell.setupVoteCell(
             shopImage: UIImage(systemName: "bag"),
-            shopName: shop.shopObject.name
+            shopName: shop.shopObject.name,
+            numberOfVote: shop.voteUsersID.count
         )
         cell.delegate = self
         cell.chooseButton.isSelected = newVoteResults[indexPath.row].isSelected
@@ -122,10 +123,6 @@ extension ShopListToVoteViewController: ShopListToVoteCellDelegate {
     }
     func didSelectedChooseButton(_ cell: ShopListToVoteCell, button: UIButton) {
         guard let indexPath = tableView.indexPath(for: cell) else { return }
-//        for shop in shopList {
-//            shop.isSelected = false
-//        }
-//        shopList[indexPath.row].isSelected = true
         newVoteResults.indices.forEach { newVoteResults[$0].isSelected = false }
         newVoteResults[indexPath.row].isSelected = true
         tableView.reloadData()

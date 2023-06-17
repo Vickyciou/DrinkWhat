@@ -10,14 +10,14 @@
             "UUID4444",
             "UUID5555"
         ],
-        "voteList": [
+        "voteResult": [
             {
                 "shopObject": {
                     "imageURL": "https://image.com",
-                    "name": "迷客夏",
+                    "name": "茶湯會",
                     "id": "UUID7"
                 },
-                "voteUsers": [
+                "voteUsersID": [
                     "UUID1111",
                     "UUID2222"
                 ]
@@ -25,10 +25,10 @@
             {
                 "shopObject": {
                     "imageURL": "https://image.com",
-                    "name": "50嵐",
+                    "name": "珍煮丹",
                     "id": "UUID10"
                 },
-                "voteUsers": [
+                "voteUsersID": [
                     "UUID3333"
                 ]
             },
@@ -38,7 +38,7 @@
                     "name": "春水堂",
                     "id": "UUID9"
                 },
-                "voteUsers": [
+                "voteUsersID": [
                     "UUID4444",
                     "UUID5555"
                 ]
@@ -46,10 +46,10 @@
             {
                 "shopObject": {
                     "imageURL": "https://image.com",
-                    "name": "春水堂",
+                    "name": "白巷子",
                     "id": "UUID5"
                 },
-                "voteUsers": [
+                "voteUsersID": [
                     ""
                 ]
             }

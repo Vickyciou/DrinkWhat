@@ -13,15 +13,16 @@ protocol ShopListToVoteCellDelegate: AnyObject {
 }
 
 class ShopListToVoteCell: UITableViewCell {
-    private lazy var shopNameLabel: UILabel = makeLabel()
+    private lazy var shopNameLabel: UILabel = makeShopNameLabel()
     private lazy var shopImageView: UIImageView = makeImageView()
-    lazy var chooseButton: UIButton = makeButton()
-    private lazy var viewMenuButton: UIButton = makeButton()
+    lazy var chooseButton: UIButton = makeChooseButton()
+    private lazy var viewMenuButton: UIButton = makeViewMenuButton()
+    private lazy var numberOfVotesLabel: UILabel = makeNumberOfVotesLabel()
     weak var delegate: ShopListToVoteCellDelegate?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        let content = [shopNameLabel, shopImageView, chooseButton, viewMenuButton]
+        let content = [shopNameLabel, shopImageView, chooseButton, viewMenuButton, numberOfVotesLabel]
         content.forEach { contentView.addSubview($0) }
         NSLayoutConstraint.activate([
             shopImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
@@ -33,54 +34,77 @@ class ShopListToVoteCell: UITableViewCell {
             shopNameLabel.leadingAnchor.constraint(equalTo: shopImageView.trailingAnchor, constant: 8),
             viewMenuButton.bottomAnchor.constraint(equalTo: shopImageView.bottomAnchor),
             viewMenuButton.leadingAnchor.constraint(equalTo: shopNameLabel.leadingAnchor),
+            numberOfVotesLabel.centerYAnchor.constraint(equalTo: shopImageView.centerYAnchor),
+            numberOfVotesLabel.trailingAnchor.constraint(equalTo: chooseButton.leadingAnchor, constant: -10),
+            numberOfVotesLabel.widthAnchor.constraint(equalToConstant: 40),
             chooseButton.centerYAnchor.constraint(equalTo: shopImageView.centerYAnchor),
             chooseButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             chooseButton.heightAnchor.constraint(equalToConstant: 40),
             chooseButton.widthAnchor.constraint(equalToConstant: 40)
         ])
     }
-    func setupVoteCell(shopImage: UIImage?, shopName: String) {
+    func setupVoteCell(shopImage: UIImage?, shopName: String, numberOfVote: Int?) {
         shopImageView.image = shopImage
         shopNameLabel.text = shopName
-        shopImageView.layer.cornerRadius = 10
-        shopNameLabel.font = .medium(size: 18)
-        shopNameLabel.textColor = UIColor.darkBrown
-        let image = UIImage(systemName: "circle")
-        chooseButton.setImage(UIImage(systemName: "circle"), for: .normal)
-        chooseButton.setImage(UIImage(systemName: "circle.inset.filled"), for: .selected)
-        chooseButton.addTarget(self, action: #selector(chooseButtonTapped(_:)), for: .touchUpInside)
-        viewMenuButton.setTitle("查看菜單 >", for: .normal)
-        viewMenuButton.addTarget(self, action: #selector(viewButtonTapped(_:)), for: .touchUpInside)
+        numberOfVotesLabel.text = String("\(numberOfVote ?? 0)票")
     }
-    @objc func chooseButtonTapped(_ sender: UIButton) {
-        delegate?.didSelectedChooseButton(self, button: sender)
-    }
-    @objc func viewButtonTapped(_ sender: UIButton) {
-        delegate?.didPressedViewMenuButton(self, button: sender)
-    }
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
 
 extension ShopListToVoteCell {
-    private func makeLabel() -> UILabel {
+    private func makeShopNameLabel() -> UILabel {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
+        label.font = .medium(size: 18)
+        label.textColor = UIColor.darkBrown
         return label
     }
     private func makeImageView() -> UIImageView {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.layer.cornerRadius = 10
         return imageView
     }
-    private func makeButton() -> UIButton {
+    private func makeNumberOfVotesLabel() -> UILabel {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
+        label.font = .medium(size: 15)
+        label.textColor = UIColor.white
+        label.backgroundColor = UIColor.darkBrown
+        label.layer.cornerRadius = 6
+        label.layer.masksToBounds = true
+        label.textAlignment = .center
+        return label
+    }
+    private func makeChooseButton() -> UIButton {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitleColor(UIColor.midiumBrown, for: .normal)
         button.titleLabel?.font = .regular(size: 14)
+        button.setImage(UIImage(systemName: "circle"), for: .normal)
+        button.setImage(UIImage(systemName: "circle.inset.filled"), for: .selected)
+        button.addTarget(self, action: #selector(chooseButtonTapped(_:)), for: .touchUpInside)
         return button
+    }
+    private func makeViewMenuButton() -> UIButton {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitleColor(UIColor.midiumBrown, for: .normal)
+        button.titleLabel?.font = .regular(size: 14)
+        button.setTitle("查看菜單 >", for: .normal)
+        button.addTarget(self, action: #selector(viewButtonTapped(_:)), for: .touchUpInside)
+        return button
+    }
+    @objc func chooseButtonTapped(_ sender: UIButton) {
+        delegate?.didSelectedChooseButton(self, button: sender)
+    }
+    @objc func viewButtonTapped(_ sender: UIButton) {
+        delegate?.didPressedViewMenuButton(self, button: sender)
     }
 }

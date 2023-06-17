@@ -8,10 +8,10 @@
 import UIKit
 
 class VoteCell: UITableViewCell {
-    private lazy var userNameLabel: UILabel = makeLabel()
-    private lazy var voteStateLabel: UILabel = makeLabel()
-    private lazy var profileImageView: UIImageView = makeImageView()
-    private lazy var arrowImageView: UIImageView = makeImageView()
+    private lazy var userNameLabel: UILabel = makeUserNameLabel()
+    private lazy var voteStateLabel: UILabel = makeVoteStateLabel()
+    private lazy var profileImageView: UIImageView = makeProfileImageView()
+    private lazy var arrowImageView: UIImageView = makeArrowImageView()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -37,12 +37,6 @@ class VoteCell: UITableViewCell {
         profileImageView.image = profileImage
         userNameLabel.text = userName
         voteStateLabel.text = voteState
-        arrowImageView.image = UIImage(systemName: "arrow.right")
-        profileImageView.layer.cornerRadius = 30
-        userNameLabel.font = .medium(size: 18)
-        voteStateLabel.font = .regular(size: 14)
-        userNameLabel.textColor = UIColor.darkBrown
-        voteStateLabel.textColor = UIColor.lightBrown
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -50,16 +44,34 @@ class VoteCell: UITableViewCell {
 }
 
 extension VoteCell {
-    private func makeLabel() -> UILabel {
+    private func makeUserNameLabel() -> UILabel {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
+        label.font = .medium(size: 18)
+        label.textColor = UIColor.darkBrown
         return label
     }
-    private func makeImageView() -> UIImageView {
-        let profileImageView = UIImageView()
-        profileImageView.contentMode = .scaleAspectFill
-        profileImageView.translatesAutoresizingMaskIntoConstraints = false
-        return profileImageView
+    private func makeVoteStateLabel() -> UILabel {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
+        label.font = .regular(size: 14)
+        label.textColor = UIColor.lightBrown
+        return label
+    }
+    private func makeProfileImageView() -> UIImageView {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.layer.cornerRadius = 30
+        return imageView
+    }
+    private func makeArrowImageView() -> UIImageView {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = UIImage(systemName: "arrow.right")
+        return imageView
     }
 }

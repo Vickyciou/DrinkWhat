@@ -16,8 +16,8 @@ struct VoteObjectResponse: Codable {
 struct VoteObject: Codable {
     let state: String
     let roomID: String
-    let initiatorUser: UserVoteState
-    let joinUser: [UserVoteState]
+    let initiatorUserID: String
+    let joinUserID: [String]
     let voteResult: [VoteResult]
 }
 
@@ -27,10 +27,10 @@ struct UserVoteState: Codable {
     let isVote: Bool
 }
 
-// MARK: - VoteList
+// MARK: - VoteResult
 struct VoteResult: Codable {
     let shopObject: ShopObject
-    let voteUsers: [String]
+    let voteUsersID: [String]
 }
 
 // MARK: - ShopObject
