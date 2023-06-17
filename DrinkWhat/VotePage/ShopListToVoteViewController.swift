@@ -10,19 +10,31 @@ import UIKit
 class ShopListToVoteViewController: UIViewController {
     private lazy var tableView: UITableView = makeTableView()
     private lazy var submitButton: UIButton = makeSubmitButton()
-    private var selectIndex: Int?
-    private var shopList = ["白巷子", "50嵐", "方最", "龜記", "木衛二"]
+    private let voteManager = VoteManager()
+    private var voteObject: VoteObject?
+    private var newVoteResults: [(voteResult: VoteResult, isSelected: Bool)] = []
+
+    let roomID: String
+
+    init(roomID: String) {
+        self.roomID = roomID
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupVC()
-
     }
     private func setupVC() {
         view.backgroundColor = .white
         setNavController()
         setupTableView()
         setupSubmitButton()
+        getData(roomID: roomID)
     }
     private func setNavController() {
         let appearance = UINavigationBarAppearance()
@@ -41,7 +53,6 @@ class ShopListToVoteViewController: UIViewController {
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
-//            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
     private func setupSubmitButton() {
@@ -53,8 +64,18 @@ class ShopListToVoteViewController: UIViewController {
             submitButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20)
         ])
     }
+    private func getData(roomID: String) {
+        voteManager.getDataFromVoteObject(roomID: roomID) { result in
+            switch result {
+            case .success(let data):
+                self.newVoteResults = data.voteResult.map { ($0, false) }
+                tableView.reloadData()
+            case .failure(let error):
+                print("Get voteObject發生錯誤: \(error)")
+            }
+        }
+    }
 }
-
 extension ShopListToVoteViewController {
     private func makeTableView() -> UITableView {
         let tableView = UITableView(frame: .zero)
@@ -80,19 +101,18 @@ extension ShopListToVoteViewController {
 
 extension ShopListToVoteViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        shopList.count
+        newVoteResults.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "ShopListToVoteCell", for: indexPath)
                 as? ShopListToVoteCell else { fatalError("Cannot created VoteCell") }
-        let shop = shopList[indexPath.row]
-        cell.setupVoteCell(shopImage: UIImage(systemName: "bag"), shopName: shop)
+        let shop = newVoteResults[indexPath.row].voteResult
+        cell.setupVoteCell(
+            shopImage: UIImage(systemName: "bag"),
+            shopName: shop.shopObject.name
+        )
         cell.delegate = self
-        if selectIndex == indexPath.row {
-            cell.chooseButton.isSelected = true
-        } else {
-            cell.chooseButton.isSelected = false
-        }
+        cell.chooseButton.isSelected = newVoteResults[indexPath.row].isSelected
         return cell
     }
 }
@@ -101,8 +121,13 @@ extension ShopListToVoteViewController: ShopListToVoteCellDelegate {
         print("ViewMenu")
     }
     func didSelectedChooseButton(_ cell: ShopListToVoteCell, button: UIButton) {
-        let indexPath = tableView.indexPath(for: cell)
-        selectIndex = indexPath?.row
+        guard let indexPath = tableView.indexPath(for: cell) else { return }
+//        for shop in shopList {
+//            shop.isSelected = false
+//        }
+//        shopList[indexPath.row].isSelected = true
+        newVoteResults.indices.forEach { newVoteResults[$0].isSelected = false }
+        newVoteResults[indexPath.row].isSelected = true
         tableView.reloadData()
     }
 }

@@ -9,26 +9,21 @@ import UIKit
 
 class VoteViewController: UIViewController {
     private lazy var tableView: UITableView = makeTableView()
-    private var user = ["Vicky"]
-
+    private var voteList: [VoteList] = []
+    private let voteManager = VoteManager()
+    private let myInfo = UserObject(userID: "UUID1", userName: "Vicky", userImageURL: "http://image.com")
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupVC()
-
     }
     private func setupVC() {
         setNavController()
         setupTableView()
+        getVoteListData()
     }
     private func setNavController() {
-//        let appearance = UINavigationBarAppearance()
-//        appearance.backgroundColor = UIColor.white
-//        appearance.titleTextAttributes = [.foregroundColor: UIColor.black]
-//        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
-//        appearance.shadowColor = UIColor.clear
-//        navigationController?.navigationBar.standardAppearance = appearance
-//        navigationController?.navigationBar.scrollEdgeAppearance = appearance
-        self.title = "投票首頁"
+        navigationItem.title = "投票首頁"
         tabBarController?.tabBar.backgroundColor = .white
     }
     private func setupTableView() {
@@ -39,6 +34,17 @@ class VoteViewController: UIViewController {
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
+    }
+    private func getVoteListData() {
+        voteManager.getDataFromVoteList { result in
+            switch result {
+            case .success(let data):
+                self.voteList = data
+                tableView.reloadData()
+            case .failure(let error):
+                print("Get voteList發生錯誤: \(error)")
+            }
+        }
     }
 }
 
@@ -58,14 +64,15 @@ extension VoteViewController {
 
 extension VoteViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        user.count
+        voteList.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "VoteCell", for: indexPath) as? VoteCell
         else { fatalError("Cannot created VoteCell") }
+        let voteList = voteList[indexPath.row]
         cell.setupVoteCell(profileImage: UIImage(systemName: "person.circle.fill"),
-                           shopName: user[indexPath.row],
-                           voteState: "進行中")
+                           userName: voteList.userObject.userName,
+                           voteState: voteList.state)
         return cell
     }
 }
@@ -73,7 +80,7 @@ extension VoteViewController: UITableViewDataSource {
 // 這邊要寫section header
 extension VoteViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let shopListToVoteVC = ShopListToVoteViewController()
+        let shopListToVoteVC = ShopListToVoteViewController(roomID: voteList[indexPath.row].roomID)
         present(shopListToVoteVC, animated: true)
     }
 }

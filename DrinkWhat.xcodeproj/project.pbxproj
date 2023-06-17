@@ -25,6 +25,15 @@
 		FA71795E2A3C13BB002C407C /* ShopListToVoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA71795D2A3C13BB002C407C /* ShopListToVoteViewController.swift */; };
 		FA7179602A3C141A002C407C /* ShopListToVoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA71795F2A3C1419002C407C /* ShopListToVoteCell.swift */; };
 		FA7179632A3C545C002C407C /* DWTNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7179622A3C545C002C407C /* DWTNavigationController.swift */; };
+		FA7179662A3D4C7C002C407C /* LocalJSONLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7179652A3D4C7C002C407C /* LocalJSONLoader.swift */; };
+		FA71796B2A3D583A002C407C /* ShopList.json in Resources */ = {isa = PBXBuildFile; fileRef = FA71796A2A3D583A002C407C /* ShopList.json */; };
+		FA71796F2A3D6CCF002C407C /* VoteList.json in Resources */ = {isa = PBXBuildFile; fileRef = FA71796E2A3D6CCF002C407C /* VoteList.json */; };
+		FA7179712A3D70F0002C407C /* VoteObjectAAAA.json in Resources */ = {isa = PBXBuildFile; fileRef = FA7179702A3D70F0002C407C /* VoteObjectAAAA.json */; };
+		FA7179732A3D7281002C407C /* VoteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7179722A3D7281002C407C /* VoteManager.swift */; };
+		FA7179772A3D75E0002C407C /* VoteListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7179762A3D75E0002C407C /* VoteListResponse.swift */; };
+		FA7179792A3D9052002C407C /* VoteObjectResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7179782A3D9052002C407C /* VoteObjectResponse.swift */; };
+		FA71797C2A3DA0AC002C407C /* VoteObjectCCCC.json in Resources */ = {isa = PBXBuildFile; fileRef = FA71797A2A3DA0AC002C407C /* VoteObjectCCCC.json */; };
+		FA71797D2A3DA0AC002C407C /* VoteObjectBBBB.json in Resources */ = {isa = PBXBuildFile; fileRef = FA71797B2A3DA0AC002C407C /* VoteObjectBBBB.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +59,15 @@
 		FA71795D2A3C13BB002C407C /* ShopListToVoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopListToVoteViewController.swift; sourceTree = "<group>"; };
 		FA71795F2A3C1419002C407C /* ShopListToVoteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopListToVoteCell.swift; sourceTree = "<group>"; };
 		FA7179622A3C545C002C407C /* DWTNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DWTNavigationController.swift; sourceTree = "<group>"; };
+		FA7179652A3D4C7C002C407C /* LocalJSONLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalJSONLoader.swift; sourceTree = "<group>"; };
+		FA71796A2A3D583A002C407C /* ShopList.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ShopList.json; sourceTree = "<group>"; };
+		FA71796E2A3D6CCF002C407C /* VoteList.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = VoteList.json; sourceTree = "<group>"; };
+		FA7179702A3D70F0002C407C /* VoteObjectAAAA.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = VoteObjectAAAA.json; sourceTree = "<group>"; };
+		FA7179722A3D7281002C407C /* VoteManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteManager.swift; sourceTree = "<group>"; };
+		FA7179762A3D75E0002C407C /* VoteListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteListResponse.swift; sourceTree = "<group>"; };
+		FA7179782A3D9052002C407C /* VoteObjectResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteObjectResponse.swift; sourceTree = "<group>"; };
+		FA71797A2A3DA0AC002C407C /* VoteObjectCCCC.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = VoteObjectCCCC.json; sourceTree = "<group>"; };
+		FA71797B2A3DA0AC002C407C /* VoteObjectBBBB.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = VoteObjectBBBB.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +120,7 @@
 		FA7179312A3A9DF7002C407C /* DrinkWhat */ = {
 			isa = PBXGroup;
 			children = (
+				FA7179642A3D4C66002C407C /* Helper */,
 				FA7179612A3C543D002C407C /* Base */,
 				FA7179322A3A9DF7002C407C /* AppDelegate.swift */,
 				FA7179342A3A9DF7002C407C /* SceneDelegate.swift */,
@@ -131,6 +150,8 @@
 		FA71795A2A3AED81002C407C /* VotePage */ = {
 			isa = PBXGroup;
 			children = (
+				FA7179752A3D758F002C407C /* Model */,
+				FA7179742A3D7289002C407C /* Manager */,
 				FA71794F2A3ABC46002C407C /* VoteViewController.swift */,
 				FA71795D2A3C13BB002C407C /* ShopListToVoteViewController.swift */,
 				FA7179552A3AE557002C407C /* VoteCell.swift */,
@@ -146,6 +167,44 @@
 				FA7179492A3AB994002C407C /* TabBarViewController.swift */,
 			);
 			path = Base;
+			sourceTree = "<group>";
+		};
+		FA7179642A3D4C66002C407C /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				FA7179692A3D4D77002C407C /* MockJSONs */,
+				FA7179652A3D4C7C002C407C /* LocalJSONLoader.swift */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
+		FA7179692A3D4D77002C407C /* MockJSONs */ = {
+			isa = PBXGroup;
+			children = (
+				FA71796E2A3D6CCF002C407C /* VoteList.json */,
+				FA7179702A3D70F0002C407C /* VoteObjectAAAA.json */,
+				FA71797B2A3DA0AC002C407C /* VoteObjectBBBB.json */,
+				FA71797A2A3DA0AC002C407C /* VoteObjectCCCC.json */,
+				FA71796A2A3D583A002C407C /* ShopList.json */,
+			);
+			path = MockJSONs;
+			sourceTree = "<group>";
+		};
+		FA7179742A3D7289002C407C /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				FA7179722A3D7281002C407C /* VoteManager.swift */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		FA7179752A3D758F002C407C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				FA7179762A3D75E0002C407C /* VoteListResponse.swift */,
+				FA7179782A3D9052002C407C /* VoteObjectResponse.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -208,8 +267,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA71797D2A3DA0AC002C407C /* VoteObjectBBBB.json in Resources */,
 				FA71793F2A3A9DF8002C407C /* LaunchScreen.storyboard in Resources */,
+				FA71796F2A3D6CCF002C407C /* VoteList.json in Resources */,
+				FA71797C2A3DA0AC002C407C /* VoteObjectCCCC.json in Resources */,
 				FA71793C2A3A9DF8002C407C /* Assets.xcassets in Resources */,
+				FA7179712A3D70F0002C407C /* VoteObjectAAAA.json in Resources */,
+				FA71796B2A3D583A002C407C /* ShopList.json in Resources */,
 				FA71793A2A3A9DF7002C407C /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -267,9 +331,13 @@
 				FA7179562A3AE557002C407C /* VoteCell.swift in Sources */,
 				FA71794A2A3AB994002C407C /* TabBarViewController.swift in Sources */,
 				FA7179502A3ABC46002C407C /* VoteViewController.swift in Sources */,
+				FA7179792A3D9052002C407C /* VoteObjectResponse.swift in Sources */,
 				FA71795E2A3C13BB002C407C /* ShopListToVoteViewController.swift in Sources */,
 				FA7179602A3C141A002C407C /* ShopListToVoteCell.swift in Sources */,
+				FA7179732A3D7281002C407C /* VoteManager.swift in Sources */,
 				FA71795C2A3C0B91002C407C /* UIColor+Extension.swift in Sources */,
+				FA7179772A3D75E0002C407C /* VoteListResponse.swift in Sources */,
+				FA7179662A3D4C7C002C407C /* LocalJSONLoader.swift in Sources */,
 				FA7179372A3A9DF7002C407C /* HomeViewController.swift in Sources */,
 				FA7179332A3A9DF7002C407C /* AppDelegate.swift in Sources */,
 				FA71794E2A3ABB8A002C407C /* FavoriteViewController.swift in Sources */,

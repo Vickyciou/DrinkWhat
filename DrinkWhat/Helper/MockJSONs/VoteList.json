@@ -1,0 +1,38 @@
+{
+    "data":[
+        {
+            "state":"進行中",
+            "roomID":"AAAA",
+            "userObject":
+            {
+                "userID":"UUID1",
+                "userName": "Vicky",
+                "userImageURL": "https://image.com"
+            }
+
+        },
+        {
+            "state":"已完成",
+            "roomID":"BBBB",
+            "userObject":
+            {
+                "userID":"UUID2",
+                "userName": "Ryan",
+                "userImageURL": "https://image.com"
+            }
+
+        },
+        {
+            "state":"已完成",
+            "roomID":"CCCC",
+            "userObject":
+            {
+                "userID":"UUID3",
+                "userName": "Ian",
+                "userImageURL": "https://image.com"
+            }
+
+        }
+
+    ]
+}

@@ -45,6 +45,7 @@ class ShopListToVoteCell: UITableViewCell {
         shopImageView.layer.cornerRadius = 10
         shopNameLabel.font = .medium(size: 18)
         shopNameLabel.textColor = UIColor.darkBrown
+        let image = UIImage(systemName: "circle")
         chooseButton.setImage(UIImage(systemName: "circle"), for: .normal)
         chooseButton.setImage(UIImage(systemName: "circle.inset.filled"), for: .selected)
         chooseButton.addTarget(self, action: #selector(chooseButtonTapped(_:)), for: .touchUpInside)
