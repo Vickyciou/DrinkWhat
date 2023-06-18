@@ -29,13 +29,16 @@ class VoteNavigationController: UINavigationController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
+        navigationItem.hidesBackButton = true
         getData(roomID: roomID)
     }
 
     private func getData(roomID: String) {
         voteManager.getDataFromVoteObject(roomID: roomID) { [weak self] result in
             switch result {
-            case .success(let data):
+            case .success(var data):
+                data.voteResult.sort(by: { $0.voteUsersID.count > $1.voteUsersID.count })
                 self?.voteObject = data
                 self?.decideVC(voteObject: data)
                 self?.viewControllers
@@ -72,6 +75,7 @@ class VoteNavigationController: UINavigationController {
             print("VotingViewController")
             let votingVC = VotingViewController(roomID: roomID)
             votingVC.receiveVoteObject(voteObject)
+            votingVC.isIntiator = voteObject.initiatorUserID == myInfo.userID
             pushViewController(votingVC, animated: true)
         }
 
@@ -85,5 +89,9 @@ class VoteNavigationController: UINavigationController {
     private func isEndVote(voteObject: VoteObject) -> Bool {
         guard voteObject.state == "已完成" else { return false }
         return true
+    }
+
+    private func isIntiator(voteObject: VoteObject) -> Bool {
+        voteObject.initiatorUserID == myInfo.userID
     }
 }

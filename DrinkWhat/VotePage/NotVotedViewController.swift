@@ -11,7 +11,7 @@ class NotVotedViewController: UIViewController {
     private lazy var tableView: UITableView = makeTableView()
     private lazy var submitButton: UIButton = makeSubmitButton()
     private let voteManager = VoteManager()
-    private var voteObject: VoteObject?
+//    private var voteObject: VoteObject?
     private var newVoteResults: [(voteResult: VoteResult, isSelected: Bool)] = []
 
     let roomID: String
@@ -46,7 +46,21 @@ class NotVotedViewController: UIViewController {
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
         navigationItem.title = "Name發起的投票"
         tabBarController?.tabBar.backgroundColor = .white
+        navigationItem.hidesBackButton = true
+        let closeImage = UIImage(systemName: "xmark")?
+            .withConfiguration(UIImage.SymbolConfiguration(pointSize: 20))
+            .withTintColor(UIColor.darkBrown ?? .black)
+            .withRenderingMode(.alwaysOriginal)
+        let closeButton = UIBarButtonItem(image: closeImage,
+                                          style: .plain,
+                                          target: self,
+                                          action: #selector(closeButtonTapped))
+        navigationItem.setRightBarButton(closeButton, animated: false)
     }
+    @objc private func closeButtonTapped() {
+        dismiss(animated: true)
+    }
+
     private func setupTableView() {
         view.addSubview(tableView)
         NSLayoutConstraint.activate([

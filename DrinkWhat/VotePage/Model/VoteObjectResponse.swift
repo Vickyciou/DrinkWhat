@@ -18,7 +18,7 @@ struct VoteObject: Codable {
     let roomID: String
     let initiatorUserID: String
     let joinUserID: [String]
-    let voteResult: [VoteResult]
+    var voteResult: [VoteResult]
 }
 
 // MARK: - VoteResult

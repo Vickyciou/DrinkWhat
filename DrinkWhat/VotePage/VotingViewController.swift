@@ -12,6 +12,7 @@ class VotingViewController: UIViewController {
     private lazy var submitButton: UIButton = makeSubmitButton()
     private let voteManager = VoteManager()
     private var voteObject: VoteObject?
+    var isIntiator: Bool = false
 
     let roomID: String
 
@@ -33,6 +34,7 @@ class VotingViewController: UIViewController {
         setNavController()
         setupTableView()
         setupSubmitButton()
+        if isIntiator == false { submitButton.isHidden = true }
 //        getData(roomID: roomID)
     }
     private func setNavController() {
@@ -45,6 +47,7 @@ class VotingViewController: UIViewController {
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
         navigationItem.title = "Name發起的投票"
         tabBarController?.tabBar.backgroundColor = .white
+        navigationItem.hidesBackButton = true
     }
     private func setupTableView() {
         view.addSubview(tableView)
