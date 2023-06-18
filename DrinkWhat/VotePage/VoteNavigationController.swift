@@ -66,7 +66,7 @@ class VoteNavigationController: UINavigationController {
                 return
             }
             print("VoteResultViewController")
-            pushViewController(VoteResultViewController(), animated: true)
+            pushViewController(VoteResultViewController(roomID: roomID), animated: true)
         } else {
             if viewControllers.last is VotingViewController {
                 print("is VotingViewController")

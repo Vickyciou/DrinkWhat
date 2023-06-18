@@ -77,18 +77,10 @@ class NotVotedViewController: UIViewController {
             submitButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             submitButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20)
         ])
+        submitButton.layer.cornerRadius = 10
+        submitButton.layer.masksToBounds = true
     }
-//    private func getData(roomID: String) {
-//        voteManager.getDataFromVoteObject(roomID: roomID) { result in
-//            switch result {
-//            case .success(let data):
-//                self.newVoteResults = data.voteResult.map { ($0, false) }
-//                tableView.reloadData()
-//            case .failure(let error):
-//                print("Get voteObject發生錯誤: \(error)")
-//            }
-//        }
-//    }
+
 }
 extension NotVotedViewController {
     private func makeTableView() -> UITableView {

@@ -9,7 +9,7 @@ import UIKit
 
 class VotingViewController: UIViewController {
     private lazy var tableView: UITableView = makeTableView()
-    private lazy var submitButton: UIButton = makeSubmitButton()
+    private lazy var endVoteButton: UIButton = makeEndVoteButton()
     private let voteManager = VoteManager()
     private var voteObject: VoteObject?
     var isIntiator: Bool = false
@@ -34,7 +34,7 @@ class VotingViewController: UIViewController {
         setNavController()
         setupTableView()
         setupSubmitButton()
-        if isIntiator == false { submitButton.isHidden = true }
+        if isIntiator == false { endVoteButton.isHidden = true }
 //        getData(roomID: roomID)
     }
     private func setNavController() {
@@ -48,6 +48,18 @@ class VotingViewController: UIViewController {
         navigationItem.title = "Name發起的投票"
         tabBarController?.tabBar.backgroundColor = .white
         navigationItem.hidesBackButton = true
+        let closeImage = UIImage(systemName: "xmark")?
+            .withConfiguration(UIImage.SymbolConfiguration(pointSize: 20))
+            .withTintColor(UIColor.darkBrown ?? .black)
+            .withRenderingMode(.alwaysOriginal)
+        let closeButton = UIBarButtonItem(image: closeImage,
+                                          style: .plain,
+                                          target: self,
+                                          action: #selector(closeButtonTapped))
+        navigationItem.setRightBarButton(closeButton, animated: false)
+    }
+    @objc private func closeButtonTapped() {
+        dismiss(animated: true)
     }
     private func setupTableView() {
         view.addSubview(tableView)
@@ -58,25 +70,16 @@ class VotingViewController: UIViewController {
         ])
     }
     private func setupSubmitButton() {
-        view.addSubview(submitButton)
+        view.addSubview(endVoteButton)
         NSLayoutConstraint.activate([
-            submitButton.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 20),
-            submitButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            submitButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            submitButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20)
+            endVoteButton.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 20),
+            endVoteButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            endVoteButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            endVoteButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20)
         ])
+        endVoteButton.layer.cornerRadius = 10
+        endVoteButton.layer.masksToBounds = true
     }
-//    private func getData(roomID: String) {
-//        voteManager.getDataFromVoteObject(roomID: roomID) { [weak self] result in
-//            switch result {
-//            case .success(let data):
-//                self?.voteObject = data
-//                self?.tableView.reloadData()
-//            case .failure(let error):
-//                print("Get voteObject發生錯誤: \(error)")
-//            }
-//        }
-//    }
 }
 extension VotingViewController {
     private func makeTableView() -> UITableView {
@@ -89,7 +92,7 @@ extension VotingViewController {
         tableView.allowsSelection = false
         return tableView
     }
-    private func makeSubmitButton() -> UIButton {
+    private func makeEndVoteButton() -> UIButton {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitleColor(UIColor.lightBrown, for: .normal)

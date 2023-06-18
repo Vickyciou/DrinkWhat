@@ -23,7 +23,7 @@ class VoteManager {
             count += 1
             print("count is \(count)")
             switch count {
-            case 0..<10:
+            case 0..<5:
                 do {
                     let data = LocalJSONLoader().loadJSON(fileName: "VoteObject"+roomID)
                     let result = try JSONDecoder().decode(VoteObjectResponse.self, from: data).data
@@ -31,7 +31,7 @@ class VoteManager {
                 } catch {
                     completionHandler(.failure(error))
                 }
-            case 10..<20:
+            case 5..<10:
                 do {
                     let data = LocalJSONLoader().loadJSON(fileName: "VoteObjectIsVoted")
                     let result = try JSONDecoder().decode(VoteObjectResponse.self, from: data).data
@@ -39,7 +39,7 @@ class VoteManager {
                 } catch {
                     completionHandler(.failure(error))
                 }
-            case 20:
+            case 10:
                 do {
                     let data = LocalJSONLoader().loadJSON(fileName: "VoteObjectIsFinished")
                     let result = try JSONDecoder().decode(VoteObjectResponse.self, from: data).data
