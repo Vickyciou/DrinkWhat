@@ -12,6 +12,7 @@ struct VoteListResponse: Codable {
 }
 
 struct VoteList: Codable {
+    let date: Double
     let state: String
     let roomID: String
     let userObject: UserObject

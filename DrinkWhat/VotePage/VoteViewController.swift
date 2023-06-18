@@ -12,7 +12,7 @@ class VoteViewController: UIViewController {
     private var voteList: [VoteList] = []
     private let voteManager = VoteManager()
     private let myInfo = UserObject(userID: "UUID1", userName: "Vicky", userImageURL: "http://image.com")
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupVC()
@@ -39,7 +39,8 @@ class VoteViewController: UIViewController {
         voteManager.getDataFromVoteList { result in
             switch result {
             case .success(let data):
-                self.voteList = data
+                let sortData = data.sorted { $0.date > $1.date }
+                self.voteList = sortData
                 tableView.reloadData()
             case .failure(let error):
                 print("Get voteList發生錯誤: \(error)")
@@ -70,9 +71,12 @@ extension VoteViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "VoteCell", for: indexPath) as? VoteCell
         else { fatalError("Cannot created VoteCell") }
         let voteList = voteList[indexPath.row]
+        let date = Date(timeIntervalSince1970: voteList.date)
+        let dateString = date.dateToString(date: date)
         cell.setupVoteCell(profileImage: UIImage(systemName: "person.circle.fill"),
                            userName: voteList.userObject.userName,
-                           voteState: voteList.state)
+                           voteState: voteList.state,
+                           date: dateString)
         return cell
     }
 }
@@ -80,7 +84,7 @@ extension VoteViewController: UITableViewDataSource {
 // 這邊要寫section header
 extension VoteViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let shopListToVoteVC = ShopListToVoteViewController(roomID: voteList[indexPath.row].roomID)
-        present(shopListToVoteVC, animated: true)
+        let voteNavigationVC = VoteNavigationController(roomID: voteList[indexPath.row].roomID)
+        present(voteNavigationVC, animated: true)
     }
 }

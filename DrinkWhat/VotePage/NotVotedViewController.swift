@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ShopListToVoteViewController: UIViewController {
+class NotVotedViewController: UIViewController {
     private lazy var tableView: UITableView = makeTableView()
     private lazy var submitButton: UIButton = makeSubmitButton()
     private let voteManager = VoteManager()
@@ -34,7 +34,7 @@ class ShopListToVoteViewController: UIViewController {
         setNavController()
         setupTableView()
         setupSubmitButton()
-        getData(roomID: roomID)
+//        getData(roomID: roomID)
     }
     private func setNavController() {
         let appearance = UINavigationBarAppearance()
@@ -64,19 +64,19 @@ class ShopListToVoteViewController: UIViewController {
             submitButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20)
         ])
     }
-    private func getData(roomID: String) {
-        voteManager.getDataFromVoteObject(roomID: roomID) { result in
-            switch result {
-            case .success(let data):
-                self.newVoteResults = data.voteResult.map { ($0, false) }
-                tableView.reloadData()
-            case .failure(let error):
-                print("Get voteObject發生錯誤: \(error)")
-            }
-        }
-    }
+//    private func getData(roomID: String) {
+//        voteManager.getDataFromVoteObject(roomID: roomID) { result in
+//            switch result {
+//            case .success(let data):
+//                self.newVoteResults = data.voteResult.map { ($0, false) }
+//                tableView.reloadData()
+//            case .failure(let error):
+//                print("Get voteObject發生錯誤: \(error)")
+//            }
+//        }
+//    }
 }
-extension ShopListToVoteViewController {
+extension NotVotedViewController {
     private func makeTableView() -> UITableView {
         let tableView = UITableView(frame: .zero)
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -95,11 +95,15 @@ extension ShopListToVoteViewController {
         button.titleLabel?.font = .medium(size: 18)
         button.backgroundColor = UIColor.darkBrown
         button.setTitle("確認送出", for: .normal)
+        button.addTarget(self, action: #selector(submitButtonTapped(_:)), for: .touchUpInside)
         return button
+    }
+    @objc func submitButtonTapped(_ sender: UIButton) {
+        // setData給firestore
     }
 }
 
-extension ShopListToVoteViewController: UITableViewDataSource {
+extension NotVotedViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         newVoteResults.count
     }
@@ -117,7 +121,8 @@ extension ShopListToVoteViewController: UITableViewDataSource {
         return cell
     }
 }
-extension ShopListToVoteViewController: ShopListToVoteCellDelegate {
+
+extension NotVotedViewController: ShopListToVoteCellDelegate {
     func didPressedViewMenuButton(_ cell: ShopListToVoteCell, button: UIButton) {
         print("ViewMenu")
     }
@@ -125,6 +130,13 @@ extension ShopListToVoteViewController: ShopListToVoteCellDelegate {
         guard let indexPath = tableView.indexPath(for: cell) else { return }
         newVoteResults.indices.forEach { newVoteResults[$0].isSelected = false }
         newVoteResults[indexPath.row].isSelected = true
+        tableView.reloadData()
+    }
+}
+
+extension NotVotedViewController: VoteObjectProvider {
+    func receiveVoteObject(_ voteObject: VoteObject) {
+        newVoteResults = voteObject.voteResult.map { ($0, false) }
         tableView.reloadData()
     }
 }

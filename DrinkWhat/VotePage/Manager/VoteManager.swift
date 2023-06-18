@@ -17,13 +17,39 @@ class VoteManager {
             completionHandler(.failure(error))
         }
     }
-    func getDataFromVoteObject(roomID: String, completionHandler: (Result<VoteObject, Error>) -> Void) {
-        do {
-            let data = LocalJSONLoader().loadJSON(fileName: "VoteObject"+roomID)
-            let result = try JSONDecoder().decode(VoteObjectResponse.self, from: data).data
-            completionHandler(.success(result))
-        } catch {
-            completionHandler(.failure(error))
+    func getDataFromVoteObject(roomID: String, completionHandler: @escaping (Result<VoteObject, Error>) -> Void) {
+        var count = 0
+        let _ = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+            count += 1
+            print("count is \(count)")
+            switch count {
+            case 0..<10:
+                do {
+                    let data = LocalJSONLoader().loadJSON(fileName: "VoteObject"+roomID)
+                    let result = try JSONDecoder().decode(VoteObjectResponse.self, from: data).data
+                    completionHandler(.success(result))
+                } catch {
+                    completionHandler(.failure(error))
+                }
+            case 10..<20:
+                do {
+                    let data = LocalJSONLoader().loadJSON(fileName: "VoteObjectIsVoted")
+                    let result = try JSONDecoder().decode(VoteObjectResponse.self, from: data).data
+                    completionHandler(.success(result))
+                } catch {
+                    completionHandler(.failure(error))
+                }
+            case 20:
+                do {
+                    let data = LocalJSONLoader().loadJSON(fileName: "VoteObjectIsFinished")
+                    let result = try JSONDecoder().decode(VoteObjectResponse.self, from: data).data
+                    completionHandler(.success(result))
+                } catch {
+                    completionHandler(.failure(error))
+                }
+            default:
+                timer.invalidate()
+            }
         }
     }
 }

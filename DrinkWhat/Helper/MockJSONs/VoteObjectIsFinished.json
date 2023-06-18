@@ -1,0 +1,61 @@
+{
+    "data": {
+        "state": "已完成",
+        "roomID": "AAAA",
+        "initiatorUserID": "UUID1",
+        "joinUserID": [
+            "UUID2323",
+            "UUID3232",
+            "UUID454",
+            "UUID4566",
+            "UUID453t",
+            "UUID565475"
+        ],
+        "voteResult": [
+            {
+                "shopObject": {
+                    "imageURL": "https://image.com",
+                    "name": "迷客夏",
+                    "id": "UUID6"
+                },
+                "voteUsersID": [
+                    "UUID2323",
+                    "UUID3232",
+                    "UUID1"
+                ]
+            },
+            {
+                "shopObject": {
+                    "imageURL": "https://image.com",
+                    "name": "50嵐",
+                    "id": "UUID9"
+                },
+                "voteUsersID": [
+                    "UUID454"
+                ]
+            },
+            {
+                "shopObject": {
+                    "imageURL": "https://image.com",
+                    "name": "春水堂",
+                    "id": "UUID8"
+                },
+                "voteUsersID": [
+                    "UUID4566",
+                    "UUID453t",
+                    "UUID565475"
+                ]
+            },
+            {
+                "shopObject": {
+                    "imageURL": "https://image.com",
+                    "name": "白巷子",
+                    "id": "UUID4"
+                },
+                "voteUsersID": [
+                    ""
+                ]
+            }
+        ]
+    }
+}

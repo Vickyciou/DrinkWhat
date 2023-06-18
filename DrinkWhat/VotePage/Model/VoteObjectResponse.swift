@@ -21,12 +21,6 @@ struct VoteObject: Codable {
     let voteResult: [VoteResult]
 }
 
-// MARK: - User
-struct UserVoteState: Codable {
-    let userID: String
-    let isVote: Bool
-}
-
 // MARK: - VoteResult
 struct VoteResult: Codable {
     let shopObject: ShopObject
