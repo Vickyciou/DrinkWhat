@@ -43,6 +43,7 @@
 		FA98EF072A3ED178000E6FEE /* VoteObjectIsFinished.json in Resources */ = {isa = PBXBuildFile; fileRef = FA98EF062A3ED168000E6FEE /* VoteObjectIsFinished.json */; };
 		FA98EF092A3F3430000E6FEE /* VoteResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA98EF082A3F3430000E6FEE /* VoteResultCell.swift */; };
 		FA98EF0B2A3F39B0000E6FEE /* WinnerShopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA98EF0A2A3F39B0000E6FEE /* WinnerShopView.swift */; };
+		FAE757C72A3FF40E003245EC /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE757C62A3FF40E003245EC /* LoginViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -86,6 +87,7 @@
 		FA98EF062A3ED168000E6FEE /* VoteObjectIsFinished.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = VoteObjectIsFinished.json; sourceTree = "<group>"; };
 		FA98EF082A3F3430000E6FEE /* VoteResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteResultCell.swift; sourceTree = "<group>"; };
 		FA98EF0A2A3F39B0000E6FEE /* WinnerShopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinnerShopView.swift; sourceTree = "<group>"; };
+		FAE757C62A3FF40E003245EC /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,12 +140,13 @@
 		FA7179312A3A9DF7002C407C /* DrinkWhat */ = {
 			isa = PBXGroup;
 			children = (
-				FA7179642A3D4C66002C407C /* Helper */,
-				FA7179612A3C543D002C407C /* Base */,
 				FA7179322A3A9DF7002C407C /* AppDelegate.swift */,
 				FA7179342A3A9DF7002C407C /* SceneDelegate.swift */,
+				FA7179642A3D4C66002C407C /* Helper */,
+				FA7179612A3C543D002C407C /* Base */,
 				FA7179572A3AEB22002C407C /* Extension */,
 				FA71795A2A3AED81002C407C /* VotePage */,
+				FAE757C62A3FF40E003245EC /* LoginViewController.swift */,
 				FA7179362A3A9DF7002C407C /* HomeViewController.swift */,
 				FA71794D2A3ABB8A002C407C /* FavoriteViewController.swift */,
 				FA7179512A3ABC99002C407C /* OrderViewController.swift */,
@@ -169,18 +172,10 @@
 		FA71795A2A3AED81002C407C /* VotePage */ = {
 			isa = PBXGroup;
 			children = (
+				FAE757C42A3FF2A0003245EC /* ViewController */,
+				FAE757C52A3FF2BC003245EC /* View */,
 				FA7179752A3D758F002C407C /* Model */,
 				FA7179742A3D7289002C407C /* Manager */,
-				FA71794F2A3ABC46002C407C /* VoteViewController.swift */,
-				FA98EF002A3EAF0E000E6FEE /* VoteNavigationController.swift */,
-				FA71795D2A3C13BB002C407C /* NotVotedViewController.swift */,
-				FA98EEFA2A3DEB7C000E6FEE /* VotingViewController.swift */,
-				FA98EF022A3EB991000E6FEE /* VoteResultViewController.swift */,
-				FA7179552A3AE557002C407C /* VoteCell.swift */,
-				FA71795F2A3C1419002C407C /* ShopListToVoteCell.swift */,
-				FA98EEFC2A3DEBA3000E6FEE /* VotingCell.swift */,
-				FA98EF082A3F3430000E6FEE /* VoteResultCell.swift */,
-				FA98EF0A2A3F39B0000E6FEE /* WinnerShopView.swift */,
 			);
 			path = VotePage;
 			sourceTree = "<group>";
@@ -234,6 +229,30 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		FAE757C42A3FF2A0003245EC /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				FA71794F2A3ABC46002C407C /* VoteViewController.swift */,
+				FA98EF002A3EAF0E000E6FEE /* VoteNavigationController.swift */,
+				FA71795D2A3C13BB002C407C /* NotVotedViewController.swift */,
+				FA98EEFA2A3DEB7C000E6FEE /* VotingViewController.swift */,
+				FA98EF022A3EB991000E6FEE /* VoteResultViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		FAE757C52A3FF2BC003245EC /* View */ = {
+			isa = PBXGroup;
+			children = (
+				FA7179552A3AE557002C407C /* VoteCell.swift */,
+				FA71795F2A3C1419002C407C /* ShopListToVoteCell.swift */,
+				FA98EEFC2A3DEBA3000E6FEE /* VotingCell.swift */,
+				FA98EF082A3F3430000E6FEE /* VoteResultCell.swift */,
+				FA98EF0A2A3F39B0000E6FEE /* WinnerShopView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -246,6 +265,7 @@
 				FA71792C2A3A9DF7002C407C /* Frameworks */,
 				FA71792D2A3A9DF7002C407C /* Resources */,
 				FA7179462A3AA7EA002C407C /* ShellScript */,
+				C02D72AF8DAB8CEEF86F6476 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -310,6 +330,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		C02D72AF8DAB8CEEF86F6476 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-DrinkWhat/Pods-DrinkWhat-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-DrinkWhat/Pods-DrinkWhat-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-DrinkWhat/Pods-DrinkWhat-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		CF81744533F0901C6A76A8CE /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -381,6 +418,7 @@
 				FA7179542A3ABD01002C407C /* ProfileViewController.swift in Sources */,
 				FA7179592A3AEBDA002C407C /* UIFont+Extension.swift in Sources */,
 				FA7179522A3ABC99002C407C /* OrderViewController.swift in Sources */,
+				FAE757C72A3FF40E003245EC /* LoginViewController.swift in Sources */,
 				FA7179632A3C545C002C407C /* DWTNavigationController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

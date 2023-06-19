@@ -7,4 +7,5 @@ target 'DrinkWhat' do
 
   # Pods for DrinkWhat
     pod 'SwiftLint'
+    pod 'LineSDKSwift', '~> 5.0'
 end

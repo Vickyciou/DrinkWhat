@@ -6,14 +6,16 @@
 //
 
 import UIKit
+import LineSDK
 
 @main
 
-// swiftlint:disable line_length
+
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions
                      launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        LoginManager.shared.setup(channelID: "1661465872", universalLinkURL: nil)
         return true
     }
 
@@ -35,4 +37,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 }
-// swiftlint:enable line_length

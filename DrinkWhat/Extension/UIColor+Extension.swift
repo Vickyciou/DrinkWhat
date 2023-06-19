@@ -9,6 +9,8 @@ import UIKit
 
 enum DWTColor: String {
     case darkBrown
+    case logoBrown
+    case orangeBrown
     case midiumBrown
     case lightBrown
     case skinColor
@@ -16,6 +18,8 @@ enum DWTColor: String {
 
 extension UIColor {
     static let darkBrown = DWTColor(.darkBrown)
+    static let logoBrown = DWTColor(.logoBrown)
+    static let orangeBrown = DWTColor(.orangeBrown)
     static let midiumBrown = DWTColor(.midiumBrown)
     static let lightBrown = DWTColor(.lightBrown)
     static let skinColor = DWTColor(.skinColor)

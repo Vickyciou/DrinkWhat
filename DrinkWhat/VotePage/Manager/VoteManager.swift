@@ -25,7 +25,7 @@ class VoteManager {
             switch count {
             case 0..<5:
                 do {
-                    let data = LocalJSONLoader().loadJSON(fileName: "VoteObject"+roomID)
+                    let data = LocalJSONLoader().loadJSON(fileName: "VoteObject" + roomID)
                     let result = try JSONDecoder().decode(VoteObjectResponse.self, from: data).data
                     completionHandler(.success(result))
                 } catch {
