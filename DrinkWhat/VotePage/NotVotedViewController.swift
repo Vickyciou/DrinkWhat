@@ -120,7 +120,7 @@ extension NotVotedViewController: UITableViewDataSource {
         cell.setupVoteCell(
             shopImage: UIImage(systemName: "bag"),
             shopName: shop.shopObject.name,
-            numberOfVote: shop.voteUsersID.count
+            numberOfVote: shop.voteUsersIDs.count
         )
         cell.delegate = self
         cell.chooseButton.isSelected = newVoteResults[indexPath.row].isSelected
@@ -142,7 +142,13 @@ extension NotVotedViewController: ShopListToVoteCellDelegate {
 
 extension NotVotedViewController: VoteObjectProvider {
     func receiveVoteObject(_ voteObject: VoteObject) {
-        newVoteResults = voteObject.voteResult.map { ($0, false) }
+        newVoteResults = voteObject.voteResults.map { voteResult in
+            let first = newVoteResults.first { (tempVoteResult, _) in
+                tempVoteResult == voteResult
+            }
+            let isSelected = first?.isSelected ?? false
+            return (voteResult, isSelected)
+        }
         tableView.reloadData()
     }
 }

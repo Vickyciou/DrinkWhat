@@ -106,17 +106,17 @@ extension VotingViewController {
 
 extension VotingViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        voteObject?.voteResult.count ?? 0
+        voteObject?.voteResults.count ?? 0
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "VotingCell", for: indexPath)
                 as? VotingCell else { fatalError("Cannot created VotingCell") }
         guard let voteObject = voteObject else { fatalError("There is no voteObject") }
-        let shop = voteObject.voteResult[indexPath.row]
+        let shop = voteObject.voteResults[indexPath.row]
         cell.setupVoteCell(
             shopImage: UIImage(systemName: "bag"),
             shopName: shop.shopObject.name,
-            numberOfVote: shop.voteUsersID.count
+            numberOfVote: shop.voteUsersIDs.count
         )
         return cell
     }

@@ -3,7 +3,7 @@
         "state": "進行中",
         "roomID": "AAAA",
         "initiatorUserID": "UUID1",
-        "joinUserID": [
+        "joinUserIDs": [
             "UUID2323",
             "UUID3232",
             "UUID454",
@@ -11,17 +11,16 @@
             "UUID453t",
             "UUID565475"
         ],
-        "voteResult": [
+        "voteResults": [
             {
                 "shopObject": {
                     "imageURL": "https://image.com",
                     "name": "迷客夏",
                     "id": "UUID6"
                 },
-                "voteUsersID": [
+                "voteUsersIDs": [
                     "UUID2323",
-                    "UUID3232",
-                    "UUID1"
+                    "UUID3232"
                 ]
             },
             {
@@ -30,7 +29,7 @@
                     "name": "50嵐",
                     "id": "UUID9"
                 },
-                "voteUsersID": [
+                "voteUsersIDs": [
                     "UUID454"
                 ]
             },
@@ -40,10 +39,11 @@
                     "name": "春水堂",
                     "id": "UUID8"
                 },
-                "voteUsersID": [
+                "voteUsersIDs": [
                     "UUID4566",
                     "UUID453t",
-                    "UUID565475"
+                    "UUID565475",
+                    "UUID1"
                 ]
             },
             {
@@ -52,7 +52,7 @@
                     "name": "白巷子",
                     "id": "UUID4"
                 },
-                "voteUsersID": [
+                "voteUsersIDs": [
                     ""
                 ]
             }

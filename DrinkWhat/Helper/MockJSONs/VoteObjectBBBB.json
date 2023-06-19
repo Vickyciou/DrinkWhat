@@ -3,21 +3,21 @@
         "state": "進行中",
         "roomID": "BBBB",
         "initiatorUserID": "UUID2",
-        "joinUserID": [
+        "joinUserIDs": [
             "UUID1111",
             "UUID2222",
             "UUID3333",
             "UUID4444",
             "UUID5555"
         ],
-        "voteResult": [
+        "voteResults": [
             {
                 "shopObject": {
                     "imageURL": "https://image.com",
                     "name": "茶湯會",
                     "id": "UUID7"
                 },
-                "voteUsersID": [
+                "voteUsersIDs": [
                     "UUID1111",
                     "UUID2222"
                 ]
@@ -28,7 +28,7 @@
                     "name": "珍煮丹",
                     "id": "UUID10"
                 },
-                "voteUsersID": [
+                "voteUsersIDs": [
                     "UUID3333"
                 ]
             },
@@ -38,7 +38,7 @@
                     "name": "春水堂",
                     "id": "UUID9"
                 },
-                "voteUsersID": [
+                "voteUsersIDs": [
                     "UUID4444",
                     "UUID5555"
                 ]
@@ -49,7 +49,7 @@
                     "name": "白巷子",
                     "id": "UUID5"
                 },
-                "voteUsersID": [
+                "voteUsersIDs": [
                     ""
                 ]
             }

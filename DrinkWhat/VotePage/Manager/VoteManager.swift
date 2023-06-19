@@ -19,7 +19,7 @@ class VoteManager {
     }
     func getDataFromVoteObject(roomID: String, completionHandler: @escaping (Result<VoteObject, Error>) -> Void) {
         var count = 0
-        let _ = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+        _ = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
             count += 1
             print("count is \(count)")
             switch count {

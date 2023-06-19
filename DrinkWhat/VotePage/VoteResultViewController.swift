@@ -67,10 +67,10 @@ class VoteResultViewController: UIViewController {
             winnerShopView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             winnerShopView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             winnerShopView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)])
-        guard let voteResultOfWinner = voteObject?.voteResult.first else { return }
+        guard let voteResultOfWinner = voteObject?.voteResults.first else { return }
         winnerShopView.setupWinnerView(shopImage: UIImage(systemName: "bag"),
                                        shopName: voteResultOfWinner.shopObject.name,
-                                       numberOfVotes: voteResultOfWinner.voteUsersID.count)
+                                       numberOfVotes: voteResultOfWinner.voteUsersIDs.count)
     }
 
     private func setupTableView() {
@@ -124,16 +124,16 @@ extension VoteResultViewController {
 extension VoteResultViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let voteObject = voteObject else { fatalError("There is no voteObject in numberOfRowsInSection") }
-        return voteObject.voteResult.count - 1
+        return voteObject.voteResults.count - 1
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "VoteResultCell", for: indexPath)
                 as? VoteResultCell else { fatalError("Cannot created VoteCell") }
         guard let voteObject = voteObject else { fatalError("There is no voteObject in cellForRowAt") }
-        let voteResults = voteObject.voteResult[indexPath.row + 1]
+        let voteResults = voteObject.voteResults[indexPath.row + 1]
         cell.setupVoteCell(
             shopName: voteResults.shopObject.name,
-            numberOfVote: voteResults.voteUsersID.count
+            numberOfVote: voteResults.voteUsersIDs.count
         )
         return cell
     }

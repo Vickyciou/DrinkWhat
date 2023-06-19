@@ -17,18 +17,22 @@ struct VoteObject: Codable {
     let state: String
     let roomID: String
     let initiatorUserID: String
-    let joinUserID: [String]
-    var voteResult: [VoteResult]
+    let joinUserIDs: [String]
+    var voteResults: [VoteResult]
 }
 
 // MARK: - VoteResult
-struct VoteResult: Codable {
+struct VoteResult: Codable, Equatable {
     let shopObject: ShopObject
-    let voteUsersID: [String]
+    let voteUsersIDs: [String]
+
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.shopObject == rhs.shopObject
+    }
 }
 
 // MARK: - ShopObject
-struct ShopObject: Codable {
+struct ShopObject: Codable, Equatable {
     let imageURL: String
     let name: String
     let id: String

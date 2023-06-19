@@ -38,7 +38,7 @@ class VoteNavigationController: UINavigationController {
         voteManager.getDataFromVoteObject(roomID: roomID) { [weak self] result in
             switch result {
             case .success(var data):
-                data.voteResult.sort(by: { $0.voteUsersID.count > $1.voteUsersID.count })
+                data.voteResults.sort(by: { $0.voteUsersIDs.count > $1.voteUsersIDs.count })
                 self?.voteObject = data
                 self?.decideVC(voteObject: data)
                 self?.viewControllers
@@ -82,8 +82,8 @@ class VoteNavigationController: UINavigationController {
     }
     private func isVote(voteObject: VoteObject) -> Bool {
         voteObject
-            .voteResult
-            .flatMap { $0.voteUsersID }
+            .voteResults
+            .flatMap { $0.voteUsersIDs }
             .contains(myInfo.userID)
     }
     private func isEndVote(voteObject: VoteObject) -> Bool {
