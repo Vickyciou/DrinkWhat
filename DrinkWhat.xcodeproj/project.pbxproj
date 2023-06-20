@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		F6E573017D9A86AE4188F657 /* Pods_DrinkWhat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FB21740431A239E7B61383D /* Pods_DrinkWhat.framework */; };
+		FA2820B12A406E98009FDAD2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA2820B02A406E98009FDAD2 /* GoogleService-Info.plist */; };
 		FA7179332A3A9DF7002C407C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7179322A3A9DF7002C407C /* AppDelegate.swift */; };
 		FA7179352A3A9DF7002C407C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7179342A3A9DF7002C407C /* SceneDelegate.swift */; };
 		FA7179372A3A9DF7002C407C /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7179362A3A9DF7002C407C /* HomeViewController.swift */; };
@@ -50,6 +51,7 @@
 		30934C47FEC6CC2DA01CFD4E /* Pods-DrinkWhat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DrinkWhat.release.xcconfig"; path = "Target Support Files/Pods-DrinkWhat/Pods-DrinkWhat.release.xcconfig"; sourceTree = "<group>"; };
 		5FB21740431A239E7B61383D /* Pods_DrinkWhat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DrinkWhat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DEE07C5BA30E83A3E151349C /* Pods-DrinkWhat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DrinkWhat.debug.xcconfig"; path = "Target Support Files/Pods-DrinkWhat/Pods-DrinkWhat.debug.xcconfig"; sourceTree = "<group>"; };
+		FA2820B02A406E98009FDAD2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FA71792F2A3A9DF7002C407C /* DrinkWhat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DrinkWhat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA7179322A3A9DF7002C407C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FA7179342A3A9DF7002C407C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 				FA71793B2A3A9DF8002C407C /* Assets.xcassets */,
 				FA71793D2A3A9DF8002C407C /* LaunchScreen.storyboard */,
 				FA7179402A3A9DF8002C407C /* Info.plist */,
+				FA2820B02A406E98009FDAD2 /* GoogleService-Info.plist */,
 			);
 			path = DrinkWhat;
 			sourceTree = "<group>";
@@ -272,6 +275,8 @@
 			dependencies = (
 			);
 			name = DrinkWhat;
+			packageProductDependencies = (
+			);
 			productName = DrinkWhat;
 			productReference = FA71792F2A3A9DF7002C407C /* DrinkWhat.app */;
 			productType = "com.apple.product-type.application";
@@ -300,6 +305,8 @@
 				Base,
 			);
 			mainGroup = FA7179262A3A9DF7002C407C;
+			packageReferences = (
+			);
 			productRefGroup = FA7179302A3A9DF7002C407C /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -319,6 +326,7 @@
 				FA71793F2A3A9DF8002C407C /* LaunchScreen.storyboard in Resources */,
 				FA71796F2A3D6CCF002C407C /* VoteList.json in Resources */,
 				FA71797C2A3DA0AC002C407C /* VoteObjectCCCC.json in Resources */,
+				FA2820B12A406E98009FDAD2 /* GoogleService-Info.plist in Resources */,
 				FA98EF052A3ECF3F000E6FEE /* VoteObjectIsVoted.json in Resources */,
 				FA71793C2A3A9DF8002C407C /* Assets.xcassets in Resources */,
 				FA7179712A3D70F0002C407C /* VoteObjectAAAA.json in Resources */,

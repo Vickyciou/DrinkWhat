@@ -99,4 +99,15 @@ extension LoginViewController: LoginButtonDelegate {
     func loginButtonDidStartLogin(_ button: LoginButton) {
         print("Login Started.")
     }
+    func login() {
+        LoginManager.shared.login(permissions: [.profile], in: self) { result in
+            switch result {
+            case .success(let loginResult):
+                print(loginResult.accessToken.value)
+                // Do other things you need with the login result
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
 }
