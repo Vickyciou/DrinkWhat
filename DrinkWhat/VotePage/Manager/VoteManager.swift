@@ -33,15 +33,31 @@ class VoteManager {
                 }
             case 5..<10:
                 do {
+                    let data = LocalJSONLoader().loadJSON(fileName: "VoteObjectIsAnotherVoted")
+                    let result = try JSONDecoder().decode(VoteObjectResponse.self, from: data).data
+                    completionHandler(.success(result))
+                } catch {
+                    completionHandler(.failure(error))
+                }
+            case 10..<15:
+                do {
                     let data = LocalJSONLoader().loadJSON(fileName: "VoteObjectIsVoted")
                     let result = try JSONDecoder().decode(VoteObjectResponse.self, from: data).data
                     completionHandler(.success(result))
                 } catch {
                     completionHandler(.failure(error))
                 }
-            case 10:
+            case 15..<20:
                 do {
-                    let data = LocalJSONLoader().loadJSON(fileName: "VoteObjectIsFinished")
+                    let data = LocalJSONLoader().loadJSON(fileName: "VoteObjectIsAnotherVoted1")
+                    let result = try JSONDecoder().decode(VoteObjectResponse.self, from: data).data
+                    completionHandler(.success(result))
+                } catch {
+                    completionHandler(.failure(error))
+                }
+            case 20:
+                do {
+                    let data = LocalJSONLoader().loadJSON(fileName: "VoteObjectIsFinished1")
                     let result = try JSONDecoder().decode(VoteObjectResponse.self, from: data).data
                     completionHandler(.success(result))
                 } catch {

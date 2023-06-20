@@ -44,29 +44,29 @@ extension TabBarViewController {
         private var normalImage: UIImage? {
             switch self {
             case .home:
-                return UIImage(systemName: "house")
+                return UIImage(systemName: "house")?.setColor(color: .darkBrown)
             case .favorite:
-                return UIImage(systemName: "heart")
+                return UIImage(systemName: "heart")?.setColor(color: .darkBrown)
             case .vote:
-                return UIImage(systemName: "hand.tap")
+                return UIImage(systemName: "hand.tap")?.setColor(color: .darkBrown)
             case .order:
-                return UIImage(systemName: "list.bullet.clipboard")
+                return UIImage(systemName: "list.bullet.clipboard")?.setColor(color: .darkBrown)
             case .profile:
-                return UIImage(systemName: "person")
+                return UIImage(systemName: "person")?.setColor(color: .darkBrown)
             }
         }
         private var selectedImage: UIImage? {
             switch self {
             case .home:
-                return UIImage(systemName: "house.fill")
+                return UIImage(systemName: "house.fill")?.setColor(color: .darkBrown)
             case .favorite:
-                return UIImage(systemName: "heart.fill")
+                return UIImage(systemName: "heart.fill")?.setColor(color: .darkBrown)
             case .vote:
-                return UIImage(systemName: "hand.tap.fill")
+                return UIImage(systemName: "hand.tap.fill")?.setColor(color: .darkBrown)
             case .order:
-                return UIImage(systemName: "list.bullet.clipboard.fill")
+                return UIImage(systemName: "list.bullet.clipboard.fill")?.setColor(color: .darkBrown)
             case .profile:
-                return UIImage(systemName: "person.fill")
+                return UIImage(systemName: "person.fill")?.setColor(color: .darkBrown)
             }
         }
     }

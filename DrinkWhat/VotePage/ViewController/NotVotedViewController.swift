@@ -87,7 +87,7 @@ extension NotVotedViewController {
         let tableView = UITableView(frame: .zero)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.dataSource = self
-        tableView.register(ShopListToVoteCell.self, forCellReuseIdentifier: "ShopListToVoteCell")
+        tableView.register(NotVotedCell.self, forCellReuseIdentifier: "ShopListToVoteCell")
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
@@ -115,10 +115,10 @@ extension NotVotedViewController: UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "ShopListToVoteCell", for: indexPath)
-                as? ShopListToVoteCell else { fatalError("Cannot created VoteCell") }
+                as? NotVotedCell else { fatalError("Cannot created VoteCell") }
         let shop = newVoteResults[indexPath.row].voteResult
         cell.setupVoteCell(
-            shopImage: UIImage(systemName: "bag"),
+            shopImage: UIImage(systemName: "bag")?.setColor(color: .darkBrown),
             shopName: shop.shopObject.name,
             numberOfVote: shop.voteUsersIDs.count
         )
@@ -128,11 +128,11 @@ extension NotVotedViewController: UITableViewDataSource {
     }
 }
 
-extension NotVotedViewController: ShopListToVoteCellDelegate {
-    func didPressedViewMenuButton(_ cell: ShopListToVoteCell, button: UIButton) {
+extension NotVotedViewController: NotVotedCellDelegate {
+    func didPressedViewMenuButton(_ cell: NotVotedCell, button: UIButton) {
         print("ViewMenu")
     }
-    func didSelectedChooseButton(_ cell: ShopListToVoteCell, button: UIButton) {
+    func didSelectedChooseButton(_ cell: NotVotedCell, button: UIButton) {
         guard let indexPath = tableView.indexPath(for: cell) else { return }
         newVoteResults.indices.forEach { newVoteResults[$0].isSelected = false }
         newVoteResults[indexPath.row].isSelected = true

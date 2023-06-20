@@ -1,5 +1,5 @@
 //
-//  ShopListToVoteCell.swift
+//  NotVotedCell.swift
 //  DrinkWhat
 //
 //  Created by Vickyciou on 2023/6/16.
@@ -7,18 +7,18 @@
 
 import UIKit
 
-protocol ShopListToVoteCellDelegate: AnyObject {
-    func didPressedViewMenuButton(_ cell: ShopListToVoteCell, button: UIButton)
-    func didSelectedChooseButton(_ cell: ShopListToVoteCell, button: UIButton)
+protocol NotVotedCellDelegate: AnyObject {
+    func didPressedViewMenuButton(_ cell: NotVotedCell, button: UIButton)
+    func didSelectedChooseButton(_ cell: NotVotedCell, button: UIButton)
 }
 
-class ShopListToVoteCell: UITableViewCell {
+class NotVotedCell: UITableViewCell {
     private lazy var shopNameLabel: UILabel = makeShopNameLabel()
     private lazy var shopImageView: UIImageView = makeImageView()
     lazy var chooseButton: UIButton = makeChooseButton()
     private lazy var viewMenuButton: UIButton = makeViewMenuButton()
     private lazy var numberOfVotesLabel: UILabel = makeNumberOfVotesLabel()
-    weak var delegate: ShopListToVoteCellDelegate?
+    weak var delegate: NotVotedCellDelegate?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -54,7 +54,7 @@ class ShopListToVoteCell: UITableViewCell {
     }
 }
 
-extension ShopListToVoteCell {
+extension NotVotedCell {
     private func makeShopNameLabel() -> UILabel {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -87,8 +87,8 @@ extension ShopListToVoteCell {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitleColor(UIColor.midiumBrown, for: .normal)
         button.titleLabel?.font = .regular(size: 14)
-        button.setImage(UIImage(systemName: "circle"), for: .normal)
-        button.setImage(UIImage(systemName: "circle.inset.filled"), for: .selected)
+        button.setImage(UIImage(systemName: "circle")?.setColor(color: .darkBrown), for: .normal)
+        button.setImage(UIImage(systemName: "circle.inset.filled")?.setColor(color: .darkBrown), for: .selected)
         button.addTarget(self, action: #selector(chooseButtonTapped(_:)), for: .touchUpInside)
         return button
     }

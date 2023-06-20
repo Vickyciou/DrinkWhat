@@ -68,7 +68,7 @@ class VoteResultViewController: UIViewController {
             winnerShopView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             winnerShopView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)])
         guard let voteResultOfWinner = voteObject?.voteResults.first else { return }
-        winnerShopView.setupWinnerView(shopImage: UIImage(systemName: "bag"),
+        winnerShopView.setupWinnerView(shopImage: UIImage(systemName: "bag")?.setColor(color: .darkBrown),
                                        shopName: voteResultOfWinner.shopObject.name,
                                        numberOfVotes: voteResultOfWinner.voteUsersIDs.count)
     }

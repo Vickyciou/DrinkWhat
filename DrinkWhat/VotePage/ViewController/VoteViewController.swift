@@ -73,7 +73,7 @@ extension VoteViewController: UITableViewDataSource {
         let voteList = voteList[indexPath.row]
         let date = Date(timeIntervalSince1970: voteList.date)
         let dateString = date.dateToString(date: date)
-        cell.setupVoteCell(profileImage: UIImage(systemName: "person.circle.fill"),
+        cell.setupVoteCell(profileImage: UIImage(systemName: "person.circle.fill")?.setColor(color: .darkBrown),
                            userName: voteList.userObject.userName,
                            voteState: voteList.state,
                            date: dateString)

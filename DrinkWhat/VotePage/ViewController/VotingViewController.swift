@@ -114,7 +114,7 @@ extension VotingViewController: UITableViewDataSource {
         guard let voteObject = voteObject else { fatalError("There is no voteObject") }
         let shop = voteObject.voteResults[indexPath.row]
         cell.setupVoteCell(
-            shopImage: UIImage(systemName: "bag"),
+            shopImage: UIImage(systemName: "bag")?.setColor(color: .darkBrown),
             shopName: shop.shopObject.name,
             numberOfVote: shop.voteUsersIDs.count
         )

@@ -23,7 +23,8 @@ extension UIColor {
     static let midiumBrown = DWTColor(.midiumBrown)
     static let lightBrown = DWTColor(.lightBrown)
     static let skinColor = DWTColor(.skinColor)
-    private static func DWTColor(_ color: DWTColor) -> UIColor? {
-        return UIColor(named: color.rawValue)
+    private static func DWTColor(_ color: DWTColor) -> UIColor {
+        guard let uiColor = UIColor(named: color.rawValue) else { return .black }
+        return uiColor
     }
 }

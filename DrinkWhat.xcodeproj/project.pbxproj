@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		F6E573017D9A86AE4188F657 /* Pods_DrinkWhat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FB21740431A239E7B61383D /* Pods_DrinkWhat.framework */; };
 		FA2820B12A406E98009FDAD2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA2820B02A406E98009FDAD2 /* GoogleService-Info.plist */; };
+		FA2820BA2A41548A009FDAD2 /* VoteObjectIsAnotherVoted.json in Resources */ = {isa = PBXBuildFile; fileRef = FA2820B72A413D3E009FDAD2 /* VoteObjectIsAnotherVoted.json */; };
+		FA2820BB2A41548D009FDAD2 /* VoteObjectIsAnotherVoted1.json in Resources */ = {isa = PBXBuildFile; fileRef = FA2820B82A413DCA009FDAD2 /* VoteObjectIsAnotherVoted1.json */; };
+		FA2820BC2A415491009FDAD2 /* VoteObjectIsFinished1.json in Resources */ = {isa = PBXBuildFile; fileRef = FA2820B92A413E29009FDAD2 /* VoteObjectIsFinished1.json */; };
+		FA2820BE2A4158BD009FDAD2 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2820BD2A4158BD009FDAD2 /* UIImage+Extension.swift */; };
 		FA7179332A3A9DF7002C407C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7179322A3A9DF7002C407C /* AppDelegate.swift */; };
 		FA7179352A3A9DF7002C407C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7179342A3A9DF7002C407C /* SceneDelegate.swift */; };
 		FA7179372A3A9DF7002C407C /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7179362A3A9DF7002C407C /* HomeViewController.swift */; };
@@ -24,7 +28,7 @@
 		FA7179592A3AEBDA002C407C /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7179582A3AEBDA002C407C /* UIFont+Extension.swift */; };
 		FA71795C2A3C0B91002C407C /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA71795B2A3C0B91002C407C /* UIColor+Extension.swift */; };
 		FA71795E2A3C13BB002C407C /* NotVotedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA71795D2A3C13BB002C407C /* NotVotedViewController.swift */; };
-		FA7179602A3C141A002C407C /* ShopListToVoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA71795F2A3C1419002C407C /* ShopListToVoteCell.swift */; };
+		FA7179602A3C141A002C407C /* NotVotedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA71795F2A3C1419002C407C /* NotVotedCell.swift */; };
 		FA7179632A3C545C002C407C /* DWTNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7179622A3C545C002C407C /* DWTNavigationController.swift */; };
 		FA7179662A3D4C7C002C407C /* LocalJSONLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7179652A3D4C7C002C407C /* LocalJSONLoader.swift */; };
 		FA71796B2A3D583A002C407C /* ShopList.json in Resources */ = {isa = PBXBuildFile; fileRef = FA71796A2A3D583A002C407C /* ShopList.json */; };
@@ -52,6 +56,10 @@
 		5FB21740431A239E7B61383D /* Pods_DrinkWhat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DrinkWhat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DEE07C5BA30E83A3E151349C /* Pods-DrinkWhat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DrinkWhat.debug.xcconfig"; path = "Target Support Files/Pods-DrinkWhat/Pods-DrinkWhat.debug.xcconfig"; sourceTree = "<group>"; };
 		FA2820B02A406E98009FDAD2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		FA2820B72A413D3E009FDAD2 /* VoteObjectIsAnotherVoted.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = VoteObjectIsAnotherVoted.json; sourceTree = "<group>"; };
+		FA2820B82A413DCA009FDAD2 /* VoteObjectIsAnotherVoted1.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = VoteObjectIsAnotherVoted1.json; sourceTree = "<group>"; };
+		FA2820B92A413E29009FDAD2 /* VoteObjectIsFinished1.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = VoteObjectIsFinished1.json; sourceTree = "<group>"; };
+		FA2820BD2A4158BD009FDAD2 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		FA71792F2A3A9DF7002C407C /* DrinkWhat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DrinkWhat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA7179322A3A9DF7002C407C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FA7179342A3A9DF7002C407C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -69,7 +77,7 @@
 		FA7179582A3AEBDA002C407C /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
 		FA71795B2A3C0B91002C407C /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		FA71795D2A3C13BB002C407C /* NotVotedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotVotedViewController.swift; sourceTree = "<group>"; };
-		FA71795F2A3C1419002C407C /* ShopListToVoteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopListToVoteCell.swift; sourceTree = "<group>"; };
+		FA71795F2A3C1419002C407C /* NotVotedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotVotedCell.swift; sourceTree = "<group>"; };
 		FA7179622A3C545C002C407C /* DWTNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DWTNavigationController.swift; sourceTree = "<group>"; };
 		FA7179652A3D4C7C002C407C /* LocalJSONLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalJSONLoader.swift; sourceTree = "<group>"; };
 		FA71796A2A3D583A002C407C /* ShopList.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ShopList.json; sourceTree = "<group>"; };
@@ -168,6 +176,7 @@
 				FA7179582A3AEBDA002C407C /* UIFont+Extension.swift */,
 				FA71795B2A3C0B91002C407C /* UIColor+Extension.swift */,
 				FA98EEFE2A3E03D0000E6FEE /* Date+Extension.swift */,
+				FA2820BD2A4158BD009FDAD2 /* UIImage+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -207,6 +216,9 @@
 				FA71796E2A3D6CCF002C407C /* VoteList.json */,
 				FA7179702A3D70F0002C407C /* VoteObjectAAAA.json */,
 				FA98EF042A3ECD9D000E6FEE /* VoteObjectIsVoted.json */,
+				FA2820B72A413D3E009FDAD2 /* VoteObjectIsAnotherVoted.json */,
+				FA2820B82A413DCA009FDAD2 /* VoteObjectIsAnotherVoted1.json */,
+				FA2820B92A413E29009FDAD2 /* VoteObjectIsFinished1.json */,
 				FA98EF062A3ED168000E6FEE /* VoteObjectIsFinished.json */,
 				FA71797B2A3DA0AC002C407C /* VoteObjectBBBB.json */,
 				FA71797A2A3DA0AC002C407C /* VoteObjectCCCC.json */,
@@ -248,7 +260,7 @@
 			isa = PBXGroup;
 			children = (
 				FA7179552A3AE557002C407C /* VoteCell.swift */,
-				FA71795F2A3C1419002C407C /* ShopListToVoteCell.swift */,
+				FA71795F2A3C1419002C407C /* NotVotedCell.swift */,
 				FA98EEFC2A3DEBA3000E6FEE /* VotingCell.swift */,
 				FA98EF082A3F3430000E6FEE /* VoteResultCell.swift */,
 				FA98EF0A2A3F39B0000E6FEE /* WinnerShopView.swift */,
@@ -323,11 +335,14 @@
 			files = (
 				FA98EF072A3ED178000E6FEE /* VoteObjectIsFinished.json in Resources */,
 				FA71797D2A3DA0AC002C407C /* VoteObjectBBBB.json in Resources */,
+				FA2820BC2A415491009FDAD2 /* VoteObjectIsFinished1.json in Resources */,
 				FA71793F2A3A9DF8002C407C /* LaunchScreen.storyboard in Resources */,
 				FA71796F2A3D6CCF002C407C /* VoteList.json in Resources */,
 				FA71797C2A3DA0AC002C407C /* VoteObjectCCCC.json in Resources */,
+				FA2820BA2A41548A009FDAD2 /* VoteObjectIsAnotherVoted.json in Resources */,
 				FA2820B12A406E98009FDAD2 /* GoogleService-Info.plist in Resources */,
 				FA98EF052A3ECF3F000E6FEE /* VoteObjectIsVoted.json in Resources */,
+				FA2820BB2A41548D009FDAD2 /* VoteObjectIsAnotherVoted1.json in Resources */,
 				FA71793C2A3A9DF8002C407C /* Assets.xcassets in Resources */,
 				FA7179712A3D70F0002C407C /* VoteObjectAAAA.json in Resources */,
 				FA71796B2A3D583A002C407C /* ShopList.json in Resources */,
@@ -409,7 +424,7 @@
 				FA98EF092A3F3430000E6FEE /* VoteResultCell.swift in Sources */,
 				FA7179792A3D9052002C407C /* VoteObjectResponse.swift in Sources */,
 				FA71795E2A3C13BB002C407C /* NotVotedViewController.swift in Sources */,
-				FA7179602A3C141A002C407C /* ShopListToVoteCell.swift in Sources */,
+				FA7179602A3C141A002C407C /* NotVotedCell.swift in Sources */,
 				FA98EF0B2A3F39B0000E6FEE /* WinnerShopView.swift in Sources */,
 				FA7179732A3D7281002C407C /* VoteManager.swift in Sources */,
 				FA71795C2A3C0B91002C407C /* UIColor+Extension.swift in Sources */,
@@ -423,6 +438,7 @@
 				FA71794E2A3ABB8A002C407C /* FavoriteViewController.swift in Sources */,
 				FA7179352A3A9DF7002C407C /* SceneDelegate.swift in Sources */,
 				FA98EF032A3EB991000E6FEE /* VoteResultViewController.swift in Sources */,
+				FA2820BE2A4158BD009FDAD2 /* UIImage+Extension.swift in Sources */,
 				FA7179542A3ABD01002C407C /* ProfileViewController.swift in Sources */,
 				FA7179592A3AEBDA002C407C /* UIFont+Extension.swift in Sources */,
 				FA7179522A3ABC99002C407C /* OrderViewController.swift in Sources */,

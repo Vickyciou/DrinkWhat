@@ -1,6 +1,6 @@
 {
     "data": {
-        "state": "進行中",
+        "state": "已完成",
         "roomID": "AAAA",
         "initiatorUserID": "UUID1",
         "joinUserIDs": [
@@ -11,7 +11,9 @@
             "UUID453t",
             "UUID565475",
             "UUID777",
-            "UUID888"
+            "UUID888",
+            "UUID999",
+            "UUID000"
         ],
         "voteResults": [
             {
@@ -34,7 +36,9 @@
                 "voteUsersIDs": [
                     "UUID454",
                     "UUID777",
-                    "UUID888"
+                    "UUID888",
+                    "UUID999",
+                    "UUID000"
                 ]
             },
             {

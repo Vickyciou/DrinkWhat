@@ -75,7 +75,7 @@ extension VoteCell {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(systemName: "arrow.right")
+        imageView.image = UIImage(systemName: "arrow.right")?.setColor(color: .darkBrown)
         return imageView
     }
 }

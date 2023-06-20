@@ -40,7 +40,7 @@ extension VoteResultCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
         label.font = .medium(size: 14)
-        label.textColor = UIColor.midiumBrown
+        label.textColor = UIColor.logoBrown
         return label
     }
 
@@ -50,7 +50,7 @@ extension VoteResultCell {
         label.numberOfLines = 0
         label.font = .medium(size: 14)
         label.textColor = UIColor.white
-        label.backgroundColor = UIColor.midiumBrown
+        label.backgroundColor = UIColor.darkBrown
         label.layer.cornerRadius = 6
         label.layer.masksToBounds = true
         label.textAlignment = .center
