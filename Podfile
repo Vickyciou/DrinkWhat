@@ -12,6 +12,7 @@ target 'DrinkWhat' do
     pod 'LineSDKSwift', '~> 5.0'
     pod 'FirebaseAuth', '~> 10.0.0'
     pod 'FirebaseFirestore', '~> 10.0.0'
+    pod 'FirebaseFirestoreSwift'
 
     post_install do |installer|
       installer.pods_project.targets.each do |target|

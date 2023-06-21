@@ -22,4 +22,8 @@ struct UserObject: Codable {
     let userID: String
     let userName: String
     let userImageURL: String
+    var groupIDs: [String]?
+    var OrderIDs: [String]?
+    var favoriteShops: [String]?
+
 }
