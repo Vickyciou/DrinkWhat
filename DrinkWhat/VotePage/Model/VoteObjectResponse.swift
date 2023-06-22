@@ -7,12 +7,12 @@
 
 import Foundation
 
-// MARK: - VoteObjectResponse
+// MARK: - VoteObject
+
 struct VoteObjectResponse: Codable {
     let data: VoteObject
 }
 
-// MARK: - DataClass
 struct VoteObject: Codable {
     let state: String
     let roomID: String
@@ -21,7 +21,6 @@ struct VoteObject: Codable {
     var voteResults: [VoteResult]
 }
 
-// MARK: - VoteResult
 struct VoteResult: Codable, Equatable {
     let shopObject: ShopObject
     var voteUsersIDs: [String]
@@ -31,7 +30,8 @@ struct VoteResult: Codable, Equatable {
     }
 }
 
-// MARK: - ShopObject
+// MARK: - Shops
+
 struct ShopObject: Codable, Equatable {
     let imageURL: String
     let name: String
@@ -40,7 +40,11 @@ struct ShopObject: Codable, Equatable {
 }
 
 struct ShopMenu: Codable, Equatable {
-    let drinkName: String
-    let drinkPrice: Int
+    let drinkID: String
+    let drinkObject: [DrinkObject]
+}
+struct DrinkObject: Codable, Equatable {
+    let name: String
+    let price: Int
 }
 

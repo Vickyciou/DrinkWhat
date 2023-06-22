@@ -55,7 +55,7 @@ class GroupManager {
 //        guard let userVoteDict = try? userVoteObject.toDictionary() else { return }
 //        db.collection("Groups").document(groupID).setData(userVoteDict, merge: true)
     }
-// Load 投票主頁
+// MARK: - Load 投票主頁
     func getAllGroupData(groupIDs: [String]) {
         var groupData : [GroupResponse] = []
         groupIDs.forEach {
@@ -72,13 +72,13 @@ class GroupManager {
 
                     }
                 } else {
-                    print("Document does not exist")
+                    print("Group\(groupIDs) document does not exist")
                 }
             }
         }
         delegate?.GroupManager(self, didGetAllGroupData: groupData)
     }
-//監聽投票狀況
+// MARK: - 監聽投票狀況
     func getGroupObject(groupID: String)  {
         db.collection("Groups").document(groupID).addSnapshotListener { [self] (documentSnapshot, error) in
             guard let document = documentSnapshot else {

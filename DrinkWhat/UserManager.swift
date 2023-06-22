@@ -38,7 +38,7 @@ class UserManager {
                     print("Document data: \(String(describing: userData))")
                 } catch {
                     delegate?.userManager(self, didFailWith: error)
-                    print("Error get user from Firestore: \(error)")
+                    print("Error get user\(userID) from Firestore: \(error)")
                 }
             } else {
                 print("Document does not exist")

@@ -42,6 +42,7 @@
 		FA7CC6082A41ACC4009B599F /* GroupManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7CC6072A41ACC4009B599F /* GroupManager.swift */; };
 		FA7CC60B2A41B65D009B599F /* GroupResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7CC60A2A41B65D009B599F /* GroupResponse.swift */; };
 		FA7CC60D2A42DDE6009B599F /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7CC60C2A42DDE6009B599F /* UserManager.swift */; };
+		FA7CC60F2A4403B5009B599F /* ShopManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7CC60E2A4403B5009B599F /* ShopManager.swift */; };
 		FA98EEFB2A3DEB7C000E6FEE /* VotingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA98EEFA2A3DEB7C000E6FEE /* VotingViewController.swift */; };
 		FA98EEFD2A3DEBA3000E6FEE /* VotingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA98EEFC2A3DEBA3000E6FEE /* VotingCell.swift */; };
 		FA98EEFF2A3E03D0000E6FEE /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA98EEFE2A3E03D0000E6FEE /* Date+Extension.swift */; };
@@ -94,6 +95,7 @@
 		FA7CC6072A41ACC4009B599F /* GroupManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupManager.swift; sourceTree = "<group>"; };
 		FA7CC60A2A41B65D009B599F /* GroupResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupResponse.swift; sourceTree = "<group>"; };
 		FA7CC60C2A42DDE6009B599F /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
+		FA7CC60E2A4403B5009B599F /* ShopManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopManager.swift; sourceTree = "<group>"; };
 		FA98EEFA2A3DEB7C000E6FEE /* VotingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VotingViewController.swift; sourceTree = "<group>"; };
 		FA98EEFC2A3DEBA3000E6FEE /* VotingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VotingCell.swift; sourceTree = "<group>"; };
 		FA98EEFE2A3E03D0000E6FEE /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
@@ -273,6 +275,7 @@
 			children = (
 				FA7CC6072A41ACC4009B599F /* GroupManager.swift */,
 				FA7CC60C2A42DDE6009B599F /* UserManager.swift */,
+				FA7CC60E2A4403B5009B599F /* ShopManager.swift */,
 			);
 			name = Manager;
 			sourceTree = "<group>";
@@ -474,6 +477,7 @@
 				FA98EF012A3EAF0E000E6FEE /* VoteNavigationController.swift in Sources */,
 				FA98EEFF2A3E03D0000E6FEE /* Date+Extension.swift in Sources */,
 				FA7CC6082A41ACC4009B599F /* GroupManager.swift in Sources */,
+				FA7CC60F2A4403B5009B599F /* ShopManager.swift in Sources */,
 				FA7179662A3D4C7C002C407C /* LocalJSONLoader.swift in Sources */,
 				FA7179372A3A9DF7002C407C /* HomeViewController.swift in Sources */,
 				FA7CC60D2A42DDE6009B599F /* UserManager.swift in Sources */,
