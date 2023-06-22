@@ -11,7 +11,7 @@ class VoteViewController: UIViewController {
     private lazy var tableView: UITableView = makeTableView()
     private var voteList: [VoteList] = []
     private let voteManager = VoteManager()
-    private let myInfo = UserObject(userID: "UUID1", userName: "Vicky", userImageURL: "http://image.com")
+    private let myInfo = UserObject(userID: "UUID1", userName: "Vicky", userImageURL: "", groupIDs: [], orderIDs: [], favoriteShops: [])
 
     override func viewDidLoad() {
         super.viewDidLoad()

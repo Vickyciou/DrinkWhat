@@ -15,7 +15,7 @@ protocol UserManagerDelegate: AnyObject {
 }
 
 class UserManager {
-//    static let shared = UserManager()
+    static let shared = UserManager()
     private let db = Firestore.firestore()
     weak var delegate: UserManagerDelegate?
 

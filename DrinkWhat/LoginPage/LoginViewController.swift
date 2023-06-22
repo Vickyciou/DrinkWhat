@@ -21,13 +21,14 @@ class LoginViewController: UIViewController {
         view.backgroundColor = .white
         setNavController()
         setupMainView()
+        setVickyLoginButton()
     }
     private func setNavController() {
         let navigationController = UINavigationController()
         let appearance = UINavigationBarAppearance()
         appearance.backgroundColor = UIColor.white
-        appearance.titleTextAttributes = [.foregroundColor: UIColor.darkBrown ?? .black]
-        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.darkBrown ?? .black]
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.darkBrown]
+        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.darkBrown]
         appearance.shadowColor = UIColor.clear
         navigationController.navigationBar.standardAppearance = appearance
         navigationController.navigationBar.scrollEdgeAppearance = appearance
@@ -36,7 +37,7 @@ class LoginViewController: UIViewController {
         navigationItem.hidesBackButton = true
         let closeImage = UIImage(systemName: "xmark")?
             .withConfiguration(UIImage.SymbolConfiguration(pointSize: 20))
-            .withTintColor(UIColor.darkBrown ?? .black)
+            .withTintColor(UIColor.darkBrown)
             .withRenderingMode(.alwaysOriginal)
         let closeButton = UIBarButtonItem(image: closeImage,
                                           style: .plain,
@@ -110,4 +111,29 @@ extension LoginViewController: LoginButtonDelegate {
             }
         }
     }
+}
+extension LoginViewController {
+
+    func setVickyLoginButton() {
+        let userVickyButton = UIButton()
+        view.addSubview(userVickyButton)
+        userVickyButton.translatesAutoresizingMaskIntoConstraints = false
+        userVickyButton.backgroundColor = .orangeBrown
+        userVickyButton.setTitleColor(UIColor.midiumBrown, for: .normal)
+        userVickyButton.titleLabel?.font = .regular(size: 14)
+        userVickyButton.setTitle("Vicky Login", for: .normal)
+        userVickyButton.addTarget(self, action: #selector(vickyButtonTapped(_:)), for: .touchUpInside)
+        NSLayoutConstraint.activate([
+            userVickyButton.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor, constant: 100),
+            userVickyButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor)])
+        let vicky = UserObject(userID: "UUID1", userName: "Vicky", userImageURL: "", groupIDs: [], orderIDs: [], favoriteShops: [])
+        UserManager.shared.createUserData(userObject: vicky)
+    }
+    @objc func vickyButtonTapped(_ sender: UIButton) {
+        UserManager.shared.getUserData(userID: "UUID1")
+        show(TabBarViewController(), sender: nil)
+        dismiss(animated: false)
+    }
+
+
 }

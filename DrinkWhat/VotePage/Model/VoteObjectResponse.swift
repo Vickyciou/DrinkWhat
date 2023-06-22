@@ -33,18 +33,20 @@ struct VoteResult: Codable, Equatable {
 // MARK: - Shops
 
 struct ShopObject: Codable, Equatable {
-    let imageURL: String
+    let logoImageURL: String
+    let mainImageURL: String
     let name: String
     let id: String
     let menu: [ShopMenu]
 }
 
 struct ShopMenu: Codable, Equatable {
-    let drinkID: String
-    let drinkObject: [DrinkObject]
+    let drinkName: String
+    let drinkPrice: [VolumePrice]
 }
-struct DrinkObject: Codable, Equatable {
-    let name: String
+
+struct VolumePrice: Codable, Equatable {
+    let volume: String
     let price: Int
 }
 

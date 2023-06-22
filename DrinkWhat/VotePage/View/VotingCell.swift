@@ -15,6 +15,7 @@ class VotingCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.selectionStyle = .none
         let content = [shopNameLabel, shopImageView, viewMenuButton, numberOfVotesLabel]
         content.forEach { contentView.addSubview($0) }
         NSLayoutConstraint.activate([

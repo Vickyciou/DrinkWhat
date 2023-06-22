@@ -13,6 +13,8 @@ class VoteResultCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        self.selectionStyle = .none
         let content = [shopNameLabel, numberOfVotesLabel]
         content.forEach { contentView.addSubview($0) }
         NSLayoutConstraint.activate([

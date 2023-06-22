@@ -16,7 +16,7 @@ class VoteNavigationController: UINavigationController {
     private let voteManager = VoteManager()
     private let roomID: String
     private var voteObject: VoteObject?
-    private let myInfo = UserObject(userID: "UUID1", userName: "Vicky", userImageURL: "http://image.com")
+    private let myInfo = UserObject(userID: "UUID1", userName: "Vicky", userImageURL: "", groupIDs: [], orderIDs: [], favoriteShops: [])
 
     init(roomID: String) {
         self.roomID = roomID

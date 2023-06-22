@@ -8,12 +8,12 @@
 import UIKit
 
 enum DWTColor: String {
-    case darkBrown
-    case logoBrown
-    case orangeBrown
-    case midiumBrown
-    case lightBrown
-    case skinColor
+    case darkBrown = "DarkBrown"
+    case logoBrown = "LogoBrown"
+    case orangeBrown = "OrangeBrown"
+    case midiumBrown = "MidiumBrown"
+    case lightBrown = "LightBrown"
+    case skinColor = "SkinColor"
 }
 
 extension UIColor {

@@ -29,7 +29,6 @@
 		FA71795C2A3C0B91002C407C /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA71795B2A3C0B91002C407C /* UIColor+Extension.swift */; };
 		FA71795E2A3C13BB002C407C /* NotVotedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA71795D2A3C13BB002C407C /* NotVotedViewController.swift */; };
 		FA7179602A3C141A002C407C /* NotVotedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA71795F2A3C1419002C407C /* NotVotedCell.swift */; };
-		FA7179632A3C545C002C407C /* DWTNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7179622A3C545C002C407C /* DWTNavigationController.swift */; };
 		FA7179662A3D4C7C002C407C /* LocalJSONLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7179652A3D4C7C002C407C /* LocalJSONLoader.swift */; };
 		FA71796B2A3D583A002C407C /* ShopList.json in Resources */ = {isa = PBXBuildFile; fileRef = FA71796A2A3D583A002C407C /* ShopList.json */; };
 		FA71796F2A3D6CCF002C407C /* VoteList.json in Resources */ = {isa = PBXBuildFile; fileRef = FA71796E2A3D6CCF002C407C /* VoteList.json */; };
@@ -43,6 +42,10 @@
 		FA7CC60B2A41B65D009B599F /* GroupResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7CC60A2A41B65D009B599F /* GroupResponse.swift */; };
 		FA7CC60D2A42DDE6009B599F /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7CC60C2A42DDE6009B599F /* UserManager.swift */; };
 		FA7CC60F2A4403B5009B599F /* ShopManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7CC60E2A4403B5009B599F /* ShopManager.swift */; };
+		FA7CC6112A44460B009B599F /* HomeShopCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7CC6102A44460B009B599F /* HomeShopCell.swift */; };
+		FA7CC6142A44493B009B599F /* KingFisherWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7CC6132A44493B009B599F /* KingFisherWrapper.swift */; };
+		FA7CC6172A444B81009B599F /* ShopMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7CC6162A444B81009B599F /* ShopMenuViewController.swift */; };
+		FA7CC6192A446106009B599F /* ShopMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7CC6182A446106009B599F /* ShopMenuCell.swift */; };
 		FA98EEFB2A3DEB7C000E6FEE /* VotingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA98EEFA2A3DEB7C000E6FEE /* VotingViewController.swift */; };
 		FA98EEFD2A3DEBA3000E6FEE /* VotingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA98EEFC2A3DEBA3000E6FEE /* VotingCell.swift */; };
 		FA98EEFF2A3E03D0000E6FEE /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA98EEFE2A3E03D0000E6FEE /* Date+Extension.swift */; };
@@ -82,7 +85,6 @@
 		FA71795B2A3C0B91002C407C /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		FA71795D2A3C13BB002C407C /* NotVotedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotVotedViewController.swift; sourceTree = "<group>"; };
 		FA71795F2A3C1419002C407C /* NotVotedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotVotedCell.swift; sourceTree = "<group>"; };
-		FA7179622A3C545C002C407C /* DWTNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DWTNavigationController.swift; sourceTree = "<group>"; };
 		FA7179652A3D4C7C002C407C /* LocalJSONLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalJSONLoader.swift; sourceTree = "<group>"; };
 		FA71796A2A3D583A002C407C /* ShopList.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ShopList.json; sourceTree = "<group>"; };
 		FA71796E2A3D6CCF002C407C /* VoteList.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = VoteList.json; sourceTree = "<group>"; };
@@ -96,6 +98,10 @@
 		FA7CC60A2A41B65D009B599F /* GroupResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupResponse.swift; sourceTree = "<group>"; };
 		FA7CC60C2A42DDE6009B599F /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		FA7CC60E2A4403B5009B599F /* ShopManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopManager.swift; sourceTree = "<group>"; };
+		FA7CC6102A44460B009B599F /* HomeShopCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeShopCell.swift; sourceTree = "<group>"; };
+		FA7CC6132A44493B009B599F /* KingFisherWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KingFisherWrapper.swift; sourceTree = "<group>"; };
+		FA7CC6162A444B81009B599F /* ShopMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopMenuViewController.swift; sourceTree = "<group>"; };
+		FA7CC6182A446106009B599F /* ShopMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopMenuCell.swift; sourceTree = "<group>"; };
 		FA98EEFA2A3DEB7C000E6FEE /* VotingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VotingViewController.swift; sourceTree = "<group>"; };
 		FA98EEFC2A3DEBA3000E6FEE /* VotingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VotingCell.swift; sourceTree = "<group>"; };
 		FA98EEFE2A3E03D0000E6FEE /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
@@ -160,6 +166,7 @@
 			children = (
 				FA7179322A3A9DF7002C407C /* AppDelegate.swift */,
 				FA7179342A3A9DF7002C407C /* SceneDelegate.swift */,
+				FA7CC6122A4448F0009B599F /* ThirdPartyWrappers */,
 				FA7179642A3D4C66002C407C /* Helper */,
 				FA7CC6062A41AC90009B599F /* Manager */,
 				FA7CC6092A41B630009B599F /* Model */,
@@ -167,6 +174,7 @@
 				FA7179572A3AEB22002C407C /* Extension */,
 				FA7CC6042A41AC0C009B599F /* LoginPage */,
 				FA7CC6052A41AC24009B599F /* HomePage */,
+				FA7CC6152A444B1C009B599F /* ShopPage */,
 				FA71795A2A3AED81002C407C /* VotePage */,
 				FA71794D2A3ABB8A002C407C /* FavoriteViewController.swift */,
 				FA7179512A3ABC99002C407C /* OrderViewController.swift */,
@@ -205,7 +213,6 @@
 		FA7179612A3C543D002C407C /* Base */ = {
 			isa = PBXGroup;
 			children = (
-				FA7179622A3C545C002C407C /* DWTNavigationController.swift */,
 				FA7179492A3AB994002C407C /* TabBarViewController.swift */,
 			);
 			path = Base;
@@ -266,6 +273,7 @@
 			isa = PBXGroup;
 			children = (
 				FA7179362A3A9DF7002C407C /* HomeViewController.swift */,
+				FA7CC6102A44460B009B599F /* HomeShopCell.swift */,
 			);
 			path = HomePage;
 			sourceTree = "<group>";
@@ -286,6 +294,23 @@
 				FA7CC60A2A41B65D009B599F /* GroupResponse.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		FA7CC6122A4448F0009B599F /* ThirdPartyWrappers */ = {
+			isa = PBXGroup;
+			children = (
+				FA7CC6132A44493B009B599F /* KingFisherWrapper.swift */,
+			);
+			path = ThirdPartyWrappers;
+			sourceTree = "<group>";
+		};
+		FA7CC6152A444B1C009B599F /* ShopPage */ = {
+			isa = PBXGroup;
+			children = (
+				FA7CC6162A444B81009B599F /* ShopMenuViewController.swift */,
+				FA7CC6182A446106009B599F /* ShopMenuCell.swift */,
+			);
+			path = ShopPage;
 			sourceTree = "<group>";
 		};
 		FAE757C42A3FF2A0003245EC /* ViewController */ = {
@@ -472,6 +497,7 @@
 				FA98EF0B2A3F39B0000E6FEE /* WinnerShopView.swift in Sources */,
 				FA7179732A3D7281002C407C /* VoteManager.swift in Sources */,
 				FA71795C2A3C0B91002C407C /* UIColor+Extension.swift in Sources */,
+				FA7CC6172A444B81009B599F /* ShopMenuViewController.swift in Sources */,
 				FA7179772A3D75E0002C407C /* VoteListResponse.swift in Sources */,
 				FA98EEFD2A3DEBA3000E6FEE /* VotingCell.swift in Sources */,
 				FA98EF012A3EAF0E000E6FEE /* VoteNavigationController.swift in Sources */,
@@ -486,12 +512,14 @@
 				FA7179352A3A9DF7002C407C /* SceneDelegate.swift in Sources */,
 				FA98EF032A3EB991000E6FEE /* VoteResultViewController.swift in Sources */,
 				FA2820BE2A4158BD009FDAD2 /* UIImage+Extension.swift in Sources */,
+				FA7CC6192A446106009B599F /* ShopMenuCell.swift in Sources */,
 				FA7CC60B2A41B65D009B599F /* GroupResponse.swift in Sources */,
 				FA7179542A3ABD01002C407C /* ProfileViewController.swift in Sources */,
+				FA7CC6112A44460B009B599F /* HomeShopCell.swift in Sources */,
 				FA7179592A3AEBDA002C407C /* UIFont+Extension.swift in Sources */,
+				FA7CC6142A44493B009B599F /* KingFisherWrapper.swift in Sources */,
 				FA7179522A3ABC99002C407C /* OrderViewController.swift in Sources */,
 				FAE757C72A3FF40E003245EC /* LoginViewController.swift in Sources */,
-				FA7179632A3C545C002C407C /* DWTNavigationController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

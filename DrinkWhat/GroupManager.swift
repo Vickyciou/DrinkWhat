@@ -10,18 +10,18 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 protocol GroupManagerDelegate: AnyObject {
-    func GroupManager(_ manager: GroupManager, didGetAllGroupData: [GroupResponse])
-    func GroupManager(_ manager: GroupManager, didGetGroupObject: GroupResponse)
-    func GroupManager(_ manager: GroupManager, didFailWith error: Error)
+    func groupManager(_ manager: GroupManager, didGetAllGroupData: [GroupResponse])
+    func groupManager(_ manager: GroupManager, didGetGroupObject: GroupResponse)
+    func groupManager(_ manager: GroupManager, didFailWith error: Error)
 }
 extension GroupManagerDelegate {
-    func GroupManager(_ manager: GroupManager, didGetAllGroupData: [GroupResponse]){}
-    func GroupManager(_ manager: GroupManager, didGetGroupObject: GroupResponse){}
-    func GroupManager(_ manager: GroupManager, didFailWith error: Error){}
+    func groupManager(_ manager: GroupManager, didGetAllGroupData: [GroupResponse]){}
+    func groupManager(_ manager: GroupManager, didGetGroupObject: GroupResponse){}
+    func groupManager(_ manager: GroupManager, didFailWith error: Error){}
 }
 
 class GroupManager {
-//    static let shared = GroupManager()
+    static let shared = GroupManager()
     let db = Firestore.firestore()
     weak var delegate: GroupManagerDelegate?
     private var userData: UserObject?
@@ -29,7 +29,14 @@ class GroupManager {
     func createGroup(voteResults: [VoteResults]) {
         let groupID = db.collection("Groups").document().documentID
         guard let userData = userData else { return }
-        let groupObject = GroupResponse(groupID: groupID, date: Date().timeIntervalSince1970, state: "進行中", initiatorUserID: userData.userID, initiatorUserName: userData.userName, initiatorUserImage: userData.userImageURL, joinUserIDs: [],voteResults: voteResults)
+        let groupObject = GroupResponse(groupID: groupID,
+                                        date: Date().timeIntervalSince1970,
+                                        state: "進行中",
+                                        initiatorUserID: userData.userID,
+                                        initiatorUserName: userData.userName,
+                                        initiatorUserImage: userData.userImageURL,
+                                        joinUserIDs: [],
+                                        voteResults: voteResults)
         do {
             try db.collection("Groups").document(groupID).setData(from: groupObject)
         } catch {
@@ -42,7 +49,7 @@ class GroupManager {
         do {
             try db.collection("Groups").document(groupID).setData(from: voteResult)
         } catch {
-            delegate?.GroupManager(self, didFailWith: error)
+            delegate?.groupManager(self, didFailWith: error)
         }
 
 //        let userVotedObject: [String: Any] = [
@@ -57,7 +64,7 @@ class GroupManager {
     }
 // MARK: - Load 投票主頁
     func getAllGroupData(groupIDs: [String]) {
-        var groupData : [GroupResponse] = []
+        var groupData: [GroupResponse] = []
         groupIDs.forEach {
             let docRef = db.collection("Groups").document($0)
             docRef.getDocument { document, error in
@@ -67,7 +74,7 @@ class GroupManager {
                         groupData.append(dataDescription)
                         print("Document data: \(dataDescription)")
                     } catch {
-                        self.delegate?.GroupManager(self, didFailWith: error)
+                        self.delegate?.groupManager(self, didFailWith: error)
                         print("Error get all groups data from Firestore:\(error)")
 
                     }
@@ -76,17 +83,17 @@ class GroupManager {
                 }
             }
         }
-        delegate?.GroupManager(self, didGetAllGroupData: groupData)
+        delegate?.groupManager(self, didGetAllGroupData: groupData)
     }
 // MARK: - 監聽投票狀況
     func getGroupObject(groupID: String)  {
         db.collection("Groups").document(groupID).addSnapshotListener { [self] (documentSnapshot, error) in
             guard let document = documentSnapshot else {
-                self.delegate?.GroupManager(self, didFailWith: error!)
+                self.delegate?.groupManager(self, didFailWith: error!)
                 print("Error fetching document: \(error!)")
                 return }
             guard let groupObject = try? document.data(as: GroupResponse.self) else { return }
-            delegate?.GroupManager(self, didGetGroupObject: groupObject)
+            delegate?.groupManager(self, didGetGroupObject: groupObject)
 
         }
     }
@@ -102,4 +109,3 @@ extension GroupManager: UserManagerDelegate {
 
 
 }
-

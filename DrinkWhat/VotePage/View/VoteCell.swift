@@ -16,6 +16,7 @@ class VoteCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.selectionStyle = .none
         let content = [userNameLabel, voteStateLabel, dateLabel, profileImageView, arrowImageView]
         content.forEach { contentView.addSubview($0) }
         NSLayoutConstraint.activate([
