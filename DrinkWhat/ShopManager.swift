@@ -44,7 +44,6 @@ class ShopManager {
                     do {
                         let shopObject = try document.data(as: ShopObject.self)
                         shopData.append(shopObject)
-                        print("\(document.documentID) => \(document.data())")
                     } catch {
                         print("Error get all shops data from Firestore:\(error)")
                     }
@@ -62,7 +61,6 @@ class ShopManager {
                 do {
                     let shopObject = try document.data(as: ShopObject.self)
                     delegate?.shopManager(self, didGetShopObject: shopObject)
-                    print("Document data: \(String(describing: shopObject))")
                 } catch {
                     delegate?.shopManager(self, didFailWith: error)
                     print("Error get shop from Firestore: \(error)")

@@ -21,6 +21,14 @@ extension UIFont {
         return UIFont(descriptor: descriptor, size: size)
     }
 
+    static func bold(size: CGFloat) -> UIFont? {
+        var descriptor = UIFontDescriptor(name: DWTFontName.regular.rawValue, size: size)
+        descriptor = descriptor.addingAttributes(
+            [UIFontDescriptor.AttributeName.traits: [UIFontDescriptor.TraitKey.weight: UIFont.Weight.bold]]
+        )
+        return UIFont(descriptor: descriptor, size: size)
+    }
+
     static func regular(size: CGFloat) -> UIFont? {
         return DWTFont(.regular, size: size)
     }

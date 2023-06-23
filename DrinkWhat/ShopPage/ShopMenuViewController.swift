@@ -8,6 +8,7 @@
 import UIKit
 
 class ShopMenuViewController: UIViewController {
+    private lazy var tableHeaderView: UIImageView = makeTableHeaderView()
     private lazy var tableView: UITableView = makeTableView()
     let shopID: String
     private let shopManager = ShopManager()
@@ -41,10 +42,18 @@ class ShopMenuViewController: UIViewController {
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
+        tableView.tableHeaderView = tableHeaderView
     }
 }
 
 extension ShopMenuViewController {
+    private func makeTableHeaderView() -> UIImageView {
+        let tableHeaderView = UIImageView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 200))
+        tableHeaderView.contentMode = .scaleAspectFill
+        tableHeaderView.layer.masksToBounds = true
+        tableHeaderView.backgroundColor = .red
+        return tableHeaderView
+    }
     private func makeTableView() -> UITableView {
         let tableView = UITableView(frame: .zero)
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -76,11 +85,21 @@ extension ShopMenuViewController: UITableViewDelegate {
 //      let shopMenuVC = ShopMenuViewController(shopID: shopData[indexPath.row].id)
 //        present(shopMenuVC, animated: true)
     }
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let firstSectionHeaderView = SectionHeaderView(frame: .zero)
+        firstSectionHeaderView.setupView(shopName: shopObject?.name ?? "")
+        return section == 0 ? firstSectionHeaderView : nil
+    }
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        100
+    }
 }
 
 extension ShopMenuViewController: ShopManagerDelegate {
     func shopManager(_ manager: ShopManager, didGetShopObject shopObject: ShopObject) {
         self.shopObject = shopObject
+        tableHeaderView.loadImage(shopObject.mainImageURL, placeHolder: UIImage(systemName: "bag"))
+
         tableView.reloadData()
     }
 }

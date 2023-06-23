@@ -49,7 +49,7 @@ class NotVotedViewController: UIViewController {
         navigationItem.hidesBackButton = true
         let closeImage = UIImage(systemName: "xmark")?
             .withConfiguration(UIImage.SymbolConfiguration(pointSize: 20))
-            .withTintColor(UIColor.darkBrown ?? .black)
+            .withTintColor(UIColor.darkBrown)
             .withRenderingMode(.alwaysOriginal)
         let closeButton = UIBarButtonItem(image: closeImage,
                                           style: .plain,

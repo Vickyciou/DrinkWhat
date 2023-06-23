@@ -46,6 +46,7 @@
 		FA7CC6142A44493B009B599F /* KingFisherWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7CC6132A44493B009B599F /* KingFisherWrapper.swift */; };
 		FA7CC6172A444B81009B599F /* ShopMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7CC6162A444B81009B599F /* ShopMenuViewController.swift */; };
 		FA7CC6192A446106009B599F /* ShopMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7CC6182A446106009B599F /* ShopMenuCell.swift */; };
+		FA7CC61B2A457754009B599F /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7CC61A2A457754009B599F /* SectionHeaderView.swift */; };
 		FA98EEFB2A3DEB7C000E6FEE /* VotingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA98EEFA2A3DEB7C000E6FEE /* VotingViewController.swift */; };
 		FA98EEFD2A3DEBA3000E6FEE /* VotingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA98EEFC2A3DEBA3000E6FEE /* VotingCell.swift */; };
 		FA98EEFF2A3E03D0000E6FEE /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA98EEFE2A3E03D0000E6FEE /* Date+Extension.swift */; };
@@ -102,6 +103,7 @@
 		FA7CC6132A44493B009B599F /* KingFisherWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KingFisherWrapper.swift; sourceTree = "<group>"; };
 		FA7CC6162A444B81009B599F /* ShopMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopMenuViewController.swift; sourceTree = "<group>"; };
 		FA7CC6182A446106009B599F /* ShopMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopMenuCell.swift; sourceTree = "<group>"; };
+		FA7CC61A2A457754009B599F /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
 		FA98EEFA2A3DEB7C000E6FEE /* VotingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VotingViewController.swift; sourceTree = "<group>"; };
 		FA98EEFC2A3DEBA3000E6FEE /* VotingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VotingCell.swift; sourceTree = "<group>"; };
 		FA98EEFE2A3E03D0000E6FEE /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
@@ -309,6 +311,7 @@
 			children = (
 				FA7CC6162A444B81009B599F /* ShopMenuViewController.swift */,
 				FA7CC6182A446106009B599F /* ShopMenuCell.swift */,
+				FA7CC61A2A457754009B599F /* SectionHeaderView.swift */,
 			);
 			path = ShopPage;
 			sourceTree = "<group>";
@@ -518,6 +521,7 @@
 				FA7CC6112A44460B009B599F /* HomeShopCell.swift in Sources */,
 				FA7179592A3AEBDA002C407C /* UIFont+Extension.swift in Sources */,
 				FA7CC6142A44493B009B599F /* KingFisherWrapper.swift in Sources */,
+				FA7CC61B2A457754009B599F /* SectionHeaderView.swift in Sources */,
 				FA7179522A3ABC99002C407C /* OrderViewController.swift in Sources */,
 				FAE757C72A3FF40E003245EC /* LoginViewController.swift in Sources */,
 			);

@@ -47,7 +47,8 @@ extension ShopMenuCell {
         imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.cornerRadius = 10
-        imageView.image = UIImage(systemName: "mug")?.setColor(color: .darkBrown)
+//        imageView.image = UIImage(systemName: "mug")?.setColor(color: .darkBrown)
+        imageView.image = UIImage(named: "Mug")
         return imageView
     }
     private func makeDrinkNameLabel() -> UILabel {

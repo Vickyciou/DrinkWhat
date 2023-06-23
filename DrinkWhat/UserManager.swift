@@ -35,7 +35,6 @@ class UserManager {
                 do {
                     let userData = try document.data(as: UserObject.self)
                     delegate?.userManager(self, didGet: userData)
-                    print("Document data: \(String(describing: userData))")
                 } catch {
                     delegate?.userManager(self, didFailWith: error)
                     print("Error get user\(userID) from Firestore: \(error)")
