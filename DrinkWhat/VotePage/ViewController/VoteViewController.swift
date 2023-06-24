@@ -23,7 +23,7 @@ class VoteViewController: UIViewController {
         setNavController()
         setupTableView()
         guard let userObject = userObject else { return }
-        groupManager.getAllGroupData(userID: userObject.userID)
+        groupManager.listenGroupChangeEvent(userID: userObject.userID)
         groupManager.delegate = self
     }
     private func setNavController() {

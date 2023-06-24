@@ -10,16 +10,14 @@ import UIKit
 class NotVotedViewController: UIViewController {
     private lazy var tableView: UITableView = makeTableView()
     private lazy var submitButton: UIButton = makeSubmitButton()
-
-    private var groupObject: GroupResponse
+    private let groupObject: GroupResponse
     private var shopObjects: [ShopObject] = []
-    private var newVoteResults: [(voteResult: VoteResults, isSelected: Bool)] = []
+    private var newVoteResults: [(voteResult: VoteResult, isSelected: Bool)] = []
     private let groupManager = GroupManager()
     private let userObject = UserManager.shared.userObject
 
-    init(groupObject: GroupResponse, shopObjects: [ShopObject]) {
+    init(groupObject: GroupResponse) {
         self.groupObject = groupObject
-        self.shopObjects = shopObjects
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -36,7 +34,6 @@ class NotVotedViewController: UIViewController {
         setNavController()
         setupTableView()
         setupSubmitButton()
-        createdNewVoteResults(groupObject)
     }
     private func setNavController() {
         navigationItem.title = "由\(groupObject.initiatorUserName)發起的投票"
@@ -102,9 +99,11 @@ extension NotVotedViewController {
     @objc func submitButtonTapped(_ sender: UIButton) {
         guard let selectedShop = newVoteResults.first(where: { $0.isSelected == true }),
               let userObject = userObject else { return }
-        groupManager.addVoteResults(groupID: groupObject.groupID,
-                                    shopID: selectedShop.voteResult.shopID,
-                                    userID: userObject.userID)
+        groupManager.addVoteResults(
+            groupID: groupObject.groupID,
+            shopID: selectedShop.voteResult.shopID,
+            userID: userObject.userID
+        )
     }
 }
 
@@ -112,6 +111,7 @@ extension NotVotedViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         newVoteResults.count
     }
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "ShopListToVoteCell", for: indexPath)
                 as? NotVotedCell else { fatalError("Cannot created VoteCell") }
@@ -121,7 +121,7 @@ extension NotVotedViewController: UITableViewDataSource {
         cell.setupVoteCell(
             shopImageURL: shop.logoImageURL,
             shopName: shop.name,
-            numberOfVote: voteResult.voteUserIDs.count
+            numberOfVote: voteResult.userIDs.count
         )
         cell.delegate = self
         cell.chooseButton.isSelected = newVoteResults[indexPath.row].isSelected
@@ -133,6 +133,7 @@ extension NotVotedViewController: NotVotedCellDelegate {
     func didPressedViewMenuButton(_ cell: NotVotedCell, button: UIButton) {
         print("ViewMenu")
     }
+
     func didSelectedChooseButton(_ cell: NotVotedCell, button: UIButton) {
         guard let indexPath = tableView.indexPath(for: cell) else { return }
         newVoteResults.indices.forEach { newVoteResults[$0].isSelected = false }
@@ -141,15 +142,22 @@ extension NotVotedViewController: NotVotedCellDelegate {
     }
 }
 
-extension NotVotedViewController {
-    func createdNewVoteResults(_ groupObject: GroupResponse) {
-        newVoteResults = groupObject.voteResults.map { voteResult in
+extension NotVotedViewController: VoteResultsAccessible {
+    func setVoteResults(_ voteResults: [VoteResult]) {
+        newVoteResults = voteResults.map { voteResult in
             let first = newVoteResults.first { (tempVoteResult, _) in
                 tempVoteResult == voteResult
             }
             let isSelected = first?.isSelected ?? false
             return (voteResult, isSelected)
         }
+        tableView.reloadData()
+    }
+}
+
+extension NotVotedViewController: ShopObjectsAccessible {
+    func setShopObjects(_ shopObjects: [ShopObject]) {
+        self.shopObjects = shopObjects
         tableView.reloadData()
     }
 }

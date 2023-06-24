@@ -22,6 +22,7 @@ class LoginViewController: UIViewController {
         setNavController()
         setupMainView()
         setVickyLoginButton()
+        setUser2LoginButton()
     }
     private func setNavController() {
         let navigationController = UINavigationController()
@@ -131,6 +132,27 @@ extension LoginViewController {
     }
     @objc func vickyButtonTapped(_ sender: UIButton) {
         UserManager.shared.getUserData(userID: "UUID1")
+        show(TabBarViewController(), sender: nil)
+        dismiss(animated: false)
+    }
+
+    func setUser2LoginButton() {
+        let userVickyButton = UIButton()
+        view.addSubview(userVickyButton)
+        userVickyButton.translatesAutoresizingMaskIntoConstraints = false
+        userVickyButton.backgroundColor = .orangeBrown
+        userVickyButton.setTitleColor(UIColor.midiumBrown, for: .normal)
+        userVickyButton.titleLabel?.font = .regular(size: 14)
+        userVickyButton.setTitle("User2 Login", for: .normal)
+        userVickyButton.addTarget(self, action: #selector(user2ButtonTapped(_:)), for: .touchUpInside)
+        NSLayoutConstraint.activate([
+            userVickyButton.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor, constant: 150),
+            userVickyButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor)])
+        let user2 = UserObject(userID: "UUID2", userName: "User2", userImageURL: "", favoriteShops: [])
+        UserManager.shared.createUserData(userObject: user2)
+    }
+    @objc func user2ButtonTapped(_ sender: UIButton) {
+        UserManager.shared.getUserData(userID: "UUID2")
         show(TabBarViewController(), sender: nil)
         dismiss(animated: false)
     }

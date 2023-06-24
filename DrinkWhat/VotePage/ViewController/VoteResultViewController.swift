@@ -11,11 +11,17 @@ class VoteResultViewController: UIViewController {
     private let winnerShopView = WinnerShopView(frame: .zero)
     private lazy var tableView: UITableView = makeTableView()
     private lazy var startOrderButton: UIButton = makeStartOrderButton()
-    private var groupObject: GroupResponse
-    private var shopObjects: [ShopObject] = []
+    private let groupObject: GroupResponse
+    private let shopObjects: [ShopObject]
+    private let voteResults: [VoteResult]
 
-    init(groupObject: GroupResponse, shopObjects: [ShopObject]) {
+    init(
+        groupObject: GroupResponse,
+        voteResults: [VoteResult],
+        shopObjects: [ShopObject]
+    ) {
         self.groupObject = groupObject
+        self.voteResults = voteResults
         self.shopObjects = shopObjects
         super.init(nibName: nil, bundle: nil)
     }
@@ -59,12 +65,14 @@ class VoteResultViewController: UIViewController {
             winnerShopView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             winnerShopView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             winnerShopView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)])
-        guard let voteResult = groupObject.voteResults.first else { return }
+        guard let voteResult = voteResults.first else { return }
         let winnerShopID = voteResult.shopID
         guard let shop = shopObjects.first(where: { $0.id == winnerShopID }) else { return }
-        winnerShopView.setupWinnerView(shopImageURL: shop.logoImageURL,
-                                       shopName: shop.name,
-                                       numberOfVotes: voteResult.voteUserIDs.count)
+        winnerShopView.setupWinnerView(
+            shopImageURL: shop.logoImageURL,
+            shopName: shop.name,
+            numberOfVotes: voteResult.userIDs.count
+        )
     }
 
     private func setupTableView() {
@@ -117,18 +125,18 @@ extension VoteResultViewController {
 
 extension VoteResultViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return groupObject.voteResults.count - 1
+        voteResults.count - 1
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "VoteResultCell", for: indexPath)
                 as? VoteResultCell else { fatalError("Cannot created VoteCell") }
-        let voteResults = groupObject.voteResults[indexPath.row + 1]
-        let shopID = voteResults.shopID
+        let voteResult = voteResults[indexPath.row + 1]
+        let shopID = voteResult.shopID
         guard let shop = shopObjects.first(where: { $0.id == shopID }) else { return cell }
         cell.setupVoteCell(
             shopName: shop.name,
-            numberOfVote: voteResults.voteUserIDs.count
+            numberOfVote: voteResult.userIDs.count
         )
         return cell
     }

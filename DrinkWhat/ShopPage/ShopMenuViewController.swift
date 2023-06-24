@@ -10,12 +10,11 @@ import UIKit
 class ShopMenuViewController: UIViewController {
     private lazy var tableHeaderView: UIImageView = makeTableHeaderView()
     private lazy var tableView: UITableView = makeTableView()
-    let shopID: String
+    private let shopID: String
     private let shopManager = ShopManager()
     private let groupManager = GroupManager()
     private var shopObject: ShopObject?
     private var groupObject: GroupResponse?
-//    private var groupID: String?
 
     init(shopID: String) {
         self.shopID = shopID
@@ -36,7 +35,6 @@ class ShopMenuViewController: UIViewController {
     private func setupVC() {
         setupTableView()
         shopManager.getShopObject(shopID: shopID)
-        groupManager.checkGroupExists(userID: UserManager.shared.userObject?.userID ?? "")
     }
 
     private func setupTableView() {
@@ -88,10 +86,8 @@ extension ShopMenuViewController: UITableViewDataSource {
 
 // 這邊要寫section header
 extension ShopMenuViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//      let shopMenuVC = ShopMenuViewController(shopID: shopData[indexPath.row].id)
-//        present(shopMenuVC, animated: true)
-    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {}
+
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let firstSectionHeaderView = SectionHeaderView(frame: .zero)
         firstSectionHeaderView.setupView(shopName: shopObject?.name ?? "")
@@ -107,24 +103,27 @@ extension ShopMenuViewController: ShopManagerDelegate {
         tableView.reloadData()
     }
 }
+
 extension ShopMenuViewController: SectionHeaderViewDelegate {
     func didPressAddOrderButton(_ view: SectionHeaderView) {
         //
     }
 
     func didPressAddVoteButton(_ view: SectionHeaderView) {
-        if groupObject?.groupID == nil {
-            let voteResult = VoteResults(shopID: shopID, voteUserIDs: [])
-            groupManager.createGroup(voteResults: [voteResult])
-        } else {
-            guard let groupObject = groupObject else { return }
-            if groupObject.voteResults.contains(where: { $0.shopID == shopID }) {
-                let alert = UIAlertController(title: "加入失敗", message: "此商店已加入投票清單囉", preferredStyle: .alert)
+        Task {
+            do {
+                try await groupManager.addShopIntoGroup(shopID: shopID)
+            } catch ManagerError.itemAlreadyExistsError {
+                let alert = UIAlertController(
+                    title: "加入失敗",
+                    message: "此商店已加入投票清單囉",
+                    preferredStyle: .alert
+                )
                 let okAction = UIAlertAction(title: "OK", style: .default)
                 alert.addAction(okAction)
                 present(alert, animated: true)
-            } else {
-                groupManager.addShopIntoGroup(groupID: groupObject.groupID, shopID: shopID)
+            } catch {
+                print("error \(error)")
             }
         }
     }
@@ -135,7 +134,7 @@ extension ShopMenuViewController: SectionHeaderViewDelegate {
 }
 extension ShopMenuViewController: GroupManagerDelegate {
     func groupManager(_ manager: GroupManager, didPostGroupID groupID: String) {
-//        self.groupID = groupID
+        print("groupID \(groupID)")
     }
     func groupManager(_ manager: GroupManager, didGetGroupObject groupObject: GroupResponse) {
         self.groupObject = groupObject

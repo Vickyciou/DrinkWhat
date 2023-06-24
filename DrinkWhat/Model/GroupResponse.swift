@@ -7,6 +7,16 @@
 
 import Foundation
 
+struct GroupSetup: Codable {
+    let groupID: String
+    let date: Double
+    let state: String
+    let initiatorUserID: String
+    let initiatorUserName: String
+    let initiatorUserImage: String
+    var joinUserIDs: [String]
+}
+
 struct GroupResponse: Codable {
     let groupID: String
     let date: Double
@@ -15,13 +25,11 @@ struct GroupResponse: Codable {
     let initiatorUserName: String
     let initiatorUserImage: String
     var joinUserIDs: [String]
-    var voteResults: [VoteResults]
-
 }
 
-struct VoteResults: Codable, Equatable {
+struct VoteResult: Codable, Equatable {
     let shopID: String
-    var voteUserIDs: [String]
+    let userIDs: [String]
 
     static func == (lhs: Self, rhs: Self) -> Bool {
         lhs.shopID == rhs.shopID

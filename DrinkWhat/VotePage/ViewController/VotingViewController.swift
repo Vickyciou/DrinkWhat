@@ -7,16 +7,25 @@
 
 import UIKit
 
+protocol VotingViewControllerDelegate: AnyObject {
+    func votingViewController(_ vc: VotingViewController, didPressEndVoteButton button: UIButton)
+}
+
 class VotingViewController: UIViewController {
     private lazy var tableView: UITableView = makeTableView()
     private lazy var endVoteButton: UIButton = makeEndVoteButton()
     private var groupObject: GroupResponse
+    private var voteResults: [VoteResult] = []
     private var shopObjects: [ShopObject] = []
-    var isIntiator: Bool = false
+    private let isInitiator: Bool
+    weak var delegate: VotingViewControllerDelegate?
 
-    init(groupObject: GroupResponse, shopObjects: [ShopObject]) {
+    init(
+        groupObject: GroupResponse,
+        isInitiator: Bool
+    ) {
         self.groupObject = groupObject
-        self.shopObjects = shopObjects
+        self.isInitiator = isInitiator
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -33,7 +42,7 @@ class VotingViewController: UIViewController {
         setNavController()
         setupTableView()
         setupSubmitButton()
-        if isIntiator == false { endVoteButton.isHidden = true }
+        if isInitiator == false { endVoteButton.isHidden = true }
     }
     private func setNavController() {
         navigationItem.title = "由\(groupObject.initiatorUserName)發起的投票"
@@ -96,25 +105,40 @@ extension VotingViewController {
         return button
     }
     @objc func endVoteButtonTapped() {
+        delegate?.votingViewController(self, didPressEndVoteButton: endVoteButton)
     }
 }
 
 extension VotingViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        groupObject.voteResults.count
+        voteResults.count
     }
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "VotingCell", for: indexPath)
                 as? VotingCell else { fatalError("Cannot created VotingCell") }
-
-        let voteResult = groupObject.voteResults[indexPath.row]
+        let voteResult = voteResults[indexPath.row]
         let shopID = voteResult.shopID
         guard let shop = shopObjects.first(where: { $0.id == shopID }) else { return cell }
         cell.setupVoteCell(
             shopImageURL: shop.logoImageURL,
             shopName: shop.name,
-            numberOfVote: voteResult.voteUserIDs.count
+            numberOfVote: voteResult.userIDs.count
         )
         return cell
+    }
+}
+
+extension VotingViewController: VoteResultsAccessible {
+    func setVoteResults(_ voteResults: [VoteResult]) {
+        self.voteResults = voteResults
+        tableView.reloadData()
+    }
+}
+
+extension VotingViewController: ShopObjectsAccessible {
+    func setShopObjects(_ shopObjects: [ShopObject]) {
+        self.shopObjects = shopObjects
+        tableView.reloadData()
     }
 }
