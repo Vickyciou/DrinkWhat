@@ -11,7 +11,7 @@ class VoteResultViewController: UIViewController {
     private let winnerShopView = WinnerShopView(frame: .zero)
     private lazy var tableView: UITableView = makeTableView()
     private lazy var startOrderButton: UIButton = makeStartOrderButton()
-    private let voteManager = VoteManager()
+//    private let voteManager = VoteManager()
     private var voteObject: VoteObject?
 
     let roomID: String

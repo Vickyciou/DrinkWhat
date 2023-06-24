@@ -11,8 +11,8 @@ target 'DrinkWhat' do
     pod 'SwiftLint'
     pod 'LineSDKSwift', '~> 5.0'
     pod 'FirebaseAuth', '~> 10.0.0'
-    pod 'FirebaseFirestore', '~> 10.0.0'
-    pod 'FirebaseFirestoreSwift'
+    pod 'FirebaseFirestore', '~> 10.11.0'
+    pod 'FirebaseFirestoreSwift', '~> 10.11.0'
     pod 'Kingfisher'
 
     post_install do |installer|

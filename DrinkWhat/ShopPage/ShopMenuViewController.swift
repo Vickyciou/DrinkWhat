@@ -12,7 +12,10 @@ class ShopMenuViewController: UIViewController {
     private lazy var tableView: UITableView = makeTableView()
     let shopID: String
     private let shopManager = ShopManager()
+    private let groupManager = GroupManager()
     private var shopObject: ShopObject?
+    private var groupObject: GroupResponse?
+//    private var groupID: String?
 
     init(shopID: String) {
         self.shopID = shopID
@@ -27,11 +30,13 @@ class ShopMenuViewController: UIViewController {
         super.viewDidLoad()
         setupVC()
         shopManager.delegate = self
+        groupManager.delegate = self
     }
 
     private func setupVC() {
         setupTableView()
         shopManager.getShopObject(shopID: shopID)
+        groupManager.checkGroupExists(userID: UserManager.shared.userObject?.userID ?? "")
     }
 
     private func setupTableView() {
@@ -51,9 +56,9 @@ extension ShopMenuViewController {
         let tableHeaderView = UIImageView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 200))
         tableHeaderView.contentMode = .scaleAspectFill
         tableHeaderView.layer.masksToBounds = true
-        tableHeaderView.backgroundColor = .red
         return tableHeaderView
     }
+
     private func makeTableView() -> UITableView {
         let tableView = UITableView(frame: .zero)
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -62,6 +67,8 @@ extension ShopMenuViewController {
         tableView.register(ShopMenuCell.self, forCellReuseIdentifier: "ShopMenuCell")
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.separatorStyle = .none
+        tableView.sectionHeaderHeight = UITableView.automaticDimension
+        tableView.sectionHeaderTopPadding = 0.0
         return tableView
     }
 }
@@ -88,10 +95,8 @@ extension ShopMenuViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let firstSectionHeaderView = SectionHeaderView(frame: .zero)
         firstSectionHeaderView.setupView(shopName: shopObject?.name ?? "")
+        firstSectionHeaderView.delegate = self
         return section == 0 ? firstSectionHeaderView : nil
-    }
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        100
     }
 }
 
@@ -99,7 +104,43 @@ extension ShopMenuViewController: ShopManagerDelegate {
     func shopManager(_ manager: ShopManager, didGetShopObject shopObject: ShopObject) {
         self.shopObject = shopObject
         tableHeaderView.loadImage(shopObject.mainImageURL, placeHolder: UIImage(systemName: "bag"))
-
         tableView.reloadData()
+    }
+}
+extension ShopMenuViewController: SectionHeaderViewDelegate {
+    func didPressAddOrderButton(_ view: SectionHeaderView) {
+        //
+    }
+
+    func didPressAddVoteButton(_ view: SectionHeaderView) {
+        if groupObject?.groupID == nil {
+            let voteResult = VoteResults(shopID: shopID, voteUserIDs: [])
+            groupManager.createGroup(voteResults: [voteResult])
+        } else {
+            guard let groupObject = groupObject else { return }
+            if groupObject.voteResults.contains(where: { $0.shopID == shopID }) {
+                let alert = UIAlertController(title: "加入失敗", message: "此商店已加入投票清單囉", preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "OK", style: .default)
+                alert.addAction(okAction)
+                present(alert, animated: true)
+            } else {
+                groupManager.addShopIntoGroup(groupID: groupObject.groupID, shopID: shopID)
+            }
+        }
+    }
+
+    func didPressAddFavoriteButton(_ view: SectionHeaderView) {
+        //
+    }
+}
+extension ShopMenuViewController: GroupManagerDelegate {
+    func groupManager(_ manager: GroupManager, didPostGroupID groupID: String) {
+//        self.groupID = groupID
+    }
+    func groupManager(_ manager: GroupManager, didGetGroupObject groupObject: GroupResponse) {
+        self.groupObject = groupObject
+    }
+    func groupManager(_ manager: GroupManager, didFailWith error: Error) {
+        print(error)
     }
 }

@@ -9,15 +9,10 @@ import Foundation
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
-protocol UserManagerDelegate: AnyObject {
-    func userManager(_ manager: UserManager, didGet userData: UserObject)
-    func userManager(_ manager: UserManager, didFailWith error: Error)
-}
-
 class UserManager {
     static let shared = UserManager()
     private let db = Firestore.firestore()
-    weak var delegate: UserManagerDelegate?
+    var userObject: UserObject?
 
     func createUserData(userObject: UserObject) {
         do {
@@ -34,13 +29,12 @@ class UserManager {
             if let document = document, document.exists {
                 do {
                     let userData = try document.data(as: UserObject.self)
-                    delegate?.userManager(self, didGet: userData)
+                    self.userObject = userData
                 } catch {
-                    delegate?.userManager(self, didFailWith: error)
-                    print("Error get user\(userID) from Firestore: \(error)")
+                    print("Error decode user\(userID) from Firestore: \(error)")
                 }
             } else {
-                print("Document does not exist")
+                print("Error get user\(userID) from Firestore: \(String(describing: error))")
             }
         }
     }

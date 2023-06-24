@@ -10,8 +10,13 @@ import UIKit
 class VoteViewController: UIViewController {
     private lazy var tableView: UITableView = makeTableView()
     private var voteList: [VoteList] = []
-    private let voteManager = VoteManager()
-    private let myInfo = UserObject(userID: "UUID1", userName: "Vicky", userImageURL: "", groupIDs: [], orderIDs: [], favoriteShops: [])
+//    private let voteManager = VoteManager()
+    private let groupManager = GroupManager()
+//    private let myInfo = UserObject(userID: "UUID1", userName: "Vicky", userImageURL: "", groupIDs: [], orderIDs: [], favoriteShops: [])
+    private var userObject: UserObject? {
+        UserManager.shared.userObject
+    }
+    private var groupObjects: [GroupResponse] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,7 +25,10 @@ class VoteViewController: UIViewController {
     private func setupVC() {
         setNavController()
         setupTableView()
-        getVoteListData()
+        guard let userObject = userObject else { return }
+        groupManager.getAllGroupData(userID: userObject.userID)
+        groupManager.delegate = self
+//        getVoteListData()
     }
     private func setNavController() {
         navigationItem.title = "投票首頁"
@@ -35,18 +43,18 @@ class VoteViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
-    private func getVoteListData() {
-        voteManager.getDataFromVoteList { result in
-            switch result {
-            case .success(let data):
-                let sortData = data.sorted { $0.date > $1.date }
-                self.voteList = sortData
-                tableView.reloadData()
-            case .failure(let error):
-                print("Get voteList發生錯誤: \(error)")
-            }
-        }
-    }
+//    private func getVoteListData() {
+//        voteManager.getDataFromVoteList { result in
+//            switch result {
+//            case .success(let data):
+//                let sortData = data.sorted { $0.date > $1.date }
+//                self.voteList = sortData
+//                tableView.reloadData()
+//            case .failure(let error):
+//                print("Get voteList發生錯誤: \(error)")
+//            }
+//        }
+//    }
 }
 
 extension VoteViewController {
@@ -58,23 +66,22 @@ extension VoteViewController {
         tableView.register(VoteCell.self, forCellReuseIdentifier: "VoteCell")
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.separatorStyle = .none
-//        tableView.allowsSelection = false
         return tableView
     }
 }
 
 extension VoteViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        voteList.count
+        groupObjects.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "VoteCell", for: indexPath) as? VoteCell
         else { fatalError("Cannot created VoteCell") }
-        let voteList = voteList[indexPath.row]
+        let voteList = groupObjects[indexPath.row]
         let date = Date(timeIntervalSince1970: voteList.date)
         let dateString = date.dateToString(date: date)
-        cell.setupVoteCell(profileImage: UIImage(systemName: "person.circle.fill")?.setColor(color: .darkBrown),
-                           userName: voteList.userObject.userName,
+        cell.setupVoteCell(profileImageURL: voteList.initiatorUserImage,
+                           userName: voteList.initiatorUserName,
                            voteState: voteList.state,
                            date: dateString)
         return cell
@@ -84,7 +91,13 @@ extension VoteViewController: UITableViewDataSource {
 // 這邊要寫section header
 extension VoteViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let voteNavigationVC = VoteNavigationController(roomID: voteList[indexPath.row].roomID)
+        let voteNavigationVC = VoteNavigationController(groupID: groupObjects[indexPath.row].groupID)
         present(voteNavigationVC, animated: true)
+    }
+}
+extension VoteViewController: GroupManagerDelegate {
+    func groupManager(_ manager: GroupManager, didGetAllGroupData groupData: [GroupResponse]) {
+        self.groupObjects = groupData
+        tableView.reloadData()
     }
 }

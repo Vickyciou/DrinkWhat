@@ -13,13 +13,13 @@ protocol VoteObjectProvider {
 
 class VoteNavigationController: UINavigationController {
 
-    private let voteManager = VoteManager()
-    private let roomID: String
+//    private let voteManager = VoteManager()
+    private let groupID: String
     private var voteObject: VoteObject?
     private let myInfo = UserObject(userID: "UUID1", userName: "Vicky", userImageURL: "", groupIDs: [], orderIDs: [], favoriteShops: [])
 
-    init(roomID: String) {
-        self.roomID = roomID
+    init(groupID: String) {
+        self.groupID = groupID
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -31,24 +31,24 @@ class VoteNavigationController: UINavigationController {
         super.viewDidLoad()
         view.backgroundColor = .white
         navigationItem.hidesBackButton = true
-        getData(roomID: roomID)
+//        getData(roomID: roomID)
     }
 
-    private func getData(roomID: String) {
-        voteManager.getDataFromVoteObject(roomID: roomID) { [weak self] result in
-            switch result {
-            case .success(var data):
-                data.voteResults.sort(by: { $0.voteUsersIDs.count > $1.voteUsersIDs.count })
-                self?.voteObject = data
-                self?.decideVC(voteObject: data)
-                self?.viewControllers
-                    .compactMap { $0 as? VoteObjectProvider }
-                    .forEach { $0.receiveVoteObject(data) }
-            case .failure(let error):
-                print("Get voteObject發生錯誤: \(error)")
-            }
-        }
-    }
+//    private func getData(roomID: String) {
+//        voteManager.getDataFromVoteObject(roomID: roomID) { [weak self] result in
+//            switch result {
+//            case .success(var data):
+//                data.voteResults.sort(by: { $0.voteUsersIDs.count > $1.voteUsersIDs.count })
+//                self?.voteObject = data
+//                self?.decideVC(voteObject: data)
+//                self?.viewControllers
+//                    .compactMap { $0 as? VoteObjectProvider }
+//                    .forEach { $0.receiveVoteObject(data) }
+//            case .failure(let error):
+//                print("Get voteObject發生錯誤: \(error)")
+//            }
+//        }
+//    }
     private func decideVC(voteObject: VoteObject) {
         guard isVote(voteObject: voteObject) else {
             if viewControllers.last is NotVotedViewController {
@@ -56,7 +56,7 @@ class VoteNavigationController: UINavigationController {
                 return
             }
             print("NotVotedViewController")
-            let shopListToVoteVC = NotVotedViewController(roomID: roomID)
+            let shopListToVoteVC = NotVotedViewController(roomID: groupID)
             shopListToVoteVC.receiveVoteObject(voteObject)
             return pushViewController(shopListToVoteVC, animated: true)
         }
@@ -66,14 +66,14 @@ class VoteNavigationController: UINavigationController {
                 return
             }
             print("VoteResultViewController")
-            pushViewController(VoteResultViewController(roomID: roomID), animated: true)
+            pushViewController(VoteResultViewController(roomID: groupID), animated: true)
         } else {
             if viewControllers.last is VotingViewController {
                 print("is VotingViewController")
                 return
             }
             print("VotingViewController")
-            let votingVC = VotingViewController(roomID: roomID)
+            let votingVC = VotingViewController(roomID: groupID)
             votingVC.receiveVoteObject(voteObject)
             votingVC.isIntiator = voteObject.initiatorUserID == myInfo.userID
             pushViewController(votingVC, animated: true)

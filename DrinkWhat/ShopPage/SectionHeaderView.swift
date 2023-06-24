@@ -7,12 +7,19 @@
 
 import UIKit
 
+protocol SectionHeaderViewDelegate: AnyObject {
+    func didPressAddOrderButton(_ view: SectionHeaderView)
+    func didPressAddVoteButton(_ view: SectionHeaderView)
+    func didPressAddFavoriteButton(_ view: SectionHeaderView)
+}
+
 class SectionHeaderView: UIView {
     private lazy var shopNameLabel: UILabel = makeShopNameLabel()
     private lazy var addOrderButton: UIButton = makeAddOrderButton()
     private lazy var addVoteButton: UIButton = makeAddVoteButton()
     private lazy var addFavoriteButton: UIButton = makeAddFavoriteButton()
     private lazy var stackView: UIStackView = makeStackView()
+    weak var delegate: SectionHeaderViewDelegate?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -21,10 +28,10 @@ class SectionHeaderView: UIView {
         let content = [shopNameLabel, stackView]
         content.forEach { self.addSubview($0) }
         NSLayoutConstraint.activate([
-            shopNameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 8),
+            shopNameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 16),
             shopNameLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             shopNameLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            stackView.topAnchor.constraint(equalTo: shopNameLabel.bottomAnchor, constant: 16),
+            stackView.topAnchor.constraint(equalTo: shopNameLabel.bottomAnchor, constant: 12),
             stackView.leadingAnchor.constraint(equalTo: shopNameLabel.leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: shopNameLabel.trailingAnchor),
             stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -16)
@@ -57,6 +64,7 @@ extension SectionHeaderView {
         button.setTitleColor(.skinColor, for: .highlighted)
         button.titleLabel?.font = .regular(size: 14)
         button.setTitle("+ 團購訂單", for: .normal)
+        button.addTarget(self, action: #selector(addOrderButtonTapped(_:)), for: .touchUpInside)
         return button
     }
     private func makeAddVoteButton() -> UIButton {
@@ -69,6 +77,7 @@ extension SectionHeaderView {
         button.setTitleColor(.skinColor, for: .highlighted)
         button.titleLabel?.font = .regular(size: 14)
         button.setTitle("+ 投票清單", for: .normal)
+        button.addTarget(self, action: #selector(addVoteButtonTapped(_:)), for: .touchUpInside)
         return button
     }
     private func makeAddFavoriteButton() -> UIButton {
@@ -81,6 +90,7 @@ extension SectionHeaderView {
         button.setTitleColor(.skinColor, for: .highlighted)
         button.titleLabel?.font = .regular(size: 14)
         button.setTitle("+ 收藏清單", for: .normal)
+        button.addTarget(self, action: #selector(addFavoriteButtonTapped(_:)), for: .touchUpInside)
         return button
     }
     private func makeStackView() -> UIStackView {
@@ -95,7 +105,13 @@ extension SectionHeaderView {
         stackView.distribution = .fillEqually
         return stackView
     }
+    @objc func addOrderButtonTapped(_ sender: UIButton) {
+        delegate?.didPressAddOrderButton(self)
+    }
+    @objc func addVoteButtonTapped(_ sender: UIButton) {
+        delegate?.didPressAddVoteButton(self)
+    }
+    @objc func addFavoriteButtonTapped(_ sender: UIButton) {
+        delegate?.didPressAddFavoriteButton(self)
+    }
 }
-
-
-

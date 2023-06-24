@@ -10,7 +10,7 @@ import UIKit
 class NotVotedViewController: UIViewController {
     private lazy var tableView: UITableView = makeTableView()
     private lazy var submitButton: UIButton = makeSubmitButton()
-    private let voteManager = VoteManager()
+//    private let voteManager = VoteManager()
 //    private var voteObject: VoteObject?
     private var newVoteResults: [(voteResult: VoteResult, isSelected: Bool)] = []
 

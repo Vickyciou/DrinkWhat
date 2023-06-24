@@ -37,8 +37,8 @@ class VoteCell: UITableViewCell {
             arrowImageView.widthAnchor.constraint(equalToConstant: 15)
         ])
     }
-    func setupVoteCell(profileImage: UIImage?, userName: String, voteState: String, date: String) {
-        profileImageView.image = profileImage
+    func setupVoteCell(profileImageURL: String?, userName: String, voteState: String, date: String) {
+        profileImageView.loadImage(profileImageURL, placeHolder: UIImage(systemName: "person.circle.fill")?.setColor(color: .darkBrown))
         userNameLabel.text = userName
         voteStateLabel.text = voteState
         dateLabel.text = date

@@ -10,7 +10,7 @@ import UIKit
 class VotingViewController: UIViewController {
     private lazy var tableView: UITableView = makeTableView()
     private lazy var endVoteButton: UIButton = makeEndVoteButton()
-    private let voteManager = VoteManager()
+//    private let voteManager = VoteManager()
     private var voteObject: VoteObject?
     var isIntiator: Bool = false
 
@@ -38,19 +38,12 @@ class VotingViewController: UIViewController {
 //        getData(roomID: roomID)
     }
     private func setNavController() {
-//        let appearance = UINavigationBarAppearance()
-//        appearance.backgroundColor = UIColor.white
-//        appearance.titleTextAttributes = [.foregroundColor: UIColor.darkBrown ?? .black]
-//        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.darkBrown ?? .black]
-//        appearance.shadowColor = UIColor.clear
-//        navigationController?.navigationBar.standardAppearance = appearance
-//        navigationController?.navigationBar.scrollEdgeAppearance = appearance
         navigationItem.title = "Name發起的投票"
         tabBarController?.tabBar.backgroundColor = .white
         navigationItem.hidesBackButton = true
         let closeImage = UIImage(systemName: "xmark")?
             .withConfiguration(UIImage.SymbolConfiguration(pointSize: 20))
-            .withTintColor(UIColor.darkBrown ?? .black)
+            .withTintColor(UIColor.darkBrown)
             .withRenderingMode(.alwaysOriginal)
         let closeButton = UIBarButtonItem(image: closeImage,
                                           style: .plain,
