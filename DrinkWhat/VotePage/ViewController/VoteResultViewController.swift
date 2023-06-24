@@ -11,13 +11,12 @@ class VoteResultViewController: UIViewController {
     private let winnerShopView = WinnerShopView(frame: .zero)
     private lazy var tableView: UITableView = makeTableView()
     private lazy var startOrderButton: UIButton = makeStartOrderButton()
-//    private let voteManager = VoteManager()
-    private var voteObject: VoteObject?
+    private var groupObject: GroupResponse
+    private var shopObjects: [ShopObject] = []
 
-    let roomID: String
-
-    init(roomID: String) {
-        self.roomID = roomID
+    init(groupObject: GroupResponse, shopObjects: [ShopObject]) {
+        self.groupObject = groupObject
+        self.shopObjects = shopObjects
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -37,19 +36,12 @@ class VoteResultViewController: UIViewController {
         setupStartOrderButton()
     }
     private func setNavController() {
-//        let appearance = UINavigationBarAppearance()
-//        appearance.backgroundColor = UIColor.white
-//        appearance.titleTextAttributes = [.foregroundColor: UIColor.darkBrown ?? .black]
-//        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.darkBrown ?? .black]
-//        appearance.shadowColor = UIColor.clear
-//        navigationController?.navigationBar.standardAppearance = appearance
-//        navigationController?.navigationBar.scrollEdgeAppearance = appearance
-        navigationItem.title = "Name發起的投票"
+        navigationItem.title = "由\(groupObject.initiatorUserName)發起的投票"
         tabBarController?.tabBar.backgroundColor = .white
         navigationItem.hidesBackButton = true
         let closeImage = UIImage(systemName: "xmark")?
             .withConfiguration(UIImage.SymbolConfiguration(pointSize: 20))
-            .withTintColor(UIColor.darkBrown ?? .black)
+            .withTintColor(UIColor.darkBrown)
             .withRenderingMode(.alwaysOriginal)
         let closeButton = UIBarButtonItem(image: closeImage,
                                           style: .plain,
@@ -67,10 +59,12 @@ class VoteResultViewController: UIViewController {
             winnerShopView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             winnerShopView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             winnerShopView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)])
-        guard let voteResultOfWinner = voteObject?.voteResults.first else { return }
-        winnerShopView.setupWinnerView(shopImage: UIImage(systemName: "bag")?.setColor(color: .darkBrown),
-                                       shopName: voteResultOfWinner.shopObject.name,
-                                       numberOfVotes: voteResultOfWinner.voteUsersIDs.count)
+        guard let voteResult = groupObject.voteResults.first else { return }
+        let winnerShopID = voteResult.shopID
+        guard let shop = shopObjects.first(where: { $0.id == winnerShopID }) else { return }
+        winnerShopView.setupWinnerView(shopImageURL: shop.logoImageURL,
+                                       shopName: shop.name,
+                                       numberOfVotes: voteResult.voteUserIDs.count)
     }
 
     private func setupTableView() {
@@ -123,25 +117,19 @@ extension VoteResultViewController {
 
 extension VoteResultViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let voteObject = voteObject else { fatalError("There is no voteObject in numberOfRowsInSection") }
-        return voteObject.voteResults.count - 1
+        return groupObject.voteResults.count - 1
     }
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "VoteResultCell", for: indexPath)
                 as? VoteResultCell else { fatalError("Cannot created VoteCell") }
-        guard let voteObject = voteObject else { fatalError("There is no voteObject in cellForRowAt") }
-        let voteResults = voteObject.voteResults[indexPath.row + 1]
+        let voteResults = groupObject.voteResults[indexPath.row + 1]
+        let shopID = voteResults.shopID
+        guard let shop = shopObjects.first(where: { $0.id == shopID }) else { return cell }
         cell.setupVoteCell(
-            shopName: voteResults.shopObject.name,
-            numberOfVote: voteResults.voteUsersIDs.count
+            shopName: shop.name,
+            numberOfVote: voteResults.voteUserIDs.count
         )
         return cell
-    }
-}
-
-extension VoteResultViewController: VoteObjectProvider {
-    func receiveVoteObject(_ voteObject: VoteObject) {
-        self.voteObject = voteObject
-        tableView.reloadData()
     }
 }

@@ -83,30 +83,12 @@ class GroupManager {
         }
         db.collection("Groups").document(groupID).updateData(["voteResults": FieldValue.arrayUnion([userVoteDict])])
     }
-// MARK: - Load 投票主頁
-//    func getAllGroupData(groupIDs: [String]) {
-//        var groupData: [GroupResponse] = []
-//        groupIDs.forEach {
-//            let docRef = db.collection("Groups").document($0)
-//            docRef.getDocument { document, error in
-//                if let document = document, document.exists {
-//                    do {
-//                        let dataDescription = try document.data(as: GroupResponse.self)
-//                        groupData.append(dataDescription)
-//                        print("Document data: \(dataDescription)")
-//                    } catch {
-//                        self.delegate?.groupManager(self, didFailWith: error)
-//                        print("Error get all groups data from Firestore:\(error)")
-//
-//                    }
-//                } else {
-//                    print("Group\(groupIDs) document does not exist")
-//                }
-//            }
-//        }
-//        delegate?.groupManager(self, didGetAllGroupData: groupData)
-//    }
 
+// MARK: - 結束投票
+    func setVoteStateToFinish(groupID: String) {
+
+    }
+// MARK: - Load 投票主頁
     func getAllGroupData(userID: String) {
         var groupData: [GroupResponse] = []
         db.collection("Groups")
@@ -165,10 +147,11 @@ class GroupManager {
                 self.delegate?.groupManager(self, didFailWith: ManagerError.noData)
                 print("Error fetching document: \(error!)")
                 return }
-            guard let groupObject = try? document.data(as: GroupResponse.self) else {
+            guard var groupObject = try? document.data(as: GroupResponse.self) else {
                 delegate?.groupManager(self, didFailWith: ManagerError.decodingError)
                 return
             }
+            groupObject.voteResults.sort(by: { $0.voteUserIDs.count > $1.voteUserIDs.count })
             delegate?.groupManager(self, didGetGroupObject: groupObject)
 
         }

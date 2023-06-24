@@ -10,14 +10,13 @@ import UIKit
 class VotingViewController: UIViewController {
     private lazy var tableView: UITableView = makeTableView()
     private lazy var endVoteButton: UIButton = makeEndVoteButton()
-//    private let voteManager = VoteManager()
-    private var voteObject: VoteObject?
+    private var groupObject: GroupResponse
+    private var shopObjects: [ShopObject] = []
     var isIntiator: Bool = false
 
-    let roomID: String
-
-    init(roomID: String) {
-        self.roomID = roomID
+    init(groupObject: GroupResponse, shopObjects: [ShopObject]) {
+        self.groupObject = groupObject
+        self.shopObjects = shopObjects
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -35,10 +34,9 @@ class VotingViewController: UIViewController {
         setupTableView()
         setupSubmitButton()
         if isIntiator == false { endVoteButton.isHidden = true }
-//        getData(roomID: roomID)
     }
     private func setNavController() {
-        navigationItem.title = "Name發起的投票"
+        navigationItem.title = "由\(groupObject.initiatorUserName)發起的投票"
         tabBarController?.tabBar.backgroundColor = .white
         navigationItem.hidesBackButton = true
         let closeImage = UIImage(systemName: "xmark")?
@@ -73,6 +71,7 @@ class VotingViewController: UIViewController {
         endVoteButton.layer.cornerRadius = 10
         endVoteButton.layer.masksToBounds = true
     }
+
 }
 extension VotingViewController {
     private func makeTableView() -> UITableView {
@@ -93,31 +92,29 @@ extension VotingViewController {
         button.titleLabel?.font = .medium(size: 18)
         button.backgroundColor = UIColor.darkBrown
         button.setTitle("結束投票", for: .normal)
+        button.addTarget(self, action: #selector(endVoteButtonTapped), for: .touchUpInside)
         return button
+    }
+    @objc func endVoteButtonTapped() {
     }
 }
 
 extension VotingViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        voteObject?.voteResults.count ?? 0
+        groupObject.voteResults.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "VotingCell", for: indexPath)
                 as? VotingCell else { fatalError("Cannot created VotingCell") }
-        guard let voteObject = voteObject else { fatalError("There is no voteObject") }
-        let shop = voteObject.voteResults[indexPath.row]
+
+        let voteResult = groupObject.voteResults[indexPath.row]
+        let shopID = voteResult.shopID
+        guard let shop = shopObjects.first(where: { $0.id == shopID }) else { return cell }
         cell.setupVoteCell(
-            shopImage: UIImage(systemName: "bag")?.setColor(color: .darkBrown),
-            shopName: shop.shopObject.name,
-            numberOfVote: shop.voteUsersIDs.count
+            shopImageURL: shop.logoImageURL,
+            shopName: shop.name,
+            numberOfVote: voteResult.voteUserIDs.count
         )
         return cell
-    }
-}
-
-extension VotingViewController: VoteObjectProvider {
-    func receiveVoteObject(_ voteObject: VoteObject) {
-        self.voteObject = voteObject
-        tableView.reloadData()
     }
 }

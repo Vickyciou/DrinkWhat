@@ -10,14 +10,16 @@ import UIKit
 class NotVotedViewController: UIViewController {
     private lazy var tableView: UITableView = makeTableView()
     private lazy var submitButton: UIButton = makeSubmitButton()
-//    private let voteManager = VoteManager()
-//    private var voteObject: VoteObject?
-    private var newVoteResults: [(voteResult: VoteResult, isSelected: Bool)] = []
 
-    let roomID: String
+    private var groupObject: GroupResponse
+    private var shopObjects: [ShopObject] = []
+    private var newVoteResults: [(voteResult: VoteResults, isSelected: Bool)] = []
+    private let groupManager = GroupManager()
+    private let userObject = UserManager.shared.userObject
 
-    init(roomID: String) {
-        self.roomID = roomID
+    init(groupObject: GroupResponse, shopObjects: [ShopObject]) {
+        self.groupObject = groupObject
+        self.shopObjects = shopObjects
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -34,17 +36,10 @@ class NotVotedViewController: UIViewController {
         setNavController()
         setupTableView()
         setupSubmitButton()
-//        getData(roomID: roomID)
+        createdNewVoteResults(groupObject)
     }
     private func setNavController() {
-//        let appearance = UINavigationBarAppearance()
-//        appearance.backgroundColor = UIColor.white
-//        appearance.titleTextAttributes = [.foregroundColor: UIColor.darkBrown ?? .black]
-//        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.darkBrown ?? .black]
-//        appearance.shadowColor = UIColor.clear
-//        navigationController?.navigationBar.standardAppearance = appearance
-//        navigationController?.navigationBar.scrollEdgeAppearance = appearance
-        navigationItem.title = "Name發起的投票"
+        navigationItem.title = "由\(groupObject.initiatorUserName)發起的投票"
         tabBarController?.tabBar.backgroundColor = .white
         navigationItem.hidesBackButton = true
         let closeImage = UIImage(systemName: "xmark")?
@@ -105,7 +100,11 @@ extension NotVotedViewController {
         return button
     }
     @objc func submitButtonTapped(_ sender: UIButton) {
-        // setData給firestore
+        guard let selectedShop = newVoteResults.first(where: { $0.isSelected == true }),
+              let userObject = userObject else { return }
+        groupManager.addVoteResults(groupID: groupObject.groupID,
+                                    shopID: selectedShop.voteResult.shopID,
+                                    userID: userObject.userID)
     }
 }
 
@@ -116,11 +115,13 @@ extension NotVotedViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "ShopListToVoteCell", for: indexPath)
                 as? NotVotedCell else { fatalError("Cannot created VoteCell") }
-        let shop = newVoteResults[indexPath.row].voteResult
+        let voteResult = newVoteResults[indexPath.row].voteResult
+        let shopID = voteResult.shopID
+        guard let shop = shopObjects.first(where: { $0.id == shopID }) else { return cell }
         cell.setupVoteCell(
-            shopImage: UIImage(systemName: "bag")?.setColor(color: .darkBrown),
-            shopName: shop.shopObject.name,
-            numberOfVote: shop.voteUsersIDs.count
+            shopImageURL: shop.logoImageURL,
+            shopName: shop.name,
+            numberOfVote: voteResult.voteUserIDs.count
         )
         cell.delegate = self
         cell.chooseButton.isSelected = newVoteResults[indexPath.row].isSelected
@@ -140,9 +141,9 @@ extension NotVotedViewController: NotVotedCellDelegate {
     }
 }
 
-extension NotVotedViewController: VoteObjectProvider {
-    func receiveVoteObject(_ voteObject: VoteObject) {
-        newVoteResults = voteObject.voteResults.map { voteResult in
+extension NotVotedViewController {
+    func createdNewVoteResults(_ groupObject: GroupResponse) {
+        newVoteResults = groupObject.voteResults.map { voteResult in
             let first = newVoteResults.first { (tempVoteResult, _) in
                 tempVoteResult == voteResult
             }

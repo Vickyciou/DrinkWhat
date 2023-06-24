@@ -31,8 +31,8 @@ class WinnerShopView: UIView {
             numberOfVotesLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10)])
     }
 
-    func setupWinnerView(shopImage: UIImage?, shopName: String, numberOfVotes: Int?) {
-        shopImageView.image = shopImage
+    func setupWinnerView(shopImageURL: String?, shopName: String, numberOfVotes: Int?) {
+        shopImageView.loadImage(shopImageURL, placeHolder: UIImage(systemName: "bag")?.setColor(color: .darkBrown))
         shopNameLabel.text = shopName
         numberOfVotesLabel.text = String("\(numberOfVotes ?? 0)票")
     }

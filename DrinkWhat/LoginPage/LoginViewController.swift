@@ -126,7 +126,7 @@ extension LoginViewController {
         NSLayoutConstraint.activate([
             userVickyButton.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor, constant: 100),
             userVickyButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor)])
-        let vicky = UserObject(userID: "UUID1", userName: "Vicky", userImageURL: "", groupIDs: [], orderIDs: [], favoriteShops: [])
+        let vicky = UserObject(userID: "UUID1", userName: "Vicky", userImageURL: "", favoriteShops: [])
         UserManager.shared.createUserData(userObject: vicky)
     }
     @objc func vickyButtonTapped(_ sender: UIButton) {

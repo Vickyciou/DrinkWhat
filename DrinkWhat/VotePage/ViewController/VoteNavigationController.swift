@@ -7,16 +7,14 @@
 
 import UIKit
 
-protocol VoteObjectProvider {
-    func receiveVoteObject(_ voteObject: VoteObject)
-}
-
 class VoteNavigationController: UINavigationController {
 
-//    private let voteManager = VoteManager()
     private let groupID: String
-    private var voteObject: VoteObject?
-    private let myInfo = UserObject(userID: "UUID1", userName: "Vicky", userImageURL: "", groupIDs: [], orderIDs: [], favoriteShops: [])
+    private let groupManager = GroupManager()
+    private var shopManager = ShopManager()
+    private var groupObject: GroupResponse?
+    private var shopObjects: [ShopObject] = []
+    private let userObject = UserManager.shared.userObject
 
     init(groupID: String) {
         self.groupID = groupID
@@ -31,67 +29,70 @@ class VoteNavigationController: UINavigationController {
         super.viewDidLoad()
         view.backgroundColor = .white
         navigationItem.hidesBackButton = true
-//        getData(roomID: roomID)
+        groupManager.delegate = self
+        shopManager.delegate = self
+        groupManager.getGroupObject(groupID: groupID)
     }
 
-//    private func getData(roomID: String) {
-//        voteManager.getDataFromVoteObject(roomID: roomID) { [weak self] result in
-//            switch result {
-//            case .success(var data):
-//                data.voteResults.sort(by: { $0.voteUsersIDs.count > $1.voteUsersIDs.count })
-//                self?.voteObject = data
-//                self?.decideVC(voteObject: data)
-//                self?.viewControllers
-//                    .compactMap { $0 as? VoteObjectProvider }
-//                    .forEach { $0.receiveVoteObject(data) }
-//            case .failure(let error):
-//                print("Get voteObject發生錯誤: \(error)")
-//            }
-//        }
-//    }
-    private func decideVC(voteObject: VoteObject) {
-        guard isVote(voteObject: voteObject) else {
+    private func decideVC(groupObject: GroupResponse, userObject: UserObject) {
+        guard isVote(groupObject: groupObject, userObject: userObject) else {
             if viewControllers.last is NotVotedViewController {
                 print("is NotVotedViewController")
                 return
             }
             print("NotVotedViewController")
-            let shopListToVoteVC = NotVotedViewController(roomID: groupID)
-            shopListToVoteVC.receiveVoteObject(voteObject)
+            let shopListToVoteVC = NotVotedViewController(groupObject: groupObject, shopObjects: shopObjects)
             return pushViewController(shopListToVoteVC, animated: true)
         }
-        if isEndVote(voteObject: voteObject) {
+        if isEndVote(groupObject: groupObject) {
             if viewControllers.last is VoteResultViewController {
                 print("is VoteResultViewController")
                 return
             }
             print("VoteResultViewController")
-            pushViewController(VoteResultViewController(roomID: groupID), animated: true)
+            pushViewController(VoteResultViewController(groupObject: groupObject, shopObjects: shopObjects), animated: true)
         } else {
             if viewControllers.last is VotingViewController {
                 print("is VotingViewController")
                 return
             }
             print("VotingViewController")
-            let votingVC = VotingViewController(roomID: groupID)
-            votingVC.receiveVoteObject(voteObject)
-            votingVC.isIntiator = voteObject.initiatorUserID == myInfo.userID
+            let votingVC = VotingViewController(groupObject: groupObject, shopObjects: shopObjects)
+            votingVC.isIntiator = groupObject.initiatorUserID == userObject.userID
             pushViewController(votingVC, animated: true)
         }
 
     }
-    private func isVote(voteObject: VoteObject) -> Bool {
-        voteObject
+    private func isVote(groupObject: GroupResponse, userObject: UserObject) -> Bool {
+        groupObject
             .voteResults
-            .flatMap { $0.voteUsersIDs }
-            .contains(myInfo.userID)
+            .flatMap { $0.voteUserIDs }
+            .contains(userObject.userID)
     }
-    private func isEndVote(voteObject: VoteObject) -> Bool {
-        guard voteObject.state == "已完成" else { return false }
+    private func isEndVote(groupObject: GroupResponse) -> Bool {
+        guard groupObject.state == "已完成" else { return false }
         return true
     }
 
-    private func isIntiator(voteObject: VoteObject) -> Bool {
-        voteObject.initiatorUserID == myInfo.userID
+    private func isIntiator(groupObject: GroupResponse, userObject: UserObject) -> Bool {
+        groupObject.initiatorUserID == userObject.userID
+    }
+
+    private func getShopObject(groupObject: GroupResponse) {
+        let shopID = groupObject.voteResults.map({ $0.shopID })
+        shopID.forEach({ shopManager.getShopObject(shopID: $0) })
+    }
+}
+extension VoteNavigationController: GroupManagerDelegate {
+    func groupManager(_ manager: GroupManager, didGetGroupObject groupObject: GroupResponse) {
+        self.groupObject = groupObject
+        getShopObject(groupObject: groupObject)
+    }
+}
+extension VoteNavigationController: ShopManagerDelegate {
+    func shopManager(_ manager: ShopManager, didGetShopObject shopObject: ShopObject) {
+        self.shopObjects.append(shopObject)
+        guard let userObject = userObject, let groupObject else { return }
+        self.decideVC(groupObject: groupObject, userObject: userObject)
     }
 }

@@ -33,8 +33,8 @@ class VotingCell: UITableViewCell {
             numberOfVotesLabel.widthAnchor.constraint(equalToConstant: 40)
         ])
     }
-    func setupVoteCell(shopImage: UIImage?, shopName: String, numberOfVote: Int?) {
-        shopImageView.image = shopImage
+    func setupVoteCell(shopImageURL: String?, shopName: String, numberOfVote: Int?) {
+        shopImageView.loadImage(shopImageURL, placeHolder: UIImage(systemName: "bag")?.setColor(color: .darkBrown))
         shopNameLabel.text = shopName
         numberOfVotesLabel.text = String("\(numberOfVote ?? 0)票")
     }

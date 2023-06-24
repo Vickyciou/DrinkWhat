@@ -9,10 +9,7 @@ import UIKit
 
 class VoteViewController: UIViewController {
     private lazy var tableView: UITableView = makeTableView()
-    private var voteList: [VoteList] = []
-//    private let voteManager = VoteManager()
     private let groupManager = GroupManager()
-//    private let myInfo = UserObject(userID: "UUID1", userName: "Vicky", userImageURL: "", groupIDs: [], orderIDs: [], favoriteShops: [])
     private var userObject: UserObject? {
         UserManager.shared.userObject
     }
@@ -28,7 +25,6 @@ class VoteViewController: UIViewController {
         guard let userObject = userObject else { return }
         groupManager.getAllGroupData(userID: userObject.userID)
         groupManager.delegate = self
-//        getVoteListData()
     }
     private func setNavController() {
         navigationItem.title = "投票首頁"
@@ -43,18 +39,6 @@ class VoteViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
-//    private func getVoteListData() {
-//        voteManager.getDataFromVoteList { result in
-//            switch result {
-//            case .success(let data):
-//                let sortData = data.sorted { $0.date > $1.date }
-//                self.voteList = sortData
-//                tableView.reloadData()
-//            case .failure(let error):
-//                print("Get voteList發生錯誤: \(error)")
-//            }
-//        }
-//    }
 }
 
 extension VoteViewController {
