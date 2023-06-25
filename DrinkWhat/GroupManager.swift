@@ -95,6 +95,12 @@ class GroupManager {
             delegate?.groupManager(self, didPostGroupID: document.documentID)
         }
     }
+// MARK: - 跟團者加入Group
+    func addUserIntoGroup(groupID: String, userID: String) {
+        groupCollection().document(groupID)
+            .updateData(["joinUserIDs": FieldValue.arrayUnion([userID])])
+    }
+
 // MARK: - 投票記錄
     func addVoteResults(groupID: String, shopID: String, userID: String) {
         voteResultsCollection(groupID: groupID)

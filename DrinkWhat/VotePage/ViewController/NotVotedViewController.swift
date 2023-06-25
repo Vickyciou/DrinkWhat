@@ -40,17 +40,30 @@ class NotVotedViewController: UIViewController {
         tabBarController?.tabBar.backgroundColor = .white
         navigationItem.hidesBackButton = true
         let closeImage = UIImage(systemName: "xmark")?
-            .withConfiguration(UIImage.SymbolConfiguration(pointSize: 20))
-            .withTintColor(UIColor.darkBrown)
-            .withRenderingMode(.alwaysOriginal)
+            .withConfiguration(UIImage.SymbolConfiguration(pointSize: 18))
+            .setColor(color: .darkBrown)
+        let shareImage = UIImage(systemName: "square.and.arrow.up")?
+            .withConfiguration(UIImage.SymbolConfiguration(pointSize: 18))
+            .setColor(color: .darkBrown)
         let closeButton = UIBarButtonItem(image: closeImage,
                                           style: .plain,
                                           target: self,
                                           action: #selector(closeButtonTapped))
-        navigationItem.setRightBarButton(closeButton, animated: false)
+        let shareButton = UIBarButtonItem(image: shareImage,
+                                          style: .plain,
+                                          target: self,
+                                          action: #selector(shareButtonTapped))
+        navigationItem.setRightBarButtonItems([closeButton, shareButton], animated: false)
     }
     @objc private func closeButtonTapped() {
         dismiss(animated: true)
+    }
+    @objc private func shareButtonTapped() {
+        let groupID = groupObject.groupID
+        let shareURL = URL(string: "drinkWhat://share?groupID=\(groupID)")!
+        let aVC = UIActivityViewController(activityItems: [shareURL], applicationActivities: nil)
+        present(aVC, animated: true)
+
     }
 
     private func setupTableView() {

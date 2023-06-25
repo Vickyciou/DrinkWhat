@@ -13,10 +13,10 @@
 		FA2820BB2A41548D009FDAD2 /* VoteObjectIsAnotherVoted1.json in Resources */ = {isa = PBXBuildFile; fileRef = FA2820B82A413DCA009FDAD2 /* VoteObjectIsAnotherVoted1.json */; };
 		FA2820BC2A415491009FDAD2 /* VoteObjectIsFinished1.json in Resources */ = {isa = PBXBuildFile; fileRef = FA2820B92A413E29009FDAD2 /* VoteObjectIsFinished1.json */; };
 		FA2820BE2A4158BD009FDAD2 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2820BD2A4158BD009FDAD2 /* UIImage+Extension.swift */; };
+		FA6C33252A4851FC005CC96E /* URL+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6C33242A4851FC005CC96E /* URL+Extension.swift */; };
 		FA7179332A3A9DF7002C407C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7179322A3A9DF7002C407C /* AppDelegate.swift */; };
 		FA7179352A3A9DF7002C407C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7179342A3A9DF7002C407C /* SceneDelegate.swift */; };
 		FA7179372A3A9DF7002C407C /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7179362A3A9DF7002C407C /* HomeViewController.swift */; };
-		FA71793A2A3A9DF7002C407C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA7179382A3A9DF7002C407C /* Main.storyboard */; };
 		FA71793C2A3A9DF8002C407C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA71793B2A3A9DF8002C407C /* Assets.xcassets */; };
 		FA71793F2A3A9DF8002C407C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA71793D2A3A9DF8002C407C /* LaunchScreen.storyboard */; };
 		FA71794A2A3AB994002C407C /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7179492A3AB994002C407C /* TabBarViewController.swift */; };
@@ -67,11 +67,11 @@
 		FA2820B82A413DCA009FDAD2 /* VoteObjectIsAnotherVoted1.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = VoteObjectIsAnotherVoted1.json; sourceTree = "<group>"; };
 		FA2820B92A413E29009FDAD2 /* VoteObjectIsFinished1.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = VoteObjectIsFinished1.json; sourceTree = "<group>"; };
 		FA2820BD2A4158BD009FDAD2 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
+		FA6C33242A4851FC005CC96E /* URL+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Extension.swift"; sourceTree = "<group>"; };
 		FA71792F2A3A9DF7002C407C /* DrinkWhat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DrinkWhat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA7179322A3A9DF7002C407C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FA7179342A3A9DF7002C407C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		FA7179362A3A9DF7002C407C /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		FA7179392A3A9DF7002C407C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FA71793B2A3A9DF8002C407C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FA71793E2A3A9DF8002C407C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FA7179402A3A9DF8002C407C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -179,7 +179,6 @@
 				FA71794D2A3ABB8A002C407C /* FavoriteViewController.swift */,
 				FA7179512A3ABC99002C407C /* OrderViewController.swift */,
 				FA7179532A3ABD01002C407C /* ProfileViewController.swift */,
-				FA7179382A3A9DF7002C407C /* Main.storyboard */,
 				FA71793B2A3A9DF8002C407C /* Assets.xcassets */,
 				FA71793D2A3A9DF8002C407C /* LaunchScreen.storyboard */,
 				FA7179402A3A9DF8002C407C /* Info.plist */,
@@ -195,6 +194,7 @@
 				FA71795B2A3C0B91002C407C /* UIColor+Extension.swift */,
 				FA98EEFE2A3E03D0000E6FEE /* Date+Extension.swift */,
 				FA2820BD2A4158BD009FDAD2 /* UIImage+Extension.swift */,
+				FA6C33242A4851FC005CC96E /* URL+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -204,7 +204,6 @@
 			children = (
 				FAE757C42A3FF2A0003245EC /* ViewController */,
 				FAE757C52A3FF2BC003245EC /* View */,
-				FA7179752A3D758F002C407C /* Model */,
 			);
 			path = VotePage;
 			sourceTree = "<group>";
@@ -241,13 +240,6 @@
 				FA71796A2A3D583A002C407C /* ShopList.json */,
 			);
 			path = MockJSONs;
-			sourceTree = "<group>";
-		};
-		FA7179752A3D758F002C407C /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		FA7CC6042A41AC0C009B599F /* LoginPage */ = {
@@ -407,7 +399,6 @@
 				FA71793C2A3A9DF8002C407C /* Assets.xcassets in Resources */,
 				FA7179712A3D70F0002C407C /* VoteObjectAAAA.json in Resources */,
 				FA71796B2A3D583A002C407C /* ShopList.json in Resources */,
-				FA71793A2A3A9DF7002C407C /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -511,6 +502,7 @@
 				FA7CC6142A44493B009B599F /* KingFisherWrapper.swift in Sources */,
 				FA7CC61B2A457754009B599F /* SectionHeaderView.swift in Sources */,
 				FA7179522A3ABC99002C407C /* OrderViewController.swift in Sources */,
+				FA6C33252A4851FC005CC96E /* URL+Extension.swift in Sources */,
 				FAE757C72A3FF40E003245EC /* LoginViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -518,14 +510,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		FA7179382A3A9DF7002C407C /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				FA7179392A3A9DF7002C407C /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		FA71793D2A3A9DF8002C407C /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -664,7 +648,6 @@
 				INFOPLIST_FILE = DrinkWhat/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -694,7 +677,6 @@
 				INFOPLIST_FILE = DrinkWhat/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;

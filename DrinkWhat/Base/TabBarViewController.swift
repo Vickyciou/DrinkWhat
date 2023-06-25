@@ -9,12 +9,31 @@ import UIKit
 
 class TabBarViewController: UITabBarController {
     private let tabs: [Tab] = [.home, .favorite, .vote, .order, .profile]
+    private let groupManager = GroupManager()
+    private var userObject = UserManager.shared.userObject
+    private let groupID: String?
+
+    init(groupID: String? = nil) {
+        self.groupID = groupID
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         viewControllers = tabs.map { $0.makeViewController() }
+        if let groupID {
+            selectedIndex = 2
+            userObject.map {
+                groupManager.addUserIntoGroup(groupID: groupID, userID: "\($0.userID)")
+            }
+        }
     }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
@@ -82,3 +101,16 @@ extension TabBarViewController {
         }
     }
 }
+
+
+//class Coordinator {
+//
+//    func openViewController(with url: URL? = nil) -> UIViewController {
+//        url // 判斷
+//
+//        > LoginViewController
+//        > TabBarViewController
+//        > TabBarViewController    
+//            > selectIndex
+//    }
+//}
