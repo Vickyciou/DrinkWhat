@@ -85,8 +85,8 @@ class GroupManager {
                 date: Date().timeIntervalSince1970,
                 state: "進行中",
                 initiatorUserID: userObject.userID,
-                initiatorUserName: userObject.userName,
-                initiatorUserImage: userObject.userImageURL,
+                initiatorUserName: userObject.userName!,
+                initiatorUserImage: userObject.userImageURL!,
                 joinUserIDs: []
             )
             try document.setData(from: groupObject)

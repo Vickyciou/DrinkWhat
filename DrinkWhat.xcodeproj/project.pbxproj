@@ -44,6 +44,8 @@
 		FA7CC6172A444B81009B599F /* ShopMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7CC6162A444B81009B599F /* ShopMenuViewController.swift */; };
 		FA7CC6192A446106009B599F /* ShopMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7CC6182A446106009B599F /* ShopMenuCell.swift */; };
 		FA7CC61B2A457754009B599F /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7CC61A2A457754009B599F /* SectionHeaderView.swift */; };
+		FA9232222A49896500F045C6 /* SignInWithAppleHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9232212A49896500F045C6 /* SignInWithAppleHelper.swift */; };
+		FA9232242A498F1E00F045C6 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9232232A498F1E00F045C6 /* AuthManager.swift */; };
 		FA98EEFB2A3DEB7C000E6FEE /* VotingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA98EEFA2A3DEB7C000E6FEE /* VotingViewController.swift */; };
 		FA98EEFD2A3DEBA3000E6FEE /* VotingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA98EEFC2A3DEBA3000E6FEE /* VotingCell.swift */; };
 		FA98EEFF2A3E03D0000E6FEE /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA98EEFE2A3E03D0000E6FEE /* Date+Extension.swift */; };
@@ -100,6 +102,9 @@
 		FA7CC6162A444B81009B599F /* ShopMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopMenuViewController.swift; sourceTree = "<group>"; };
 		FA7CC6182A446106009B599F /* ShopMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopMenuCell.swift; sourceTree = "<group>"; };
 		FA7CC61A2A457754009B599F /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
+		FA9232202A49705300F045C6 /* DrinkWhat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DrinkWhat.entitlements; sourceTree = "<group>"; };
+		FA9232212A49896500F045C6 /* SignInWithAppleHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithAppleHelper.swift; sourceTree = "<group>"; };
+		FA9232232A498F1E00F045C6 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		FA98EEFA2A3DEB7C000E6FEE /* VotingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VotingViewController.swift; sourceTree = "<group>"; };
 		FA98EEFC2A3DEBA3000E6FEE /* VotingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VotingCell.swift; sourceTree = "<group>"; };
 		FA98EEFE2A3E03D0000E6FEE /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
@@ -164,6 +169,7 @@
 		FA7179312A3A9DF7002C407C /* DrinkWhat */ = {
 			isa = PBXGroup;
 			children = (
+				FA9232202A49705300F045C6 /* DrinkWhat.entitlements */,
 				FA7179322A3A9DF7002C407C /* AppDelegate.swift */,
 				FA7179342A3A9DF7002C407C /* SceneDelegate.swift */,
 				FA7CC6122A4448F0009B599F /* ThirdPartyWrappers */,
@@ -221,6 +227,7 @@
 			children = (
 				FA7179692A3D4D77002C407C /* MockJSONs */,
 				FA7179652A3D4C7C002C407C /* LocalJSONLoader.swift */,
+				FA9232212A49896500F045C6 /* SignInWithAppleHelper.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -265,6 +272,7 @@
 				FA7CC6072A41ACC4009B599F /* GroupManager.swift */,
 				FA7CC60C2A42DDE6009B599F /* UserManager.swift */,
 				FA7CC60E2A4403B5009B599F /* ShopManager.swift */,
+				FA9232232A498F1E00F045C6 /* AuthManager.swift */,
 			);
 			name = Manager;
 			sourceTree = "<group>";
@@ -477,6 +485,7 @@
 				FA71795E2A3C13BB002C407C /* NotVotedViewController.swift in Sources */,
 				FA7179602A3C141A002C407C /* NotVotedCell.swift in Sources */,
 				FA98EF0B2A3F39B0000E6FEE /* WinnerShopView.swift in Sources */,
+				FA9232222A49896500F045C6 /* SignInWithAppleHelper.swift in Sources */,
 				FA71795C2A3C0B91002C407C /* UIColor+Extension.swift in Sources */,
 				FA7CC6172A444B81009B599F /* ShopMenuViewController.swift in Sources */,
 				FA98EEFD2A3DEBA3000E6FEE /* VotingCell.swift in Sources */,
@@ -502,6 +511,7 @@
 				FA7CC6142A44493B009B599F /* KingFisherWrapper.swift in Sources */,
 				FA7CC61B2A457754009B599F /* SectionHeaderView.swift in Sources */,
 				FA7179522A3ABC99002C407C /* OrderViewController.swift in Sources */,
+				FA9232242A498F1E00F045C6 /* AuthManager.swift in Sources */,
 				FA6C33252A4851FC005CC96E /* URL+Extension.swift in Sources */,
 				FAE757C72A3FF40E003245EC /* LoginViewController.swift in Sources */,
 			);
@@ -641,6 +651,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = DrinkWhat/DrinkWhat.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = NNHJ7Y69AL;
@@ -670,6 +681,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = DrinkWhat/DrinkWhat.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = NNHJ7Y69AL;
