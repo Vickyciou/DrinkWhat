@@ -11,12 +11,17 @@ import AuthenticationServices
 import CryptoKit
 import FirebaseAuth
 
+protocol LoginViewControllerDelegate: AnyObject {
+    func loginViewControllerDidLoginSuccess(_ vc: LoginViewController)
+}
+
 class LoginViewController: UIViewController {
     private lazy var appIconImageView: UIImageView = makeAppIconImageView()
     private lazy var appNameLabel: UILabel = makeAppNameLabel()
     private lazy var loginWithLineButton = LoginButton()
     private lazy var signInWithAppleButton = ASAuthorizationAppleIDButton(type: .signIn, style: .black)
     private var currentNonce: String?
+    weak var delegate: LoginViewControllerDelegate?
 
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -94,7 +99,7 @@ class LoginViewController: UIViewController {
                 let user = UserObject(auth: authDataResult)
                 try await UserManager.shared.createUserData(userObject: user)
                 try await UserManager.shared.loadCurrentUser()
-                show(TabBarViewController(), sender: nil)
+                delegate?.loginViewControllerDidLoginSuccess(self)
             } catch {
                 print("startSignInWithAppleFlow error \(error)")
             }

@@ -26,7 +26,7 @@ class UserManager {
     }
 
     func createUserData(userObject: UserObject) async throws {
-        try userDocument(userID: userObject.userID).setData(from: userObject)
+        try userDocument(userID: userObject.userID).setData(from: userObject, merge: true)
     }
 
     func getUserData(userId: String) async throws -> UserObject {

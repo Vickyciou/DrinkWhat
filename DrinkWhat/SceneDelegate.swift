@@ -22,9 +22,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let rootViewController = RootViewController()
-        let navigationController = UINavigationController(rootViewController: rootViewController)
         window = UIWindow(windowScene: windowScene)
-        window?.rootViewController = navigationController
+        window?.rootViewController = rootViewController
         window?.makeKeyAndVisible()
     }
 
@@ -63,8 +62,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             _ = LoginManager.shared.application(.shared, open: urlContext.url)
         case "drinkWhat":
             guard let windowScene = (scene as? UIWindowScene) else { return }
-            let rootViewController = RootViewController()
-            rootViewController.url = urlContext.url
+            let rootViewController = RootViewController(url: urlContext.url)
             window = UIWindow(windowScene: windowScene)
             window?.rootViewController = rootViewController
             window?.makeKeyAndVisible()
