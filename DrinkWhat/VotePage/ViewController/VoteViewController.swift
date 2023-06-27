@@ -81,7 +81,8 @@ extension VoteViewController: UITableViewDelegate {
 }
 extension VoteViewController: GroupManagerDelegate {
     func groupManager(_ manager: GroupManager, didGetAllGroupData groupData: [GroupResponse]) {
-        self.groupObjects = groupData
+        let sortedGroupData = groupData.sorted(by: { $0.date > $1.date })
+        self.groupObjects = sortedGroupData
         tableView.reloadData()
     }
 }

@@ -21,6 +21,7 @@ class VoteResultCell: UITableViewCell {
 
             shopNameLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             shopNameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            shopNameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
             numberOfVotesLabel.centerYAnchor.constraint(equalTo: shopNameLabel.centerYAnchor),
             numberOfVotesLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             numberOfVotesLabel.widthAnchor.constraint(equalToConstant: 40)
