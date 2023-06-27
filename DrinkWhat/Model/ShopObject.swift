@@ -13,6 +13,7 @@ struct ShopObject: Codable, Equatable {
     let name: String
     let id: String
     let menu: [ShopMenu]
+    let addToppings: [AddToppings]
 }
 
 struct ShopMenu: Codable, Equatable {
@@ -22,5 +23,10 @@ struct ShopMenu: Codable, Equatable {
 
 struct VolumePrice: Codable, Equatable {
     let volume: String
+    let price: Int
+}
+
+struct AddToppings: Codable, Equatable {
+    let topping: String
     let price: Int
 }

@@ -299,7 +299,8 @@ extension ShopManager {
             mainImageURL: "https://firebasestorage.googleapis.com/v0/b/drinkwhat-7702e.appspot.com/o/50%E5%B5%90-%E4%B8%BB%E5%9C%96.png?alt=media&token=7b78f42c-b77f-4ed3-98fb-a1a9e000812a",
             name: "50嵐",
             id: "uuid001",
-            menu: shopMenu)
+            menu: shopMenu,
+            addToppings: [])
 
         self.createShopData(shopObject: shopObjects)
     }
@@ -434,7 +435,12 @@ extension ShopManager {
             mainImageURL: "https://firebasestorage.googleapis.com/v0/b/drinkwhat-7702e.appspot.com/o/%E9%BE%9C%E8%A8%98-%E4%B8%BB%E5%9C%96.jpeg?alt=media&token=b477e372-04d6-4618-ab30-a39744b1fa14",
             name: "龜記茗品",
             id: "uuid002",
-            menu: shopMenu)
+            menu: shopMenu,
+            addToppings: [
+                AddToppings(topping: "珍珠", price: 10),
+                AddToppings(topping: "蘆薈", price: 10),
+                AddToppings(topping: "椰果", price: 10),
+            ])
 
         self.createShopData(shopObject: shopObjects)
     }
@@ -527,7 +533,11 @@ extension ShopManager {
             mainImageURL: "https://firebasestorage.googleapis.com/v0/b/drinkwhat-7702e.appspot.com/o/%E4%B8%80%E6%89%8B%E7%A7%81%E8%97%8F-%E4%B8%BB%E5%9C%96.jpeg?alt=media&token=5f66fb2f-b3d4-42fd-b7ea-d6a6a60d8f80",
             name: "一手私藏 世界紅茶專賣",
             id: "uuid003",
-            menu: shopMenu)
+            menu: shopMenu,
+            addToppings: [
+            AddToppings(topping: "粉條", price: 15),
+            AddToppings(topping: "珍珠", price: 10)
+            ])
 
         self.createShopData(shopObject: shopObjects)
     }

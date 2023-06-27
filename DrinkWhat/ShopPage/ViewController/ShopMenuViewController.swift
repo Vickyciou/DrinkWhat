@@ -86,7 +86,12 @@ extension ShopMenuViewController: UITableViewDataSource {
 
 // 這邊要寫section header
 extension ShopMenuViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {}
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let shopObject else { return }
+        let drink = shopObject.menu[indexPath.row]
+        let drinkDetailVC = DrinkDetailViewController(shopObject: shopObject, drink: drink)
+        show(drinkDetailVC, sender: nil)
+    }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let firstSectionHeaderView = SectionHeaderView(frame: .zero)

@@ -14,6 +14,7 @@ class HomeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+//        ShopManager.shared.set50嵐Shop()
 //        ShopManager.shared.set一手私藏Shop()
         setupVC()
         shopManager.delegate = self

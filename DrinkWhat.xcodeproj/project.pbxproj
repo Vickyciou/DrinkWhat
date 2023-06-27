@@ -57,6 +57,10 @@
 		FA98EF0B2A3F39B0000E6FEE /* WinnerShopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA98EF0A2A3F39B0000E6FEE /* WinnerShopView.swift */; };
 		FAA10A512A471079001F9CC0 /* UserObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA10A502A471079001F9CC0 /* UserObject.swift */; };
 		FAA10A532A4710B7001F9CC0 /* ShopObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA10A522A4710B7001F9CC0 /* ShopObject.swift */; };
+		FAB2B9D52A4ADC7800EB449C /* DrinkDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB2B9D42A4ADC7800EB449C /* DrinkDetailViewController.swift */; };
+		FAB2B9D72A4ADDCC00EB449C /* DrinkDetailTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB2B9D62A4ADDCC00EB449C /* DrinkDetailTopView.swift */; };
+		FAB2B9DB2A4AE21600EB449C /* DrinkDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB2B9DA2A4AE21600EB449C /* DrinkDetailCell.swift */; };
+		FAB2B9DD2A4AE4F000EB449C /* DrinkDetailDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB2B9DC2A4AE4F000EB449C /* DrinkDetailDataSource.swift */; };
 		FAE757C72A3FF40E003245EC /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE757C62A3FF40E003245EC /* LoginViewController.swift */; };
 		FAF2AE172A4A8F8400F27B64 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF2AE162A4A8F8400F27B64 /* RootViewController.swift */; };
 /* End PBXBuildFile section */
@@ -117,6 +121,10 @@
 		FA98EF0A2A3F39B0000E6FEE /* WinnerShopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinnerShopView.swift; sourceTree = "<group>"; };
 		FAA10A502A471079001F9CC0 /* UserObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserObject.swift; sourceTree = "<group>"; };
 		FAA10A522A4710B7001F9CC0 /* ShopObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopObject.swift; sourceTree = "<group>"; };
+		FAB2B9D42A4ADC7800EB449C /* DrinkDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkDetailViewController.swift; sourceTree = "<group>"; };
+		FAB2B9D62A4ADDCC00EB449C /* DrinkDetailTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkDetailTopView.swift; sourceTree = "<group>"; };
+		FAB2B9DA2A4AE21600EB449C /* DrinkDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkDetailCell.swift; sourceTree = "<group>"; };
+		FAB2B9DC2A4AE4F000EB449C /* DrinkDetailDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkDetailDataSource.swift; sourceTree = "<group>"; };
 		FAE757C62A3FF40E003245EC /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		FAF2AE162A4A8F8400F27B64 /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -184,8 +192,8 @@
 				FA7CC6052A41AC24009B599F /* HomePage */,
 				FA7CC6152A444B1C009B599F /* ShopPage */,
 				FA71795A2A3AED81002C407C /* VotePage */,
+				FAB2B9D32A4ADC1A00EB449C /* OrderPage */,
 				FA71794D2A3ABB8A002C407C /* FavoriteViewController.swift */,
-				FA7179512A3ABC99002C407C /* OrderViewController.swift */,
 				FA7179532A3ABD01002C407C /* ProfileViewController.swift */,
 				FA71793B2A3A9DF8002C407C /* Assets.xcassets */,
 				FA71793D2A3A9DF8002C407C /* LaunchScreen.storyboard */,
@@ -301,11 +309,39 @@
 		FA7CC6152A444B1C009B599F /* ShopPage */ = {
 			isa = PBXGroup;
 			children = (
-				FA7CC6162A444B81009B599F /* ShopMenuViewController.swift */,
-				FA7CC6182A446106009B599F /* ShopMenuCell.swift */,
-				FA7CC61A2A457754009B599F /* SectionHeaderView.swift */,
+				FAB2B9DC2A4AE4F000EB449C /* DrinkDetailDataSource.swift */,
+				FAB2B9D92A4AE1C200EB449C /* ViewController */,
+				FAB2B9D82A4AE1AF00EB449C /* View */,
 			);
 			path = ShopPage;
+			sourceTree = "<group>";
+		};
+		FAB2B9D32A4ADC1A00EB449C /* OrderPage */ = {
+			isa = PBXGroup;
+			children = (
+				FA7179512A3ABC99002C407C /* OrderViewController.swift */,
+			);
+			path = OrderPage;
+			sourceTree = "<group>";
+		};
+		FAB2B9D82A4AE1AF00EB449C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				FA7CC61A2A457754009B599F /* SectionHeaderView.swift */,
+				FA7CC6182A446106009B599F /* ShopMenuCell.swift */,
+				FAB2B9D62A4ADDCC00EB449C /* DrinkDetailTopView.swift */,
+				FAB2B9DA2A4AE21600EB449C /* DrinkDetailCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		FAB2B9D92A4AE1C200EB449C /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				FA7CC6162A444B81009B599F /* ShopMenuViewController.swift */,
+				FAB2B9D42A4ADC7800EB449C /* DrinkDetailViewController.swift */,
+			);
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 		FAE757C42A3FF2A0003245EC /* ViewController */ = {
@@ -480,6 +516,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAB2B9DD2A4AE4F000EB449C /* DrinkDetailDataSource.swift in Sources */,
 				FA7179562A3AE557002C407C /* VoteCell.swift in Sources */,
 				FA71794A2A3AB994002C407C /* TabBarViewController.swift in Sources */,
 				FAF2AE172A4A8F8400F27B64 /* RootViewController.swift in Sources */,
@@ -508,7 +545,10 @@
 				FA2820BE2A4158BD009FDAD2 /* UIImage+Extension.swift in Sources */,
 				FA7CC6192A446106009B599F /* ShopMenuCell.swift in Sources */,
 				FA7CC60B2A41B65D009B599F /* GroupResponse.swift in Sources */,
+				FAB2B9D72A4ADDCC00EB449C /* DrinkDetailTopView.swift in Sources */,
 				FAA10A532A4710B7001F9CC0 /* ShopObject.swift in Sources */,
+				FAB2B9D52A4ADC7800EB449C /* DrinkDetailViewController.swift in Sources */,
+				FAB2B9DB2A4AE21600EB449C /* DrinkDetailCell.swift in Sources */,
 				FA7179542A3ABD01002C407C /* ProfileViewController.swift in Sources */,
 				FA7CC6112A44460B009B599F /* HomeShopCell.swift in Sources */,
 				FA7179592A3AEBDA002C407C /* UIFont+Extension.swift in Sources */,
