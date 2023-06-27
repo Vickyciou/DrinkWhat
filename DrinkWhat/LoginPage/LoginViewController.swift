@@ -34,8 +34,6 @@ class LoginViewController: UIViewController {
         view.backgroundColor = .white
         setNavController()
         setupMainView()
-//        setVickyLoginButton()
-//        setUser2LoginButton()
     }
     private func setNavController() {
         let navigationController = UINavigationController()
@@ -95,21 +93,12 @@ class LoginViewController: UIViewController {
                 let authDataResult = try await AuthManager.shared.signInWithApple(tokens: tokens)
                 let user = UserObject(auth: authDataResult)
                 try await UserManager.shared.createUserData(userObject: user)
+                try await UserManager.shared.loadCurrentUser()
+                show(TabBarViewController(), sender: nil)
             } catch {
                 print("startSignInWithAppleFlow error \(error)")
             }
         }
-//        let nonce = randomNonceString()
-//        currentNonce = nonce
-//        let appleIDProvider = ASAuthorizationAppleIDProvider()
-//        let request = appleIDProvider.createRequest()
-//        request.requestedScopes = [.fullName, .email]
-//        request.nonce = sha256(nonce)
-//
-//        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
-//        authorizationController.delegate = self
-//        authorizationController.presentationContextProvider = self
-//        authorizationController.performRequests()
     }
 }
 extension LoginViewController {
@@ -156,137 +145,3 @@ extension LoginViewController: LoginButtonDelegate {
         }
     }
 }
-//extension LoginViewController {
-//
-//    func setVickyLoginButton() {
-//        let userVickyButton = UIButton()
-//        view.addSubview(userVickyButton)
-//        userVickyButton.translatesAutoresizingMaskIntoConstraints = false
-//        userVickyButton.backgroundColor = .orangeBrown
-//        userVickyButton.setTitleColor(UIColor.midiumBrown, for: .normal)
-//        userVickyButton.titleLabel?.font = .regular(size: 14)
-//        userVickyButton.setTitle("Vicky Login", for: .normal)
-//        userVickyButton.addTarget(self, action: #selector(vickyButtonTapped(_:)), for: .touchUpInside)
-//        NSLayoutConstraint.activate([
-//            userVickyButton.centerYAnchor.constraint(equalTo: signInWithAppleButton.bottomAnchor, constant: 50),
-//            userVickyButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor)])
-//        let vicky = UserObject(userID: "UUID1", userName: "Vicky", userImageURL: "", favoriteShops: [])
-//        UserManager.shared.createUserData(userObject: vicky)
-//    }
-//    @objc func vickyButtonTapped(_ sender: UIButton) {
-//        UserManager.shared.getUserData(userID: "UUID1")
-//        show(TabBarViewController(), sender: nil)
-//        dismiss(animated: false)
-//    }
-//
-//    func setUser2LoginButton() {
-//        let user2Button = UIButton()
-//        view.addSubview(user2Button)
-//        user2Button.translatesAutoresizingMaskIntoConstraints = false
-//        user2Button.backgroundColor = .orangeBrown
-//        user2Button.setTitleColor(UIColor.midiumBrown, for: .normal)
-//        user2Button.titleLabel?.font = .regular(size: 14)
-//        user2Button.setTitle("User2 Login", for: .normal)
-//        user2Button.addTarget(self, action: #selector(user2ButtonTapped(_:)), for: .touchUpInside)
-//        NSLayoutConstraint.activate([
-//            user2Button.centerYAnchor.constraint(equalTo: signInWithAppleButton.bottomAnchor, constant: 100),
-//            user2Button.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor)])
-//        let user2 = UserObject(userID: "UUID2", userName: "User2", userImageURL: "", favoriteShops: [])
-//        UserManager.shared.createUserData(userObject: user2)
-//    }
-//    @objc func user2ButtonTapped(_ sender: UIButton) {
-//        UserManager.shared.getUserData(userID: "UUID2")
-//        show(TabBarViewController(), sender: nil)
-//        dismiss(animated: false)
-//    }
-//
-//
-//}
-
-extension LoginViewController {
-    private func randomNonceString(length: Int = 32) -> String {
-        precondition(length > 0)
-        let charset: [Character] =
-        Array("0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._")
-        var result = ""
-        var remainingLength = length
-
-        while remainingLength > 0 {
-            let randoms: [UInt8] = (0 ..< 16).map { _ in
-                var random: UInt8 = 0
-                let errorCode = SecRandomCopyBytes(kSecRandomDefault, 1, &random)
-                if errorCode != errSecSuccess {
-                    fatalError(
-                        "Unable to generate nonce. SecRandomCopyBytes failed with OSStatus \(errorCode)"
-                    )
-                }
-                return random
-            }
-
-            randoms.forEach { random in
-                if remainingLength == 0 {
-                    return
-                }
-
-                if random < charset.count {
-                    result.append(charset[Int(random)])
-                    remainingLength -= 1
-                }
-            }
-        }
-
-        return result
-    }
-
-    @available(iOS 13, *)
-    private func sha256(_ input: String) -> String {
-      let inputData = Data(input.utf8)
-      let hashedData = SHA256.hash(data: inputData)
-      let hashString = hashedData.compactMap {
-        String(format: "%02x", $0)
-      }.joined()
-
-      return hashString
-    }
-}
-
-extension LoginViewController: ASAuthorizationControllerDelegate {
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
-        if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
-          guard let nonce = currentNonce else {
-            fatalError("Invalid state: A login callback was received, but no login request was sent.")
-          }
-          guard let appleIDToken = appleIDCredential.identityToken else {
-            print("Unable to fetch identity token")
-            return
-          }
-          guard let idTokenString = String(data: appleIDToken, encoding: .utf8)
-            else {
-            print("Unable to serialize token string from data: \(appleIDToken.debugDescription)")
-            return
-          }
-            let credential = OAuthProvider.credential(
-                withProviderID: "apple.com",
-                idToken: idTokenString,
-                rawNonce: nonce
-            )
-            // Sign in with Firebase.
-            Auth.auth().signIn(with: credential) { (authResult, error) in
-                if let error {
-                    print(error.localizedDescription)
-                    return
-                }
-                if let _ = authResult {
-                    let tabBarVC = TabBarViewController()
-                    self.present(tabBarVC, animated: false)
-                }
-            }
-        }
-    }
-
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-        // Handle error.
-        print("Sign in with Apple errored: \(error)")
-    }
-}
-

@@ -21,7 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             return
         }
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        let rootViewController = LoginViewController()
+        let rootViewController = RootViewController()
         let navigationController = UINavigationController(rootViewController: rootViewController)
         window = UIWindow(windowScene: windowScene)
         window?.rootViewController = navigationController
@@ -63,24 +63,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             _ = LoginManager.shared.application(.shared, open: urlContext.url)
         case "drinkWhat":
             guard let windowScene = (scene as? UIWindowScene) else { return }
-            let rootViewController = handleShareURL(urlContext.url)
-            // if login
+            let rootViewController = RootViewController()
+            rootViewController.url = urlContext.url
             window = UIWindow(windowScene: windowScene)
             window?.rootViewController = rootViewController
-            /* else
-             window.rootViewController = loginVC
-             */
             window?.makeKeyAndVisible()
         default:
             break
         }
-    }
-    func handleShareURL(_ url: URL) -> UIViewController {
-        if url.host == "share" {
-            if let groupID = url.queryParameters?["groupID"] {
-                return TabBarViewController(groupID: groupID)
-            }
-        }
-        return UIViewController()
     }
 }

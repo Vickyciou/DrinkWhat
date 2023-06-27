@@ -26,6 +26,13 @@ final class AuthManager {
     static let shared = AuthManager()
     private init() { }
 
+    func getAuthenticatedUser() throws -> AuthDataResultModel {
+        guard let user = Auth.auth().currentUser else {
+            throw URLError(.badServerResponse)
+        }
+        return AuthDataResultModel(user: user, name: user.email, email: user.displayName)
+    }
+
     func signInWithApple(tokens: SignInWithAppleResult) async throws -> AuthDataResultModel {
         let credential = OAuthProvider.credential(withProviderID: "apple.com", idToken: tokens.token, rawNonce: tokens.nonce)
         return try await signIn(

@@ -12,26 +12,28 @@ import FirebaseAuth
 
 class UserManager {
     static let shared = UserManager()
+    var userObject: UserObject?
 
     private let userCollection: CollectionReference = Firestore.firestore().collection("Users")
-    
+
     private func userDocument(userID: String) -> DocumentReference {
         userCollection.document(userID)
     }
 
-    var userObject: UserObject?
+    func loadCurrentUser() async throws {
+        let authDataResult = try AuthManager.shared.getAuthenticatedUser()
+        self.userObject = try await getUserData(userId: authDataResult.uid)
+    }
 
     func createUserData(userObject: UserObject) async throws {
         try userDocument(userID: userObject.userID).setData(from: userObject)
     }
 
-    func getUserData() async throws -> UserObject {
-        guard let id = Auth.auth().currentUser?.uid else {
-            throw NSError(domain: "", code: 0)
-        }
-        let object = try await userDocument(userID: id).getDocument(as: UserObject.self)
+    func getUserData(userId: String) async throws -> UserObject {
+        let object = try await userDocument(userID: userId).getDocument(as: UserObject.self)
         userObject = object
         return object
+    }
 
 //        let docRef = db.collection("Users").document(userID)
 //
@@ -47,5 +49,5 @@ class UserManager {
 //                print("Error get user\(userID) from Firestore: \(String(describing: error))")
 //            }
 //        }
-    }
+
 }

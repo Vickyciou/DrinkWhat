@@ -85,8 +85,8 @@ class GroupManager {
                 date: Date().timeIntervalSince1970,
                 state: "進行中",
                 initiatorUserID: userObject.userID,
-                initiatorUserName: userObject.userName!,
-                initiatorUserImage: userObject.userImageURL!,
+                initiatorUserName: userObject.userName ?? "Name",
+                initiatorUserImage: userObject.userImageURL ?? "",
                 joinUserIDs: []
             )
             try document.setData(from: groupObject)
@@ -127,36 +127,13 @@ class GroupManager {
                 if let error = error {
                     self.delegate?.groupManager(self, didFailWith: error)
                 } else if let snapshot {
-                    let groupData: [GroupResponse] = snapshot.documents.compactMap { try? $0.data(as: GroupResponse.self) }
+                    let groupData: [GroupResponse] = snapshot.documents.compactMap {
+                        try? $0.data(as: GroupResponse.self) }
                     self.delegate?.groupManager(self, didGetAllGroupData: groupData)
                 }
             })
     }
-// 確認是否有自己發起並進行中的投票Group
-//    func checkGroupExists(userID: String) {
-//        groupCollection()
-//            .whereFilter(Filter.orFilter(
-//                [
-//                    Filter.whereField("initiatorUserID", isEqualTo: userID),
-//                    Filter.whereField("state", isEqualTo: "進行中"),
-//                ]
-//            ))
-//            .getDocuments() { (document, error) in
-//                if let error = error {
-//                    print("Error get all groups data from Firestore:\(error)")
-//                } else {
-//                    for document in document!.documents {
-//                        do {
-//                            let dataDescription = try document.data(as: GroupResponse.self)
-//                            self.delegate?.groupManager(self, didGetGroupObject: dataDescription)
-//                            print("\(document.documentID) => \(document.data())")
-//                        } catch {
-//                            print("Error decode group exist data from Firestore:\(error)")
-//                        }
-//                    }
-//                }
-//            }
-//    }
+
 // MARK: - 監聽投票狀況
     func getGroupObject(groupID: String) {
         groupCollection().document(groupID).addSnapshotListener { [self] (documentSnapshot, error) in
@@ -165,7 +142,7 @@ class GroupManager {
                 print("Error fetching document: \(error!)")
                 return
             }
-            guard var groupObject = try? document.data(as: GroupResponse.self) else {
+            guard let groupObject = try? document.data(as: GroupResponse.self) else {
                 delegate?.groupManager(self, didFailWith: ManagerError.decodingError)
                 return
             }

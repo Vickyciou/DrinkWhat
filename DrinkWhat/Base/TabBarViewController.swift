@@ -26,12 +26,7 @@ class TabBarViewController: UITabBarController {
         super.viewDidLoad()
         view.backgroundColor = .white
         viewControllers = tabs.map { $0.makeViewController() }
-        if let groupID {
-            selectedIndex = 2
-            userObject.map {
-                groupManager.addUserIntoGroup(groupID: groupID, userID: "\($0.userID)")
-            }
-        }
+        switchToGroupIndex()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -44,6 +39,17 @@ class TabBarViewController: UITabBarController {
         super.viewWillDisappear(animated)
 
         navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+
+    private func switchToGroupIndex() {
+        guard let groupID else { return }
+        selectedIndex = 2
+        userObject.map {
+            groupManager.addUserIntoGroup(groupID: groupID, userID: "\($0.userID)")
+        }
+    }
+    private func switchToOrderIndex() {
+
     }
 }
 
