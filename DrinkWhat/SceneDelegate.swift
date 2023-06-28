@@ -16,10 +16,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        if !connectionOptions.urlContexts.isEmpty {
-            self.scene(scene, openURLContexts: connectionOptions.urlContexts)
-            return
-        }
+//        if !connectionOptions.urlContexts.isEmpty {
+//            self.scene(scene, openURLContexts: connectionOptions.urlContexts)
+//            return
+//        }
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let rootViewController = RootViewController()
         window = UIWindow(windowScene: windowScene)
@@ -55,7 +55,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
     }
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
-        print("openURLContexts")
         guard let urlContext = URLContexts.first else { return }
         switch urlContext.url.scheme {
         case "line3rdp.ll.drinkwhat":

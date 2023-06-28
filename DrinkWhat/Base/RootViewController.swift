@@ -38,11 +38,10 @@ class RootViewController: UIViewController {
     func decideVC() async throws {
         let myVC: UIViewController = try await {
             switch (showLoginView, url) {
-            case let (true, url?):
-                let aaa = url
-                let lvc = LoginViewController()
-                lvc.delegate = self
-                return lvc
+//            case let (true, url?):
+//                let lvc = LoginViewController()
+//                lvc.delegate = self
+//                return lvc
             case (true, _):
                 let lvc = LoginViewController()
                 lvc.delegate = self
@@ -50,9 +49,13 @@ class RootViewController: UIViewController {
             case let (false, url?):
                 try await UserManager.shared.loadCurrentUser()
                 if let groupID = groupID(url) {
-                    return TabBarViewController(groupID: groupID)
+                    let tabBarVC = TabBarViewController(groupID: groupID)
+                    tabBarVC.tabBardelegate = self
+                    return tabBarVC
                 } else {
-                    return TabBarViewController()
+                    let tabBarVC = TabBarViewController()
+                    tabBarVC.tabBardelegate = self
+                    return tabBarVC
                 }
             case (false, _):
                 try await UserManager.shared.loadCurrentUser()
@@ -72,10 +75,10 @@ class RootViewController: UIViewController {
 }
 
 extension RootViewController: LoginViewControllerDelegate {
-    func loginViewControllerDidLoginSuccess(_ vc: LoginViewController) {
-        vc.willMove(toParent: nil)
-        vc.view.removeFromSuperview()
-        vc.removeFromParent()
+    func loginViewControllerDidLoginSuccess(_ viewController: LoginViewController) {
+        viewController.willMove(toParent: nil)
+        viewController.view.removeFromSuperview()
+        viewController.removeFromParent()
         let tabBarVC = {
             if let url {
                 return TabBarViewController(groupID: groupID(url))
@@ -84,22 +87,33 @@ extension RootViewController: LoginViewControllerDelegate {
             }
         }()
         displayViewControllerAsMain(tabBarVC)
+        tabBarVC.tabBardelegate = self
+    }
+}
+extension RootViewController: TabBarViewControllerDelegate {
+    func getProfileViewControllerDidPressLogOut(_ viewController: TabBarViewController) {
+        viewController.willMove(toParent: nil)
+        viewController.view.removeFromSuperview()
+        viewController.removeFromParent()
+        let loginVC = LoginViewController()
+        loginVC.delegate = self
+        displayViewControllerAsMain(loginVC)
     }
 }
 
 extension UIViewController {
-    func displayViewControllerAsMain(_ vc: UIViewController) {
-        addChild(vc)
-        view.addSubview(vc.view)
-        vc.view.translatesAutoresizingMaskIntoConstraints = false
+    func displayViewControllerAsMain(_ viewController: UIViewController) {
+        addChild(viewController)
+        view.addSubview(viewController.view)
+        viewController.view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate(
             [
-                vc.view.topAnchor.constraint(equalTo: view.topAnchor),
-                vc.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-                vc.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-                vc.view.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+                viewController.view.topAnchor.constraint(equalTo: view.topAnchor),
+                viewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+                viewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                viewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor)
             ]
         )
-        vc.didMove(toParent: self)
+        viewController.didMove(toParent: self)
     }
 }

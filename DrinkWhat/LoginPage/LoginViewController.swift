@@ -12,7 +12,7 @@ import CryptoKit
 import FirebaseAuth
 
 protocol LoginViewControllerDelegate: AnyObject {
-    func loginViewControllerDidLoginSuccess(_ vc: LoginViewController)
+    func loginViewControllerDidLoginSuccess(_ viewController: LoginViewController)
 }
 
 class LoginViewController: UIViewController {

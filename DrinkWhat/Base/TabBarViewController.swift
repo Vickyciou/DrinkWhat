@@ -7,11 +7,15 @@
 
 import UIKit
 
+protocol TabBarViewControllerDelegate: AnyObject {
+    func getProfileViewControllerDidPressLogOut(_ viewController: TabBarViewController)
+}
 class TabBarViewController: UITabBarController {
     private let tabs: [Tab] = [.home, .favorite, .vote, .order, .profile]
     private let groupManager = GroupManager()
     private var userObject = UserManager.shared.userObject
     private let groupID: String?
+    weak var tabBardelegate: TabBarViewControllerDelegate?
 
     init(groupID: String? = nil) {
         self.groupID = groupID
@@ -27,6 +31,8 @@ class TabBarViewController: UITabBarController {
         view.backgroundColor = .white
         viewControllers = tabs.map { $0.makeViewController() }
         switchToGroupIndex()
+        let profileVC = (viewControllers?.last as? UINavigationController)?.viewControllers.first as? ProfileViewController
+        profileVC?.delegate = self
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -69,6 +75,7 @@ extension TabBarViewController {
             case .vote: controller = UINavigationController(rootViewController: VoteViewController())
             case .order: controller = UINavigationController(rootViewController: OrderViewController())
             case .profile: controller = UINavigationController(rootViewController: ProfileViewController())
+
             }
             controller.tabBarItem = makeTabBarItem()
             controller.tabBarItem.imageInsets = UIEdgeInsets(top: 6.0, left: 0.0, bottom: -6.0, right: 0.0)
@@ -108,15 +115,10 @@ extension TabBarViewController {
     }
 }
 
+extension TabBarViewController: ProfileViewControllerDelegate {
+    func profileViewControllerDidPressLogOut(_ viewController: ProfileViewController) {
+        tabBardelegate?.getProfileViewControllerDidPressLogOut(self)
+    }
 
-//class Coordinator {
-//
-//    func openViewController(with url: URL? = nil) -> UIViewController {
-//        url // 判斷
-//
-//        > LoginViewController
-//        > TabBarViewController
-//        > TabBarViewController    
-//            > selectIndex
-//    }
-//}
+
+}
