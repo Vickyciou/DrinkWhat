@@ -33,6 +33,7 @@ class ShopMenuViewController: UIViewController {
     }
 
     private func setupVC() {
+        view.backgroundColor = .white
         setupTableView()
         shopManager.getShopObject(shopID: shopID)
     }

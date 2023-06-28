@@ -15,6 +15,17 @@ class DrinkDetailViewController: UIViewController {
     private let dataSource = DrinkDetailDataSource()
     private var shopObject: ShopObject
     private var drink: ShopMenu
+    private var currentVolumeIndex: Int = 0
+    private var currentSugarIndex: Int = 0
+    private var currentIceIndex: Int = 0
+    private var currentAddToppingsIndex: Int?
+    private var drinkPrice: Int {
+        if currentAddToppingsIndex != nil {
+            return drink.drinkPrice[currentVolumeIndex].price + shopObject.addToppings[currentAddToppingsIndex!].price
+        } else {
+            return drink.drinkPrice[currentVolumeIndex].price
+        }
+    }
 
     init(shopObject: ShopObject, drink: ShopMenu) {
         self.shopObject = shopObject
@@ -44,7 +55,7 @@ class DrinkDetailViewController: UIViewController {
             topView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             topView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
         ])
-        topView.setupTopView(drinkName: drink.drinkName, price: drink.drinkPrice[0].price)
+        topView.setupTopView(drinkName: drink.drinkName, price: drinkPrice)
     }
     private func setupTableView() {
         view.addSubview(tableView)
@@ -72,8 +83,9 @@ extension DrinkDetailViewController {
         let tableView = UITableView(frame: .zero)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.dataSource = self
+        tableView.delegate = self
         tableView.register(DrinkDetailCell.self, forCellReuseIdentifier: "DrinkDetailCell")
-        tableView.contentInsetAdjustmentBehavior = .never
+//        tableView.contentInsetAdjustmentBehavior = .never
         tableView.separatorStyle = .none
         tableView.sectionHeaderHeight = UITableView.automaticDimension
         tableView.sectionHeaderTopPadding = 0.0
@@ -92,7 +104,23 @@ extension DrinkDetailViewController {
         return button
     }
     @objc func addItemButtonTapped() {
+        let selectedIndexPaths = tableView.indexPathsForSelectedRows ?? []
+        var hasSelection = false
 
+        for section in 0..<4 {
+            let sectionIndexPaths = selectedIndexPaths.filter { $0.section == section }
+            if !sectionIndexPaths.isEmpty {
+                hasSelection = true
+                break
+            }
+        }
+
+        if hasSelection {
+            // 在這裡將選取的儲存格項目加入 Firestore
+            // 您可以使用 selectedIndexPaths 來取得選取的儲存格的 IndexPath
+        } else {
+            // 如果沒有選取儲存格，執行相應的處理
+        }
     }
 }
 extension DrinkDetailViewController: UITableViewDataSource {
@@ -116,9 +144,9 @@ extension DrinkDetailViewController: UITableViewDataSource {
         }
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "DrinkDetailCell", for: indexPath) as? DrinkDetailCell
-              else { fatalError("Cannot created DrinkDetailCell") }
-//        cell.delegate = self
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "DrinkDetailCell", for: indexPath)
+                as? DrinkDetailCell else { fatalError("Cannot created DrinkDetailCell") }
+
         let section = indexPath.section
         switch section {
         case 0:
@@ -149,7 +177,11 @@ extension DrinkDetailViewController: UITableViewDelegate {
         case 2:
             return "冰量"
         case 3:
-            return "加料"
+            if !shopObject.addToppings.isEmpty {
+                return "加料"
+            } else {
+                return nil
+            }
         default:
             return ""
         }
@@ -163,19 +195,31 @@ extension DrinkDetailViewController: UITableViewDelegate {
             $0.section == indexPath.section
         }) {
             tableView.deselectRow(at: selectIndexPathInSection, animated: false)
+            guard let cell = tableView.cellForRow(at: selectIndexPathInSection) as? DrinkDetailCell
+                  else { fatalError("Cannot created DrinkDetailCell") }
+            cell.chooseButton.isSelected = false
         }
         return indexPath
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "DrinkDetailCell", for: indexPath) as? DrinkDetailCell
+        guard let cell = tableView.cellForRow(at: indexPath) as? DrinkDetailCell
               else { fatalError("Cannot created DrinkDetailCell") }
         cell.chooseButton.isSelected = true
+        let section = indexPath.section
+        switch section {
+        case 0:
+            currentVolumeIndex = indexPath.row
+            topView.setupTopView(drinkName: drink.drinkName, price: drinkPrice)
+        case 1:
+            currentSugarIndex = indexPath.row
+        case 2:
+            currentIceIndex = indexPath.row
+        case 3:
+            currentAddToppingsIndex = indexPath.row
+            topView.setupTopView(drinkName: drink.drinkName, price: drinkPrice)
+        default:
+            return
+        }
     }
 }
-
-//extension DrinkDetailViewController: DrinkDetailCellDelegate {
-//    func didSelectedChooseButton(_ cell: DrinkDetailCell, button: UIButton) {
-//        cell.chooseButton.isSelected = true
-//    }
-//}
