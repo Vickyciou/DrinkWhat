@@ -7,8 +7,13 @@
 
 import UIKit
 
+protocol ProfileViewControllerDelegate: AnyObject {
+    func profileViewControllerDidPressLogOut(_ viewController: ProfileViewController)
+}
+
 class ProfileViewController: UIViewController {
     private lazy var logOutButton: UIButton = makeLogOutButton()
+    weak var delegate: ProfileViewControllerDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,13 +38,13 @@ extension ProfileViewController {
         button.setTitleColor(UIColor.darkBrown, for: .normal)
         button.setTitleColor(UIColor.skinColor, for: .highlighted)
         button.titleLabel?.font = .regular(size: 18)
-        button.backgroundColor = .logoBrown
+        button.backgroundColor = .orangeBrown
         button.setTitle("Log out", for: .normal)
         button.addTarget(self, action: #selector(logOutButtonTapped), for: .touchUpInside)
         return button
     }
     @objc func logOutButtonTapped() throws {
         try AuthManager.shared.signOut()
-        show(RootViewController(), sender: nil)
+        delegate?.profileViewControllerDidPressLogOut(self)
     }
 }
