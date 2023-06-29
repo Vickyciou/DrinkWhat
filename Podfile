@@ -14,6 +14,7 @@ target 'DrinkWhat' do
     pod 'FirebaseFirestore', '~> 10.11.0'
     pod 'FirebaseFirestoreSwift', '~> 10.11.0'
     pod 'Kingfisher'
+    pod 'Toast-Swift'
 
     post_install do |installer|
       installer.pods_project.targets.each do |target|

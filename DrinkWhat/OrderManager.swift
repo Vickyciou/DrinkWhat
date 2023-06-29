@@ -60,9 +60,9 @@ class OrderManager {
     }
 
     // MARK: - Add order results
-    func addOrderResult(userID: String, orderID: String, drinkName: String, drinkPrice: Int, volume: String, sugar: String, ice: String, addToppings: [AddTopping], note: String) async throws {
-        let orderObject = OrderObject(
-            drinkName: drinkName, drinkPrice: drinkPrice, volume: volume, sugar: sugar, ice: ice, addToppings: addToppings, note: note)
+    func addOrderResult(userID: String, orderID: String, orderObject: OrderObject) async throws {
+//        let orderObject = OrderObject(
+//            drinkName: drinkName, drinkPrice: drinkPrice, volume: volume, sugar: sugar, ice: ice, addToppings: addToppings, note: note)
         try orderObjectsDocument(orderID: orderID, userID: userID).setData(from: orderObject, merge: true)
     }
 

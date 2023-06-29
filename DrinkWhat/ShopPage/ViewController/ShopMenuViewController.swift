@@ -10,14 +10,16 @@ import UIKit
 class ShopMenuViewController: UIViewController {
     private lazy var tableHeaderView: UIImageView = makeTableHeaderView()
     private lazy var tableView: UITableView = makeTableView()
-    private let shopID: String
-    private let shopManager = ShopManager()
     private let groupManager = GroupManager()
-    private var shopObject: ShopObject?
+    private let orderManager = OrderManager()
+    private var shopObject: ShopObject
     private var groupObject: GroupResponse?
+    private var userObject: UserObject? {
+        UserManager.shared.userObject
+    }
 
-    init(shopID: String) {
-        self.shopID = shopID
+    init(shopObject: ShopObject) {
+        self.shopObject = shopObject
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -28,14 +30,12 @@ class ShopMenuViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupVC()
-        shopManager.delegate = self
         groupManager.delegate = self
     }
 
     private func setupVC() {
         view.backgroundColor = .white
         setupTableView()
-        shopManager.getShopObject(shopID: shopID)
     }
 
     private func setupTableView() {
@@ -55,6 +55,7 @@ extension ShopMenuViewController {
         let tableHeaderView = UIImageView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 200))
         tableHeaderView.contentMode = .scaleAspectFill
         tableHeaderView.layer.masksToBounds = true
+        tableHeaderView.loadImage(shopObject.mainImageURL, placeHolder: UIImage(systemName: "bag"))
         return tableHeaderView
     }
 
@@ -74,11 +75,10 @@ extension ShopMenuViewController {
 
 extension ShopMenuViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-       return shopObject?.menu.count ?? 0
+       return shopObject.menu.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "ShopMenuCell", for: indexPath) as? ShopMenuCell,
-              let shopObject = shopObject else { fatalError("Cannot created ShopMenuCell") }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "ShopMenuCell", for: indexPath) as? ShopMenuCell else { fatalError("Cannot created ShopMenuCell") }
         let drink = shopObject.menu[indexPath.row]
         cell.setupCell(drinkName: drink.drinkName, drinkPrice: drink.drinkPrice[0].price)
         return cell
@@ -88,7 +88,6 @@ extension ShopMenuViewController: UITableViewDataSource {
 // 這邊要寫section header
 extension ShopMenuViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let shopObject else { return }
         let drink = shopObject.menu[indexPath.row]
         let drinkDetailVC = DrinkDetailViewController(shopObject: shopObject, drink: drink)
         show(drinkDetailVC, sender: nil)
@@ -96,29 +95,64 @@ extension ShopMenuViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let firstSectionHeaderView = SectionHeaderView(frame: .zero)
-        firstSectionHeaderView.setupView(shopName: shopObject?.name ?? "")
+        firstSectionHeaderView.setupView(shopName: shopObject.name)
         firstSectionHeaderView.delegate = self
         return section == 0 ? firstSectionHeaderView : nil
     }
 }
 
-extension ShopMenuViewController: ShopManagerDelegate {
-    func shopManager(_ manager: ShopManager, didGetShopObject shopObject: ShopObject) {
-        self.shopObject = shopObject
-        tableHeaderView.loadImage(shopObject.mainImageURL, placeHolder: UIImage(systemName: "bag"))
-        tableView.reloadData()
-    }
-}
-
 extension ShopMenuViewController: SectionHeaderViewDelegate {
     func didPressAddOrderButton(_ view: SectionHeaderView) {
-        //
+        guard let userObject else {
+            let alert = UIAlertController(
+                title: "加入失敗",
+                message: "請先登入會員",
+                preferredStyle: .alert
+            )
+            let okAction = UIAlertAction(title: "OK", style: .default)
+            alert.addAction(okAction)
+            present(alert, animated: true)
+            return
+        }
+        Task {
+            do {
+                try await orderManager.creatOrder(
+                    shopID: shopObject.id,
+                    shopName: shopObject.name,
+                    initiatorUserID: userObject.userID,
+                    initiatorUserName: userObject.userName ?? "Name")
+
+                let alert = UIAlertController(
+                    title: "開始團購囉",
+                    message: "要立刻分享給朋友嗎？",
+                    preferredStyle: .alert
+                )
+                let shareAction = UIAlertAction(title: "分享", style: .default)
+                let cancelAction = UIAlertAction(title: "先不要", style: .cancel)
+                alert.addAction(shareAction)
+                alert.addAction(cancelAction)
+                present(alert, animated: true)
+
+            } catch ManagerError.itemAlreadyExistsError {
+                let alert = UIAlertController(
+                    title: "加入失敗",
+                    message: "目前已有進行中的團購囉！",
+                    preferredStyle: .alert
+                )
+                let okAction = UIAlertAction(title: "OK", style: .default)
+                alert.addAction(okAction)
+                present(alert, animated: true)
+            } catch {
+                print("error \(error)")
+            }
+        }
     }
 
     func didPressAddVoteButton(_ view: SectionHeaderView) {
         Task {
             do {
-                try await groupManager.addShopIntoGroup(shopID: shopID)
+                try await groupManager.addShopIntoGroup(shopID: shopObject.id)
+                view.makeAlertToast(message: "加入成功！", duration: 2)
             } catch ManagerError.itemAlreadyExistsError {
                 let alert = UIAlertController(
                     title: "加入失敗",

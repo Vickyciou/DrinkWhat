@@ -47,6 +47,7 @@
 		FA9AABD62A4D247500B99FB7 /* OrderResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABD52A4D247500B99FB7 /* OrderResponse.swift */; };
 		FA9AABD82A4D25A300B99FB7 /* Encodable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABD72A4D25A300B99FB7 /* Encodable+Extension.swift */; };
 		FA9AABDA2A4D34D200B99FB7 /* OrderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABD92A4D34D200B99FB7 /* OrderManager.swift */; };
+		FA9AABDC2A4D810800B99FB7 /* ToastSwiftWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABDB2A4D810800B99FB7 /* ToastSwiftWrapper.swift */; };
 		FAA10A512A471079001F9CC0 /* UserObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA10A502A471079001F9CC0 /* UserObject.swift */; };
 		FAA10A532A4710B7001F9CC0 /* ShopObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA10A522A4710B7001F9CC0 /* ShopObject.swift */; };
 		FAB2B9D52A4ADC7800EB449C /* DrinkDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB2B9D42A4ADC7800EB449C /* DrinkDetailViewController.swift */; };
@@ -103,6 +104,7 @@
 		FA9AABD52A4D247500B99FB7 /* OrderResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderResponse.swift; sourceTree = "<group>"; };
 		FA9AABD72A4D25A300B99FB7 /* Encodable+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+Extension.swift"; sourceTree = "<group>"; };
 		FA9AABD92A4D34D200B99FB7 /* OrderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderManager.swift; sourceTree = "<group>"; };
+		FA9AABDB2A4D810800B99FB7 /* ToastSwiftWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastSwiftWrapper.swift; sourceTree = "<group>"; };
 		FAA10A502A471079001F9CC0 /* UserObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserObject.swift; sourceTree = "<group>"; };
 		FAA10A522A4710B7001F9CC0 /* ShopObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopObject.swift; sourceTree = "<group>"; };
 		FAB2B9D42A4ADC7800EB449C /* DrinkDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkDetailViewController.swift; sourceTree = "<group>"; };
@@ -270,6 +272,7 @@
 			isa = PBXGroup;
 			children = (
 				FA7CC6132A44493B009B599F /* KingFisherWrapper.swift */,
+				FA9AABDB2A4D810800B99FB7 /* ToastSwiftWrapper.swift */,
 			);
 			path = ThirdPartyWrappers;
 			sourceTree = "<group>";
@@ -483,6 +486,7 @@
 				FA7179502A3ABC46002C407C /* VoteViewController.swift in Sources */,
 				FA98EEFB2A3DEB7C000E6FEE /* VotingViewController.swift in Sources */,
 				FA98EF092A3F3430000E6FEE /* VoteResultCell.swift in Sources */,
+				FA9AABDC2A4D810800B99FB7 /* ToastSwiftWrapper.swift in Sources */,
 				FA71795E2A3C13BB002C407C /* NotVotedViewController.swift in Sources */,
 				FA7179602A3C141A002C407C /* NotVotedCell.swift in Sources */,
 				FA98EF0B2A3F39B0000E6FEE /* WinnerShopView.swift in Sources */,
