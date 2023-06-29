@@ -159,7 +159,8 @@ extension DrinkDetailViewController: UITableViewDataSource {
             cell.setupCell(description: dataSource.ice[indexPath.row])
             return cell
         case 3:
-            cell.setupCell(description: shopObject.addToppings[indexPath.row].topping)
+            let addToppings = shopObject.addToppings[indexPath.row]
+            cell.setupAddToppingCell(description: addToppings.topping, addPrice: addToppings.price)
             return cell
         default:
             return cell
