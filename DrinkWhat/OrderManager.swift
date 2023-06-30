@@ -34,13 +34,14 @@ class OrderManager {
 
     // MARK: - Create new order
     func creatOrder(shopID: String, shopName: String, initiatorUserID: String, initiatorUserName: String) async throws {
-        //if Order exist
+
         let document = try await orderCollection.whereFilter(Filter.andFilter(
             [
                 Filter.whereField("initiatorUserID", isEqualTo: initiatorUserID),
                 Filter.whereField("state", isEqualTo: "進行中")
             ]
         )).getDocuments()
+
         if (document.documents.first?.data()) != nil {
             throw ManagerError.itemAlreadyExistsError
         } else {
@@ -60,10 +61,31 @@ class OrderManager {
     }
 
     // MARK: - Add order results
-    func addOrderResult(userID: String, orderID: String, orderObject: OrderObject) async throws {
+    func addOrderResult(userID: String, orderObject: OrderObject) async throws {
+        let document = try await orderCollection.whereFilter(Filter.orFilter(
+            [
+                Filter.whereField("initiatorUserID", isEqualTo: userID),
+                Filter.whereField("joinUserIDs", arrayContains: userID)
+            ]
+        )).whereFilter(Filter.whereField("state", isEqualTo: "進行中")).getDocuments()
+
+        if let order = try document.documents.first?.data(as: OrderResponse.self) {
+            let orderID = order.orderID
+            let orderResultRef = orderObjectsDocument(orderID: orderID, userID: userID)
+            if let _ = try? await orderResultRef.getDocument().data(as: OrderResults.self) {
+                let orderObjectDic = try orderObject.toDictionary()
+                try await orderResultRef.updateData(["orderObjects": FieldValue.arrayUnion([orderObjectDic])])
+            } else {
+                let orderResults = OrderResults(userID: userID, isPaid: "未付款", orderObjects: [orderObject])
+                try orderObjectsDocument(orderID: orderID, userID: userID).setData(from: orderResults)
+            }
+
+        } else {
+            throw ManagerError.noData
+        }
 //        let orderObject = OrderObject(
 //            drinkName: drinkName, drinkPrice: drinkPrice, volume: volume, sugar: sugar, ice: ice, addToppings: addToppings, note: note)
-        try orderObjectsDocument(orderID: orderID, userID: userID).setData(from: orderObject, merge: true)
+
     }
 
     // MARK: - User add into order group
@@ -78,7 +100,7 @@ class OrderManager {
 
     // MARK: - Load order page
     func getOrderResponse(userID: String) async throws {
-        let orders = try await orderCollection.whereFilter(Filter.andFilter(
+        let orders = try await orderCollection.whereFilter(Filter.orFilter(
             [
                 Filter.whereField("initiatorUserID", isEqualTo: userID),
                 Filter.whereField("joinUserIDs", arrayContains: userID)

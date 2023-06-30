@@ -78,7 +78,8 @@ extension ShopMenuViewController: UITableViewDataSource {
        return shopObject.menu.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "ShopMenuCell", for: indexPath) as? ShopMenuCell else { fatalError("Cannot created ShopMenuCell") }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "ShopMenuCell", for: indexPath) as? ShopMenuCell
+        else { fatalError("Cannot created ShopMenuCell") }
         let drink = shopObject.menu[indexPath.row]
         cell.setupCell(drinkName: drink.drinkName, drinkPrice: drink.drinkPrice[0].price)
         return cell
@@ -109,8 +110,10 @@ extension ShopMenuViewController: SectionHeaderViewDelegate {
                 message: "請先登入會員",
                 preferredStyle: .alert
             )
-            let okAction = UIAlertAction(title: "OK", style: .default)
-            alert.addAction(okAction)
+            let loginAction = UIAlertAction(title: "前往登入", style: .default)
+            let cancelAction = UIAlertAction(title: "稍後再說", style: .cancel)
+            alert.addAction(loginAction)
+            alert.addAction(cancelAction)
             present(alert, animated: true)
             return
         }
@@ -173,9 +176,6 @@ extension ShopMenuViewController: SectionHeaderViewDelegate {
     }
 }
 extension ShopMenuViewController: GroupManagerDelegate {
-    func groupManager(_ manager: GroupManager, didPostGroupID groupID: String) {
-        print("groupID \(groupID)")
-    }
     func groupManager(_ manager: GroupManager, didGetGroupObject groupObject: GroupResponse) {
         self.groupObject = groupObject
     }

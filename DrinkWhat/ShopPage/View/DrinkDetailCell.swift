@@ -31,17 +31,15 @@ class DrinkDetailCell: UITableViewCell {
             chooseButton.widthAnchor.constraint(equalToConstant: 40)
         ])
     }
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        chooseButton.isSelected = false
-        addPriceLabel.text = ""
-    }
-    func setupCell(description: String) {
+    func setupCell(description: String, isSelected: Bool) {
         descriptionLabel.text = description
+        addPriceLabel.text = nil
+        chooseButton.isSelected = isSelected
     }
-    func setupAddToppingCell(description: String, addPrice: Int) {
+    func setupAddToppingCell(description: String, addPrice: Int, isSelected: Bool) {
         descriptionLabel.text = description
         addPriceLabel.text = "+ $ \(addPrice)"
+        chooseButton.isSelected = isSelected
     }
 
     required init?(coder: NSCoder) {
