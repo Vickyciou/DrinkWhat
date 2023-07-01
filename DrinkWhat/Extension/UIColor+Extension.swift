@@ -28,3 +28,14 @@ extension UIColor {
         return uiColor
     }
 }
+
+extension UIColor {
+    func toImage(size: CGSize = CGSize(width: 1, height: 1)) -> UIImage? {
+        let renderer = UIGraphicsImageRenderer(size: size)
+        let image = renderer.image { context in
+            self.setFill()
+            context.fill(CGRect(origin: .zero, size: size))
+        }
+        return image
+    }
+}

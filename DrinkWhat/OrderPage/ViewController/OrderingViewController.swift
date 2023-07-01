@@ -36,8 +36,7 @@ class OrderingViewController: UIViewController {
     private func setupVC() {
         setNavController()
         setupTableView()
-        orderManager.delegate = self
-//        orderManager.listenOrderResults(orderID: orderResponse.orderID)
+//        orderManager.delegate = self
     }
 
     private func setNavController() {
@@ -62,7 +61,7 @@ extension OrderingViewController {
         let tableView = UITableView(frame: .zero)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.dataSource = self
-//        tableView.delegate = self
+        tableView.delegate = self
         tableView.register(CustomDrinkCell.self, forCellReuseIdentifier: "CustomDrinkCell")
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.separatorStyle = .none
@@ -87,38 +86,62 @@ extension OrderingViewController: UITableViewDataSource {
                        volume: orderObject.volume,
                        ice: orderObject.ice,
                        sugar: orderObject.sugar,
-                       addToppings: "\(addToppings.topping)" + "+\(addToppings.price)",
+                       addToppings: "\(addToppings.topping)" + "+ $\(addToppings.price)",
                        note: orderObject.note,
                        price: orderObject.drinkPrice)
 
         return cell
     }
+    func numberOfSections(in tableView: UITableView) -> Int {
+        orderResults.count
+    }
 }
-extension OrderingViewController: OrderManagerDelegate {
-    func orderManager(_ manager: OrderManager, didGetAllOrderData orderData: [OrderResponse]) {
-        return
+extension OrderingViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = OrderSectionHeaderView(frame: .zero)
+        let order = orderResults[section]
+        if let user = joinUserObjects.first(where: { $0.userID == order.userID }) {
+            headerView.setupView(userImageURL: user.userImageURL, userName: user.userName ?? "")
+        }
+        return headerView
     }
 
-    func orderManager(_ manager: OrderManager, didGetOrderResults orderResults: [OrderResults]) {
-        self.orderResults = orderResults
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let footView = OrderSectionFooterView(frame: .zero)
+        let order = orderResults[section].orderObjects
+        let totalPrice = order.reduce(into: 0) { $0 += $1.drinkPrice }
+        footView.setupView(price: totalPrice)
+        return footView
     }
-
-    func orderManager(_ manager: OrderManager, didFailWith error: Error) {
-        print(error.localizedDescription)
-    }
-
 }
+
+//extension OrderingViewController: OrderManagerDelegate {
+//    func orderManager(_ manager: OrderManager, didGetAllOrderData orderData: [OrderResponse]) {
+//        return
+//    }
+//
+//    func orderManager(_ manager: OrderManager, didGetOrderResults orderResults: [OrderResults]) {
+//        self.orderResults = orderResults
+//        tableView.reloadData()
+//    }
+//
+//    func orderManager(_ manager: OrderManager, didFailWith error: Error) {
+//        print(error.localizedDescription)
+//    }
+//
+//}
 
 extension OrderingViewController: UserObjectsAccessible {
     func setUserObjects(_ userObjects: [UserObject]) {
         joinUserObjects = userObjects
+        print("orderingVC : \(joinUserObjects)")
+        tableView.reloadData()
     }
 }
 
 extension OrderingViewController: OrderResultsAccessible {
     func setOrderResults(_ orderResults: [OrderResults]) {
         self.orderResults = orderResults
+        tableView.reloadData()
     }
-
-
 }

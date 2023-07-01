@@ -64,6 +64,7 @@ class OrderNavigationController: UINavigationController {
         userObject: UserObject,
         orderResults: [OrderResults]
     ) {
+        DispatchQueue.main.async { [self] in
         if isEndOrder(orderResponse: orderResponse) {
             if viewControllers.last is OrderResultsViewController { return }
             let orderResultVC = OrderResultsViewController(
@@ -80,8 +81,9 @@ class OrderNavigationController: UINavigationController {
             )
             orderingVC.setOrderResults(orderResults)
             orderingVC.setUserObjects(joinUserObject)
-//            orderingVC.delegate = self
+            //            orderingVC.delegate = self
             pushViewController(orderingVC, animated: !viewControllers.isEmpty)
+        }
         }
     }
 
@@ -101,18 +103,10 @@ extension OrderNavigationController: OrderManagerDelegate {
 
     func orderManager (_ manager: OrderManager, didGetOrderResults orderResults: [OrderResults]) {
         self.orderResults = orderResults
-        orderManager.listenOrderResults(orderID: orderResponse.orderID)
         Task {
-            let userIDs = try await orderResults
+            try await orderResults
                 .map { $0.userID }
                 .asyncMap(userManager.getUserData)
-        }
-
-        if let userObject {
-            decideVC(orderResponse: orderResponse,
-                     joinUserObject: joinUserObjects,
-                     userObject: userObject,
-                     orderResults: orderResults)
         }
     }
 
@@ -124,6 +118,13 @@ extension OrderNavigationController: OrderManagerDelegate {
 extension OrderNavigationController: UserManagerDelegate {
     func userManager(_ manager: UserManager, didGet userObject: UserObject) {
         self.joinUserObjects.append(userObject)
+
+        if let myUserObject = self.userObject {
+            decideVC(orderResponse: orderResponse,
+                     joinUserObject: joinUserObjects,
+                     userObject: myUserObject,
+                     orderResults: orderResults)
+        }
     }
 }
 

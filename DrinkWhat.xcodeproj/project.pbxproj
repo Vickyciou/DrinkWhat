@@ -53,6 +53,8 @@
 		FA9AABE22A4F1DA400B99FB7 /* CustomDrinkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABE12A4F1DA400B99FB7 /* CustomDrinkCell.swift */; };
 		FA9AABE42A4FABFB00B99FB7 /* OrderNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABE32A4FABFB00B99FB7 /* OrderNavigationController.swift */; };
 		FA9AABE62A4FBA1B00B99FB7 /* OrderResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABE52A4FBA1B00B99FB7 /* OrderResultsViewController.swift */; };
+		FA9AABEA2A5030A300B99FB7 /* OrderSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABE92A5030A300B99FB7 /* OrderSectionHeaderView.swift */; };
+		FA9AABEC2A5069B100B99FB7 /* OrderSectionFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABEB2A5069B100B99FB7 /* OrderSectionFooterView.swift */; };
 		FAA10A512A471079001F9CC0 /* UserObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA10A502A471079001F9CC0 /* UserObject.swift */; };
 		FAA10A532A4710B7001F9CC0 /* ShopObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA10A522A4710B7001F9CC0 /* ShopObject.swift */; };
 		FAB2B9D52A4ADC7800EB449C /* DrinkDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB2B9D42A4ADC7800EB449C /* DrinkDetailViewController.swift */; };
@@ -115,6 +117,8 @@
 		FA9AABE12A4F1DA400B99FB7 /* CustomDrinkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDrinkCell.swift; sourceTree = "<group>"; };
 		FA9AABE32A4FABFB00B99FB7 /* OrderNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderNavigationController.swift; sourceTree = "<group>"; };
 		FA9AABE52A4FBA1B00B99FB7 /* OrderResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderResultsViewController.swift; sourceTree = "<group>"; };
+		FA9AABE92A5030A300B99FB7 /* OrderSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderSectionHeaderView.swift; sourceTree = "<group>"; };
+		FA9AABEB2A5069B100B99FB7 /* OrderSectionFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderSectionFooterView.swift; sourceTree = "<group>"; };
 		FAA10A502A471079001F9CC0 /* UserObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserObject.swift; sourceTree = "<group>"; };
 		FAA10A522A4710B7001F9CC0 /* ShopObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopObject.swift; sourceTree = "<group>"; };
 		FAB2B9D42A4ADC7800EB449C /* DrinkDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkDetailViewController.swift; sourceTree = "<group>"; };
@@ -297,15 +301,33 @@
 			path = ShopPage;
 			sourceTree = "<group>";
 		};
-		FAB2B9D32A4ADC1A00EB449C /* OrderPage */ = {
+		FA9AABE72A502AD600B99FB7 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
 				FA7179512A3ABC99002C407C /* OrderViewController.swift */,
-				FA9AABDD2A4EC45300B99FB7 /* MainOrderCell.swift */,
-				FA9AABDF2A4F1D7600B99FB7 /* OrderingViewController.swift */,
-				FA9AABE12A4F1DA400B99FB7 /* CustomDrinkCell.swift */,
 				FA9AABE32A4FABFB00B99FB7 /* OrderNavigationController.swift */,
+				FA9AABDF2A4F1D7600B99FB7 /* OrderingViewController.swift */,
 				FA9AABE52A4FBA1B00B99FB7 /* OrderResultsViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		FA9AABE82A502AE300B99FB7 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				FA9AABE12A4F1DA400B99FB7 /* CustomDrinkCell.swift */,
+				FA9AABDD2A4EC45300B99FB7 /* MainOrderCell.swift */,
+				FA9AABE92A5030A300B99FB7 /* OrderSectionHeaderView.swift */,
+				FA9AABEB2A5069B100B99FB7 /* OrderSectionFooterView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		FAB2B9D32A4ADC1A00EB449C /* OrderPage */ = {
+			isa = PBXGroup;
+			children = (
+				FA9AABE72A502AD600B99FB7 /* ViewController */,
+				FA9AABE82A502AE300B99FB7 /* View */,
 			);
 			path = OrderPage;
 			sourceTree = "<group>";
@@ -501,6 +523,7 @@
 				FAF2AE172A4A8F8400F27B64 /* RootViewController.swift in Sources */,
 				FA7179502A3ABC46002C407C /* VoteViewController.swift in Sources */,
 				FA9AABE62A4FBA1B00B99FB7 /* OrderResultsViewController.swift in Sources */,
+				FA9AABEA2A5030A300B99FB7 /* OrderSectionHeaderView.swift in Sources */,
 				FA98EEFB2A3DEB7C000E6FEE /* VotingViewController.swift in Sources */,
 				FA98EF092A3F3430000E6FEE /* VoteResultCell.swift in Sources */,
 				FA9AABDC2A4D810800B99FB7 /* ToastSwiftWrapper.swift in Sources */,
@@ -521,6 +544,7 @@
 				FA7CC60F2A4403B5009B599F /* ShopManager.swift in Sources */,
 				FA7179372A3A9DF7002C407C /* HomeViewController.swift in Sources */,
 				FA7CC60D2A42DDE6009B599F /* UserManager.swift in Sources */,
+				FA9AABEC2A5069B100B99FB7 /* OrderSectionFooterView.swift in Sources */,
 				FA9AABE02A4F1D7600B99FB7 /* OrderingViewController.swift in Sources */,
 				FA7179332A3A9DF7002C407C /* AppDelegate.swift in Sources */,
 				FA71794E2A3ABB8A002C407C /* FavoriteViewController.swift in Sources */,

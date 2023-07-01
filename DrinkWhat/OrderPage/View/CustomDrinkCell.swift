@@ -23,7 +23,7 @@ class CustomDrinkCell: UITableViewCell {
         content.forEach { contentView.addSubview($0) }
         NSLayoutConstraint.activate([
             drinkNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
-            drinkNameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            drinkNameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
             drinkNameLabel.trailingAnchor.constraint(equalTo: priceLabel.leadingAnchor, constant: -8),
             volumeLabel.topAnchor.constraint(equalTo: drinkNameLabel.bottomAnchor, constant: 8),
             volumeLabel.leadingAnchor.constraint(equalTo: drinkNameLabel.leadingAnchor),
@@ -31,7 +31,10 @@ class CustomDrinkCell: UITableViewCell {
             iceLabel.topAnchor.constraint(equalTo: volumeLabel.bottomAnchor, constant: 4),
             iceLabel.leadingAnchor.constraint(equalTo: drinkNameLabel.leadingAnchor),
             iceLabel.trailingAnchor.constraint(equalTo: drinkNameLabel.trailingAnchor),
-            addToppingsLabel.topAnchor.constraint(equalTo: iceLabel.bottomAnchor, constant: 4),
+            sugarLabel.topAnchor.constraint(equalTo: iceLabel.bottomAnchor, constant: 4),
+            sugarLabel.leadingAnchor.constraint(equalTo: drinkNameLabel.leadingAnchor),
+            sugarLabel.trailingAnchor.constraint(equalTo: drinkNameLabel.trailingAnchor),
+            addToppingsLabel.topAnchor.constraint(equalTo: sugarLabel.bottomAnchor, constant: 4),
             addToppingsLabel.leadingAnchor.constraint(equalTo: drinkNameLabel.leadingAnchor),
             addToppingsLabel.trailingAnchor.constraint(equalTo: drinkNameLabel.trailingAnchor),
             noteLabel.topAnchor.constraint(equalTo: addToppingsLabel.bottomAnchor, constant: 4),
@@ -39,7 +42,7 @@ class CustomDrinkCell: UITableViewCell {
             noteLabel.trailingAnchor.constraint(equalTo: drinkNameLabel.trailingAnchor),
             noteLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
             priceLabel.topAnchor.constraint(equalTo: drinkNameLabel.topAnchor),
-            priceLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            priceLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20)
         ])
     }
     func setupCell(drinkName: String, volume: String, ice: String, sugar: String, addToppings: String, note: String, price: Int) {
@@ -76,6 +79,7 @@ extension CustomDrinkCell {
     private func makePriceLabel() -> UILabel {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .right
         label.numberOfLines = 0
         label.font = .medium(size: 16)
         label.textColor = UIColor.darkBrown
