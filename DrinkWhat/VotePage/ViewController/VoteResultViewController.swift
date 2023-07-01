@@ -130,7 +130,7 @@ extension VoteResultViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "VoteResultCell", for: indexPath)
-                as? VoteResultCell else { fatalError("Cannot created VoteCell") }
+                as? VoteResultCell else { fatalError("Cannot created VoteResultCell") }
         let voteResult = voteResults[indexPath.row + 1]
         let shopID = voteResult.shopID
         guard let shop = shopObjects.first(where: { $0.id == shopID }) else { return cell }

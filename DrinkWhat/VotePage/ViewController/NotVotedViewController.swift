@@ -92,7 +92,7 @@ extension NotVotedViewController {
         let tableView = UITableView(frame: .zero)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.dataSource = self
-        tableView.register(NotVotedCell.self, forCellReuseIdentifier: "ShopListToVoteCell")
+        tableView.register(NotVotedCell.self, forCellReuseIdentifier: "NotVotedCell")
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
@@ -126,8 +126,8 @@ extension NotVotedViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "ShopListToVoteCell", for: indexPath)
-                as? NotVotedCell else { fatalError("Cannot created VoteCell") }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "NotVotedCell", for: indexPath)
+                as? NotVotedCell else { fatalError("Cannot created NotVotedCell") }
         let voteResult = newVoteResults[indexPath.row].voteResult
         let shopID = voteResult.shopID
         guard let shop = shopObjects.first(where: { $0.id == shopID }) else { return cell }

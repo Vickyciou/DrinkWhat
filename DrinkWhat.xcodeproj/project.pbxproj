@@ -48,6 +48,11 @@
 		FA9AABD82A4D25A300B99FB7 /* Encodable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABD72A4D25A300B99FB7 /* Encodable+Extension.swift */; };
 		FA9AABDA2A4D34D200B99FB7 /* OrderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABD92A4D34D200B99FB7 /* OrderManager.swift */; };
 		FA9AABDC2A4D810800B99FB7 /* ToastSwiftWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABDB2A4D810800B99FB7 /* ToastSwiftWrapper.swift */; };
+		FA9AABDE2A4EC45300B99FB7 /* MainOrderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABDD2A4EC45300B99FB7 /* MainOrderCell.swift */; };
+		FA9AABE02A4F1D7600B99FB7 /* OrderingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABDF2A4F1D7600B99FB7 /* OrderingViewController.swift */; };
+		FA9AABE22A4F1DA400B99FB7 /* CustomDrinkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABE12A4F1DA400B99FB7 /* CustomDrinkCell.swift */; };
+		FA9AABE42A4FABFB00B99FB7 /* OrderNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABE32A4FABFB00B99FB7 /* OrderNavigationController.swift */; };
+		FA9AABE62A4FBA1B00B99FB7 /* OrderResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABE52A4FBA1B00B99FB7 /* OrderResultsViewController.swift */; };
 		FAA10A512A471079001F9CC0 /* UserObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA10A502A471079001F9CC0 /* UserObject.swift */; };
 		FAA10A532A4710B7001F9CC0 /* ShopObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA10A522A4710B7001F9CC0 /* ShopObject.swift */; };
 		FAB2B9D52A4ADC7800EB449C /* DrinkDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB2B9D42A4ADC7800EB449C /* DrinkDetailViewController.swift */; };
@@ -105,6 +110,11 @@
 		FA9AABD72A4D25A300B99FB7 /* Encodable+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+Extension.swift"; sourceTree = "<group>"; };
 		FA9AABD92A4D34D200B99FB7 /* OrderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderManager.swift; sourceTree = "<group>"; };
 		FA9AABDB2A4D810800B99FB7 /* ToastSwiftWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastSwiftWrapper.swift; sourceTree = "<group>"; };
+		FA9AABDD2A4EC45300B99FB7 /* MainOrderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainOrderCell.swift; sourceTree = "<group>"; };
+		FA9AABDF2A4F1D7600B99FB7 /* OrderingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderingViewController.swift; sourceTree = "<group>"; };
+		FA9AABE12A4F1DA400B99FB7 /* CustomDrinkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDrinkCell.swift; sourceTree = "<group>"; };
+		FA9AABE32A4FABFB00B99FB7 /* OrderNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderNavigationController.swift; sourceTree = "<group>"; };
+		FA9AABE52A4FBA1B00B99FB7 /* OrderResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderResultsViewController.swift; sourceTree = "<group>"; };
 		FAA10A502A471079001F9CC0 /* UserObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserObject.swift; sourceTree = "<group>"; };
 		FAA10A522A4710B7001F9CC0 /* ShopObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopObject.swift; sourceTree = "<group>"; };
 		FAB2B9D42A4ADC7800EB449C /* DrinkDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkDetailViewController.swift; sourceTree = "<group>"; };
@@ -291,6 +301,11 @@
 			isa = PBXGroup;
 			children = (
 				FA7179512A3ABC99002C407C /* OrderViewController.swift */,
+				FA9AABDD2A4EC45300B99FB7 /* MainOrderCell.swift */,
+				FA9AABDF2A4F1D7600B99FB7 /* OrderingViewController.swift */,
+				FA9AABE12A4F1DA400B99FB7 /* CustomDrinkCell.swift */,
+				FA9AABE32A4FABFB00B99FB7 /* OrderNavigationController.swift */,
+				FA9AABE52A4FBA1B00B99FB7 /* OrderResultsViewController.swift */,
 			);
 			path = OrderPage;
 			sourceTree = "<group>";
@@ -481,9 +496,11 @@
 				FAB2B9DD2A4AE4F000EB449C /* DrinkDetailDataSource.swift in Sources */,
 				FA9AABD82A4D25A300B99FB7 /* Encodable+Extension.swift in Sources */,
 				FA7179562A3AE557002C407C /* VoteCell.swift in Sources */,
+				FA9AABE42A4FABFB00B99FB7 /* OrderNavigationController.swift in Sources */,
 				FA71794A2A3AB994002C407C /* TabBarViewController.swift in Sources */,
 				FAF2AE172A4A8F8400F27B64 /* RootViewController.swift in Sources */,
 				FA7179502A3ABC46002C407C /* VoteViewController.swift in Sources */,
+				FA9AABE62A4FBA1B00B99FB7 /* OrderResultsViewController.swift in Sources */,
 				FA98EEFB2A3DEB7C000E6FEE /* VotingViewController.swift in Sources */,
 				FA98EF092A3F3430000E6FEE /* VoteResultCell.swift in Sources */,
 				FA9AABDC2A4D810800B99FB7 /* ToastSwiftWrapper.swift in Sources */,
@@ -492,9 +509,11 @@
 				FA98EF0B2A3F39B0000E6FEE /* WinnerShopView.swift in Sources */,
 				FA9AABD62A4D247500B99FB7 /* OrderResponse.swift in Sources */,
 				FA9232222A49896500F045C6 /* SignInWithAppleHelper.swift in Sources */,
+				FA9AABDE2A4EC45300B99FB7 /* MainOrderCell.swift in Sources */,
 				FA71795C2A3C0B91002C407C /* UIColor+Extension.swift in Sources */,
 				FA7CC6172A444B81009B599F /* ShopMenuViewController.swift in Sources */,
 				FA98EEFD2A3DEBA3000E6FEE /* VotingCell.swift in Sources */,
+				FA9AABE22A4F1DA400B99FB7 /* CustomDrinkCell.swift in Sources */,
 				FAA10A512A471079001F9CC0 /* UserObject.swift in Sources */,
 				FA98EF012A3EAF0E000E6FEE /* VoteNavigationController.swift in Sources */,
 				FA98EEFF2A3E03D0000E6FEE /* Date+Extension.swift in Sources */,
@@ -502,6 +521,7 @@
 				FA7CC60F2A4403B5009B599F /* ShopManager.swift in Sources */,
 				FA7179372A3A9DF7002C407C /* HomeViewController.swift in Sources */,
 				FA7CC60D2A42DDE6009B599F /* UserManager.swift in Sources */,
+				FA9AABE02A4F1D7600B99FB7 /* OrderingViewController.swift in Sources */,
 				FA7179332A3A9DF7002C407C /* AppDelegate.swift in Sources */,
 				FA71794E2A3ABB8A002C407C /* FavoriteViewController.swift in Sources */,
 				FA7179352A3A9DF7002C407C /* SceneDelegate.swift in Sources */,

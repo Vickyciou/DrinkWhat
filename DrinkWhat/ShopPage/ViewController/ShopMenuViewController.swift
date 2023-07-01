@@ -120,8 +120,7 @@ extension ShopMenuViewController: SectionHeaderViewDelegate {
         Task {
             do {
                 try await orderManager.creatOrder(
-                    shopID: shopObject.id,
-                    shopName: shopObject.name,
+                    shopObject: shopObject,
                     initiatorUserID: userObject.userID,
                     initiatorUserName: userObject.userName ?? "Name")
 
@@ -155,7 +154,7 @@ extension ShopMenuViewController: SectionHeaderViewDelegate {
         Task {
             do {
                 try await groupManager.addShopIntoGroup(shopID: shopObject.id)
-                view.makeAlertToast(message: "加入成功！", duration: 2)
+                view.makeAlertToast(message: "加入成功！", title: nil, duration: 2)
             } catch ManagerError.itemAlreadyExistsError {
                 let alert = UIAlertController(
                     title: "加入失敗",

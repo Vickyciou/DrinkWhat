@@ -10,9 +10,13 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 import FirebaseAuth
 
+protocol UserManagerDelegate: AnyObject {
+    func userManager(_ manager: UserManager, didGet userObject: UserObject)
+}
 class UserManager {
     static let shared = UserManager()
     var userObject: UserObject?
+    weak var delegate: UserManagerDelegate?
 
     private let userCollection: CollectionReference = Firestore.firestore().collection("Users")
 
@@ -30,24 +34,10 @@ class UserManager {
     }
 
     func getUserData(userId: String) async throws -> UserObject {
-        let object = try await userDocument(userID: userId).getDocument(as: UserObject.self)
-        userObject = object
-        return object
+        let userObject = try await userDocument(userID: userId).getDocument(as: UserObject.self)
+        self.userObject = userObject
+        delegate?.userManager(self, didGet: userObject)
+        return userObject
     }
-
-//        let docRef = db.collection("Users").document(userID)
-//
-//        docRef.getDocument { [self] (document, error) in
-//            if let document = document, document.exists {
-//                do {
-//                    let userData = try document.data(as: UserObject.self)
-//                    self.userObject = userData
-//                } catch {
-//                    print("Error decode user\(userID) from Firestore: \(error)")
-//                }
-//            } else {
-//                print("Error get user\(userID) from Firestore: \(String(describing: error))")
-//            }
-//        }
 
 }

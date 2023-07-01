@@ -69,6 +69,7 @@ extension TabBarViewController {
 
         func makeViewController() -> UIViewController {
             let controller: UIViewController
+            let userManager = UserManager()
             switch self {
             case .home: controller = UINavigationController(rootViewController: HomeViewController())
             case .favorite: controller = UINavigationController(rootViewController: FavoriteViewController())

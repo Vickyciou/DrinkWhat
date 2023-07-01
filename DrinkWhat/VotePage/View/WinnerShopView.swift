@@ -46,6 +46,7 @@ extension WinnerShopView {
         imageView.contentMode = .scaleAspectFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.cornerRadius = 10
+        imageView.layer.masksToBounds = true
         return imageView
     }
     private func makeShopNameLabel() -> UILabel {

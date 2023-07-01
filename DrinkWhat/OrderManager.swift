@@ -33,7 +33,7 @@ class OrderManager {
     }
 
     // MARK: - Create new order
-    func creatOrder(shopID: String, shopName: String, initiatorUserID: String, initiatorUserName: String) async throws {
+    func creatOrder(shopObject: ShopObject, initiatorUserID: String, initiatorUserName: String) async throws {
 
         let document = try await orderCollection.whereFilter(Filter.andFilter(
             [
@@ -52,8 +52,9 @@ class OrderManager {
                 state: "進行中",
                 initiatorUserID: initiatorUserID,
                 initiatorUserName: initiatorUserName,
-                shopID: shopID,
-                shopName: shopName,
+                shopID: shopObject.id,
+                shopLogoImageURL: shopObject.logoImageURL,
+                shopName: shopObject.name,
                 joinUserIDs: []
             )
             try orderDocument(orderID: orderID).setData(from: order)
@@ -83,14 +84,11 @@ class OrderManager {
         } else {
             throw ManagerError.noData
         }
-//        let orderObject = OrderObject(
-//            drinkName: drinkName, drinkPrice: drinkPrice, volume: volume, sugar: sugar, ice: ice, addToppings: addToppings, note: note)
-
     }
 
     // MARK: - User add into order group
-    func addUserIntoOrderGroup(userID: String, orderID: String) async throws {
-        try await orderDocument(orderID: orderID).updateData(["joinUserIDs": FieldValue.arrayUnion([userID])])
+    func addUserIntoOrderGroup(userID: String, orderID: String) {
+        orderDocument(orderID: orderID).updateData(["joinUserIDs": FieldValue.arrayUnion([userID])])
     }
 
     // MARK: - Closed order group
@@ -99,6 +97,27 @@ class OrderManager {
     }
 
     // MARK: - Load order page
+//    func getOrderResponse(userID: String) {
+//        let orders = orderCollection.whereFilter(Filter.orFilter(
+//            [
+//                Filter.whereField("initiatorUserID", isEqualTo: userID),
+//                Filter.whereField("joinUserIDs", arrayContains: userID)
+//            ]
+//        )).addSnapshotListener ({ [weak self] snapshot, error in
+//            guard let self else { return }
+//            if let error = error {
+//                self.delegate?.orderManager(self, didFailWith: error)
+//            } else if let snapshot {
+//                let orderData: [OrderResponse] =
+//                    snapshot.documents.compactMap
+//                {
+//                    try? $0.data(as: OrderResponse.self)
+//
+//                }
+//                self.delegate?.orderManager(self, didGetAllOrderData: orderData)
+//            }
+//        })
+//    }
     func getOrderResponse(userID: String) async throws {
         let orders = try await orderCollection.whereFilter(Filter.orFilter(
             [
