@@ -82,7 +82,7 @@ class OrderingViewController: UIViewController {
     }
     @objc private func shareButtonTapped() {
         let orderID = orderResponse.orderID
-        let shareURL = URL(string: "drinkWhat://share?groupID=\(orderID)")!
+        let shareURL = URL(string: "drinkWhat://share?orderID=\(orderID)")!
         let aVC = UIActivityViewController(activityItems: [shareURL], applicationActivities: nil)
         present(aVC, animated: true)
 
@@ -192,7 +192,7 @@ extension OrderingViewController: UITableViewDelegate {
 extension OrderingViewController: InitiatorOrderingBottomViewDelegate {
     func cancelButtonTapped(_ view: InitiatorOrderingBottomView) {
         orderManager.setOrderState(orderID: orderResponse.orderID,
-                                   status: OrderStatus.canceled)
+                                   status: OrderStatus.canceled.rawValue)
         if let userObject {
             Task {
                 try await orderManager.getOrderResponse(userID: userObject.userID)
@@ -202,7 +202,7 @@ extension OrderingViewController: InitiatorOrderingBottomViewDelegate {
 
     func finishButtonTapped(_ view: InitiatorOrderingBottomView) {
         orderManager.setOrderState(orderID: orderResponse.orderID,
-                                   status: OrderStatus.finished)
+                                   status: OrderStatus.finished.rawValue)
         if let userObject {
             Task {
                 try await orderManager.getOrderResponse(userID: userObject.userID)
@@ -223,7 +223,6 @@ extension OrderingViewController: JoinUsersBottomViewDelegate {
 extension OrderingViewController: UserObjectsAccessible {
     func setUserObjects(_ userObjects: [UserObject]) {
         joinUserObjects = userObjects
-        print("orderingVC : \(joinUserObjects)")
         tableView.reloadData()
     }
 }
@@ -237,9 +236,11 @@ extension OrderingViewController: OrderResultsAccessible {
 
 extension OrderingViewController: OrderManagerDelegate {
     func orderManager(_ manager: OrderManager, didGetAllOrderData orderData: [OrderResponse]) {
-        guard let newOrderResponse = orderData.first(where: { $0.orderID == orderResponse.orderID}) else { return }
+        guard let newOrderResponse = orderData.first(where: {$0.orderID == orderResponse.orderID}) else { return }
         orderResponse = newOrderResponse
-        setupBottomView(state: state)
+        DispatchQueue.main.async { [self] in
+            setupBottomView(state: state)
+        }
     }
 
     func orderManager(_ manager: OrderManager, didGetOrderResults orderResults: [OrderResults]) {

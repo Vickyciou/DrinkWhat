@@ -18,7 +18,7 @@ protocol OrderManagerDelegate: AnyObject {
 enum OrderStatus: String {
     case active = "進行中"
     case canceled = "已取消"
-    case finished =  "已完成"
+    case finished = "已完成"
 }
 
 class OrderManager {
@@ -98,7 +98,7 @@ class OrderManager {
     }
 
     // MARK: - Closed or cancel order group
-    func setOrderState(orderID: String, status: OrderStatus) {
+    func setOrderState(orderID: String, status: String) {
         orderDocument(orderID: orderID).updateData(["state": status])
     }
 
@@ -132,10 +132,13 @@ class OrderManager {
             ]
         )).getDocuments()
 
-        let orderData: [OrderResponse] =
-        orders.documents.compactMap({ try? $0.data(as: OrderResponse.self) })
-
-        delegate?.orderManager(self, didGetAllOrderData: orderData)
+        do {
+            let orderData: [OrderResponse] =
+            try orders.documents.compactMap({ try $0.data(as: OrderResponse.self) })
+            delegate?.orderManager(self, didGetAllOrderData: orderData)
+        } catch {
+            print(ManagerError.decodingError)
+        }
     }
 
     // MARK: - Listen to order results

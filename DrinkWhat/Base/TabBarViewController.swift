@@ -13,12 +13,15 @@ protocol TabBarViewControllerDelegate: AnyObject {
 class TabBarViewController: UITabBarController {
     private let tabs: [Tab] = [.home, .favorite, .vote, .order, .profile]
     private let groupManager = GroupManager()
+    private let orderManager = OrderManager()
     private var userObject = UserManager.shared.userObject
     private let groupID: String?
+    private let orderID: String?
     weak var tabBardelegate: TabBarViewControllerDelegate?
 
-    init(groupID: String? = nil) {
+    init(groupID: String? = nil, orderID: String? = nil) {
         self.groupID = groupID
+        self.orderID = orderID
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -31,6 +34,7 @@ class TabBarViewController: UITabBarController {
         view.backgroundColor = .white
         viewControllers = tabs.map { $0.makeViewController() }
         switchToGroupIndex()
+        switchToOrderIndex()
         let profileVC = (viewControllers?.last as? UINavigationController)?.viewControllers.first as? ProfileViewController
         profileVC?.delegate = self
     }
@@ -55,7 +59,11 @@ class TabBarViewController: UITabBarController {
         }
     }
     private func switchToOrderIndex() {
-
+        guard let orderID else { return }
+        selectedIndex = 3
+        userObject.map {
+            orderManager.addUserIntoOrderGroup(userID: "\($0.userID)", orderID: orderID)
+        }
     }
 }
 

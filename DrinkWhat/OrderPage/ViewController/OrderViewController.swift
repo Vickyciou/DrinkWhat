@@ -19,6 +19,14 @@ class OrderViewController: UIViewController {
         super.viewDidLoad()
         setupVC()
     }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        Task {
+            guard let userObject else { return }
+            try await orderManager.getOrderResponse(userID: userObject.userID)
+        }
+    }
     private func setupVC() {
         setNavController()
         setupTableView()
@@ -90,7 +98,7 @@ extension OrderViewController: UITableViewDataSource {
             let dateString = date.dateToString(date: date)
             cell.setupCell(shopImageURL: continueOrders.shopLogoImageURL,
                            shopName: continueOrders.shopName,
-                           description: "由\(userName)發起的團購",
+                           description: "由\(continueOrders.initiatorUserName)發起的團購",
                            date: dateString)
             return cell
         case 1:
@@ -152,4 +160,3 @@ extension OrderViewController: OrderManagerDelegate {
         print(error.localizedDescription)
     }
 }
-

@@ -108,6 +108,14 @@ extension OrderNavigationController: OrderManagerDelegate {
                 .map { $0.userID }
                 .asyncMap(userManager.getUserData)
         }
+        if orderResults.isEmpty {
+            if let myUserObject = self.userObject {
+                decideVC(orderResponse: orderResponse,
+                         joinUserObject: joinUserObjects,
+                         userObject: myUserObject,
+                         orderResults: orderResults)
+            }
+        }
     }
 
     func orderManager(_ manager: OrderManager, didFailWith error: Error) {
