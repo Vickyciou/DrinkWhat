@@ -36,10 +36,11 @@ class OrderSectionHeaderView: UIView {
         ])
     }
 
-    func setupView(userImageURL: String?, userName: String) {
+    func setupView(userImageURL: String?, userName: String, isPaid: Bool) {
         userImageView.loadImage(userImageURL,
                                 placeHolder: UIImage(systemName: "person.circle.fill")?.setColor(color: .darkBrown))
         userNameLabel.text = userName
+        paidStatusButton.isEnabled = !isPaid
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -65,17 +66,17 @@ extension OrderSectionHeaderView {
     private func makePaidStatusButton() -> UIButton {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitleColor(UIColor.skinColor, for: .selected)
+        button.setTitleColor(UIColor.skinColor, for: .disabled)
         button.setTitleColor(UIColor.darkBrown, for: .normal)
         button.titleLabel?.font = .medium(size: 16)
         let normalBackground = UIColor.darkBrown.toImage(size: CGSize(width: 65, height: 25))
         let selectedBackground = UIColor.white.toImage(size: CGSize(width: 65, height: 25))
-        button.setBackgroundImage(normalBackground, for: .selected)
+        button.setBackgroundImage(normalBackground, for: .disabled)
         button.setBackgroundImage(selectedBackground, for: .normal)
         button.layer.borderColor = UIColor.darkBrown.cgColor
         button.layer.borderWidth = 1
         button.setTitle("未付款", for: .normal)
-        button.setTitle("已付款", for: .selected)
+        button.setTitle("已付款", for: .disabled)
         button.layer.cornerRadius = 5
         button.layer.masksToBounds = true
         button.addTarget(self, action: #selector(paidStatusButtonTapped), for: .touchUpInside)

@@ -45,7 +45,13 @@ class CustomDrinkCell: UITableViewCell {
             priceLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20)
         ])
     }
-    func setupCell(drinkName: String, volume: String, ice: String, sugar: String, addToppings: String, note: String, price: Int) {
+    func setupCell(drinkName: String,
+                   volume: String,
+                   ice: String,
+                   sugar: String,
+                   addToppings: [String],
+                   note: String,
+                   price: Int) {
         drinkNameLabel.text = drinkName
         volumeLabel.text = "份量：\(volume)"
         iceLabel.text = "冰量：\(ice)"

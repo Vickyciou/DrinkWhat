@@ -94,7 +94,7 @@ extension TabBarViewController {
             case .vote:
                 return UIImage(systemName: "hand.tap")?.setColor(color: .darkBrown)
             case .order:
-                return UIImage(systemName: "list.bullet.clipboard")?.setColor(color: .darkBrown)
+                return UIImage(systemName: "doc.text")?.setColor(color: .darkBrown)
             case .profile:
                 return UIImage(systemName: "person")?.setColor(color: .darkBrown)
             }
@@ -108,7 +108,7 @@ extension TabBarViewController {
             case .vote:
                 return UIImage(systemName: "hand.tap.fill")?.setColor(color: .darkBrown)
             case .order:
-                return UIImage(systemName: "list.bullet.clipboard.fill")?.setColor(color: .darkBrown)
+                return UIImage(systemName: "doc.text.fill")?.setColor(color: .darkBrown)
             case .profile:
                 return UIImage(systemName: "person.fill")?.setColor(color: .darkBrown)
             }

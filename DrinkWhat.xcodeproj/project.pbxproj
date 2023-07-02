@@ -55,6 +55,11 @@
 		FA9AABE62A4FBA1B00B99FB7 /* OrderResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABE52A4FBA1B00B99FB7 /* OrderResultsViewController.swift */; };
 		FA9AABEA2A5030A300B99FB7 /* OrderSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABE92A5030A300B99FB7 /* OrderSectionHeaderView.swift */; };
 		FA9AABEC2A5069B100B99FB7 /* OrderSectionFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABEB2A5069B100B99FB7 /* OrderSectionFooterView.swift */; };
+		FA9AABEE2A51210700B99FB7 /* OrderTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABED2A51210700B99FB7 /* OrderTableViewHeader.swift */; };
+		FA9AABF02A51378400B99FB7 /* InitiatorOrderingBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABEF2A51378400B99FB7 /* InitiatorOrderingBottomView.swift */; };
+		FA9AABF22A51472400B99FB7 /* OrderFinishedBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABF12A51472400B99FB7 /* OrderFinishedBottomView.swift */; };
+		FA9AABF42A51480600B99FB7 /* JoinUsersBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABF32A51480600B99FB7 /* JoinUsersBottomView.swift */; };
+		FA9AABF62A51687500B99FB7 /* OrderTableViewFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABF52A51687500B99FB7 /* OrderTableViewFooter.swift */; };
 		FAA10A512A471079001F9CC0 /* UserObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA10A502A471079001F9CC0 /* UserObject.swift */; };
 		FAA10A532A4710B7001F9CC0 /* ShopObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA10A522A4710B7001F9CC0 /* ShopObject.swift */; };
 		FAB2B9D52A4ADC7800EB449C /* DrinkDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB2B9D42A4ADC7800EB449C /* DrinkDetailViewController.swift */; };
@@ -119,6 +124,11 @@
 		FA9AABE52A4FBA1B00B99FB7 /* OrderResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderResultsViewController.swift; sourceTree = "<group>"; };
 		FA9AABE92A5030A300B99FB7 /* OrderSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderSectionHeaderView.swift; sourceTree = "<group>"; };
 		FA9AABEB2A5069B100B99FB7 /* OrderSectionFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderSectionFooterView.swift; sourceTree = "<group>"; };
+		FA9AABED2A51210700B99FB7 /* OrderTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderTableViewHeader.swift; sourceTree = "<group>"; };
+		FA9AABEF2A51378400B99FB7 /* InitiatorOrderingBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitiatorOrderingBottomView.swift; sourceTree = "<group>"; };
+		FA9AABF12A51472400B99FB7 /* OrderFinishedBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderFinishedBottomView.swift; sourceTree = "<group>"; };
+		FA9AABF32A51480600B99FB7 /* JoinUsersBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinUsersBottomView.swift; sourceTree = "<group>"; };
+		FA9AABF52A51687500B99FB7 /* OrderTableViewFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderTableViewFooter.swift; sourceTree = "<group>"; };
 		FAA10A502A471079001F9CC0 /* UserObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserObject.swift; sourceTree = "<group>"; };
 		FAA10A522A4710B7001F9CC0 /* ShopObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopObject.swift; sourceTree = "<group>"; };
 		FAB2B9D42A4ADC7800EB449C /* DrinkDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkDetailViewController.swift; sourceTree = "<group>"; };
@@ -319,6 +329,11 @@
 				FA9AABDD2A4EC45300B99FB7 /* MainOrderCell.swift */,
 				FA9AABE92A5030A300B99FB7 /* OrderSectionHeaderView.swift */,
 				FA9AABEB2A5069B100B99FB7 /* OrderSectionFooterView.swift */,
+				FA9AABED2A51210700B99FB7 /* OrderTableViewHeader.swift */,
+				FA9AABF52A51687500B99FB7 /* OrderTableViewFooter.swift */,
+				FA9AABEF2A51378400B99FB7 /* InitiatorOrderingBottomView.swift */,
+				FA9AABF32A51480600B99FB7 /* JoinUsersBottomView.swift */,
+				FA9AABF12A51472400B99FB7 /* OrderFinishedBottomView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -520,6 +535,7 @@
 				FA7179562A3AE557002C407C /* VoteCell.swift in Sources */,
 				FA9AABE42A4FABFB00B99FB7 /* OrderNavigationController.swift in Sources */,
 				FA71794A2A3AB994002C407C /* TabBarViewController.swift in Sources */,
+				FA9AABF42A51480600B99FB7 /* JoinUsersBottomView.swift in Sources */,
 				FAF2AE172A4A8F8400F27B64 /* RootViewController.swift in Sources */,
 				FA7179502A3ABC46002C407C /* VoteViewController.swift in Sources */,
 				FA9AABE62A4FBA1B00B99FB7 /* OrderResultsViewController.swift in Sources */,
@@ -530,6 +546,7 @@
 				FA71795E2A3C13BB002C407C /* NotVotedViewController.swift in Sources */,
 				FA7179602A3C141A002C407C /* NotVotedCell.swift in Sources */,
 				FA98EF0B2A3F39B0000E6FEE /* WinnerShopView.swift in Sources */,
+				FA9AABEE2A51210700B99FB7 /* OrderTableViewHeader.swift in Sources */,
 				FA9AABD62A4D247500B99FB7 /* OrderResponse.swift in Sources */,
 				FA9232222A49896500F045C6 /* SignInWithAppleHelper.swift in Sources */,
 				FA9AABDE2A4EC45300B99FB7 /* MainOrderCell.swift in Sources */,
@@ -542,11 +559,14 @@
 				FA98EEFF2A3E03D0000E6FEE /* Date+Extension.swift in Sources */,
 				FA7CC6082A41ACC4009B599F /* GroupManager.swift in Sources */,
 				FA7CC60F2A4403B5009B599F /* ShopManager.swift in Sources */,
+				FA9AABF02A51378400B99FB7 /* InitiatorOrderingBottomView.swift in Sources */,
+				FA9AABF62A51687500B99FB7 /* OrderTableViewFooter.swift in Sources */,
 				FA7179372A3A9DF7002C407C /* HomeViewController.swift in Sources */,
 				FA7CC60D2A42DDE6009B599F /* UserManager.swift in Sources */,
 				FA9AABEC2A5069B100B99FB7 /* OrderSectionFooterView.swift in Sources */,
 				FA9AABE02A4F1D7600B99FB7 /* OrderingViewController.swift in Sources */,
 				FA7179332A3A9DF7002C407C /* AppDelegate.swift in Sources */,
+				FA9AABF22A51472400B99FB7 /* OrderFinishedBottomView.swift in Sources */,
 				FA71794E2A3ABB8A002C407C /* FavoriteViewController.swift in Sources */,
 				FA7179352A3A9DF7002C407C /* SceneDelegate.swift in Sources */,
 				FA98EF032A3EB991000E6FEE /* VoteResultViewController.swift in Sources */,

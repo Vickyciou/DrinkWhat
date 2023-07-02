@@ -65,16 +65,16 @@ class OrderNavigationController: UINavigationController {
         orderResults: [OrderResults]
     ) {
         DispatchQueue.main.async { [self] in
-        if isEndOrder(orderResponse: orderResponse) {
-            if viewControllers.last is OrderResultsViewController { return }
-            let orderResultVC = OrderResultsViewController(
-                orderResponse: orderResponse,
-                joinUserObject: joinUserObject,
-                orderResults: orderResults
-            )
-            pushViewController(orderResultVC, animated: !viewControllers.isEmpty)
-        } else {
-            if viewControllers.last is OrderingViewController { return }
+            //        if isEndOrder(orderResponse: orderResponse) {
+            //            if viewControllers.last is OrderResultsViewController { return }
+            //            let orderResultVC = OrderResultsViewController(
+            //                orderResponse: orderResponse,
+            //                joinUserObject: joinUserObject,
+            //                orderResults: orderResults
+            //            )
+            //            pushViewController(orderResultVC, animated: !viewControllers.isEmpty)
+            //        } else {
+            //            if viewControllers.last is OrderingViewController { return }
             let orderingVC = OrderingViewController(
                 orderResponse: orderResponse,
                 isInitiator: orderResponse.initiatorUserID == userObject.userID
@@ -84,12 +84,12 @@ class OrderNavigationController: UINavigationController {
             //            orderingVC.delegate = self
             pushViewController(orderingVC, animated: !viewControllers.isEmpty)
         }
-        }
     }
-
-    private func isEndOrder(orderResponse: OrderResponse) -> Bool {
-        orderResponse.state == "已完成"
-    }
+//    }
+//
+//    private func isEndOrder(orderResponse: OrderResponse) -> Bool {
+//        orderResponse.state == "已完成"
+//    }
 
     private func isInitiator(orderResponse: OrderResponse, userObject: UserObject) -> Bool {
         orderResponse.initiatorUserID == userObject.userID

@@ -15,6 +15,12 @@ protocol OrderManagerDelegate: AnyObject {
     func orderManager(_ manager: OrderManager, didFailWith error: Error)
 }
 
+enum OrderStatus: String {
+    case active = "進行中"
+    case canceled = "已取消"
+    case finished =  "已完成"
+}
+
 class OrderManager {
     weak var delegate: OrderManagerDelegate?
     private let orderCollection: CollectionReference =
@@ -38,7 +44,7 @@ class OrderManager {
         let document = try await orderCollection.whereFilter(Filter.andFilter(
             [
                 Filter.whereField("initiatorUserID", isEqualTo: initiatorUserID),
-                Filter.whereField("state", isEqualTo: "進行中")
+                Filter.whereField("state", isEqualTo: OrderStatus.active.rawValue)
             ]
         )).getDocuments()
 
@@ -49,7 +55,7 @@ class OrderManager {
             let order = OrderResponse(
                 orderID: orderID,
                 date: Date().timeIntervalSince1970,
-                state: "進行中",
+                state: OrderStatus.active.rawValue,
                 initiatorUserID: initiatorUserID,
                 initiatorUserName: initiatorUserName,
                 shopID: shopObject.id,
@@ -68,7 +74,7 @@ class OrderManager {
                 Filter.whereField("initiatorUserID", isEqualTo: userID),
                 Filter.whereField("joinUserIDs", arrayContains: userID)
             ]
-        )).whereFilter(Filter.whereField("state", isEqualTo: "進行中")).getDocuments()
+        )).whereFilter(Filter.whereField("state", isEqualTo: OrderStatus.active.rawValue)).getDocuments()
 
         if let order = try document.documents.first?.data(as: OrderResponse.self) {
             let orderID = order.orderID
@@ -77,7 +83,7 @@ class OrderManager {
                 let orderObjectDic = try orderObject.toDictionary()
                 try await orderResultRef.updateData(["orderObjects": FieldValue.arrayUnion([orderObjectDic])])
             } else {
-                let orderResults = OrderResults(userID: userID, isPaid: "未付款", orderObjects: [orderObject])
+                let orderResults = OrderResults(userID: userID, isPaid: false, orderObjects: [orderObject])
                 try orderObjectsDocument(orderID: orderID, userID: userID).setData(from: orderResults)
             }
 
@@ -91,9 +97,9 @@ class OrderManager {
         orderDocument(orderID: orderID).updateData(["joinUserIDs": FieldValue.arrayUnion([userID])])
     }
 
-    // MARK: - Closed order group
-    func setOrderStateToFinish(orderID: String) {
-        orderDocument(orderID: orderID).updateData(["state": "已完成"])
+    // MARK: - Closed or cancel order group
+    func setOrderState(orderID: String, status: OrderStatus) {
+        orderDocument(orderID: orderID).updateData(["state": status])
     }
 
     // MARK: - Load order page
