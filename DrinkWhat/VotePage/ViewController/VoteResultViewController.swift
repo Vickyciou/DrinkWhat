@@ -12,15 +12,19 @@ class VoteResultViewController: UIViewController {
     private lazy var tableView: UITableView = makeTableView()
     private lazy var startOrderButton: UIButton = makeStartOrderButton()
     private let groupObject: GroupResponse
+    private let userObject: UserObject
     private let shopObjects: [ShopObject]
     private let voteResults: [VoteResult]
+    private let orderManager = OrderManager()
 
     init(
         groupObject: GroupResponse,
+        userObject: UserObject,
         voteResults: [VoteResult],
         shopObjects: [ShopObject]
     ) {
         self.groupObject = groupObject
+        self.userObject = userObject
         self.voteResults = voteResults
         self.shopObjects = shopObjects
         super.init(nibName: nil, bundle: nil)
@@ -114,12 +118,34 @@ extension VoteResultViewController {
         button.setTitleColor(UIColor.midiumBrown, for: .highlighted)
         button.titleLabel?.font = .medium(size: 18)
         button.backgroundColor = UIColor.darkBrown
-        button.setTitle("前往點餐", for: .normal)
+        button.setTitle("開始團購", for: .normal)
         button.addTarget(self, action: #selector(startOrderButtonTapped(_:)), for: .touchUpInside)
         return button
     }
     @objc func startOrderButtonTapped(_ sender: UIButton) {
-        // setData給firestore
+
+        guard let voteResult = voteResults.first else { return }
+        let winnerShopID = voteResult.shopID
+        guard let shop = shopObjects.first(where: { $0.id == winnerShopID }) else { return }
+        Task {
+            do {
+                let orderID = try await orderManager.createOrder(shopObject: shop,
+                                                                initiatorUserID: groupObject.initiatorUserID,
+                                                                initiatorUserName: groupObject.initiatorUserName).orderID
+                try await orderManager.addUserIntoOrderGroup(userID: userObject.userID, orderID: orderID)
+                let shopMenuVC = ShopMenuViewController(shopObject: shop)
+                present(shopMenuVC, animated: true)
+            } catch ManagerError.itemAlreadyExistsError {
+                let alert = UIAlertController(
+                    title: "開團失敗",
+                    message: "目前已有進行中的團購群組囉！\n請先完成進行中的群組~",
+                    preferredStyle: .alert
+                )
+                let okAction = UIAlertAction(title: "OK", style: .default)
+                alert.addAction(okAction)
+                present(alert, animated: true)
+            }
+        }
     }
 }
 

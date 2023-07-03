@@ -23,7 +23,7 @@ extension GroupManagerDelegate {
 }
 
 enum ManagerError: LocalizedError {
-    case serverError, noData, decodingError, conversionError, itemAlreadyExistsError, noMatchData
+    case serverError, noData, decodingError, conversionError, itemAlreadyExistsError, alreadyAddAnotherOrderError, noMatchData
 
     var errorDescription: String? {
         switch self {
@@ -32,6 +32,7 @@ enum ManagerError: LocalizedError {
         case .decodingError: return "Decoding error"
         case .conversionError: return "Failed to change Object into dictionary"
         case .itemAlreadyExistsError: return "Item Already Exists."
+        case .alreadyAddAnotherOrderError: return "Already add another order"
         case .noMatchData: return "Could not found match data"
         }
     }

@@ -89,7 +89,6 @@ extension ShopMenuViewController: UITableViewDataSource {
     }
 }
 
-// 這邊要寫section header
 extension ShopMenuViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let drink = shopObject.menu[indexPath.row]
@@ -122,21 +121,29 @@ extension ShopMenuViewController: SectionHeaderViewDelegate {
         }
         Task {
             do {
-                try await orderManager.creatOrder(
+                let orderID = try await orderManager.createOrder(
                     shopObject: shopObject,
                     initiatorUserID: userObject.userID,
-                    initiatorUserName: userObject.userName ?? "Name")
+                    initiatorUserName: userObject.userName ?? "Name").orderID
 
                 let alert = UIAlertController(
                     title: "開始團購囉",
                     message: "要立刻分享給朋友嗎？",
                     preferredStyle: .alert
                 )
-                let shareAction = UIAlertAction(title: "分享", style: .default)
-                let cancelAction = UIAlertAction(title: "先不要", style: .cancel)
-                alert.addAction(shareAction)
-                alert.addAction(cancelAction)
-                present(alert, animated: true)
+                DispatchQueue.main.async {
+                    let shareAction = UIAlertAction(title: "分享", style: .default) { _ in
+                        let orderID = orderID
+                        let shareURL = URL(string: "drinkWhat://share?orderID=\(orderID)")!
+                        let aVC = UIActivityViewController(activityItems: [shareURL], applicationActivities: nil)
+                        self.present(aVC, animated: true)
+
+                    }
+                    let cancelAction = UIAlertAction(title: "先不要", style: .cancel)
+                    alert.addAction(shareAction)
+                    alert.addAction(cancelAction)
+                    self.present(alert, animated: true)
+                }
 
             } catch ManagerError.itemAlreadyExistsError {
                 let alert = UIAlertController(

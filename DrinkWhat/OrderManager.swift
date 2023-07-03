@@ -42,7 +42,7 @@ class OrderManager {
     private var orderResultsListener: ListenerRegistration?
 
     // MARK: - Create new order
-    func creatOrder(shopObject: ShopObject, initiatorUserID: String, initiatorUserName: String) async throws {
+    func createOrder(shopObject: ShopObject, initiatorUserID: String, initiatorUserName: String) async throws -> OrderResponse {
 
         let document = try await orderCollection.whereFilter(Filter.andFilter(
             [
@@ -65,6 +65,7 @@ class OrderManager {
                 joinUserIDs: []
             )
             try orderDocument(orderID: orderID).setData(from: order)
+            return order
         }
     }
 
@@ -119,11 +120,18 @@ class OrderManager {
             ]
         )).whereFilter(Filter.whereField("state", isEqualTo: OrderStatus.active.rawValue)).getDocuments()
 
-        if document.isEmpty {
+        if (document.documents.first?.data()) == nil {
             try await orderDocument(orderID: orderID).updateData(["joinUserIDs": FieldValue.arrayUnion([userID])])
+        } else if document.documents.first?.data()["initiatorUserID"] as! String == userID {
+            return
         } else {
-            throw ManagerError.itemAlreadyExistsError
+            throw ManagerError.alreadyAddAnotherOrderError
         }
+    }
+
+    // MARK: - Remove user from order group
+    func removeUserFromOrder(userID: String, orderID: String) {
+        orderDocument(orderID: orderID).updateData(["joinUserIDs": FieldValue.arrayRemove([userID])])
     }
 
     // MARK: - Closed or cancel order group

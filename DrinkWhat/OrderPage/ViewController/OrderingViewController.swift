@@ -219,7 +219,22 @@ extension OrderingViewController: JoinUsersBottomViewDelegate {
 
 extension OrderingViewController: OrderTableViewFooterDelegate {
     func exitButtonTapped(_ view: OrderTableViewFooter) {
-        //
+        let alert = UIAlertController(
+            title: "離開此團購",
+            message: "確定要離開嗎？",
+            preferredStyle: .alert
+        )
+        let leaveAction = UIAlertAction(title: "離開", style: .default) { [self] _ in
+            if let userObject {
+                orderManager.removeUserFromOrder(userID: userObject.userID, orderID: orderResponse.orderID)
+            }
+            dismiss(animated: true)
+        }
+        let cancelAction = UIAlertAction(title: "先不要", style: .cancel)
+        alert.addAction(leaveAction)
+        alert.addAction(cancelAction)
+        present(alert, animated: true)
+
     }
 }
 
