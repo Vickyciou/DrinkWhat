@@ -13,9 +13,7 @@ struct OrderResponse: Codable {
     let state: String
     let initiatorUserID: String
     let initiatorUserName: String
-    let shopID: String
-    let shopLogoImageURL: String
-    let shopName: String
+    let shopObject: ShopObject
     var joinUserIDs: [String]
 //    let amountPrice: Int
 }

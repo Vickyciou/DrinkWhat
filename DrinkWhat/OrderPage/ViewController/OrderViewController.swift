@@ -28,9 +28,6 @@ class OrderViewController: UIViewController {
         guard let userObject else { return }
         orderManager.listenOrderResponse(userID: userObject.userID)
 
-        let orderingVC = OrderingViewController()
-        orderingVC.delegate = self
-
     }
 
     private func setNavController() {
@@ -81,8 +78,8 @@ extension OrderViewController: UITableViewDataSource {
 
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "MainOrderCell", for: indexPath) as? MainOrderCell,
-              let userName = userObject?.userName else { fatalError("Cannot created MainOrderCell") }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "MainOrderCell", for: indexPath)
+                as? MainOrderCell else { fatalError("Cannot created MainOrderCell") }
 
         switch indexPath.section {
         case 0:
@@ -90,8 +87,8 @@ extension OrderViewController: UITableViewDataSource {
             let continueOrder = continueOrders[indexPath.row]
             let date = Date(timeIntervalSince1970: continueOrder.date)
             let dateString = date.dateToString(date: date)
-            cell.setupCell(shopImageURL: continueOrder.shopLogoImageURL,
-                           shopName: continueOrder.shopName,
+            cell.setupCell(shopImageURL: continueOrder.shopObject.logoImageURL,
+                           shopName: continueOrder.shopObject.name,
                            description: "由\(continueOrder.initiatorUserName)發起的團購",
                            date: dateString)
             return cell
@@ -100,9 +97,9 @@ extension OrderViewController: UITableViewDataSource {
             let finishedOrder = finishedOrders[indexPath.row]
             let date = Date(timeIntervalSince1970: finishedOrder.date)
             let dateString = date.dateToString(date: date)
-            cell.setupCell(shopImageURL: finishedOrder.shopLogoImageURL,
-                           shopName: finishedOrder.shopName,
-                           description: "由\(userName)發起的團購",
+            cell.setupCell(shopImageURL: finishedOrder.shopObject.logoImageURL,
+                           shopName: finishedOrder.shopObject.name,
+                           description: "由\(finishedOrder.initiatorUserName)發起的團購",
                            date: dateString)
             return cell
         default:
@@ -117,6 +114,7 @@ extension OrderViewController: UITableViewDelegate {
         case 0:
             let continueOrders = orderResponses.filter({ $0.state == "進行中" })
             let orderVC = OrderNavigationController(orderResponse: continueOrders[indexPath.row])
+            orderVC.orderNavDelegate = self
             present(orderVC, animated: true)
         case 1:
             let finishedOrders = orderResponses.filter({ $0.state == "已完成" || $0.state == "已取消"})
@@ -138,6 +136,13 @@ extension OrderViewController: UITableViewDelegate {
         }
     }
 }
+extension OrderViewController: OrderNavigationControllerDelegate {
+    func didPressAddItemButton(_ vc: OrderNavigationController, orderResponse: OrderResponse) {
+        let shopMenuVC = ShopMenuViewController(shopObject: orderResponse.shopObject)
+        show(shopMenuVC, sender: nil)
+    }
+}
+
 extension OrderViewController: OrderManagerDelegate {
     func orderManager(_ manager: OrderManager, didGetAllOrderData orderData: [OrderResponse]) {
         let sortedOrderData = orderData.sorted(by: { $0.date > $1.date })
@@ -154,11 +159,4 @@ extension OrderViewController: OrderManagerDelegate {
     func orderManager(_ manager: OrderManager, didFailWith error: Error) {
         print(error.localizedDescription)
     }
-}
-
-extension OrderViewController: OrderingViewControllerDelegate {
-    func didPressAddItemButton(_ vc: OrderingViewController) {
-        <#code#>
-    }
-
 }

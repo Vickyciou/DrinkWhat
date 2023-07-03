@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol OrderNavigationControllerDelegate: AnyObject {
+    func didPressAddItemButton(_ vc: OrderNavigationController, orderResponse: OrderResponse)
+}
+
 protocol OrderResultsAccessible {
     func setOrderResults(_ orderResults: [OrderResults])
 }
@@ -22,6 +26,7 @@ protocol UserObjectsAccessible {
 class OrderNavigationController: UINavigationController {
     private let orderManager = OrderManager()
     private let userManager = UserManager()
+    weak var orderNavDelegate: OrderNavigationControllerDelegate?
     private var orderResponse: OrderResponse {
         didSet {
             viewControllers.forEach {
@@ -96,7 +101,7 @@ class OrderNavigationController: UINavigationController {
             orderingVC.setOrderResults(orderResults)
             orderingVC.setUserObjects(joinUserObject)
             orderingVC.setOrderResponse(orderResponse)
-            //            orderingVC.delegate = self
+            orderingVC.delegate = self
             pushViewController(orderingVC, animated: !viewControllers.isEmpty)
         }
     }
@@ -153,12 +158,12 @@ extension OrderNavigationController: UserManagerDelegate {
     }
 }
 
-
-//extension VoteNavigationController: VotingViewControllerDelegate {
-//    func votingViewController(_ vc: VotingViewController, didPressEndVoteButton button: UIButton) {
-//        groupManager.setVoteStateToFinish(groupID: groupID)
-//    }
-//}
+extension OrderNavigationController: OrderingViewControllerDelegate {
+    func didPressAddItemButton(_ vc: OrderingViewController, orderResponse: OrderResponse) {
+        orderNavDelegate?.didPressAddItemButton(self, orderResponse: orderResponse)
+        dismiss(animated: false)
+    }
+}
 
 extension Array {
     func asyncMap<T>(_ transform: @escaping (Element) async throws -> T) async throws -> [T] {

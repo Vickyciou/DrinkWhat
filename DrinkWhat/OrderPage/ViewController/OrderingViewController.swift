@@ -8,7 +8,7 @@
 import UIKit
 
 protocol OrderingViewControllerDelegate: AnyObject {
-    func didPressAddItemButton(_ vc: OrderingViewController)
+    func didPressAddItemButton(_ vc: OrderingViewController, orderResponse: OrderResponse)
 }
 
 class OrderingViewController: UIViewController {
@@ -100,13 +100,13 @@ class OrderingViewController: UIViewController {
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
         ])
         let headerView = OrderTableViewHeader(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
-        headerView.setupView(shopName: orderResponse.shopName)
+        headerView.setupView(shopName: orderResponse.shopObject.name)
         tableView.tableHeaderView = headerView
 
         let footerView = OrderTableViewFooter(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
         let orderObject = orderResults.map { $0.orderObjects }
         let amount = orderObject.flatMap { $0 }.reduce(0, { $0 + $1.drinkPrice })
-        footerView.setupView(amount: amount)
+        footerView.setupView(amount: amount, isInitiator: isInitiator)
         footerView.delegate = self
         tableView.tableFooterView = footerView
     }
@@ -212,7 +212,7 @@ extension OrderingViewController: JoinUsersBottomViewDelegate {
     }
 
     func addItemButtonTapped(_ view: JoinUsersBottomView) {
-        delegate?.didPressAddItemButton(self)
+        delegate?.didPressAddItemButton(self, orderResponse: orderResponse)
         dismiss(animated: true)
     }
 }

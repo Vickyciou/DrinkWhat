@@ -61,9 +61,7 @@ class OrderManager {
                 state: OrderStatus.active.rawValue,
                 initiatorUserID: initiatorUserID,
                 initiatorUserName: initiatorUserName,
-                shopID: shopObject.id,
-                shopLogoImageURL: shopObject.logoImageURL,
-                shopName: shopObject.name,
+                shopObject: shopObject,
                 joinUserIDs: []
             )
             try orderDocument(orderID: orderID).setData(from: order)
@@ -71,7 +69,7 @@ class OrderManager {
     }
 
     // MARK: - Add order results
-    func addOrderResult(userID: String, orderObject: OrderObject) async throws {
+    func addOrderResult(userID: String, orderObject: OrderObject, shopID: String) async throws {
         let document = try await orderCollection.whereFilter(Filter.orFilter(
             [
                 Filter.whereField("initiatorUserID", isEqualTo: userID),
@@ -80,24 +78,52 @@ class OrderManager {
         )).whereFilter(Filter.whereField("state", isEqualTo: OrderStatus.active.rawValue)).getDocuments()
 
         if let order = try document.documents.first?.data(as: OrderResponse.self) {
-            let orderID = order.orderID
-            let orderResultRef = orderObjectsDocument(orderID: orderID, userID: userID)
-            if let _ = try? await orderResultRef.getDocument().data(as: OrderResults.self) {
-                let orderObjectDic = try orderObject.toDictionary()
-                try await orderResultRef.updateData(["orderObjects": FieldValue.arrayUnion([orderObjectDic])])
-            } else {
-                let orderResults = OrderResults(userID: userID, isPaid: false, orderObjects: [orderObject])
-                try orderObjectsDocument(orderID: orderID, userID: userID).setData(from: orderResults)
-            }
+            if order.shopObject.id == shopID {
+                let orderID = order.orderID
+                let orderResultRef = orderObjectsDocument(orderID: orderID, userID: userID)
+                if let _ = try? await orderResultRef.getDocument().data(as: OrderResults.self) {
+                    let orderObjectDic = try orderObject.toDictionary()
+                    try await orderResultRef.updateData(["orderObjects": FieldValue.arrayUnion([orderObjectDic])])
+                } else {
+                    let orderResults = OrderResults(userID: userID, isPaid: false, orderObjects: [orderObject])
+                    try orderObjectsDocument(orderID: orderID, userID: userID).setData(from: orderResults)
+                }
 
+            } else {
+                throw ManagerError.noMatchData
+            }
         } else {
             throw ManagerError.noData
         }
     }
-
+    // MARK: - add order object to another group
+//    func addOrderResultToAnother(userID: String, orderResponse: OrderResponse, orderObject: OrderObject) async throws {
+//
+//        let orderID = orderResponse.orderID
+//        let orderResultRef = orderObjectsDocument(orderID: orderID, userID: userID)
+//        if let _ = try? await orderResultRef.getDocument().data(as: OrderResults.self) {
+//            let orderObjectDic = try orderObject.toDictionary()
+//            try await orderResultRef.updateData(["orderObjects": FieldValue.arrayUnion([orderObjectDic])])
+//        } else {
+//            let orderResults = OrderResults(userID: userID, isPaid: false, orderObjects: [orderObject])
+//            try orderObjectsDocument(orderID: orderID, userID: userID).setData(from: orderResults)
+//        }
+//
+//    }
     // MARK: - User add into order group
-    func addUserIntoOrderGroup(userID: String, orderID: String) {
-        orderDocument(orderID: orderID).updateData(["joinUserIDs": FieldValue.arrayUnion([userID])])
+    func addUserIntoOrderGroup(userID: String, orderID: String) async throws {
+        let document = try await orderCollection.whereFilter(Filter.orFilter(
+            [
+                Filter.whereField("initiatorUserID", isEqualTo: userID),
+                Filter.whereField("joinUserIDs", arrayContains: userID)
+            ]
+        )).whereFilter(Filter.whereField("state", isEqualTo: OrderStatus.active.rawValue)).getDocuments()
+
+        if document.isEmpty {
+            try await orderDocument(orderID: orderID).updateData(["joinUserIDs": FieldValue.arrayUnion([userID])])
+        } else {
+            throw ManagerError.itemAlreadyExistsError
+        }
     }
 
     // MARK: - Closed or cancel order group

@@ -14,14 +14,17 @@ class ShopMenuViewController: UIViewController {
     private let orderManager = OrderManager()
     private var shopObject: ShopObject
     private var groupObject: GroupResponse?
+    private var orderResponse: OrderResponse?
     private var userObject: UserObject? {
         UserManager.shared.userObject
     }
 
-    init(shopObject: ShopObject) {
+    init(shopObject: ShopObject, orderResponse: OrderResponse? = nil) {
         self.shopObject = shopObject
+        self.orderResponse = orderResponse
         super.init(nibName: nil, bundle: nil)
     }
+
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

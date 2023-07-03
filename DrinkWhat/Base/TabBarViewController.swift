@@ -59,13 +59,25 @@ class TabBarViewController: UITabBarController {
         }
     }
     private func switchToOrderIndex() {
-        guard let orderID else { return }
+        guard let orderID, let userObject else { return }
         selectedIndex = 3
-        userObject.map {
-            orderManager.addUserIntoOrderGroup(userID: "\($0.userID)", orderID: orderID)
+        Task {
+            do {
+                try await orderManager.addUserIntoOrderGroup(userID: userObject.userID, orderID: orderID)
+            } catch ManagerError.itemAlreadyExistsError {
+                let alert = UIAlertController(
+                    title: "加入團購群組失敗",
+                    message: "目前已有進行中的團購群組囉！\n請先完成進行中的群組~",
+                    preferredStyle: .alert
+                )
+                let okAction = UIAlertAction(title: "OK", style: .default)
+                alert.addAction(okAction)
+                present(alert, animated: true)
+            }
         }
     }
 }
+
 
 extension TabBarViewController {
     private enum Tab {

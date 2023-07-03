@@ -35,8 +35,9 @@ class OrderTableViewFooter: UIView {
             exitButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8)
         ])
     }
-    func setupView(amount: Int) {
+    func setupView(amount: Int, isInitiator: Bool) {
         amountLabel.text = "總計$ \(amount)"
+        exitButton.isHidden = isInitiator
     }
 
     required init?(coder: NSCoder) {
