@@ -20,21 +20,17 @@ class OrderViewController: UIViewController {
         setupVC()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        Task {
-            guard let userObject else { return }
-            try await orderManager.getOrderResponse(userID: userObject.userID)
-        }
-    }
     private func setupVC() {
         setNavController()
         setupTableView()
         orderManager.delegate = self
-        Task {
-            guard let userObject else { return }
-            try await orderManager.getOrderResponse(userID: userObject.userID)
-        }
+
+        guard let userObject else { return }
+        orderManager.listenOrderResponse(userID: userObject.userID)
+
+        let orderingVC = OrderingViewController()
+        orderingVC.delegate = self
+
     }
 
     private func setNavController() {
@@ -72,12 +68,12 @@ extension OrderViewController: UITableViewDataSource {
         2
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let continueOrders = orderResponses.filter({ $0.state == "進行中" })
-        let finishedOrders = orderResponses.filter({ $0.state == "已完成" })
         switch section {
         case 0:
+            let continueOrders = orderResponses.filter({ $0.state == "進行中" })
             return continueOrders.count
         case 1:
+            let finishedOrders = orderResponses.filter({ $0.state == "已完成" || $0.state == "已取消"})
             return finishedOrders.count
         default:
             return 0
@@ -87,26 +83,25 @@ extension OrderViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "MainOrderCell", for: indexPath) as? MainOrderCell,
               let userName = userObject?.userName else { fatalError("Cannot created MainOrderCell") }
-        let continueOrders = orderResponses.filter({ $0.state == "進行中" })
-        let finishedOrders = orderResponses.filter({ $0.state == "已完成" })
-
 
         switch indexPath.section {
         case 0:
-            let continueOrders = continueOrders[indexPath.row]
-            let date = Date(timeIntervalSince1970: continueOrders.date)
+            let continueOrders = orderResponses.filter({ $0.state == "進行中" })
+            let continueOrder = continueOrders[indexPath.row]
+            let date = Date(timeIntervalSince1970: continueOrder.date)
             let dateString = date.dateToString(date: date)
-            cell.setupCell(shopImageURL: continueOrders.shopLogoImageURL,
-                           shopName: continueOrders.shopName,
-                           description: "由\(continueOrders.initiatorUserName)發起的團購",
+            cell.setupCell(shopImageURL: continueOrder.shopLogoImageURL,
+                           shopName: continueOrder.shopName,
+                           description: "由\(continueOrder.initiatorUserName)發起的團購",
                            date: dateString)
             return cell
         case 1:
-            let finishedOrders = finishedOrders[indexPath.row]
-            let date = Date(timeIntervalSince1970: finishedOrders.date)
+            let finishedOrders = orderResponses.filter({ $0.state == "已完成" || $0.state == "已取消"})
+            let finishedOrder = finishedOrders[indexPath.row]
+            let date = Date(timeIntervalSince1970: finishedOrder.date)
             let dateString = date.dateToString(date: date)
-            cell.setupCell(shopImageURL: finishedOrders.shopLogoImageURL,
-                           shopName: finishedOrders.shopName,
+            cell.setupCell(shopImageURL: finishedOrder.shopLogoImageURL,
+                           shopName: finishedOrder.shopName,
                            description: "由\(userName)發起的團購",
                            date: dateString)
             return cell
@@ -124,7 +119,7 @@ extension OrderViewController: UITableViewDelegate {
             let orderVC = OrderNavigationController(orderResponse: continueOrders[indexPath.row])
             present(orderVC, animated: true)
         case 1:
-            let finishedOrders = orderResponses.filter({ $0.state == "已完成" })
+            let finishedOrders = orderResponses.filter({ $0.state == "已完成" || $0.state == "已取消"})
             let orderVC = OrderNavigationController(orderResponse: finishedOrders[indexPath.row])
             present(orderVC, animated: true)
         default:
@@ -135,9 +130,9 @@ extension OrderViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
         case 0:
-            return "進行中的投票"
+            return "進行中的團購"
         case 1:
-            return "已完成的投票"
+            return "已完成的團購"
         default:
             return ""
         }
@@ -159,4 +154,11 @@ extension OrderViewController: OrderManagerDelegate {
     func orderManager(_ manager: OrderManager, didFailWith error: Error) {
         print(error.localizedDescription)
     }
+}
+
+extension OrderViewController: OrderingViewControllerDelegate {
+    func didPressAddItemButton(_ vc: OrderingViewController) {
+        <#code#>
+    }
+
 }

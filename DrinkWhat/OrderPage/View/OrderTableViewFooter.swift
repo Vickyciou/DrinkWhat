@@ -7,26 +7,32 @@
 
 import UIKit
 
+protocol OrderTableViewFooterDelegate: AnyObject {
+    func exitButtonTapped(_ view: OrderTableViewFooter)
+}
+
 class OrderTableViewFooter: UIView {
     private lazy var imageView: UIImageView = makeImageView()
     private lazy var amountLabel: UILabel = makeLabel()
+    private lazy var stackView: UIStackView = makeStackView()
+    private lazy var exitButton: UIButton = makeExitButton()
+    weak var delegate: OrderTableViewFooterDelegate?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        let contents = [imageView, amountLabel]
+        let contents = [stackView, exitButton]
         contents.forEach { self.addSubview($0) }
 
+
         NSLayoutConstraint.activate([
-            imageView.topAnchor.constraint(equalTo: topAnchor, constant: 8),
-//            imageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
-            imageView.trailingAnchor.constraint(equalTo: amountLabel.leadingAnchor, constant: -16),
             imageView.heightAnchor.constraint(equalToConstant: 25),
             imageView.widthAnchor.constraint(equalToConstant: 25),
-//            imageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
-            amountLabel.centerYAnchor.constraint(equalTo: imageView.centerYAnchor),
-            amountLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-            amountLabel.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 16)
+            stackView.topAnchor.constraint(equalTo: topAnchor, constant: 8),
+            stackView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            exitButton.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 16),
+            exitButton.centerXAnchor.constraint(equalTo: centerXAnchor),
+            exitButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8)
         ])
     }
     func setupView(amount: Int) {
@@ -53,5 +59,32 @@ extension OrderTableViewFooter {
         label.font = .bold(size: 18)
         label.textColor = UIColor.darkBrown
         return label
+    }
+    private func makeExitButton() -> UIButton {
+        let button = UIButton(type: .custom)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitleColor(UIColor.red, for: .normal)
+        button.setTitleColor(UIColor.red.withAlphaComponent(0.5), for: .highlighted)
+        button.titleLabel?.font = .regular(size: 16)
+        button.setTitle("離開此團購", for: .normal)
+        button.layer.cornerRadius = 5
+        button.layer.masksToBounds = true
+        button.addTarget(self, action: #selector(exitButtonTapped), for: .touchUpInside)
+        return button
+    }
+    @objc func exitButtonTapped() {
+        delegate?.exitButtonTapped(self)
+    }
+
+    private func makeStackView() -> UIStackView {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.addArrangedSubview(imageView)
+        stackView.addArrangedSubview(amountLabel)
+        stackView.axis = .horizontal
+        stackView.spacing = 12
+        stackView.alignment = .center
+        stackView.distribution = .fill
+        return stackView
     }
 }

@@ -70,8 +70,7 @@ extension DrinkDetailCell {
         button.setTitleColor(UIColor.midiumBrown, for: .normal)
         button.titleLabel?.font = .regular(size: 14)
         button.setImage(UIImage(systemName: "circle")?.setColor(color: .darkBrown), for: .normal)
-        button.setImage(UIImage(systemName: "circle.inset.filled")?.setColor(color: .darkBrown), for: .selected) 
+        button.setImage(UIImage(systemName: "circle.inset.filled")?.setColor(color: .darkBrown), for: .selected)
         return button
     }
-
 }

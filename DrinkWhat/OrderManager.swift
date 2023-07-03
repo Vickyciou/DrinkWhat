@@ -10,7 +10,7 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 protocol OrderManagerDelegate: AnyObject {
-    func orderManager(_ manager: OrderManager, didGetAllOrderData orderData:[OrderResponse])
+    func orderManager(_ manager: OrderManager, didGetAllOrderData orderData: [OrderResponse])
     func orderManager(_ manager: OrderManager, didGetOrderResults orderResults: [OrderResults])
     func orderManager(_ manager: OrderManager, didFailWith error: Error)
 }
@@ -37,6 +37,9 @@ class OrderManager {
     private func orderObjectsDocument(orderID: String, userID: String) -> DocumentReference {
         orderResultsSubCollection(orderID: orderID).document(userID)
     }
+    private var orderResponseListener: ListenerRegistration?
+
+    private var orderResultsListener: ListenerRegistration?
 
     // MARK: - Create new order
     func creatOrder(shopObject: ShopObject, initiatorUserID: String, initiatorUserName: String) async throws {
@@ -103,47 +106,47 @@ class OrderManager {
     }
 
     // MARK: - Load order page
-//    func getOrderResponse(userID: String) {
-//        let orders = orderCollection.whereFilter(Filter.orFilter(
-//            [
-//                Filter.whereField("initiatorUserID", isEqualTo: userID),
-//                Filter.whereField("joinUserIDs", arrayContains: userID)
-//            ]
-//        )).addSnapshotListener ({ [weak self] snapshot, error in
-//            guard let self else { return }
-//            if let error = error {
-//                self.delegate?.orderManager(self, didFailWith: error)
-//            } else if let snapshot {
-//                let orderData: [OrderResponse] =
-//                    snapshot.documents.compactMap
-//                {
-//                    try? $0.data(as: OrderResponse.self)
-//
-//                }
-//                self.delegate?.orderManager(self, didGetAllOrderData: orderData)
-//            }
-//        })
-//    }
-    func getOrderResponse(userID: String) async throws {
-        let orders = try await orderCollection.whereFilter(Filter.orFilter(
+    func listenOrderResponse(userID: String) {
+        orderResponseListener = orderCollection.whereFilter(Filter.orFilter(
             [
                 Filter.whereField("initiatorUserID", isEqualTo: userID),
                 Filter.whereField("joinUserIDs", arrayContains: userID)
             ]
-        )).getDocuments()
+        )).addSnapshotListener ({ [weak self] snapshot, error in
+            guard let self else { return }
+            if let error = error {
+                self.delegate?.orderManager(self, didFailWith: error)
+            } else if let snapshot {
+                let orderData: [OrderResponse] =
+                    snapshot.documents.compactMap
+                {
+                    try? $0.data(as: OrderResponse.self)
 
-        do {
-            let orderData: [OrderResponse] =
-            try orders.documents.compactMap({ try $0.data(as: OrderResponse.self) })
-            delegate?.orderManager(self, didGetAllOrderData: orderData)
-        } catch {
-            print(ManagerError.decodingError)
-        }
+                }
+                self.delegate?.orderManager(self, didGetAllOrderData: orderData)
+            }
+        })
     }
+//    func getOrderResponse(userID: String) async throws {
+//        let orders = try await orderCollection.whereFilter(Filter.orFilter(
+//            [
+//                Filter.whereField("initiatorUserID", isEqualTo: userID),
+//                Filter.whereField("joinUserIDs", arrayContains: userID)
+//            ]
+//        )).getDocuments()
+//
+//        do {
+//            let orderData: [OrderResponse] =
+//            try orders.documents.compactMap({ try $0.data(as: OrderResponse.self) })
+//            delegate?.orderManager(self, didGetAllOrderData: orderData)
+//        } catch {
+//            print(ManagerError.decodingError)
+//        }
+//    }
 
     // MARK: - Listen to order results
     func listenOrderResults(orderID: String) {
-        orderResultsSubCollection(orderID: orderID).addSnapshotListener {
+        orderResultsListener = orderResultsSubCollection(orderID: orderID).addSnapshotListener {
             [weak self] documentSnapshot, error in
             guard let self else { return }
             if let error {

@@ -11,6 +11,10 @@ protocol OrderResultsAccessible {
     func setOrderResults(_ orderResults: [OrderResults])
 }
 
+protocol OrderResponseAccessible {
+    func setOrderResponse(_ orderResponse: OrderResponse)
+}
+
 protocol UserObjectsAccessible {
     func setUserObjects(_ userObjects: [UserObject])
 }
@@ -18,7 +22,14 @@ protocol UserObjectsAccessible {
 class OrderNavigationController: UINavigationController {
     private let orderManager = OrderManager()
     private let userManager = UserManager()
-    private let orderResponse: OrderResponse
+    private var orderResponse: OrderResponse {
+        didSet {
+            viewControllers.forEach {
+                let orderResponseAccessible = $0 as? OrderResponseAccessible
+                orderResponseAccessible?.setOrderResponse(orderResponse)
+            }
+        }
+    }
     private var orderResults: [OrderResults] = [] {
         didSet {
             viewControllers.forEach {
@@ -56,6 +67,9 @@ class OrderNavigationController: UINavigationController {
         orderManager.delegate = self
         userManager.delegate = self
         orderManager.listenOrderResults(orderID: orderResponse.orderID)
+        if let userObject {
+            orderManager.listenOrderResponse(userID: userObject.userID)
+        }
     }
 
     private func decideVC(
@@ -81,6 +95,7 @@ class OrderNavigationController: UINavigationController {
             )
             orderingVC.setOrderResults(orderResults)
             orderingVC.setUserObjects(joinUserObject)
+            orderingVC.setOrderResponse(orderResponse)
             //            orderingVC.delegate = self
             pushViewController(orderingVC, animated: !viewControllers.isEmpty)
         }
@@ -98,7 +113,9 @@ class OrderNavigationController: UINavigationController {
 
 extension OrderNavigationController: OrderManagerDelegate {
     func orderManager(_ manager: OrderManager, didGetAllOrderData orderData: [OrderResponse]) {
-        return
+        if let orderResponse = orderData.first { $0.orderID == self.orderResponse.orderID } {
+            self.orderResponse = orderResponse
+        }
     }
 
     func orderManager (_ manager: OrderManager, didGetOrderResults orderResults: [OrderResults]) {

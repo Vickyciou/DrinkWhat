@@ -88,7 +88,6 @@ extension DrinkDetailViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(DrinkDetailCell.self, forCellReuseIdentifier: "DrinkDetailCell")
-        //        tableView.contentInsetAdjustmentBehavior = .never
         tableView.separatorStyle = .none
         tableView.sectionHeaderHeight = UITableView.automaticDimension
         tableView.sectionHeaderTopPadding = 0.0

@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol OrderingViewControllerDelegate: AnyObject {
+    func didPressAddItemButton(_ vc: OrderingViewController)
+}
+
 class OrderingViewController: UIViewController {
 
     enum BottomViewUIState {
@@ -23,6 +27,7 @@ class OrderingViewController: UIViewController {
     }
     private var joinUserObjects: [UserObject] = []
     private var isInitiator: Bool
+    weak var delegate: OrderingViewControllerDelegate?
     private var state: BottomViewUIState {
         if orderResponse.state == OrderStatus.canceled.rawValue
             || orderResponse.state == OrderStatus.finished.rawValue {
@@ -47,7 +52,6 @@ class OrderingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupVC()
-        orderManager.delegate = self
     }
 
     private func setupVC() {
@@ -99,10 +103,11 @@ class OrderingViewController: UIViewController {
         headerView.setupView(shopName: orderResponse.shopName)
         tableView.tableHeaderView = headerView
 
-        let footerView = OrderTableViewFooter(frame: CGRect(x: 0, y: 0, width: 100, height: 40))
+        let footerView = OrderTableViewFooter(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
         let orderObject = orderResults.map { $0.orderObjects }
         let amount = orderObject.flatMap { $0 }.reduce(0, { $0 + $1.drinkPrice })
         footerView.setupView(amount: amount)
+        footerView.delegate = self
         tableView.tableFooterView = footerView
     }
     private func setupBottomView(state: BottomViewUIState) {
@@ -123,11 +128,12 @@ class OrderingViewController: UIViewController {
         }()
         view.addSubview(bottomView)
         bottomView.translatesAutoresizingMaskIntoConstraints = false
+        bottomView.backgroundColor = .white
         NSLayoutConstraint.activate([
             bottomView.topAnchor.constraint(equalTo: tableView.bottomAnchor),
             bottomView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             bottomView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            bottomView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -4),
+            bottomView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -4)
         ])
     }
 }
@@ -193,29 +199,26 @@ extension OrderingViewController: InitiatorOrderingBottomViewDelegate {
     func cancelButtonTapped(_ view: InitiatorOrderingBottomView) {
         orderManager.setOrderState(orderID: orderResponse.orderID,
                                    status: OrderStatus.canceled.rawValue)
-        if let userObject {
-            Task {
-                try await orderManager.getOrderResponse(userID: userObject.userID)
-            }
-        }
     }
 
     func finishButtonTapped(_ view: InitiatorOrderingBottomView) {
         orderManager.setOrderState(orderID: orderResponse.orderID,
                                    status: OrderStatus.finished.rawValue)
-        if let userObject {
-            Task {
-                try await orderManager.getOrderResponse(userID: userObject.userID)
-            }
-        }
     }
 }
 extension OrderingViewController: JoinUsersBottomViewDelegate {
-    func exitButtonTapped(_ view: JoinUsersBottomView) {
+    func linePayButtonTapped(_ view: JoinUsersBottomView) {
         //
     }
 
     func addItemButtonTapped(_ view: JoinUsersBottomView) {
+        delegate?.didPressAddItemButton(self)
+        dismiss(animated: true)
+    }
+}
+
+extension OrderingViewController: OrderTableViewFooterDelegate {
+    func exitButtonTapped(_ view: OrderTableViewFooter) {
         //
     }
 }
@@ -233,21 +236,11 @@ extension OrderingViewController: OrderResultsAccessible {
         tableView.reloadData()
     }
 }
-
-extension OrderingViewController: OrderManagerDelegate {
-    func orderManager(_ manager: OrderManager, didGetAllOrderData orderData: [OrderResponse]) {
-        guard let newOrderResponse = orderData.first(where: {$0.orderID == orderResponse.orderID}) else { return }
-        orderResponse = newOrderResponse
+extension OrderingViewController: OrderResponseAccessible {
+    func setOrderResponse(_ orderResponse: OrderResponse) {
+        self.orderResponse = orderResponse
         DispatchQueue.main.async { [self] in
             setupBottomView(state: state)
         }
-    }
-
-    func orderManager(_ manager: OrderManager, didGetOrderResults orderResults: [OrderResults]) {
-        return
-    }
-
-    func orderManager(_ manager: OrderManager, didFailWith error: Error) {
-        print(error.localizedDescription)
     }
 }
