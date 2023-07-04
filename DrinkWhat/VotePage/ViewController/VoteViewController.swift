@@ -20,6 +20,7 @@ class VoteViewController: UIViewController {
         setupVC()
     }
     private func setupVC() {
+        view.backgroundColor = .skinColor
         setNavController()
         setupTableView()
         guard let userObject = userObject else { return }
@@ -27,8 +28,17 @@ class VoteViewController: UIViewController {
         groupManager.delegate = self
     }
     private func setNavController() {
+        let appearance = UINavigationBarAppearance()
+        appearance.backgroundColor = UIColor.skinColor
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.darkLogoBrown]
+        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.darkLogoBrown]
+        appearance.shadowColor = UIColor.clear
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        navigationItem.hidesBackButton = true
+
         navigationItem.title = "投票首頁"
-        tabBarController?.tabBar.backgroundColor = .white
+//        tabBarController?.tabBar.backgroundColor = .lightYellow
     }
     private func setupTableView() {
         view.addSubview(tableView)
@@ -50,6 +60,7 @@ extension VoteViewController {
         tableView.register(VoteCell.self, forCellReuseIdentifier: "VoteCell")
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.separatorStyle = .none
+        tableView.backgroundColor = .lightYellow
         return tableView
     }
 }

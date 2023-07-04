@@ -21,6 +21,7 @@ class OrderViewController: UIViewController {
     }
 
     private func setupVC() {
+        view.backgroundColor = .skinColor
         setNavController()
         setupTableView()
         orderManager.delegate = self
@@ -31,8 +32,16 @@ class OrderViewController: UIViewController {
     }
 
     private func setNavController() {
+        let appearance = UINavigationBarAppearance()
+        appearance.backgroundColor = UIColor.logoBrown
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.lightYellow]
+        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.lightYellow]
+        appearance.shadowColor = UIColor.clear
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        navigationItem.hidesBackButton = true
         navigationItem.title = "團購首頁"
-        tabBarController?.tabBar.backgroundColor = .white
+//        tabBarController?.tabBar.backgroundColor = .white
     }
 
     private func setupTableView() {

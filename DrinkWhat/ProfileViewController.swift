@@ -26,6 +26,7 @@ class ProfileViewController: UIViewController {
     }
 
     private func setupVC() {
+        view.backgroundColor = .lightYellow
         setupLogOUtButton()
         setNavController()
     }

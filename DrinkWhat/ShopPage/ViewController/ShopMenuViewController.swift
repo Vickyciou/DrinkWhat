@@ -214,9 +214,9 @@ extension ShopMenuViewController: SectionHeaderViewDelegate {
         }
     }
 
-    func didPressAddFavoriteButton(_ view: SectionHeaderView) {
-        //
-    }
+//    func didPressAddFavoriteButton(_ view: SectionHeaderView) {
+//        //
+//    }
 }
 extension ShopMenuViewController: GroupManagerDelegate {
     func groupManager(_ manager: GroupManager, didGetGroupObject groupObject: GroupResponse) {

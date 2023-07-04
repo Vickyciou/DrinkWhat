@@ -14,6 +14,8 @@ enum DWTColor: String {
     case midiumBrown = "MidiumBrown"
     case lightBrown = "LightBrown"
     case skinColor = "SkinColor"
+    case lightYellow = "LightYellow"
+    case darkLogoBrown = "DarkLogoBrown"
 }
 
 extension UIColor {
@@ -23,6 +25,8 @@ extension UIColor {
     static let midiumBrown = DWTColor(.midiumBrown)
     static let lightBrown = DWTColor(.lightBrown)
     static let skinColor = DWTColor(.skinColor)
+    static let lightYellow = DWTColor(.lightYellow)
+    static let darkLogoBrown = DWTColor(.darkLogoBrown)
     private static func DWTColor(_ color: DWTColor) -> UIColor {
         guard let uiColor = UIColor(named: color.rawValue) else { return .black }
         return uiColor

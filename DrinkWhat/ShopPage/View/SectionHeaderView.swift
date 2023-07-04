@@ -10,14 +10,14 @@ import UIKit
 protocol SectionHeaderViewDelegate: AnyObject {
     func didPressAddOrderButton(_ view: SectionHeaderView)
     func didPressAddVoteButton(_ view: SectionHeaderView)
-    func didPressAddFavoriteButton(_ view: SectionHeaderView)
+//    func didPressAddFavoriteButton(_ view: SectionHeaderView)
 }
 
 class SectionHeaderView: UIView {
     private lazy var shopNameLabel: UILabel = makeShopNameLabel()
     private lazy var addOrderButton: UIButton = makeAddOrderButton()
     private lazy var addVoteButton: UIButton = makeAddVoteButton()
-    private lazy var addFavoriteButton: UIButton = makeAddFavoriteButton()
+//    private lazy var addFavoriteButton: UIButton = makeAddFavoriteButton()
     private lazy var stackView: UIStackView = makeStackView()
     weak var delegate: SectionHeaderViewDelegate?
 
@@ -80,27 +80,27 @@ extension SectionHeaderView {
         button.addTarget(self, action: #selector(addVoteButtonTapped(_:)), for: .touchUpInside)
         return button
     }
-    private func makeAddFavoriteButton() -> UIButton {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.layer.cornerRadius = 10
-        button.layer.masksToBounds = true
-        button.backgroundColor = .lightBrown
-        button.setTitleColor(.darkBrown, for: .normal)
-        button.setTitleColor(.skinColor, for: .highlighted)
-        button.titleLabel?.font = .regular(size: 14)
-        button.setTitle("+ 收藏清單", for: .normal)
-        button.addTarget(self, action: #selector(addFavoriteButtonTapped(_:)), for: .touchUpInside)
-        return button
-    }
+//    private func makeAddFavoriteButton() -> UIButton {
+//        let button = UIButton()
+//        button.translatesAutoresizingMaskIntoConstraints = false
+//        button.layer.cornerRadius = 10
+//        button.layer.masksToBounds = true
+//        button.backgroundColor = .lightBrown
+//        button.setTitleColor(.darkBrown, for: .normal)
+//        button.setTitleColor(.skinColor, for: .highlighted)
+//        button.titleLabel?.font = .regular(size: 14)
+//        button.setTitle("+ 收藏清單", for: .normal)
+//        button.addTarget(self, action: #selector(addFavoriteButtonTapped(_:)), for: .touchUpInside)
+//        return button
+//    }
     private func makeStackView() -> UIStackView {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.addArrangedSubview(addOrderButton)
         stackView.addArrangedSubview(addVoteButton)
-        stackView.addArrangedSubview(addFavoriteButton)
+//        stackView.addArrangedSubview(addFavoriteButton)
         stackView.axis = .horizontal
-        stackView.spacing = 10
+        stackView.spacing = 20
         stackView.alignment = .fill
         stackView.distribution = .fillEqually
         return stackView
@@ -111,7 +111,7 @@ extension SectionHeaderView {
     @objc func addVoteButtonTapped(_ sender: UIButton) {
         delegate?.didPressAddVoteButton(self)
     }
-    @objc func addFavoriteButtonTapped(_ sender: UIButton) {
-        delegate?.didPressAddFavoriteButton(self)
-    }
+//    @objc func addFavoriteButtonTapped(_ sender: UIButton) {
+//        delegate?.didPressAddFavoriteButton(self)
+//    }
 }

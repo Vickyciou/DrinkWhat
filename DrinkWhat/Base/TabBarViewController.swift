@@ -12,7 +12,7 @@ protocol TabBarViewControllerDelegate: AnyObject {
 }
 class TabBarViewController: UITabBarController, UIViewControllerTransitioningDelegate {
 
-    private let tabs: [Tab] = [.home, .favorite, .vote, .order, .profile]
+    private let tabs: [Tab] = [.home, .vote, .order, .profile]
     private let groupManager = GroupManager()
     private let orderManager = OrderManager()
     private var userObject = UserManager.shared.userObject
@@ -32,13 +32,17 @@ class TabBarViewController: UITabBarController, UIViewControllerTransitioningDel
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
         viewControllers = tabs.map { $0.makeViewController() }
         switchToGroupIndex()
         switchToOrderIndex()
         let profileVC = (viewControllers?.last as? UINavigationController)?.viewControllers.first as? ProfileViewController
         profileVC?.delegate = self
         delegate = self
+
+        let appearance = UITabBarAppearance()
+        appearance.backgroundColor = UIColor.logoBrown
+        tabBarController?.tabBar.standardAppearance = appearance
+        tabBarController?.tabBar.scrollEdgeAppearance = appearance
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -55,14 +59,14 @@ class TabBarViewController: UITabBarController, UIViewControllerTransitioningDel
 
     private func switchToGroupIndex() {
         guard let groupID else { return }
-        selectedIndex = 2
+        selectedIndex = 1
         userObject.map {
             groupManager.addUserIntoGroup(groupID: groupID, userID: "\($0.userID)")
         }
     }
     private func switchToOrderIndex() {
         guard let orderID, let userObject else { return }
-        selectedIndex = 3
+        selectedIndex = 2
         Task {
             do {
                 try await orderManager.addUserIntoOrderGroup(userID: userObject.userID, orderID: orderID)
@@ -84,7 +88,7 @@ class TabBarViewController: UITabBarController, UIViewControllerTransitioningDel
 extension TabBarViewController {
     private enum Tab {
         case home
-        case favorite
+//        case favorite
         case vote
         case order
         case profile
@@ -94,7 +98,7 @@ extension TabBarViewController {
             let userManager = UserManager()
             switch self {
             case .home: controller = UINavigationController(rootViewController: HomeViewController())
-            case .favorite: controller = UINavigationController(rootViewController: FavoriteViewController())
+//            case .favorite: controller = UINavigationController(rootViewController: FavoriteViewController())
             case .vote: controller = UINavigationController(rootViewController: VoteViewController())
             case .order: controller = UINavigationController(rootViewController: OrderViewController())
             case .profile: controller = UINavigationController(rootViewController: ProfileViewController())
@@ -110,29 +114,29 @@ extension TabBarViewController {
         private var normalImage: UIImage? {
             switch self {
             case .home:
-                return UIImage(systemName: "house")?.setColor(color: .darkBrown)
-            case .favorite:
-                return UIImage(systemName: "heart")?.setColor(color: .darkBrown)
+                return UIImage(systemName: "house")?.setColor(color: .darkLogoBrown)
+//            case .favorite:
+//                return UIImage(systemName: "heart")?.setColor(color: .darkBrown)
             case .vote:
-                return UIImage(systemName: "hand.tap")?.setColor(color: .darkBrown)
+                return UIImage(systemName: "hand.tap")?.setColor(color: .darkLogoBrown)
             case .order:
-                return UIImage(systemName: "doc.text")?.setColor(color: .darkBrown)
+                return UIImage(systemName: "doc.text")?.setColor(color: .darkLogoBrown)
             case .profile:
-                return UIImage(systemName: "person")?.setColor(color: .darkBrown)
+                return UIImage(systemName: "person")?.setColor(color: .darkLogoBrown)
             }
         }
         private var selectedImage: UIImage? {
             switch self {
             case .home:
-                return UIImage(systemName: "house.fill")?.setColor(color: .darkBrown)
-            case .favorite:
-                return UIImage(systemName: "heart.fill")?.setColor(color: .darkBrown)
+                return UIImage(systemName: "house.fill")?.setColor(color: .darkLogoBrown)
+//            case .favorite:
+//                return UIImage(systemName: "heart.fill")?.setColor(color: .darkBrown)
             case .vote:
-                return UIImage(systemName: "hand.tap.fill")?.setColor(color: .darkBrown)
+                return UIImage(systemName: "hand.tap.fill")?.setColor(color: .darkLogoBrown)
             case .order:
-                return UIImage(systemName: "doc.text.fill")?.setColor(color: .darkBrown)
+                return UIImage(systemName: "doc.text.fill")?.setColor(color: .darkLogoBrown)
             case .profile:
-                return UIImage(systemName: "person.fill")?.setColor(color: .darkBrown)
+                return UIImage(systemName: "person.fill")?.setColor(color: .darkLogoBrown)
             }
         }
     }

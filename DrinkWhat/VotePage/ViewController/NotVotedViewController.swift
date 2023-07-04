@@ -36,8 +36,9 @@ class NotVotedViewController: UIViewController {
         setupSubmitButton()
     }
     private func setNavController() {
+
         navigationItem.title = "由\(groupObject.initiatorUserName)發起的投票"
-        tabBarController?.tabBar.backgroundColor = .white
+        navigationController?.navigationBar.backgroundColor = .white
         navigationItem.hidesBackButton = true
         let closeImage = UIImage(systemName: "xmark")?
             .withConfiguration(UIImage.SymbolConfiguration(pointSize: 18))
