@@ -10,7 +10,8 @@ import UIKit
 protocol TabBarViewControllerDelegate: AnyObject {
     func getProfileViewControllerDidPressLogOut(_ viewController: TabBarViewController)
 }
-class TabBarViewController: UITabBarController {
+class TabBarViewController: UITabBarController, UIViewControllerTransitioningDelegate {
+
     private let tabs: [Tab] = [.home, .favorite, .vote, .order, .profile]
     private let groupManager = GroupManager()
     private let orderManager = OrderManager()
@@ -37,6 +38,7 @@ class TabBarViewController: UITabBarController {
         switchToOrderIndex()
         let profileVC = (viewControllers?.last as? UINavigationController)?.viewControllers.first as? ProfileViewController
         profileVC?.delegate = self
+        delegate = self
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -139,6 +141,36 @@ extension TabBarViewController {
 extension TabBarViewController: ProfileViewControllerDelegate {
     func profileViewControllerDidPressLogOut(_ viewController: ProfileViewController) {
         tabBardelegate?.getProfileViewControllerDidPressLogOut(self)
+    }
+}
+
+extension TabBarViewController: UITabBarControllerDelegate {
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+        if
+            let navVC = viewController as? UINavigationController,
+            navVC.viewControllers.first is HomeViewController {
+            return true
+        } else {
+            let authUser = try? AuthManager.shared.getAuthenticatedUser()
+            if authUser == nil {
+                let loginVC = LoginSheetViewController()
+                loginVC.delegate = self
+                loginVC.modalPresentationStyle = .pageSheet
+                if let sheet = loginVC.sheetPresentationController {
+                    sheet.detents = [.medium()]
+                }
+                present(loginVC, animated: true, completion: nil)
+                return false
+            } else {
+                return true
+            }
+        }
+    }
+}
+
+extension TabBarViewController: LoginSheetViewControllerDelegate {
+    func loginSheetViewControllerLoginSuccess(_ viewController: LoginSheetViewController) {
+        view.makeAlertToast(message: "登入成功", title: nil, duration: 2)
     }
 
 

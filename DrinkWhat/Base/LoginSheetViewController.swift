@@ -11,18 +11,17 @@ import AuthenticationServices
 import CryptoKit
 import FirebaseAuth
 
-protocol LoginViewControllerDelegate: AnyObject {
-    func loginViewControllerDismissSelf(_ viewController: LoginViewController)
+protocol LoginSheetViewControllerDelegate: AnyObject {
+    func loginSheetViewControllerLoginSuccess(_ viewController: LoginSheetViewController)
 }
 
-class LoginViewController: UIViewController {
-    private lazy var appIconImageView: UIImageView = makeAppIconImageView()
-    private lazy var appNameLabel: UILabel = makeAppNameLabel()
-    private lazy var loginWithLineButton = LoginButton()
+class LoginSheetViewController: UIViewController {
     private lazy var signInWithAppleButton = ASAuthorizationAppleIDButton(type: .signIn, style: .black)
-    private lazy var skipButton: UIButton = makeSkipButton()
+    private lazy var remindLabel: UILabel = makeRemindLabel()
+    private lazy var descriptionLabel: UILabel = makeDescriptionLabel()
+    private lazy var closeButton: UIButton = makeCloseButton()
     private var currentNonce: String?
-    weak var delegate: LoginViewControllerDelegate?
+    weak var delegate: LoginSheetViewControllerDelegate?
 
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -38,56 +37,23 @@ class LoginViewController: UIViewController {
     }
     private func setupVC() {
         view.backgroundColor = .white
-        setNavController()
         setupMainView()
     }
-    private func setNavController() {
-        let navigationController = UINavigationController()
-        let appearance = UINavigationBarAppearance()
-        appearance.backgroundColor = UIColor.white
-        appearance.titleTextAttributes = [.foregroundColor: UIColor.darkBrown]
-        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.darkBrown]
-        appearance.shadowColor = UIColor.clear
-        navigationController.navigationBar.standardAppearance = appearance
-        navigationController.navigationBar.scrollEdgeAppearance = appearance
-        navigationItem.title = "Sign in"
-        tabBarController?.tabBar.backgroundColor = .white
-        navigationItem.hidesBackButton = true
-        let closeImage = UIImage(systemName: "xmark")?
-            .withConfiguration(UIImage.SymbolConfiguration(pointSize: 20))
-            .withTintColor(UIColor.darkBrown)
-            .withRenderingMode(.alwaysOriginal)
-        let closeButton = UIBarButtonItem(image: closeImage,
-                                          style: .plain,
-                                          target: self,
-                                          action: #selector(closeButtonTapped))
-        navigationItem.setRightBarButton(closeButton, animated: false)
-    }
-    @objc private func closeButtonTapped() {
-        show(TabBarViewController(), sender: nil)
-        dismiss(animated: false)
-    }
+
     private func setupMainView() {
-        let contents = [appIconImageView, appNameLabel, loginWithLineButton, signInWithAppleButton, skipButton]
+        let contents = [remindLabel, descriptionLabel, closeButton, signInWithAppleButton]
         contents.forEach { view.addSubview($0) }
         NSLayoutConstraint.activate([
-            appIconImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100),
-            appIconImageView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-            appIconImageView.heightAnchor.constraint(equalToConstant: 120),
-            appIconImageView.widthAnchor.constraint(equalToConstant: 120),
-            appNameLabel.topAnchor.constraint(equalTo: appIconImageView.bottomAnchor, constant: 12),
-            appNameLabel.centerXAnchor.constraint(equalTo: appIconImageView.centerXAnchor),
-            loginWithLineButton.topAnchor.constraint(equalTo: appNameLabel.bottomAnchor, constant: 80),
-            loginWithLineButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            signInWithAppleButton.topAnchor.constraint(equalTo: loginWithLineButton.bottomAnchor, constant: 50),
-            signInWithAppleButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            skipButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50),
-            skipButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor)
+            remindLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+            remindLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            remindLabel.trailingAnchor.constraint(equalTo: closeButton.leadingAnchor, constant: -16),
+            descriptionLabel.topAnchor.constraint(equalTo: remindLabel.bottomAnchor, constant: 24),
+            descriptionLabel.leadingAnchor.constraint(equalTo: remindLabel.leadingAnchor),
+            closeButton.topAnchor.constraint(equalTo: remindLabel.topAnchor),
+            closeButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            signInWithAppleButton.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 50),
+            signInWithAppleButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
-        loginWithLineButton.translatesAutoresizingMaskIntoConstraints = false
-        loginWithLineButton.delegate = self
-        loginWithLineButton.permissions = [.profile]
-        loginWithLineButton.presentingViewController = self
 
         signInWithAppleButton.translatesAutoresizingMaskIntoConstraints = false
         signInWithAppleButton.addTarget(self, action: #selector(startSignInWithAppleFlow), for: .touchUpInside)
@@ -102,14 +68,15 @@ class LoginViewController: UIViewController {
                 let user = UserObject(auth: authDataResult)
                 try await UserManager.shared.createUserData(userObject: user)
                 try await UserManager.shared.loadCurrentUser()
-                delegate?.loginViewControllerDismissSelf(self)
+                delegate?.loginSheetViewControllerLoginSuccess(self)
+                dismiss(animated: true)
             } catch {
                 print("startSignInWithAppleFlow error \(error)")
             }
         }
     }
 }
-extension LoginViewController {
+extension LoginSheetViewController {
     private func makeAppIconImageView() -> UIImageView {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -119,49 +86,37 @@ extension LoginViewController {
         imageView.image = UIImage(named: "DrinkWhatAppIcon")
         return imageView
     }
-    private func makeAppNameLabel() -> UILabel {
+    private func makeRemindLabel() -> UILabel {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .medium(size: 20)
+        label.font = .bold(size: 24)
         label.textColor = UIColor.darkBrown
-        label.text = "Drink What?"
+        label.text = "請先登入會員"
         return label
     }
-    private func makeSkipButton() -> UIButton {
+    private func makeDescriptionLabel() -> UILabel {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = .regular(size: 18)
+        label.textColor = UIColor.darkBrown
+        label.text = "登入會員即可使用更多服務"
+        return label
+    }
+    private func makeCloseButton() -> UIButton {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitleColor(.lightGray, for: .normal)
-        button.titleLabel?.font = .regular(size: 16)
-        button.setTitle("稍候再說 >", for: .normal)
-        button.addTarget(self, action: #selector(skipButtonTapped), for: .touchUpInside)
+        let closeImage = UIImage(systemName: "xmark")?
+            .withConfiguration(UIImage.SymbolConfiguration(pointSize: 18))
+            .setColor(color: .darkBrown)
+        button.setImage(closeImage, for: .normal)
+        button.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
         return button
+
     }
-    @objc func skipButtonTapped() {
-        delegate?.loginViewControllerDismissSelf(self)
+    @objc private func closeButtonTapped() {
+        dismiss(animated: true)
     }
 
 }
-extension LoginViewController: LoginButtonDelegate {
-    func loginButton(_ button: LoginButton, didSucceedLogin loginResult: LoginResult) {
-        print("Login Succeeded.")
-    }
 
-    func loginButton(_ button: LoginButton, didFailLogin error: LineSDKError) {
-        print("Error: \(error)")
-    }
 
-    func loginButtonDidStartLogin(_ button: LoginButton) {
-        print("Login Started.")
-    }
-    func login() {
-        LoginManager.shared.login(permissions: [.profile], in: self) { result in
-            switch result {
-            case .success(let loginResult):
-                print(loginResult.accessToken.value)
-                // Do other things you need with the login result
-            case .failure(let error):
-                print(error)
-            }
-        }
-    }
-}

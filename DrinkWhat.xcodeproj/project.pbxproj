@@ -67,6 +67,7 @@
 		FAB2B9DB2A4AE21600EB449C /* DrinkDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB2B9DA2A4AE21600EB449C /* DrinkDetailCell.swift */; };
 		FAB2B9DD2A4AE4F000EB449C /* DrinkDetailDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB2B9DC2A4AE4F000EB449C /* DrinkDetailDataSource.swift */; };
 		FAE757C72A3FF40E003245EC /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE757C62A3FF40E003245EC /* LoginViewController.swift */; };
+		FAF16F342A53F2EF002590D9 /* LoginSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF16F332A53F2EF002590D9 /* LoginSheetViewController.swift */; };
 		FAF2AE172A4A8F8400F27B64 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF2AE162A4A8F8400F27B64 /* RootViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -136,6 +137,7 @@
 		FAB2B9DA2A4AE21600EB449C /* DrinkDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkDetailCell.swift; sourceTree = "<group>"; };
 		FAB2B9DC2A4AE4F000EB449C /* DrinkDetailDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkDetailDataSource.swift; sourceTree = "<group>"; };
 		FAE757C62A3FF40E003245EC /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		FAF16F332A53F2EF002590D9 /* LoginSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginSheetViewController.swift; sourceTree = "<group>"; };
 		FAF2AE162A4A8F8400F27B64 /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -198,7 +200,6 @@
 				FA7CC6092A41B630009B599F /* Model */,
 				FA7179612A3C543D002C407C /* Base */,
 				FA7179572A3AEB22002C407C /* Extension */,
-				FA7CC6042A41AC0C009B599F /* LoginPage */,
 				FA7CC6052A41AC24009B599F /* HomePage */,
 				FA7CC6152A444B1C009B599F /* ShopPage */,
 				FA71795A2A3AED81002C407C /* VotePage */,
@@ -238,6 +239,8 @@
 		FA7179612A3C543D002C407C /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				FAE757C62A3FF40E003245EC /* LoginViewController.swift */,
+				FAF16F332A53F2EF002590D9 /* LoginSheetViewController.swift */,
 				FA7179492A3AB994002C407C /* TabBarViewController.swift */,
 				FAF2AE162A4A8F8400F27B64 /* RootViewController.swift */,
 			);
@@ -250,14 +253,6 @@
 				FA9232212A49896500F045C6 /* SignInWithAppleHelper.swift */,
 			);
 			path = Helper;
-			sourceTree = "<group>";
-		};
-		FA7CC6042A41AC0C009B599F /* LoginPage */ = {
-			isa = PBXGroup;
-			children = (
-				FAE757C62A3FF40E003245EC /* LoginViewController.swift */,
-			);
-			path = LoginPage;
 			sourceTree = "<group>";
 		};
 		FA7CC6052A41AC24009B599F /* HomePage */ = {
@@ -579,6 +574,7 @@
 				FAB2B9DB2A4AE21600EB449C /* DrinkDetailCell.swift in Sources */,
 				FA7179542A3ABD01002C407C /* ProfileViewController.swift in Sources */,
 				FA7CC6112A44460B009B599F /* HomeShopCell.swift in Sources */,
+				FAF16F342A53F2EF002590D9 /* LoginSheetViewController.swift in Sources */,
 				FA7179592A3AEBDA002C407C /* UIFont+Extension.swift in Sources */,
 				FA7CC6142A44493B009B599F /* KingFisherWrapper.swift in Sources */,
 				FA7CC61B2A457754009B599F /* SectionHeaderView.swift in Sources */,

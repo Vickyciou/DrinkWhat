@@ -86,7 +86,7 @@ class RootViewController: UIViewController {
 }
 
 extension RootViewController: LoginViewControllerDelegate {
-    func loginViewControllerDidLoginSuccess(_ viewController: LoginViewController) {
+    func loginViewControllerDismissSelf(_ viewController: LoginViewController) {
         viewController.willMove(toParent: nil)
         viewController.view.removeFromSuperview()
         viewController.removeFromParent()
@@ -100,7 +100,9 @@ extension RootViewController: LoginViewControllerDelegate {
                 tabBarVC.tabBardelegate = self
                 return tabBarVC
             } else {
-                return TabBarViewController()
+                let tabBarVC = TabBarViewController()
+                tabBarVC.tabBardelegate = self
+                return tabBarVC
             }
         }()
         displayViewControllerAsMain(tabBarVC)
