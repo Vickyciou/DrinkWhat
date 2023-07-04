@@ -40,4 +40,16 @@ class UserManager {
         return userObject
     }
 
+    func checkCurrentUser() {
+
+    }
+
+    func signOut() {
+
+    }
+
+    func deleteUser() {
+        
+    }
+
 }

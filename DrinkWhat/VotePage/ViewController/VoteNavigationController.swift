@@ -19,6 +19,7 @@ class VoteNavigationController: UINavigationController {
     private let groupID: String
     private let groupManager = GroupManager()
     private let shopManager = ShopManager()
+    private let orderManager = OrderManager()
     private var groupObject: GroupResponse?
     private var shopObjects: [ShopObject] = [] {
         didSet {
@@ -130,5 +131,33 @@ extension VoteNavigationController: ShopManagerDelegate {
 extension VoteNavigationController: VotingViewControllerDelegate {
     func votingViewController(_ vc: VotingViewController, didPressEndVoteButton button: UIButton) {
         groupManager.setVoteStateToFinish(groupID: groupID)
+
+        guard let voteResult = voteResults.first,
+            let userObject else { return }
+        let winnerShopID = voteResult.shopID
+        guard let shop = shopObjects.first(where: { $0.id == winnerShopID }) else { return }
+
+        Task {
+            do {
+                let orderID = try await orderManager.createOrder(shopObject: shop,
+                                                                 initiatorUserID: userObject.userID,
+                                                                 initiatorUserName: userObject.userName ?? "Name").orderID
+
+                if let joinUserIDs = groupObject.flatMap { $0.joinUserIDs } {
+                    try await joinUserIDs.asyncMap {
+                        try await self.orderManager.addUserIntoOrderGroup(userID: $0, orderID: orderID)
+                    }
+                }
+            } catch ManagerError.itemAlreadyExistsError {
+                let alert = UIAlertController(
+                    title: "開團失敗",
+                    message: "目前已有進行中的團購群組囉！\n請先完成進行中的群組~",
+                    preferredStyle: .alert
+                )
+                let okAction = UIAlertAction(title: "OK", style: .default)
+                alert.addAction(okAction)
+                present(alert, animated: true)
+            }
+        }
     }
 }

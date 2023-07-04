@@ -148,7 +148,7 @@ extension OrderViewController: UITableViewDelegate {
 extension OrderViewController: OrderNavigationControllerDelegate {
     func didPressAddItemButton(_ vc: OrderNavigationController, orderResponse: OrderResponse) {
         let shopMenuVC = ShopMenuViewController(shopObject: orderResponse.shopObject)
-        show(shopMenuVC, sender: nil)
+        present(shopMenuVC, animated: true)
     }
 }
 

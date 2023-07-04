@@ -176,6 +176,8 @@ extension DrinkDetailViewController {
                     let okAction = UIAlertAction(title: "OK", style: .default)
                     alert.addAction(okAction)
                     present(alert, animated: true)
+                } catch {
+                    print("加入品項失敗：\(error)")
                 }
         }
     }

@@ -44,12 +44,12 @@ class OrderManager {
     // MARK: - Create new order
     func createOrder(shopObject: ShopObject, initiatorUserID: String, initiatorUserName: String) async throws -> OrderResponse {
 
-        let document = try await orderCollection.whereFilter(Filter.andFilter(
+        let document = try await orderCollection.whereFilter(Filter.orFilter(
             [
                 Filter.whereField("initiatorUserID", isEqualTo: initiatorUserID),
-                Filter.whereField("state", isEqualTo: OrderStatus.active.rawValue)
+                Filter.whereField("joinUserIDs", arrayContains: initiatorUserID)
             ]
-        )).getDocuments()
+        )).whereFilter(Filter.whereField("state", isEqualTo: OrderStatus.active.rawValue)).getDocuments()
 
         if (document.documents.first?.data()) != nil {
             throw ManagerError.itemAlreadyExistsError

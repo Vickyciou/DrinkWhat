@@ -123,29 +123,11 @@ extension VoteResultViewController {
         return button
     }
     @objc func startOrderButtonTapped(_ sender: UIButton) {
-
         guard let voteResult = voteResults.first else { return }
         let winnerShopID = voteResult.shopID
         guard let shop = shopObjects.first(where: { $0.id == winnerShopID }) else { return }
-        Task {
-            do {
-                let orderID = try await orderManager.createOrder(shopObject: shop,
-                                                                initiatorUserID: groupObject.initiatorUserID,
-                                                                initiatorUserName: groupObject.initiatorUserName).orderID
-                try await orderManager.addUserIntoOrderGroup(userID: userObject.userID, orderID: orderID)
-                let shopMenuVC = ShopMenuViewController(shopObject: shop)
-                present(shopMenuVC, animated: true)
-            } catch ManagerError.itemAlreadyExistsError {
-                let alert = UIAlertController(
-                    title: "開團失敗",
-                    message: "目前已有進行中的團購群組囉！\n請先完成進行中的群組~",
-                    preferredStyle: .alert
-                )
-                let okAction = UIAlertAction(title: "OK", style: .default)
-                alert.addAction(okAction)
-                present(alert, animated: true)
-            }
-        }
+        let shopMenuVC = ShopMenuViewController(shopObject: shop)
+        present(shopMenuVC, animated: true)
     }
 }
 
