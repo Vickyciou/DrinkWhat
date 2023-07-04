@@ -14,18 +14,16 @@ protocol GroupManagerDelegate: AnyObject {
     func groupManager(_ manager: GroupManager, didGetGroupObject groupObject: GroupResponse)
     func groupManager(_ manager: GroupManager, didGetVoteResults voteResults: [VoteResult])
     func groupManager(_ manager: GroupManager, didFailWith error: Error)
-    func groupManager(_ manager: GroupManager, didPostGroupID groupID: String)
 }
 extension GroupManagerDelegate {
     func groupManager(_ manager: GroupManager, didGetAllGroupData groupData: [GroupResponse]) {}
     func groupManager(_ manager: GroupManager, didGetGroupObject groupObject: GroupResponse) {}
     func groupManager(_ manager: GroupManager, didGetVoteResults voteResults: [VoteResult]) {}
     func groupManager(_ manager: GroupManager, didFailWith error: Error) {}
-    func groupManager(_ manager: GroupManager, didPostGroupID groupID: String) {}
 }
 
 enum ManagerError: LocalizedError {
-    case serverError, noData, decodingError, conversionError, itemAlreadyExistsError
+    case serverError, noData, decodingError, conversionError, itemAlreadyExistsError, alreadyAddAnotherOrderError, noMatchData
 
     var errorDescription: String? {
         switch self {
@@ -34,6 +32,8 @@ enum ManagerError: LocalizedError {
         case .decodingError: return "Decoding error"
         case .conversionError: return "Failed to change Object into dictionary"
         case .itemAlreadyExistsError: return "Item Already Exists."
+        case .alreadyAddAnotherOrderError: return "Already add another order"
+        case .noMatchData: return "Could not found match data"
         }
     }
 }
@@ -77,10 +77,9 @@ class GroupManager {
                 let voteResultDic = try VoteResult(shopID: shopID, userIDs: []).toDictionary()
                 try await shopRef.setData(voteResultDic)
             }
-            delegate?.groupManager(self, didPostGroupID: group.groupID)
         } else {
             let document = groupCollection().document()
-            let groupObject = GroupSetup(
+            let groupObject = GroupResponse(
                 groupID: document.documentID,
                 date: Date().timeIntervalSince1970,
                 state: "進行中",
@@ -92,7 +91,6 @@ class GroupManager {
             try document.setData(from: groupObject)
             let voteResultDic = try VoteResult(shopID: shopID, userIDs: []).toDictionary()
             try await voteResultsCollection(groupID: document.documentID).document(shopID).setData(voteResultDic)
-            delegate?.groupManager(self, didPostGroupID: document.documentID)
         }
     }
 // MARK: - 跟團者加入Group
@@ -128,7 +126,8 @@ class GroupManager {
                     self.delegate?.groupManager(self, didFailWith: error)
                 } else if let snapshot {
                     let groupData: [GroupResponse] = snapshot.documents.compactMap {
-                        try? $0.data(as: GroupResponse.self) }
+                        try? $0.data(as: GroupResponse.self)
+                    }
                     self.delegate?.groupManager(self, didGetAllGroupData: groupData)
                 }
             })

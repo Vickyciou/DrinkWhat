@@ -52,6 +52,10 @@ class RootViewController: UIViewController {
                     let tabBarVC = TabBarViewController(groupID: groupID)
                     tabBarVC.tabBardelegate = self
                     return tabBarVC
+                } else if let orderID = orderID(url) {
+                    let tabBarVC = TabBarViewController(orderID: orderID)
+                    tabBarVC.tabBardelegate = self
+                    return tabBarVC
                 } else {
                     let tabBarVC = TabBarViewController()
                     tabBarVC.tabBardelegate = self
@@ -72,6 +76,13 @@ class RootViewController: UIViewController {
             return nil
         }
     }
+    private func orderID(_ url: URL) -> String? {
+        if url.host == "share" {
+            return url.queryParameters?["orderID"]
+        } else {
+            return nil
+        }
+    }
 }
 
 extension RootViewController: LoginViewControllerDelegate {
@@ -80,8 +91,14 @@ extension RootViewController: LoginViewControllerDelegate {
         viewController.view.removeFromSuperview()
         viewController.removeFromParent()
         let tabBarVC = {
-            if let url {
-                return TabBarViewController(groupID: groupID(url))
+            if let url, let groupID = groupID(url) {
+                let tabBarVC = TabBarViewController(groupID: groupID)
+                tabBarVC.tabBardelegate = self
+                return tabBarVC
+            } else if let url, let orderID = orderID(url) {
+                let tabBarVC = TabBarViewController(orderID: orderID)
+                tabBarVC.tabBardelegate = self
+                return tabBarVC
             } else {
                 return TabBarViewController()
             }

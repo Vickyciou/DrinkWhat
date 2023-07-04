@@ -55,28 +55,81 @@ extension VoteViewController {
 }
 
 extension VoteViewController: UITableViewDataSource {
+
+    func numberOfSections(in tableView: UITableView) -> Int {
+        2
+    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        groupObjects.count
+
+
+        switch section {
+        case 0:
+            let continueVotes = groupObjects.filter({ $0.state == "進行中" })
+            return continueVotes.count
+        case 1:
+            let finishedVotes = groupObjects.filter({ $0.state == "已完成" })
+            return finishedVotes.count
+        default:
+            return 0
+        }
+
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "VoteCell", for: indexPath) as? VoteCell
         else { fatalError("Cannot created VoteCell") }
-        let voteList = groupObjects[indexPath.row]
-        let date = Date(timeIntervalSince1970: voteList.date)
-        let dateString = date.dateToString(date: date)
-        cell.setupVoteCell(profileImageURL: voteList.initiatorUserImage,
-                           userName: voteList.initiatorUserName,
-                           voteState: voteList.state,
-                           date: dateString)
-        return cell
+
+        switch indexPath.section {
+        case 0:
+            let continueVotes = groupObjects.filter({ $0.state == "進行中" })
+            let continueVote = continueVotes[indexPath.row]
+            let date = Date(timeIntervalSince1970: continueVote.date)
+            let dateString = date.dateToString(date: date)
+            cell.setupVoteCell(profileImageURL: continueVote.initiatorUserImage,
+                               userName: continueVote.initiatorUserName,
+                               voteState: continueVote.state,
+                               date: dateString)
+            return cell
+        case 1:
+            let finishedVotes = groupObjects.filter({ $0.state == "已完成" })
+            let finishedVote = finishedVotes[indexPath.row]
+            let date = Date(timeIntervalSince1970: finishedVote.date)
+            let dateString = date.dateToString(date: date)
+            cell.setupVoteCell(profileImageURL: finishedVote.initiatorUserImage,
+                               userName: finishedVote.initiatorUserName,
+                               voteState: finishedVote.state,
+                               date: dateString)
+            return cell
+        default:
+            return cell
+        }
     }
 }
 
-// 這邊要寫section header
 extension VoteViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let voteNavigationVC = VoteNavigationController(groupID: groupObjects[indexPath.row].groupID)
-        present(voteNavigationVC, animated: true)
+        switch indexPath.section {
+        case 0:
+            let continueVotes = groupObjects.filter({ $0.state == "進行中" })
+            let voteNavigationVC = VoteNavigationController(groupID: continueVotes[indexPath.row].groupID)
+            present(voteNavigationVC, animated: true)
+        case 1:
+            let finishedVotes = groupObjects.filter({ $0.state == "已完成" })
+            let voteNavigationVC = VoteNavigationController(groupID: finishedVotes[indexPath.row].groupID)
+            present(voteNavigationVC, animated: true)
+        default:
+            return
+        }
+    }
+
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch section {
+        case 0:
+            return "進行中的投票"
+        case 1:
+            return "已完成的投票"
+        default:
+            return ""
+        }
     }
 }
 extension VoteViewController: GroupManagerDelegate {

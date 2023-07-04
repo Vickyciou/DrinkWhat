@@ -755,6 +755,7 @@ PODS:
   - nanopb/encode (2.30909.0)
   - PromisesObjC (2.2.0)
   - SwiftLint (0.52.2)
+  - Toast-Swift (5.0.1)
 
 DEPENDENCIES:
   - FirebaseAuth (~> 10.0.0)
@@ -763,6 +764,7 @@ DEPENDENCIES:
   - Kingfisher
   - LineSDKSwift (~> 5.0)
   - SwiftLint
+  - Toast-Swift
 
 SPEC REPOS:
   trunk:
@@ -785,6 +787,7 @@ SPEC REPOS:
     - nanopb
     - PromisesObjC
     - SwiftLint
+    - Toast-Swift
 
 SPEC CHECKSUMS:
   abseil: 926fb7a82dc6d2b8e1f2ed7f3a718bce691d1e46
@@ -806,7 +809,8 @@ SPEC CHECKSUMS:
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
   SwiftLint: 1ac76dac888ca05cb0cf24d0c85887ec1209961d
+  Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
 
-PODFILE CHECKSUM: 6aed5d8612512ee762262844ab94d2ee6dbe5172
+PODFILE CHECKSUM: 8a5b422a0b03eddddd2b287fc5f8f074088a963c
 
 COCOAPODS: 1.12.1

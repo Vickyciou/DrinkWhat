@@ -9,9 +9,6 @@
 /* Begin PBXBuildFile section */
 		F6E573017D9A86AE4188F657 /* Pods_DrinkWhat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FB21740431A239E7B61383D /* Pods_DrinkWhat.framework */; };
 		FA2820B12A406E98009FDAD2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA2820B02A406E98009FDAD2 /* GoogleService-Info.plist */; };
-		FA2820BA2A41548A009FDAD2 /* VoteObjectIsAnotherVoted.json in Resources */ = {isa = PBXBuildFile; fileRef = FA2820B72A413D3E009FDAD2 /* VoteObjectIsAnotherVoted.json */; };
-		FA2820BB2A41548D009FDAD2 /* VoteObjectIsAnotherVoted1.json in Resources */ = {isa = PBXBuildFile; fileRef = FA2820B82A413DCA009FDAD2 /* VoteObjectIsAnotherVoted1.json */; };
-		FA2820BC2A415491009FDAD2 /* VoteObjectIsFinished1.json in Resources */ = {isa = PBXBuildFile; fileRef = FA2820B92A413E29009FDAD2 /* VoteObjectIsFinished1.json */; };
 		FA2820BE2A4158BD009FDAD2 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2820BD2A4158BD009FDAD2 /* UIImage+Extension.swift */; };
 		FA6C33252A4851FC005CC96E /* URL+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6C33242A4851FC005CC96E /* URL+Extension.swift */; };
 		FA7179332A3A9DF7002C407C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7179322A3A9DF7002C407C /* AppDelegate.swift */; };
@@ -29,12 +26,6 @@
 		FA71795C2A3C0B91002C407C /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA71795B2A3C0B91002C407C /* UIColor+Extension.swift */; };
 		FA71795E2A3C13BB002C407C /* NotVotedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA71795D2A3C13BB002C407C /* NotVotedViewController.swift */; };
 		FA7179602A3C141A002C407C /* NotVotedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA71795F2A3C1419002C407C /* NotVotedCell.swift */; };
-		FA7179662A3D4C7C002C407C /* LocalJSONLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7179652A3D4C7C002C407C /* LocalJSONLoader.swift */; };
-		FA71796B2A3D583A002C407C /* ShopList.json in Resources */ = {isa = PBXBuildFile; fileRef = FA71796A2A3D583A002C407C /* ShopList.json */; };
-		FA71796F2A3D6CCF002C407C /* VoteList.json in Resources */ = {isa = PBXBuildFile; fileRef = FA71796E2A3D6CCF002C407C /* VoteList.json */; };
-		FA7179712A3D70F0002C407C /* VoteObjectAAAA.json in Resources */ = {isa = PBXBuildFile; fileRef = FA7179702A3D70F0002C407C /* VoteObjectAAAA.json */; };
-		FA71797C2A3DA0AC002C407C /* VoteObjectCCCC.json in Resources */ = {isa = PBXBuildFile; fileRef = FA71797A2A3DA0AC002C407C /* VoteObjectCCCC.json */; };
-		FA71797D2A3DA0AC002C407C /* VoteObjectBBBB.json in Resources */ = {isa = PBXBuildFile; fileRef = FA71797B2A3DA0AC002C407C /* VoteObjectBBBB.json */; };
 		FA7CC6082A41ACC4009B599F /* GroupManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7CC6072A41ACC4009B599F /* GroupManager.swift */; };
 		FA7CC60B2A41B65D009B599F /* GroupResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7CC60A2A41B65D009B599F /* GroupResponse.swift */; };
 		FA7CC60D2A42DDE6009B599F /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7CC60C2A42DDE6009B599F /* UserManager.swift */; };
@@ -51,10 +42,24 @@
 		FA98EEFF2A3E03D0000E6FEE /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA98EEFE2A3E03D0000E6FEE /* Date+Extension.swift */; };
 		FA98EF012A3EAF0E000E6FEE /* VoteNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA98EF002A3EAF0E000E6FEE /* VoteNavigationController.swift */; };
 		FA98EF032A3EB991000E6FEE /* VoteResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA98EF022A3EB991000E6FEE /* VoteResultViewController.swift */; };
-		FA98EF052A3ECF3F000E6FEE /* VoteObjectIsVoted.json in Resources */ = {isa = PBXBuildFile; fileRef = FA98EF042A3ECD9D000E6FEE /* VoteObjectIsVoted.json */; };
-		FA98EF072A3ED178000E6FEE /* VoteObjectIsFinished.json in Resources */ = {isa = PBXBuildFile; fileRef = FA98EF062A3ED168000E6FEE /* VoteObjectIsFinished.json */; };
 		FA98EF092A3F3430000E6FEE /* VoteResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA98EF082A3F3430000E6FEE /* VoteResultCell.swift */; };
 		FA98EF0B2A3F39B0000E6FEE /* WinnerShopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA98EF0A2A3F39B0000E6FEE /* WinnerShopView.swift */; };
+		FA9AABD62A4D247500B99FB7 /* OrderResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABD52A4D247500B99FB7 /* OrderResponse.swift */; };
+		FA9AABD82A4D25A300B99FB7 /* Encodable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABD72A4D25A300B99FB7 /* Encodable+Extension.swift */; };
+		FA9AABDA2A4D34D200B99FB7 /* OrderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABD92A4D34D200B99FB7 /* OrderManager.swift */; };
+		FA9AABDC2A4D810800B99FB7 /* ToastSwiftWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABDB2A4D810800B99FB7 /* ToastSwiftWrapper.swift */; };
+		FA9AABDE2A4EC45300B99FB7 /* MainOrderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABDD2A4EC45300B99FB7 /* MainOrderCell.swift */; };
+		FA9AABE02A4F1D7600B99FB7 /* OrderingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABDF2A4F1D7600B99FB7 /* OrderingViewController.swift */; };
+		FA9AABE22A4F1DA400B99FB7 /* CustomDrinkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABE12A4F1DA400B99FB7 /* CustomDrinkCell.swift */; };
+		FA9AABE42A4FABFB00B99FB7 /* OrderNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABE32A4FABFB00B99FB7 /* OrderNavigationController.swift */; };
+		FA9AABE62A4FBA1B00B99FB7 /* OrderResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABE52A4FBA1B00B99FB7 /* OrderResultsViewController.swift */; };
+		FA9AABEA2A5030A300B99FB7 /* OrderSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABE92A5030A300B99FB7 /* OrderSectionHeaderView.swift */; };
+		FA9AABEC2A5069B100B99FB7 /* OrderSectionFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABEB2A5069B100B99FB7 /* OrderSectionFooterView.swift */; };
+		FA9AABEE2A51210700B99FB7 /* OrderTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABED2A51210700B99FB7 /* OrderTableViewHeader.swift */; };
+		FA9AABF02A51378400B99FB7 /* InitiatorOrderingBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABEF2A51378400B99FB7 /* InitiatorOrderingBottomView.swift */; };
+		FA9AABF22A51472400B99FB7 /* OrderFinishedBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABF12A51472400B99FB7 /* OrderFinishedBottomView.swift */; };
+		FA9AABF42A51480600B99FB7 /* JoinUsersBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABF32A51480600B99FB7 /* JoinUsersBottomView.swift */; };
+		FA9AABF62A51687500B99FB7 /* OrderTableViewFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABF52A51687500B99FB7 /* OrderTableViewFooter.swift */; };
 		FAA10A512A471079001F9CC0 /* UserObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA10A502A471079001F9CC0 /* UserObject.swift */; };
 		FAA10A532A4710B7001F9CC0 /* ShopObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA10A522A4710B7001F9CC0 /* ShopObject.swift */; };
 		FAB2B9D52A4ADC7800EB449C /* DrinkDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB2B9D42A4ADC7800EB449C /* DrinkDetailViewController.swift */; };
@@ -70,9 +75,6 @@
 		5FB21740431A239E7B61383D /* Pods_DrinkWhat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DrinkWhat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DEE07C5BA30E83A3E151349C /* Pods-DrinkWhat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DrinkWhat.debug.xcconfig"; path = "Target Support Files/Pods-DrinkWhat/Pods-DrinkWhat.debug.xcconfig"; sourceTree = "<group>"; };
 		FA2820B02A406E98009FDAD2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		FA2820B72A413D3E009FDAD2 /* VoteObjectIsAnotherVoted.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = VoteObjectIsAnotherVoted.json; sourceTree = "<group>"; };
-		FA2820B82A413DCA009FDAD2 /* VoteObjectIsAnotherVoted1.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = VoteObjectIsAnotherVoted1.json; sourceTree = "<group>"; };
-		FA2820B92A413E29009FDAD2 /* VoteObjectIsFinished1.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = VoteObjectIsFinished1.json; sourceTree = "<group>"; };
 		FA2820BD2A4158BD009FDAD2 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		FA6C33242A4851FC005CC96E /* URL+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Extension.swift"; sourceTree = "<group>"; };
 		FA71792F2A3A9DF7002C407C /* DrinkWhat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DrinkWhat.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -92,12 +94,6 @@
 		FA71795B2A3C0B91002C407C /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		FA71795D2A3C13BB002C407C /* NotVotedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotVotedViewController.swift; sourceTree = "<group>"; };
 		FA71795F2A3C1419002C407C /* NotVotedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotVotedCell.swift; sourceTree = "<group>"; };
-		FA7179652A3D4C7C002C407C /* LocalJSONLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalJSONLoader.swift; sourceTree = "<group>"; };
-		FA71796A2A3D583A002C407C /* ShopList.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ShopList.json; sourceTree = "<group>"; };
-		FA71796E2A3D6CCF002C407C /* VoteList.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = VoteList.json; sourceTree = "<group>"; };
-		FA7179702A3D70F0002C407C /* VoteObjectAAAA.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = VoteObjectAAAA.json; sourceTree = "<group>"; };
-		FA71797A2A3DA0AC002C407C /* VoteObjectCCCC.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = VoteObjectCCCC.json; sourceTree = "<group>"; };
-		FA71797B2A3DA0AC002C407C /* VoteObjectBBBB.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = VoteObjectBBBB.json; sourceTree = "<group>"; };
 		FA7CC6072A41ACC4009B599F /* GroupManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupManager.swift; sourceTree = "<group>"; };
 		FA7CC60A2A41B65D009B599F /* GroupResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupResponse.swift; sourceTree = "<group>"; };
 		FA7CC60C2A42DDE6009B599F /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
@@ -115,10 +111,24 @@
 		FA98EEFE2A3E03D0000E6FEE /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 		FA98EF002A3EAF0E000E6FEE /* VoteNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteNavigationController.swift; sourceTree = "<group>"; };
 		FA98EF022A3EB991000E6FEE /* VoteResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteResultViewController.swift; sourceTree = "<group>"; };
-		FA98EF042A3ECD9D000E6FEE /* VoteObjectIsVoted.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = VoteObjectIsVoted.json; sourceTree = "<group>"; };
-		FA98EF062A3ED168000E6FEE /* VoteObjectIsFinished.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = VoteObjectIsFinished.json; sourceTree = "<group>"; };
 		FA98EF082A3F3430000E6FEE /* VoteResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteResultCell.swift; sourceTree = "<group>"; };
 		FA98EF0A2A3F39B0000E6FEE /* WinnerShopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinnerShopView.swift; sourceTree = "<group>"; };
+		FA9AABD52A4D247500B99FB7 /* OrderResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderResponse.swift; sourceTree = "<group>"; };
+		FA9AABD72A4D25A300B99FB7 /* Encodable+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+Extension.swift"; sourceTree = "<group>"; };
+		FA9AABD92A4D34D200B99FB7 /* OrderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderManager.swift; sourceTree = "<group>"; };
+		FA9AABDB2A4D810800B99FB7 /* ToastSwiftWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastSwiftWrapper.swift; sourceTree = "<group>"; };
+		FA9AABDD2A4EC45300B99FB7 /* MainOrderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainOrderCell.swift; sourceTree = "<group>"; };
+		FA9AABDF2A4F1D7600B99FB7 /* OrderingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderingViewController.swift; sourceTree = "<group>"; };
+		FA9AABE12A4F1DA400B99FB7 /* CustomDrinkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDrinkCell.swift; sourceTree = "<group>"; };
+		FA9AABE32A4FABFB00B99FB7 /* OrderNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderNavigationController.swift; sourceTree = "<group>"; };
+		FA9AABE52A4FBA1B00B99FB7 /* OrderResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderResultsViewController.swift; sourceTree = "<group>"; };
+		FA9AABE92A5030A300B99FB7 /* OrderSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderSectionHeaderView.swift; sourceTree = "<group>"; };
+		FA9AABEB2A5069B100B99FB7 /* OrderSectionFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderSectionFooterView.swift; sourceTree = "<group>"; };
+		FA9AABED2A51210700B99FB7 /* OrderTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderTableViewHeader.swift; sourceTree = "<group>"; };
+		FA9AABEF2A51378400B99FB7 /* InitiatorOrderingBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitiatorOrderingBottomView.swift; sourceTree = "<group>"; };
+		FA9AABF12A51472400B99FB7 /* OrderFinishedBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderFinishedBottomView.swift; sourceTree = "<group>"; };
+		FA9AABF32A51480600B99FB7 /* JoinUsersBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinUsersBottomView.swift; sourceTree = "<group>"; };
+		FA9AABF52A51687500B99FB7 /* OrderTableViewFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderTableViewFooter.swift; sourceTree = "<group>"; };
 		FAA10A502A471079001F9CC0 /* UserObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserObject.swift; sourceTree = "<group>"; };
 		FAA10A522A4710B7001F9CC0 /* ShopObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopObject.swift; sourceTree = "<group>"; };
 		FAB2B9D42A4ADC7800EB449C /* DrinkDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkDetailViewController.swift; sourceTree = "<group>"; };
@@ -211,6 +221,7 @@
 				FA98EEFE2A3E03D0000E6FEE /* Date+Extension.swift */,
 				FA2820BD2A4158BD009FDAD2 /* UIImage+Extension.swift */,
 				FA6C33242A4851FC005CC96E /* URL+Extension.swift */,
+				FA9AABD72A4D25A300B99FB7 /* Encodable+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -236,28 +247,9 @@
 		FA7179642A3D4C66002C407C /* Helper */ = {
 			isa = PBXGroup;
 			children = (
-				FA7179692A3D4D77002C407C /* MockJSONs */,
-				FA7179652A3D4C7C002C407C /* LocalJSONLoader.swift */,
 				FA9232212A49896500F045C6 /* SignInWithAppleHelper.swift */,
 			);
 			path = Helper;
-			sourceTree = "<group>";
-		};
-		FA7179692A3D4D77002C407C /* MockJSONs */ = {
-			isa = PBXGroup;
-			children = (
-				FA71796E2A3D6CCF002C407C /* VoteList.json */,
-				FA7179702A3D70F0002C407C /* VoteObjectAAAA.json */,
-				FA98EF042A3ECD9D000E6FEE /* VoteObjectIsVoted.json */,
-				FA2820B72A413D3E009FDAD2 /* VoteObjectIsAnotherVoted.json */,
-				FA2820B82A413DCA009FDAD2 /* VoteObjectIsAnotherVoted1.json */,
-				FA2820B92A413E29009FDAD2 /* VoteObjectIsFinished1.json */,
-				FA98EF062A3ED168000E6FEE /* VoteObjectIsFinished.json */,
-				FA71797B2A3DA0AC002C407C /* VoteObjectBBBB.json */,
-				FA71797A2A3DA0AC002C407C /* VoteObjectCCCC.json */,
-				FA71796A2A3D583A002C407C /* ShopList.json */,
-			);
-			path = MockJSONs;
 			sourceTree = "<group>";
 		};
 		FA7CC6042A41AC0C009B599F /* LoginPage */ = {
@@ -284,6 +276,7 @@
 				FA7CC60C2A42DDE6009B599F /* UserManager.swift */,
 				FA7CC60E2A4403B5009B599F /* ShopManager.swift */,
 				FA9232232A498F1E00F045C6 /* AuthManager.swift */,
+				FA9AABD92A4D34D200B99FB7 /* OrderManager.swift */,
 			);
 			name = Manager;
 			sourceTree = "<group>";
@@ -294,6 +287,7 @@
 				FA7CC60A2A41B65D009B599F /* GroupResponse.swift */,
 				FAA10A502A471079001F9CC0 /* UserObject.swift */,
 				FAA10A522A4710B7001F9CC0 /* ShopObject.swift */,
+				FA9AABD52A4D247500B99FB7 /* OrderResponse.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -302,6 +296,7 @@
 			isa = PBXGroup;
 			children = (
 				FA7CC6132A44493B009B599F /* KingFisherWrapper.swift */,
+				FA9AABDB2A4D810800B99FB7 /* ToastSwiftWrapper.swift */,
 			);
 			path = ThirdPartyWrappers;
 			sourceTree = "<group>";
@@ -316,10 +311,38 @@
 			path = ShopPage;
 			sourceTree = "<group>";
 		};
-		FAB2B9D32A4ADC1A00EB449C /* OrderPage */ = {
+		FA9AABE72A502AD600B99FB7 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
 				FA7179512A3ABC99002C407C /* OrderViewController.swift */,
+				FA9AABE32A4FABFB00B99FB7 /* OrderNavigationController.swift */,
+				FA9AABDF2A4F1D7600B99FB7 /* OrderingViewController.swift */,
+				FA9AABE52A4FBA1B00B99FB7 /* OrderResultsViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		FA9AABE82A502AE300B99FB7 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				FA9AABE12A4F1DA400B99FB7 /* CustomDrinkCell.swift */,
+				FA9AABDD2A4EC45300B99FB7 /* MainOrderCell.swift */,
+				FA9AABE92A5030A300B99FB7 /* OrderSectionHeaderView.swift */,
+				FA9AABEB2A5069B100B99FB7 /* OrderSectionFooterView.swift */,
+				FA9AABED2A51210700B99FB7 /* OrderTableViewHeader.swift */,
+				FA9AABF52A51687500B99FB7 /* OrderTableViewFooter.swift */,
+				FA9AABEF2A51378400B99FB7 /* InitiatorOrderingBottomView.swift */,
+				FA9AABF32A51480600B99FB7 /* JoinUsersBottomView.swift */,
+				FA9AABF12A51472400B99FB7 /* OrderFinishedBottomView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		FAB2B9D32A4ADC1A00EB449C /* OrderPage */ = {
+			isa = PBXGroup;
+			children = (
+				FA9AABE72A502AD600B99FB7 /* ViewController */,
+				FA9AABE82A502AE300B99FB7 /* View */,
 			);
 			path = OrderPage;
 			sourceTree = "<group>";
@@ -433,19 +456,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FA98EF072A3ED178000E6FEE /* VoteObjectIsFinished.json in Resources */,
-				FA71797D2A3DA0AC002C407C /* VoteObjectBBBB.json in Resources */,
-				FA2820BC2A415491009FDAD2 /* VoteObjectIsFinished1.json in Resources */,
 				FA71793F2A3A9DF8002C407C /* LaunchScreen.storyboard in Resources */,
-				FA71796F2A3D6CCF002C407C /* VoteList.json in Resources */,
-				FA71797C2A3DA0AC002C407C /* VoteObjectCCCC.json in Resources */,
-				FA2820BA2A41548A009FDAD2 /* VoteObjectIsAnotherVoted.json in Resources */,
 				FA2820B12A406E98009FDAD2 /* GoogleService-Info.plist in Resources */,
-				FA98EF052A3ECF3F000E6FEE /* VoteObjectIsVoted.json in Resources */,
-				FA2820BB2A41548D009FDAD2 /* VoteObjectIsAnotherVoted1.json in Resources */,
 				FA71793C2A3A9DF8002C407C /* Assets.xcassets in Resources */,
-				FA7179712A3D70F0002C407C /* VoteObjectAAAA.json in Resources */,
-				FA71796B2A3D583A002C407C /* ShopList.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -516,29 +529,44 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA9AABDA2A4D34D200B99FB7 /* OrderManager.swift in Sources */,
 				FAB2B9DD2A4AE4F000EB449C /* DrinkDetailDataSource.swift in Sources */,
+				FA9AABD82A4D25A300B99FB7 /* Encodable+Extension.swift in Sources */,
 				FA7179562A3AE557002C407C /* VoteCell.swift in Sources */,
+				FA9AABE42A4FABFB00B99FB7 /* OrderNavigationController.swift in Sources */,
 				FA71794A2A3AB994002C407C /* TabBarViewController.swift in Sources */,
+				FA9AABF42A51480600B99FB7 /* JoinUsersBottomView.swift in Sources */,
 				FAF2AE172A4A8F8400F27B64 /* RootViewController.swift in Sources */,
 				FA7179502A3ABC46002C407C /* VoteViewController.swift in Sources */,
+				FA9AABE62A4FBA1B00B99FB7 /* OrderResultsViewController.swift in Sources */,
+				FA9AABEA2A5030A300B99FB7 /* OrderSectionHeaderView.swift in Sources */,
 				FA98EEFB2A3DEB7C000E6FEE /* VotingViewController.swift in Sources */,
 				FA98EF092A3F3430000E6FEE /* VoteResultCell.swift in Sources */,
+				FA9AABDC2A4D810800B99FB7 /* ToastSwiftWrapper.swift in Sources */,
 				FA71795E2A3C13BB002C407C /* NotVotedViewController.swift in Sources */,
 				FA7179602A3C141A002C407C /* NotVotedCell.swift in Sources */,
 				FA98EF0B2A3F39B0000E6FEE /* WinnerShopView.swift in Sources */,
+				FA9AABEE2A51210700B99FB7 /* OrderTableViewHeader.swift in Sources */,
+				FA9AABD62A4D247500B99FB7 /* OrderResponse.swift in Sources */,
 				FA9232222A49896500F045C6 /* SignInWithAppleHelper.swift in Sources */,
+				FA9AABDE2A4EC45300B99FB7 /* MainOrderCell.swift in Sources */,
 				FA71795C2A3C0B91002C407C /* UIColor+Extension.swift in Sources */,
 				FA7CC6172A444B81009B599F /* ShopMenuViewController.swift in Sources */,
 				FA98EEFD2A3DEBA3000E6FEE /* VotingCell.swift in Sources */,
+				FA9AABE22A4F1DA400B99FB7 /* CustomDrinkCell.swift in Sources */,
 				FAA10A512A471079001F9CC0 /* UserObject.swift in Sources */,
 				FA98EF012A3EAF0E000E6FEE /* VoteNavigationController.swift in Sources */,
 				FA98EEFF2A3E03D0000E6FEE /* Date+Extension.swift in Sources */,
 				FA7CC6082A41ACC4009B599F /* GroupManager.swift in Sources */,
 				FA7CC60F2A4403B5009B599F /* ShopManager.swift in Sources */,
-				FA7179662A3D4C7C002C407C /* LocalJSONLoader.swift in Sources */,
+				FA9AABF02A51378400B99FB7 /* InitiatorOrderingBottomView.swift in Sources */,
+				FA9AABF62A51687500B99FB7 /* OrderTableViewFooter.swift in Sources */,
 				FA7179372A3A9DF7002C407C /* HomeViewController.swift in Sources */,
 				FA7CC60D2A42DDE6009B599F /* UserManager.swift in Sources */,
+				FA9AABEC2A5069B100B99FB7 /* OrderSectionFooterView.swift in Sources */,
+				FA9AABE02A4F1D7600B99FB7 /* OrderingViewController.swift in Sources */,
 				FA7179332A3A9DF7002C407C /* AppDelegate.swift in Sources */,
+				FA9AABF22A51472400B99FB7 /* OrderFinishedBottomView.swift in Sources */,
 				FA71794E2A3ABB8A002C407C /* FavoriteViewController.swift in Sources */,
 				FA7179352A3A9DF7002C407C /* SceneDelegate.swift in Sources */,
 				FA98EF032A3EB991000E6FEE /* VoteResultViewController.swift in Sources */,

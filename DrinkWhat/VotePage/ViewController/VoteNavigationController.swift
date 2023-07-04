@@ -73,6 +73,7 @@ class VoteNavigationController: UINavigationController {
             if viewControllers.last is VoteResultViewController { return }
             let voteResultVC = VoteResultViewController(
                 groupObject: groupObject,
+                userObject: userObject,
                 voteResults: voteResults,
                 shopObjects: shopObjects
             )

@@ -13,8 +13,21 @@ class DrinkDetailViewController: UIViewController {
     private lazy var tableView: UITableView = makeTableView()
     private lazy var addItemButton: UIButton = makeAddItemButton()
     private let dataSource = DrinkDetailDataSource()
+    private let orderManager = OrderManager()
     private var shopObject: ShopObject
+    private var userObject: UserObject? {
+        UserManager.shared.userObject
+    }
     private var drink: ShopMenu
+    private var currentVolumeIndex: Int?
+    private var currentSugarIndex: Int?
+    private var currentIceIndex: Int?
+    private var currentAddToppingsIndexes: Set<Int> = []
+    private var drinkPrice: Int {
+        let basePrice = currentVolumeIndex.map { drink.drinkPrice[$0].price } ?? drink.drinkPrice[0].price
+        let extraPrice = currentAddToppingsIndexes.map { shopObject.addToppings[$0].price }.reduce(0, +)
+        return basePrice + extraPrice
+    }
 
     init(shopObject: ShopObject, drink: ShopMenu) {
         self.shopObject = shopObject
@@ -44,7 +57,7 @@ class DrinkDetailViewController: UIViewController {
             topView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             topView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
         ])
-        topView.setupTopView(drinkName: drink.drinkName, price: drink.drinkPrice[0].price)
+        topView.setupTopView(drinkName: drink.drinkName, price: drinkPrice)
     }
     private func setupTableView() {
         view.addSubview(tableView)
@@ -72,8 +85,8 @@ extension DrinkDetailViewController {
         let tableView = UITableView(frame: .zero)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.dataSource = self
+        tableView.delegate = self
         tableView.register(DrinkDetailCell.self, forCellReuseIdentifier: "DrinkDetailCell")
-        tableView.contentInsetAdjustmentBehavior = .never
         tableView.separatorStyle = .none
         tableView.sectionHeaderHeight = UITableView.automaticDimension
         tableView.sectionHeaderTopPadding = 0.0
@@ -92,7 +105,79 @@ extension DrinkDetailViewController {
         return button
     }
     @objc func addItemButtonTapped() {
+        Task {
+            if let currentVolumeIndex, let currentSugarIndex, let currentIceIndex {
+                try await addOrderObject(currentVolumeIndex: currentVolumeIndex,
+                                         currentSugarIndex: currentSugarIndex,
+                                         currentIceIndex: currentIceIndex)
+            } else {
+                // 如果沒有選取儲存格，執行相應的處理
+                let alert = UIAlertController(
+                    title: "加入失敗",
+                    message: "容量、甜度、冰量都需要選取哦！",
+                    preferredStyle: .alert
+                )
+                let okAction = UIAlertAction(title: "OK", style: .default)
+                alert.addAction(okAction)
+                present(alert, animated: true)
+            }
+        }
+    }
+    private func addOrderObject(currentVolumeIndex: Int, currentSugarIndex: Int, currentIceIndex: Int) async throws {
+        guard let userObject else {
+            let alert = UIAlertController(
+                title: "加入失敗",
+                message: "請先登入會員",
+                preferredStyle: .alert
+            )
+            let loginAction = UIAlertAction(title: "前往登入", style: .default)
+            let cancelAction = UIAlertAction(title: "稍後再說", style: .cancel)
+            alert.addAction(loginAction)
+            alert.addAction(cancelAction)
+            present(alert, animated: true)
+            return
+        }
+        var addToppings: [AddTopping] = []
+        currentAddToppingsIndexes.forEach { index in
+            let topping = shopObject.addToppings[index].topping
+            let price = shopObject.addToppings[index].price
+            let addTopping = AddTopping(topping: topping, price: price)
+            addToppings.append(addTopping)
+        }
 
+        let orderObject = OrderObject(
+            drinkName: drink.drinkName,
+            drinkPrice: drinkPrice,
+            volume: drink.drinkPrice[currentVolumeIndex].volume,
+            sugar: dataSource.sugar[currentSugarIndex],
+            ice: dataSource.ice[currentIceIndex],
+            addToppings: addToppings, note: "")
+        Task {
+                do {
+                    try await orderManager.addOrderResult(userID: userObject.userID,
+                                                          orderObject: orderObject, shopID: shopObject.id)
+                    view.makeAlertToast(message: "\(drink.drinkName)", title: "已成功加入", duration: 2)
+                    dismiss(animated: true)
+                } catch ManagerError.noData {
+                    let alert = UIAlertController(
+                        title: "加入失敗",
+                        message: "尚未加入任何團購群組哦！",
+                        preferredStyle: .alert
+                    )
+                    let okAction = UIAlertAction(title: "OK", style: .default)
+                    alert.addAction(okAction)
+                    present(alert, animated: true)
+                } catch ManagerError.noMatchData {
+                    let alert = UIAlertController(
+                        title: "加入失敗",
+                        message: "查無此商店進行中的團購哦！",
+                        preferredStyle: .alert
+                    )
+                    let okAction = UIAlertAction(title: "OK", style: .default)
+                    alert.addAction(okAction)
+                    present(alert, animated: true)
+                }
+        }
     }
 }
 extension DrinkDetailViewController: UITableViewDataSource {
@@ -116,22 +201,36 @@ extension DrinkDetailViewController: UITableViewDataSource {
         }
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "DrinkDetailCell", for: indexPath) as? DrinkDetailCell
-              else { fatalError("Cannot created DrinkDetailCell") }
-//        cell.delegate = self
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "DrinkDetailCell", for: indexPath)
+                as? DrinkDetailCell else { fatalError("Cannot created DrinkDetailCell") }
+
         let section = indexPath.section
         switch section {
         case 0:
-            cell.setupCell(description: drink.drinkPrice[indexPath.row].volume)
+            cell.setupCell(
+                description: drink.drinkPrice[indexPath.row].volume,
+                isSelected: currentVolumeIndex == indexPath.row
+            )
             return cell
         case 1:
-            cell.setupCell(description: dataSource.sugar[indexPath.row])
+            cell.setupCell(
+                description: dataSource.sugar[indexPath.row],
+                isSelected: currentSugarIndex == indexPath.row
+            )
             return cell
         case 2:
-            cell.setupCell(description: dataSource.ice[indexPath.row])
+            cell.setupCell(
+                description: dataSource.ice[indexPath.row],
+                isSelected: currentIceIndex == indexPath.row
+            )
             return cell
         case 3:
-            cell.setupCell(description: shopObject.addToppings[indexPath.row].topping)
+            let addToppings = shopObject.addToppings[indexPath.row]
+            cell.setupAddToppingCell(
+                description: addToppings.topping,
+                addPrice: addToppings.price,
+                isSelected: currentAddToppingsIndexes.contains(indexPath.row)
+            )
             return cell
         default:
             return cell
@@ -149,7 +248,11 @@ extension DrinkDetailViewController: UITableViewDelegate {
         case 2:
             return "冰量"
         case 3:
-            return "加料"
+            if !shopObject.addToppings.isEmpty {
+                return "加料"
+            } else {
+                return nil
+            }
         default:
             return ""
         }
@@ -159,7 +262,8 @@ extension DrinkDetailViewController: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        if let selectIndexPathInSection = tableView.indexPathsForSelectedRows?.first(where: {
+        if indexPath.section != 3,
+           let selectIndexPathInSection = tableView.indexPathsForSelectedRows?.first(where: {
             $0.section == indexPath.section
         }) {
             tableView.deselectRow(at: selectIndexPathInSection, animated: false)
@@ -168,14 +272,44 @@ extension DrinkDetailViewController: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "DrinkDetailCell", for: indexPath) as? DrinkDetailCell
-              else { fatalError("Cannot created DrinkDetailCell") }
-        cell.chooseButton.isSelected = true
+        let section = indexPath.section
+        switch section {
+        case 0:
+            currentVolumeIndex.toggleValue(indexPath.row)
+            currentVolumeIndex = indexPath.row
+            topView.setupTopView(drinkName: drink.drinkName, price: drinkPrice)
+        case 1:
+            currentSugarIndex.toggleValue(indexPath.row)
+            currentSugarIndex = indexPath.row
+        case 2:
+            currentIceIndex.toggleValue(indexPath.row)
+            currentIceIndex = indexPath.row
+        case 3:
+            currentAddToppingsIndexes.toggle(with: indexPath.row)
+            topView.setupTopView(drinkName: drink.drinkName, price: drinkPrice)
+        default:
+            return
+        }
+        tableView.reloadData()
     }
 }
 
-//extension DrinkDetailViewController: DrinkDetailCellDelegate {
-//    func didSelectedChooseButton(_ cell: DrinkDetailCell, button: UIButton) {
-//        cell.chooseButton.isSelected = true
-//    }
-//}
+extension Optional where Wrapped == Int {
+    mutating func toggleValue(_ value: Int) {
+        if let unwrappedValue = self, unwrappedValue == value {
+            self = nil
+        } else {
+            self = value
+        }
+    }
+}
+
+extension Set {
+    mutating func toggle(with value: Element) {
+        if contains(value) {
+            remove(value)
+        } else {
+            insert(value)
+        }
+    }
+}

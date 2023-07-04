@@ -13,12 +13,15 @@ protocol TabBarViewControllerDelegate: AnyObject {
 class TabBarViewController: UITabBarController {
     private let tabs: [Tab] = [.home, .favorite, .vote, .order, .profile]
     private let groupManager = GroupManager()
+    private let orderManager = OrderManager()
     private var userObject = UserManager.shared.userObject
     private let groupID: String?
+    private let orderID: String?
     weak var tabBardelegate: TabBarViewControllerDelegate?
 
-    init(groupID: String? = nil) {
+    init(groupID: String? = nil, orderID: String? = nil) {
         self.groupID = groupID
+        self.orderID = orderID
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -31,6 +34,7 @@ class TabBarViewController: UITabBarController {
         view.backgroundColor = .white
         viewControllers = tabs.map { $0.makeViewController() }
         switchToGroupIndex()
+        switchToOrderIndex()
         let profileVC = (viewControllers?.last as? UINavigationController)?.viewControllers.first as? ProfileViewController
         profileVC?.delegate = self
     }
@@ -55,9 +59,25 @@ class TabBarViewController: UITabBarController {
         }
     }
     private func switchToOrderIndex() {
-
+        guard let orderID, let userObject else { return }
+        selectedIndex = 3
+        Task {
+            do {
+                try await orderManager.addUserIntoOrderGroup(userID: userObject.userID, orderID: orderID)
+            } catch ManagerError.itemAlreadyExistsError {
+                let alert = UIAlertController(
+                    title: "加入團購群組失敗",
+                    message: "目前已有進行中的團購群組囉！\n請先完成進行中的群組~",
+                    preferredStyle: .alert
+                )
+                let okAction = UIAlertAction(title: "OK", style: .default)
+                alert.addAction(okAction)
+                present(alert, animated: true)
+            }
+        }
     }
 }
+
 
 extension TabBarViewController {
     private enum Tab {
@@ -69,6 +89,7 @@ extension TabBarViewController {
 
         func makeViewController() -> UIViewController {
             let controller: UIViewController
+            let userManager = UserManager()
             switch self {
             case .home: controller = UINavigationController(rootViewController: HomeViewController())
             case .favorite: controller = UINavigationController(rootViewController: FavoriteViewController())
@@ -93,7 +114,7 @@ extension TabBarViewController {
             case .vote:
                 return UIImage(systemName: "hand.tap")?.setColor(color: .darkBrown)
             case .order:
-                return UIImage(systemName: "list.bullet.clipboard")?.setColor(color: .darkBrown)
+                return UIImage(systemName: "doc.text")?.setColor(color: .darkBrown)
             case .profile:
                 return UIImage(systemName: "person")?.setColor(color: .darkBrown)
             }
@@ -107,7 +128,7 @@ extension TabBarViewController {
             case .vote:
                 return UIImage(systemName: "hand.tap.fill")?.setColor(color: .darkBrown)
             case .order:
-                return UIImage(systemName: "list.bullet.clipboard.fill")?.setColor(color: .darkBrown)
+                return UIImage(systemName: "doc.text.fill")?.setColor(color: .darkBrown)
             case .profile:
                 return UIImage(systemName: "person.fill")?.setColor(color: .darkBrown)
             }

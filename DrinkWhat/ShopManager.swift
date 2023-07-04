@@ -21,7 +21,6 @@ extension ShopManagerDelegate {
 }
 
 class ShopManager {
-    static let shared = ShopManager()
     private let db = Firestore.firestore()
     weak var delegate: ShopManagerDelegate?
 

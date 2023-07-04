@@ -32,7 +32,6 @@ opt_in_rules:
   - last_where
   - legacy_random
   - literal_expression_end_indentation
-  - multiline_function_chains
   - operator_usage_whitespace
   - overridden_super_call
   - pattern_matching_keywords
@@ -40,7 +39,6 @@ opt_in_rules:
   - redundant_nil_coalescing
   - strict_fileprivate
   - toggle_bool
-  - trailing_closure
   - yoda_condition
 
 
