@@ -174,7 +174,7 @@ extension TabBarViewController: UITabBarControllerDelegate {
 
 extension TabBarViewController: LoginSheetViewControllerDelegate {
     func loginSheetViewControllerLoginSuccess(_ viewController: LoginSheetViewController) {
-        view.makeAlertToast(message: "登入成功", title: nil, duration: 2)
+        makeAlertToast(message: "登入成功", title: nil, duration: 2)
     }
 
 

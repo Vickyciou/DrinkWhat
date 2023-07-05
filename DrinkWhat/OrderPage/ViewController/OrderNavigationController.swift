@@ -169,7 +169,7 @@ extension OrderNavigationController: UserManagerDelegate {
 extension OrderNavigationController: OrderingViewControllerDelegate {
     func didPressAddItemButton(_ vc: OrderingViewController, orderResponse: OrderResponse) {
         orderNavDelegate?.didPressAddItemButton(self, orderResponse: orderResponse)
-        dismiss(animated: false)
+//        dismiss(animated: false)
     }
 }
 

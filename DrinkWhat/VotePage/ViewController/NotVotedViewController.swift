@@ -93,6 +93,7 @@ extension NotVotedViewController {
         let tableView = UITableView(frame: .zero)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.dataSource = self
+        tableView.delegate = self
         tableView.register(NotVotedCell.self, forCellReuseIdentifier: "NotVotedCell")
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.separatorStyle = .none
@@ -143,9 +144,37 @@ extension NotVotedViewController: UITableViewDataSource {
     }
 }
 
+extension NotVotedViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete, let userObject {
+            guard groupObject.initiatorUserID == userObject.userID else {
+                let alert = UIAlertController(
+                    title: "移除店家失敗",
+                    message: "只有發起人可以移除店家哦！",
+                    preferredStyle: .alert
+                )
+                let okAction = UIAlertAction(title: "OK", style: .default)
+                alert.addAction(okAction)
+                present(alert, animated: true)
+                return
+            }
+            groupManager.removeShopFromGroup(groupID: groupObject.groupID,
+                                             shopID: shopObjects[indexPath.row].id)
+            newVoteResults.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
+    }
+}
+
+
 extension NotVotedViewController: NotVotedCellDelegate {
     func didPressedViewMenuButton(_ cell: NotVotedCell, button: UIButton) {
-        print("ViewMenu")
+        guard let index = tableView.indexPath(for: cell) else { return }
+        let shopID = newVoteResults[index.row].voteResult.shopID
+        if let shopObject = shopObjects.first { $0.id == shopID } {
+            let shopMenuVC = ShopMenuViewController(shopObject: shopObject)
+            present(shopMenuVC, animated: true)
+        }
     }
 
     func didSelectedChooseButton(_ cell: NotVotedCell, button: UIButton) {

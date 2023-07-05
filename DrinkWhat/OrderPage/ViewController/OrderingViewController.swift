@@ -99,17 +99,8 @@ class OrderingViewController: UIViewController {
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
         ])
-        let headerView = OrderTableViewHeader(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
-        headerView.setupView(shopName: orderResponse.shopObject.name)
-        tableView.tableHeaderView = headerView
-
-        let footerView = OrderTableViewFooter(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-        let orderObject = orderResults.map { $0.orderObjects }
-        let amount = orderObject.flatMap { $0 }.reduce(0, { $0 + $1.drinkPrice })
-        footerView.setupView(amount: amount, isInitiator: isInitiator)
-        footerView.delegate = self
-        tableView.tableFooterView = footerView
     }
+
     private func setupBottomView(state: BottomViewUIState) {
         let bottomView: UIView = {
             switch state {
@@ -194,6 +185,18 @@ extension OrderingViewController: UITableViewDelegate {
         footView.setupView(price: totalPrice)
         return footView
     }
+
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        let section = indexPath.section
+        let order = orderResults[section]
+        let orderObject = order.orderObjects[indexPath.row]
+
+        if editingStyle == .delete {
+            orderManager.removeOrderObject(userID: order.userID, orderID: orderResponse.orderID, orderObject: orderObject)
+        }
+        orderResults[section].orderObjects.remove(at: indexPath.row)
+        tableView.deleteRows(at: [indexPath], with: .fade)
+    }
 }
 extension OrderingViewController: InitiatorOrderingBottomViewDelegate {
     func cancelButtonTapped(_ view: InitiatorOrderingBottomView) {
@@ -212,8 +215,9 @@ extension OrderingViewController: JoinUsersBottomViewDelegate {
     }
 
     func addItemButtonTapped(_ view: JoinUsersBottomView) {
-        delegate?.didPressAddItemButton(self, orderResponse: orderResponse)
-        dismiss(animated: true)
+        dismiss(animated: true) { [self] in
+            delegate?.didPressAddItemButton(self, orderResponse: orderResponse)
+        }
     }
 }
 
@@ -249,6 +253,13 @@ extension OrderingViewController: OrderResultsAccessible {
     func setOrderResults(_ orderResults: [OrderResults]) {
         self.orderResults = orderResults
         tableView.reloadData()
+
+        let footerView = OrderTableViewFooter(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+        let orderObject = orderResults.map { $0.orderObjects }
+        let amount = orderObject.flatMap { $0 }.reduce(0, { $0 + $1.drinkPrice })
+        footerView.setupView(amount: amount, isInitiator: isInitiator)
+        footerView.delegate = self
+        tableView.tableFooterView = footerView
     }
 }
 extension OrderingViewController: OrderResponseAccessible {
@@ -256,6 +267,10 @@ extension OrderingViewController: OrderResponseAccessible {
         self.orderResponse = orderResponse
         DispatchQueue.main.async { [self] in
             setupBottomView(state: state)
+
+            let headerView = OrderTableViewHeader(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
+            headerView.setupView(shopName: orderResponse.shopObject.name)
+            tableView.tableHeaderView = headerView
         }
     }
 }

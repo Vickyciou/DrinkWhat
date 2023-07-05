@@ -42,6 +42,7 @@ class CustomDrinkCell: UITableViewCell {
             noteLabel.trailingAnchor.constraint(equalTo: drinkNameLabel.trailingAnchor),
             noteLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
             priceLabel.topAnchor.constraint(equalTo: drinkNameLabel.topAnchor),
+            priceLabel.widthAnchor.constraint(equalToConstant: 60),
             priceLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20)
         ])
     }

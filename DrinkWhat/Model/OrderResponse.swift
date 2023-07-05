@@ -22,7 +22,7 @@ struct OrderResults: Codable {
     let userID: String
 //    let totalPrice: Int
     var isPaid: Bool
-    let orderObjects: [OrderObject]
+    var orderObjects: [OrderObject]
 }
 
 struct OrderObject: Codable {

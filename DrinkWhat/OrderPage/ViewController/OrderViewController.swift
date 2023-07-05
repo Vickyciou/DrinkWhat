@@ -148,7 +148,10 @@ extension OrderViewController: UITableViewDelegate {
 extension OrderViewController: OrderNavigationControllerDelegate {
     func didPressAddItemButton(_ vc: OrderNavigationController, orderResponse: OrderResponse) {
         let shopMenuVC = ShopMenuViewController(shopObject: orderResponse.shopObject)
+//        let navigationController = UINavigationController(rootViewController: shopMenuVC)
+//        navigationController.modalPresentationStyle = .fullScreen
         present(shopMenuVC, animated: true)
+//        show(shopMenuVC, sender: nil)
     }
 }
 

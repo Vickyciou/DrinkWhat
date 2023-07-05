@@ -156,7 +156,7 @@ extension DrinkDetailViewController {
                 do {
                     try await orderManager.addOrderResult(userID: userObject.userID,
                                                           orderObject: orderObject, shopID: shopObject.id)
-                    view.makeAlertToast(message: "\(drink.drinkName)", title: "已成功加入", duration: 2)
+                    makeAlertToast(message: "\(drink.drinkName)", title: "已成功加入", duration: 2)
                     dismiss(animated: true)
                 } catch ManagerError.noData {
                     let alert = UIAlertController(

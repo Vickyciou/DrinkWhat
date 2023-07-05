@@ -139,6 +139,16 @@ class OrderManager {
         orderDocument(orderID: orderID).updateData(["state": status])
     }
 
+    // MARK: - Remove orderObject from user orderResults
+    func removeOrderObject(userID: String, orderID: String, orderObject: OrderObject) {
+        do {
+            let orderObjectDic = try orderObject.toDictionary()
+            orderObjectsDocument(orderID: orderID, userID: userID).updateData(["orderObjects": FieldValue.arrayRemove([orderObjectDic])])
+        } catch {
+             print(ManagerError.encodingError)
+        }
+    }
+
     // MARK: - Load order page
     func listenOrderResponse(userID: String) {
         orderResponseListener = orderCollection.whereFilter(Filter.orFilter(

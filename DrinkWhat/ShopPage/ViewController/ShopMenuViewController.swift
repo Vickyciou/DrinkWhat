@@ -197,7 +197,7 @@ extension ShopMenuViewController: SectionHeaderViewDelegate {
             Task {
                 do {
                     try await groupManager.addShopIntoGroup(shopID: shopObject.id)
-                    view.makeAlertToast(message: "加入成功！", title: nil, duration: 2)
+                    makeAlertToast(message: "加入成功！", title: nil, duration: 2)
                 } catch ManagerError.itemAlreadyExistsError {
                     let alert = UIAlertController(
                         title: "加入失敗",
@@ -229,6 +229,6 @@ extension ShopMenuViewController: GroupManagerDelegate {
 
 extension ShopMenuViewController: LoginSheetViewControllerDelegate {
     func loginSheetViewControllerLoginSuccess(_ viewController: LoginSheetViewController) {
-        view.makeAlertToast(message: "登入成功", title: nil, duration: 2)
+        makeAlertToast(message: "登入成功", title: nil, duration: 2)
     }
 }

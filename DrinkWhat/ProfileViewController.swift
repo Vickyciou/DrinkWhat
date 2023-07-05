@@ -105,9 +105,13 @@ extension ProfileViewController {
         button.addTarget(self, action: #selector(logOutButtonTapped), for: .touchUpInside)
         return button
     }
-    @objc func logOutButtonTapped() throws {
-        try AuthManager.shared.signOut()
-        delegate?.profileViewControllerDidPressLogOut(self)
+    @objc func logOutButtonTapped() {
+        do {
+            try AuthManager.shared.signOut()
+            delegate?.profileViewControllerDidPressLogOut(self)
+        } catch {
+            print("logOutButtonTapped \(error)")
+        }
     }
 
     private func makeDeleteButton() -> UIButton {

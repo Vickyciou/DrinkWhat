@@ -67,6 +67,7 @@ extension DrinkDetailCell {
     private func makeChooseButton() -> UIButton {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.isUserInteractionEnabled = false
         button.setTitleColor(UIColor.midiumBrown, for: .normal)
         button.titleLabel?.font = .regular(size: 14)
         button.setImage(UIImage(systemName: "circle")?.setColor(color: .darkBrown), for: .normal)

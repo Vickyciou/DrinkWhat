@@ -23,13 +23,14 @@ extension GroupManagerDelegate {
 }
 
 enum ManagerError: LocalizedError {
-    case serverError, noData, decodingError, conversionError, itemAlreadyExistsError, alreadyAddAnotherOrderError, noMatchData
+    case serverError, noData, decodingError, encodingError, conversionError, itemAlreadyExistsError, alreadyAddAnotherOrderError, noMatchData
 
     var errorDescription: String? {
         switch self {
         case .serverError: return "HttpResponse statusCode 500"
         case .noData: return "No data error"
         case .decodingError: return "Decoding error"
+        case .encodingError: return "Encoding error"
         case .conversionError: return "Failed to change Object into dictionary"
         case .itemAlreadyExistsError: return "Item Already Exists."
         case .alreadyAddAnotherOrderError: return "Already add another order"
@@ -111,6 +112,10 @@ class GroupManager {
         groupCollection().document(groupID).updateData(["state": "已完成"])
     }
 
+// MARK: - 刪除投票店家
+    func removeShopFromGroup(groupID: String, shopID: String) {
+        voteResultsCollection(groupID: groupID).document(shopID).delete()
+    }
 // MARK: - Load 投票主頁
     func listenGroupChangeEvent(userID: String) {
         groupListener = groupCollection()

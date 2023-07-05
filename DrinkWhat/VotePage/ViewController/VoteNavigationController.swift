@@ -63,13 +63,6 @@ class VoteNavigationController: UINavigationController {
         voteResults: [VoteResult],
         shopObjects: [ShopObject]
     ) {
-        guard isVoted(voteResults: voteResults, userObject: userObject) else {
-            if viewControllers.last is NotVotedViewController { return }
-            let shopListToVoteVC = NotVotedViewController(groupObject: groupObject)
-            shopListToVoteVC.setVoteResults(voteResults)
-            shopListToVoteVC.setShopObjects(shopObjects)
-            return pushViewController(shopListToVoteVC, animated: !viewControllers.isEmpty)
-        }
         if isEndVote(groupObject: groupObject) {
             if viewControllers.last is VoteResultViewController { return }
             let voteResultVC = VoteResultViewController(
@@ -79,7 +72,8 @@ class VoteNavigationController: UINavigationController {
                 shopObjects: shopObjects
             )
             pushViewController(voteResultVC, animated: !viewControllers.isEmpty)
-        } else {
+        } else
+        if isVoted(voteResults: voteResults, userObject: userObject) {
             if viewControllers.last is VotingViewController { return }
             let votingVC = VotingViewController(
                 groupObject: groupObject,
@@ -89,6 +83,13 @@ class VoteNavigationController: UINavigationController {
             votingVC.setShopObjects(shopObjects)
             votingVC.delegate = self
             pushViewController(votingVC, animated: !viewControllers.isEmpty)
+
+        } else {
+            if viewControllers.last is NotVotedViewController { return }
+            let shopListToVoteVC = NotVotedViewController(groupObject: groupObject)
+            shopListToVoteVC.setVoteResults(voteResults)
+            shopListToVoteVC.setShopObjects(shopObjects)
+            return pushViewController(shopListToVoteVC, animated: !viewControllers.isEmpty)
         }
     }
 
@@ -130,8 +131,6 @@ extension VoteNavigationController: ShopManagerDelegate {
 
 extension VoteNavigationController: VotingViewControllerDelegate {
     func votingViewController(_ vc: VotingViewController, didPressEndVoteButton button: UIButton) {
-        groupManager.setVoteStateToFinish(groupID: groupID)
-
         guard let voteResult = voteResults.first,
             let userObject else { return }
         let winnerShopID = voteResult.shopID
@@ -139,9 +138,11 @@ extension VoteNavigationController: VotingViewControllerDelegate {
 
         Task {
             do {
-                let orderID = try await orderManager.createOrder(shopObject: shop,
-                                                                 initiatorUserID: userObject.userID,
-                                                                 initiatorUserName: userObject.userName ?? "Name").orderID
+                let orderID = try await
+                orderManager.createOrder(shopObject: shop,
+                                         initiatorUserID: userObject.userID,
+                                         initiatorUserName: userObject.userName ?? "Name").orderID
+                groupManager.setVoteStateToFinish(groupID: groupID)
 
                 if let joinUserIDs = groupObject.flatMap { $0.joinUserIDs } {
                     try await joinUserIDs.asyncMap {
