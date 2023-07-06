@@ -28,6 +28,8 @@ class OrderingViewController: UIViewController {
     private var joinUserObjects: [UserObject] = []
     private var isInitiator: Bool
     weak var delegate: OrderingViewControllerDelegate?
+    private let footerView = OrderTableViewFooter(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+    private let headerView = OrderTableViewHeader(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
     private var state: BottomViewUIState {
         if orderResponse.state == OrderStatus.canceled.rawValue
             || orderResponse.state == OrderStatus.finished.rawValue {
@@ -99,6 +101,9 @@ class OrderingViewController: UIViewController {
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
         ])
+        footerView.delegate = self
+        tableView.tableHeaderView = headerView
+        tableView.tableFooterView = footerView
     }
 
     private func setupBottomView(state: BottomViewUIState) {
@@ -140,6 +145,7 @@ extension OrderingViewController {
         tableView.backgroundColor = .white
         return tableView
     }
+    
 }
 
 extension OrderingViewController: UITableViewDataSource {
@@ -171,6 +177,7 @@ extension OrderingViewController: UITableViewDataSource {
 extension OrderingViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = OrderSectionHeaderView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.width, height: 60))
+        headerView.delegate = self
         let order = orderResults[section]
         if let user = joinUserObjects.first(where: { $0.userID == order.userID }) {
             headerView.setupView(userImageURL: user.userImageURL, userName: user.userName ?? "", isPaid: order.isPaid)
@@ -211,7 +218,14 @@ extension OrderingViewController: InitiatorOrderingBottomViewDelegate {
 }
 extension OrderingViewController: JoinUsersBottomViewDelegate {
     func linePayButtonTapped(_ view: JoinUsersBottomView) {
-        //
+        guard let linePayURL = URL(string: "https://line.me/R/nv/wallet"),
+              let lineURL = URL(string: "https://line.me/R/") else { return }
+
+        if UIApplication.shared.canOpenURL(linePayURL) {
+            UIApplication.shared.open(linePayURL, options: [:], completionHandler: nil)
+        } else {
+            UIApplication.shared.open(lineURL, options: [:], completionHandler: nil)
+        }
     }
 
     func addItemButtonTapped(_ view: JoinUsersBottomView) {
@@ -219,6 +233,27 @@ extension OrderingViewController: JoinUsersBottomViewDelegate {
             delegate?.didPressAddItemButton(self, orderResponse: orderResponse)
         }
     }
+}
+extension OrderingViewController: OrderSectionHeaderViewDelegate {
+    func didPressedPaidStatusButton(_ view: OrderSectionHeaderView) {
+        if let userObject {
+            let alert = UIAlertController(
+                title: "付款確認",
+                message: "是否已完成付款？",
+                preferredStyle: .alert
+            )
+            let confirmAction = UIAlertAction(title: "是的", style: .default) { [self]_ in
+                orderManager.updatePaidStatus(orderID: orderResponse.orderID,
+                                              userID: userObject.userID)
+            }
+            let cancelAction = UIAlertAction(title: "還沒", style: .cancel)
+            alert.addAction(confirmAction)
+            alert.addAction(cancelAction)
+            present(alert, animated: true)
+        }
+    }
+
+
 }
 
 extension OrderingViewController: OrderTableViewFooterDelegate {
@@ -254,12 +289,9 @@ extension OrderingViewController: OrderResultsAccessible {
         self.orderResults = orderResults
         tableView.reloadData()
 
-        let footerView = OrderTableViewFooter(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
         let orderObject = orderResults.map { $0.orderObjects }
         let amount = orderObject.flatMap { $0 }.reduce(0, { $0 + $1.drinkPrice })
         footerView.setupView(amount: amount, isInitiator: isInitiator)
-        footerView.delegate = self
-        tableView.tableFooterView = footerView
     }
 }
 extension OrderingViewController: OrderResponseAccessible {
@@ -267,10 +299,8 @@ extension OrderingViewController: OrderResponseAccessible {
         self.orderResponse = orderResponse
         DispatchQueue.main.async { [self] in
             setupBottomView(state: state)
-
-            let headerView = OrderTableViewHeader(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
             headerView.setupView(shopName: orderResponse.shopObject.name)
-            tableView.tableHeaderView = headerView
+
         }
     }
 }

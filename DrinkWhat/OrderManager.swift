@@ -148,6 +148,10 @@ class OrderManager {
              print(ManagerError.encodingError)
         }
     }
+    // MARK: - update user paid status
+    func updatePaidStatus(orderID: String, userID: String) {
+        orderObjectsDocument(orderID: orderID, userID: userID).updateData(["isPaid": true])
+    }
 
     // MARK: - Load order page
     func listenOrderResponse(userID: String) {
