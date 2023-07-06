@@ -17,6 +17,9 @@ class ProfileViewController: UIViewController {
     private lazy var imageView: UIImageView = makeImageView()
     private lazy var logOutButton: UIButton = makeLogOutButton()
     private lazy var deleteButton: UIButton = makeDeleteButton()
+    private var userObject: UserObject? {
+        UserManager.shared.userObject
+    }
 
     weak var delegate: ProfileViewControllerDelegate?
 
@@ -66,7 +69,7 @@ extension ProfileViewController {
         label.numberOfLines = 0
         label.font = .bold(size: 24)
         label.textColor = UIColor.darkBrown
-        label.text = "Vicky"
+        label.text = userObject?.userName
         return label
     }
 
@@ -76,7 +79,7 @@ extension ProfileViewController {
         label.numberOfLines = 0
         label.font = .regular(size: 14)
         label.textColor = UIColor.darkBrown
-        label.text = "stu7032@gmail.com"
+        label.text = userObject?.email
         return label
     }
 
