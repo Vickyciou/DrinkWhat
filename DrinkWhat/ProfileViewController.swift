@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import PhotosUI
 
 protocol ProfileViewControllerDelegate: AnyObject {
     func profileViewControllerDidPressLogOut(_ viewController: ProfileViewController)
@@ -15,6 +16,7 @@ class ProfileViewController: UIViewController {
     private lazy var nameLabel: UILabel = makeNameLabel()
     private lazy var emailLabel: UILabel = makeEmailLabel()
     private lazy var imageView: UIImageView = makeImageView()
+    private lazy var cameraButton: UIButton = makeCameraButton()
     private lazy var logOutButton: UIButton = makeLogOutButton()
     private lazy var deleteButton: UIButton = makeDeleteButton()
     private var userObject: UserObject? {
@@ -22,6 +24,8 @@ class ProfileViewController: UIViewController {
     }
 
     weak var delegate: ProfileViewControllerDelegate?
+    private let firebaseStorageManager = FirebaseStorageManager()
+    private let userManager = UserManager()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,13 +44,18 @@ class ProfileViewController: UIViewController {
     }
 
     private func setupLogOUtButton() {
-        let contents = [nameLabel, emailLabel, imageView, logOutButton, deleteButton]
+        let contents = [nameLabel, emailLabel, imageView, cameraButton, logOutButton, deleteButton]
         contents.forEach { view.addSubview($0)}
+//        imageView.addSubview(cameraButton)
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 80),
             imageView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             imageView.heightAnchor.constraint(equalToConstant: 120),
             imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor),
+            cameraButton.heightAnchor.constraint(equalToConstant: 30),
+            cameraButton.widthAnchor.constraint(equalToConstant: 30),
+            cameraButton.bottomAnchor.constraint(equalTo: imageView.bottomAnchor, constant: -2),
+            cameraButton.trailingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: -10),
             nameLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 16),
             nameLabel.centerXAnchor.constraint(equalTo: imageView.centerXAnchor),
             emailLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8),
@@ -87,10 +96,33 @@ extension ProfileViewController {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.layer.cornerRadius = 75
+        imageView.layer.cornerRadius = 60
         imageView.layer.masksToBounds = true
-        imageView.loadImage("", placeHolder: UIImage(systemName: "person.circle.fill")?.setColor(color: .darkBrown))
+        imageView.loadImage(userObject?.userImageURL,
+                            placeHolder: UIImage(systemName: "person.circle.fill")?.setColor(color: .darkBrown))
+
         return imageView
+    }
+    private func makeCameraButton() -> UIButton {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        let normalBackground = UIColor.white.toImage(size: CGSize(width: 65, height: 25))
+        button.setBackgroundImage(normalBackground, for: .normal)
+        button.layer.cornerRadius = 15
+        button.layer.masksToBounds = true
+        let cameraImage = UIImage(systemName: "camera.circle")?
+            .withConfiguration(UIImage.SymbolConfiguration(scale: .large))
+            .setColor(color: .darkGray)
+        button.setImage(cameraImage, for: .normal)
+        button.addTarget(self, action: #selector(cameraButtonTapped), for: .touchUpInside)
+        return button
+    }
+    @objc func cameraButtonTapped() {
+        var configuration = PHPickerConfiguration()
+        configuration.filter = .images
+        let picker = PHPickerViewController(configuration: configuration)
+        picker.delegate = self
+        present(picker, animated: true)
     }
 
     private func makeLogOutButton() -> UIButton {
@@ -152,5 +184,30 @@ extension ProfileViewController {
         alert.addAction(cancelAction)
         present(alert, animated: true)
 
+    }
+}
+
+extension ProfileViewController: PHPickerViewControllerDelegate {
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        picker.dismiss(animated: true)
+
+        let itemProviders = results.map(\.itemProvider)
+        if let itemProvider = itemProviders.first, itemProvider.canLoadObject(ofClass: UIImage.self) {
+            itemProvider.loadObject(ofClass: UIImage.self) {[weak self] (image, error) in
+                guard let self = self, let userObject = self.userObject, let image = image as? UIImage else { return }
+                self.firebaseStorageManager.uploadPhoto(image: image) { result in
+                    switch result {
+                    case .success(let url):
+                        self.userManager.updateUserImage(userID: userObject.userID, imageURL: url.absoluteString)
+                    case .failure(let error):
+                        print("Update user image fail: \(error)")
+                    }
+                }
+                
+                DispatchQueue.main.async {
+                    self.imageView.image = image
+                }
+            }
+        }
     }
 }

@@ -40,6 +40,10 @@ class UserManager {
         return userObject
     }
 
+    func updateUserImage(userID: String, imageURL: String) {
+        userDocument(userID: userID).updateData(["userImageURL": imageURL])
+    }
+
     func checkCurrentUser() {
 
     }
@@ -51,5 +55,4 @@ class UserManager {
     func deleteUser() {
         
     }
-
 }

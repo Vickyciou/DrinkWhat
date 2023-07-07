@@ -634,11 +634,13 @@ PODS:
   - BoringSSL-GRPC/Implementation (0.0.24):
     - BoringSSL-GRPC/Interface (= 0.0.24)
   - BoringSSL-GRPC/Interface (0.0.24)
+  - FirebaseAppCheckInterop (10.11.0)
   - FirebaseAuth (10.0.0):
     - FirebaseCore (~> 10.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.8)
     - GoogleUtilities/Environment (~> 7.8)
     - GTMSessionFetcher/Core (~> 2.1)
+  - FirebaseAuthInterop (10.11.0)
   - FirebaseCore (10.11.0):
     - FirebaseCoreInternal (~> 10.0)
     - GoogleUtilities/Environment (~> 7.8)
@@ -666,6 +668,12 @@ PODS:
     - FirebaseFirestore (~> 10.0)
     - FirebaseSharedSwift (~> 10.0)
   - FirebaseSharedSwift (10.11.0)
+  - FirebaseStorage (10.11.0):
+    - FirebaseAppCheckInterop (~> 10.0)
+    - FirebaseAuthInterop (~> 10.0)
+    - FirebaseCore (~> 10.0)
+    - FirebaseCoreExtension (~> 10.0)
+    - GTMSessionFetcher/Core (< 4.0, >= 2.1)
   - GoogleUtilities/AppDelegateSwizzler (7.11.1):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
@@ -761,6 +769,7 @@ DEPENDENCIES:
   - FirebaseAuth (~> 10.0.0)
   - FirebaseFirestore (~> 10.11.0)
   - FirebaseFirestoreSwift (~> 10.11.0)
+  - FirebaseStorage
   - Kingfisher
   - LineSDKSwift (~> 5.0)
   - SwiftLint
@@ -770,13 +779,16 @@ SPEC REPOS:
   trunk:
     - abseil
     - BoringSSL-GRPC
+    - FirebaseAppCheckInterop
     - FirebaseAuth
+    - FirebaseAuthInterop
     - FirebaseCore
     - FirebaseCoreExtension
     - FirebaseCoreInternal
     - FirebaseFirestore
     - FirebaseFirestoreSwift
     - FirebaseSharedSwift
+    - FirebaseStorage
     - GoogleUtilities
     - "gRPC-C++"
     - gRPC-Core
@@ -792,13 +804,16 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   abseil: 926fb7a82dc6d2b8e1f2ed7f3a718bce691d1e46
   BoringSSL-GRPC: 3175b25143e648463a56daeaaa499c6cb86dad33
+  FirebaseAppCheckInterop: 255b6c0292fe5da995c8b2df0c02f6a3ca7f61b4
   FirebaseAuth: 493382cf533cc45e2862b00e9aa4cfe4c98daf71
+  FirebaseAuthInterop: 44e34efef7145776a107b9e7f79ed44beb4738fa
   FirebaseCore: 62fd4d549f5e3f3bd52b7998721c5fa0557fb355
   FirebaseCoreExtension: cacdad57fdb60e0b86dcbcac058ec78237946759
   FirebaseCoreInternal: 9e46c82a14a3b3a25be4e1e151ce6d21536b89c0
   FirebaseFirestore: 09be82b113fbcb225b9797d2c525ae8886abc7a3
   FirebaseFirestoreSwift: 95ce63a643eee625fe5d5baaf09b9afbeaa091ca
   FirebaseSharedSwift: c590d181c8b80ebf85f2606f4d366cf72f82f184
+  FirebaseStorage: 8d8f23ca3688c2edb1950bd38e44f82a325ceb6f
   GoogleUtilities: 9aa0ad5a7bc171f8bae016300bfcfa3fb8425749
   "gRPC-C++": 0968bace703459fd3e5dcb0b2bed4c573dbff046
   gRPC-Core: 17108291d84332196d3c8466b48f016fc17d816d
@@ -811,6 +826,6 @@ SPEC CHECKSUMS:
   SwiftLint: 1ac76dac888ca05cb0cf24d0c85887ec1209961d
   Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
 
-PODFILE CHECKSUM: 8a5b422a0b03eddddd2b287fc5f8f074088a963c
+PODFILE CHECKSUM: c1137d1b59b95ce1a52b5b6b69448dca15ffe87f
 
 COCOAPODS: 1.12.1

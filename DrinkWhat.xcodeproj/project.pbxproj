@@ -35,6 +35,7 @@
 		FA7CC6172A444B81009B599F /* ShopMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7CC6162A444B81009B599F /* ShopMenuViewController.swift */; };
 		FA7CC6192A446106009B599F /* ShopMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7CC6182A446106009B599F /* ShopMenuCell.swift */; };
 		FA7CC61B2A457754009B599F /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7CC61A2A457754009B599F /* SectionHeaderView.swift */; };
+		FA8B17F32A57F52700404DC7 /* FirebaseStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8B17F22A57F52700404DC7 /* FirebaseStorageManager.swift */; };
 		FA9232222A49896500F045C6 /* SignInWithAppleHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9232212A49896500F045C6 /* SignInWithAppleHelper.swift */; };
 		FA9232242A498F1E00F045C6 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9232232A498F1E00F045C6 /* AuthManager.swift */; };
 		FA98EEFB2A3DEB7C000E6FEE /* VotingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA98EEFA2A3DEB7C000E6FEE /* VotingViewController.swift */; };
@@ -104,6 +105,7 @@
 		FA7CC6162A444B81009B599F /* ShopMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopMenuViewController.swift; sourceTree = "<group>"; };
 		FA7CC6182A446106009B599F /* ShopMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopMenuCell.swift; sourceTree = "<group>"; };
 		FA7CC61A2A457754009B599F /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
+		FA8B17F22A57F52700404DC7 /* FirebaseStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStorageManager.swift; sourceTree = "<group>"; };
 		FA9232202A49705300F045C6 /* DrinkWhat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DrinkWhat.entitlements; sourceTree = "<group>"; };
 		FA9232212A49896500F045C6 /* SignInWithAppleHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithAppleHelper.swift; sourceTree = "<group>"; };
 		FA9232232A498F1E00F045C6 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
@@ -272,6 +274,7 @@
 				FA7CC60E2A4403B5009B599F /* ShopManager.swift */,
 				FA9232232A498F1E00F045C6 /* AuthManager.swift */,
 				FA9AABD92A4D34D200B99FB7 /* OrderManager.swift */,
+				FA8B17F22A57F52700404DC7 /* FirebaseStorageManager.swift */,
 			);
 			name = Manager;
 			sourceTree = "<group>";
@@ -577,6 +580,7 @@
 				FAF16F342A53F2EF002590D9 /* LoginSheetViewController.swift in Sources */,
 				FA7179592A3AEBDA002C407C /* UIFont+Extension.swift in Sources */,
 				FA7CC6142A44493B009B599F /* KingFisherWrapper.swift in Sources */,
+				FA8B17F32A57F52700404DC7 /* FirebaseStorageManager.swift in Sources */,
 				FA7CC61B2A457754009B599F /* SectionHeaderView.swift in Sources */,
 				FA7179522A3ABC99002C407C /* OrderViewController.swift in Sources */,
 				FA9232242A498F1E00F045C6 /* AuthManager.swift in Sources */,
@@ -725,6 +729,7 @@
 				DEVELOPMENT_TEAM = NNHJ7Y69AL;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DrinkWhat/Info.plist;
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "App將取用您的照片庫，以便您可以上傳照片設定個人頭像";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -755,6 +760,7 @@
 				DEVELOPMENT_TEAM = NNHJ7Y69AL;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DrinkWhat/Info.plist;
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "App將取用您的照片庫，以便您可以上傳照片設定個人頭像";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";

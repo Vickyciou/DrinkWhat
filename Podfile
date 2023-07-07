@@ -13,6 +13,7 @@ target 'DrinkWhat' do
     pod 'FirebaseAuth', '~> 10.0.0'
     pod 'FirebaseFirestore', '~> 10.11.0'
     pod 'FirebaseFirestoreSwift', '~> 10.11.0'
+    pod 'FirebaseStorage'
     pod 'Kingfisher'
     pod 'Toast-Swift'
 

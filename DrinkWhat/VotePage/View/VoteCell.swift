@@ -23,10 +23,10 @@ class VoteCell: UITableViewCell {
         NSLayoutConstraint.activate([
             profileImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
             profileImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            profileImageView.heightAnchor.constraint(equalToConstant: 60),
-            profileImageView.widthAnchor.constraint(equalToConstant: 60),
+            profileImageView.heightAnchor.constraint(equalToConstant: 50),
+            profileImageView.widthAnchor.constraint(equalToConstant: 50),
             profileImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
-            userNameLabel.topAnchor.constraint(equalTo: profileImageView.topAnchor, constant: 8),
+            userNameLabel.topAnchor.constraint(equalTo: profileImageView.topAnchor),
             userNameLabel.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 8),
             dateLabel.topAnchor.constraint(equalTo: userNameLabel.bottomAnchor, constant: 2),
             dateLabel.leadingAnchor.constraint(equalTo: userNameLabel.leadingAnchor),
@@ -70,7 +70,8 @@ extension VoteCell {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.layer.cornerRadius = 30
+        imageView.layer.cornerRadius = 25
+        imageView.layer.masksToBounds = true
         return imageView
     }
     private func makeArrowImageView() -> UIImageView {
