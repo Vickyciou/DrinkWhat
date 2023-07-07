@@ -13,30 +13,54 @@ class VoteCell: UITableViewCell {
     private lazy var dateLabel: UILabel = makeLabel()
     private lazy var profileImageView: UIImageView = makeProfileImageView()
     private lazy var arrowImageView: UIImageView = makeArrowImageView()
+    private lazy var view: UIView = makeBackgroundView()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        backgroundColor = .lightYellow
         self.selectionStyle = .none
+        contentView.addSubview(view)
         let content = [userNameLabel, voteStateLabel, dateLabel, profileImageView, arrowImageView]
-        content.forEach { contentView.addSubview($0) }
+//        content.forEach { contentView.addSubview($0) }
+//        NSLayoutConstraint.activate([
+//            profileImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
+//            profileImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+//            profileImageView.heightAnchor.constraint(equalToConstant: 50),
+//            profileImageView.widthAnchor.constraint(equalToConstant: 50),
+//            profileImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
+//            userNameLabel.topAnchor.constraint(equalTo: profileImageView.topAnchor),
+//            userNameLabel.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 16),
+//            dateLabel.topAnchor.constraint(equalTo: userNameLabel.bottomAnchor, constant: 2),
+//            dateLabel.leadingAnchor.constraint(equalTo: userNameLabel.leadingAnchor),
+//            voteStateLabel.topAnchor.constraint(equalTo: dateLabel.topAnchor),
+//            voteStateLabel.leadingAnchor.constraint(equalTo: dateLabel.trailingAnchor, constant: 4),
+//            arrowImageView.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor),
+//            arrowImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+//            arrowImageView.heightAnchor.constraint(equalToConstant: 15),
+//            arrowImageView.widthAnchor.constraint(equalToConstant: 15)
+//        ])
+        content.forEach { view.addSubview($0) }
         NSLayoutConstraint.activate([
-            profileImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
-            profileImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            view.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+            view.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
+            view.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
+            view.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
+            profileImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 12),
+            profileImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             profileImageView.heightAnchor.constraint(equalToConstant: 50),
             profileImageView.widthAnchor.constraint(equalToConstant: 50),
-            profileImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
+            profileImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -12),
             userNameLabel.topAnchor.constraint(equalTo: profileImageView.topAnchor),
-            userNameLabel.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 8),
+            userNameLabel.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 16),
             dateLabel.topAnchor.constraint(equalTo: userNameLabel.bottomAnchor, constant: 2),
             dateLabel.leadingAnchor.constraint(equalTo: userNameLabel.leadingAnchor),
             voteStateLabel.topAnchor.constraint(equalTo: dateLabel.topAnchor),
             voteStateLabel.leadingAnchor.constraint(equalTo: dateLabel.trailingAnchor, constant: 4),
             arrowImageView.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor),
-            arrowImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            arrowImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             arrowImageView.heightAnchor.constraint(equalToConstant: 15),
             arrowImageView.widthAnchor.constraint(equalToConstant: 15)
         ])
+
     }
     func setupVoteCell(profileImageURL: String?, userName: String, voteState: String, date: String) {
         profileImageView.loadImage(profileImageURL, placeHolder: UIImage(systemName: "person.circle.fill")?.setColor(color: .darkBrown))
@@ -54,8 +78,8 @@ extension VoteCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
-        label.font = .medium(size: 18)
-        label.textColor = UIColor.darkBrown
+        label.font = .title2()
+        label.textColor = UIColor.darkLogoBrown
         return label
     }
     private func makeLabel() -> UILabel {
@@ -80,5 +104,17 @@ extension VoteCell {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = UIImage(systemName: "arrow.right")?.setColor(color: .darkBrown)
         return imageView
+    }
+    private func makeBackgroundView() -> UIView {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .white
+        view.layer.cornerRadius = 20
+        view.clipsToBounds = false
+        view.layer.shadowColor = UIColor.darkLogoBrown.cgColor
+        view.layer.shadowOpacity = 0.3
+        view.layer.shadowOffset = CGSize(width: 0, height: 1)
+        view.layer.shadowRadius = 4
+        return view
     }
 }

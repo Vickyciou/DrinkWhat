@@ -26,14 +26,12 @@ class NotVotedCell: UITableViewCell {
         let content = [shopNameLabel, shopImageView, chooseButton, viewMenuButton, numberOfVotesLabel]
         content.forEach { contentView.addSubview($0) }
         NSLayoutConstraint.activate([
-//            shopImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
             shopImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             shopImageView.heightAnchor.constraint(equalToConstant: 60),
             shopImageView.widthAnchor.constraint(equalToConstant: 60),
             shopImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-//            shopImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
             shopNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
-            shopNameLabel.leadingAnchor.constraint(equalTo: shopImageView.trailingAnchor, constant: 8),
+            shopNameLabel.leadingAnchor.constraint(equalTo: shopImageView.trailingAnchor, constant: 16),
             shopNameLabel.trailingAnchor.constraint(equalTo: numberOfVotesLabel.leadingAnchor, constant: -8),
             viewMenuButton.topAnchor.constraint(equalTo: shopNameLabel.bottomAnchor, constant: -2),
             viewMenuButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
@@ -41,6 +39,7 @@ class NotVotedCell: UITableViewCell {
             numberOfVotesLabel.centerYAnchor.constraint(equalTo: shopImageView.centerYAnchor),
             numberOfVotesLabel.trailingAnchor.constraint(equalTo: chooseButton.leadingAnchor, constant: -8),
             numberOfVotesLabel.widthAnchor.constraint(equalToConstant: 40),
+            numberOfVotesLabel.heightAnchor.constraint(equalToConstant: 25),
             chooseButton.centerYAnchor.constraint(equalTo: shopImageView.centerYAnchor),
             chooseButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             chooseButton.heightAnchor.constraint(equalToConstant: 40),
@@ -63,8 +62,8 @@ extension NotVotedCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
-        label.font = .medium(size: 18)
-        label.textColor = UIColor.darkBrown
+        label.font = .bold(size: 20)
+        label.textColor = UIColor.darkLogoBrown
         return label
     }
     private func makeImageView() -> UIImageView {
@@ -81,7 +80,7 @@ extension NotVotedCell {
         label.numberOfLines = 0
         label.font = .medium(size: 15)
         label.textColor = UIColor.white
-        label.backgroundColor = UIColor.darkBrown
+        label.backgroundColor = UIColor.darkLogoBrown
         label.layer.cornerRadius = 6
         label.layer.masksToBounds = true
         label.textAlignment = .center
@@ -90,7 +89,7 @@ extension NotVotedCell {
     private func makeChooseButton() -> UIButton {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitleColor(UIColor.midiumBrown, for: .normal)
+        button.setTitleColor(UIColor.darkLogoBrown, for: .normal)
         button.titleLabel?.font = .regular(size: 14)
         button.setImage(UIImage(systemName: "circle")?.setColor(color: .darkBrown), for: .normal)
         button.setImage(UIImage(systemName: "circle.inset.filled")?.setColor(color: .darkBrown), for: .selected)

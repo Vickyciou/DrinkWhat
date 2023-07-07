@@ -36,16 +36,22 @@ class NotVotedViewController: UIViewController {
         setupSubmitButton()
     }
     private func setNavController() {
-
+        let appearance = UINavigationBarAppearance()
+        appearance.backgroundColor = UIColor.white
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.darkLogoBrown]
+        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.darkLogoBrown]
+        appearance.shadowColor = UIColor.clear
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
         navigationItem.title = "由\(groupObject.initiatorUserName)發起的投票"
         navigationController?.navigationBar.backgroundColor = .white
         navigationItem.hidesBackButton = true
         let closeImage = UIImage(systemName: "xmark")?
             .withConfiguration(UIImage.SymbolConfiguration(pointSize: 18))
-            .setColor(color: .darkBrown)
+            .setColor(color: .darkLogoBrown)
         let shareImage = UIImage(systemName: "square.and.arrow.up")?
             .withConfiguration(UIImage.SymbolConfiguration(pointSize: 18))
-            .setColor(color: .darkBrown)
+            .setColor(color: .darkLogoBrown)
         let closeButton = UIBarButtonItem(image: closeImage,
                                           style: .plain,
                                           target: self,
@@ -81,7 +87,8 @@ class NotVotedViewController: UIViewController {
             submitButton.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 20),
             submitButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             submitButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            submitButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20)
+            submitButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
+            submitButton.heightAnchor.constraint(equalToConstant: 40)
         ])
         submitButton.layer.cornerRadius = 10
         submitButton.layer.masksToBounds = true
@@ -103,10 +110,14 @@ extension NotVotedViewController {
     private func makeSubmitButton() -> UIButton {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitleColor(UIColor.lightBrown, for: .normal)
-        button.setTitleColor(UIColor.midiumBrown, for: .highlighted)
+        button.setTitleColor(UIColor.white, for: .normal)
+//        button.setTitleColor(UIColor.midiumBrown, for: .highlighted)
+        let normalBackground = UIColor.darkLogoBrown.toImage()
+        let selectedBackground = UIColor.darkLogoBrown.withAlphaComponent(0.5).toImage()
+        button.setBackgroundImage(normalBackground, for: .normal)
+        button.setBackgroundImage(selectedBackground, for: .highlighted)
         button.titleLabel?.font = .medium(size: 18)
-        button.backgroundColor = UIColor.darkBrown
+//        button.backgroundColor = UIColor.darkLogoBrown
         button.setTitle("確認送出", for: .normal)
         button.addTarget(self, action: #selector(submitButtonTapped(_:)), for: .touchUpInside)
         return button

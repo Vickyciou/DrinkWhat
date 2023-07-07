@@ -22,8 +22,20 @@ class HomeViewController: UIViewController {
 
     private func setupVC() {
         view.backgroundColor = .white
+        setNavController()
         setupTableView()
         shopManager.getAllShopData()
+    }
+    private func setNavController() {
+        let appearance = UINavigationBarAppearance()
+        appearance.backgroundColor = UIColor.white
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.darkLogoBrown]
+        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.darkLogoBrown]
+        appearance.shadowColor = UIColor.clear
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        navigationItem.hidesBackButton = true
+        navigationItem.title = "飲料店家"
     }
 
     private func setupTableView() {

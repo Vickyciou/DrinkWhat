@@ -18,11 +18,11 @@ class HomeShopCell: UITableViewCell {
         let content = [shopNameLabel, shopImageView, arrowImageView]
         content.forEach { contentView.addSubview($0) }
         NSLayoutConstraint.activate([
-            shopImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+            shopImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
             shopImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             shopImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             shopImageView.heightAnchor.constraint(equalToConstant: 200),
-            shopNameLabel.topAnchor.constraint(equalTo: shopImageView.bottomAnchor, constant: 8),
+            shopNameLabel.topAnchor.constraint(equalTo: shopImageView.bottomAnchor, constant: 11),
             shopNameLabel.leadingAnchor.constraint(equalTo: shopImageView.leadingAnchor),
             shopNameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
             arrowImageView.centerYAnchor.constraint(equalTo: shopNameLabel.centerYAnchor),
@@ -45,8 +45,9 @@ extension HomeShopCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
-        label.font = .bold(size: 18)
-        label.textColor = UIColor.darkBrown
+        label.font = .title3()
+//        label.font = UIFont(name: "Heiti TC", size: 20)
+        label.textColor = UIColor.darkLogoBrown
         return label
     }
     private func makeShopImageView() -> UIImageView {
@@ -61,7 +62,7 @@ extension HomeShopCell {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(systemName: "arrow.right")?.setColor(color: .darkBrown)
+        imageView.image = UIImage(systemName: "arrow.right")?.setColor(color: .darkLogoBrown)
         return imageView
     }
 }

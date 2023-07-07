@@ -55,7 +55,7 @@ extension ShopMenuCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
-        label.font = .medium(size: 18)
+        label.font = .regular(size: 18)
         label.textColor = UIColor.darkBrown
         return label
     }

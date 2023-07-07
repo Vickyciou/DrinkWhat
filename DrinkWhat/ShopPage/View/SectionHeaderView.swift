@@ -28,10 +28,10 @@ class SectionHeaderView: UIView {
         let content = [shopNameLabel, stackView]
         content.forEach { self.addSubview($0) }
         NSLayoutConstraint.activate([
-            shopNameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 16),
+            shopNameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
             shopNameLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             shopNameLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            stackView.topAnchor.constraint(equalTo: shopNameLabel.bottomAnchor, constant: 12),
+            stackView.topAnchor.constraint(equalTo: shopNameLabel.bottomAnchor, constant: 20),
             stackView.leadingAnchor.constraint(equalTo: shopNameLabel.leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: shopNameLabel.trailingAnchor),
             stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -16)
@@ -50,8 +50,8 @@ extension SectionHeaderView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
-        label.font = .bold(size: 24)
-        label.textColor = UIColor.darkBrown
+        label.font = .title1()
+        label.textColor = UIColor.darkLogoBrown
         return label
     }
     private func makeAddOrderButton() -> UIButton {
@@ -60,9 +60,9 @@ extension SectionHeaderView {
         button.layer.cornerRadius = 10
         button.layer.masksToBounds = true
         button.backgroundColor = .lightBrown
-        button.setTitleColor(.darkBrown, for: .normal)
+        button.setTitleColor(.darkLogoBrown, for: .normal)
         button.setTitleColor(.skinColor, for: .highlighted)
-        button.titleLabel?.font = .regular(size: 14)
+        button.titleLabel?.font = .medium4()
         button.setTitle("+ 團購訂單", for: .normal)
         button.addTarget(self, action: #selector(addOrderButtonTapped(_:)), for: .touchUpInside)
         return button
@@ -75,7 +75,7 @@ extension SectionHeaderView {
         button.backgroundColor = .lightBrown
         button.setTitleColor(.darkBrown, for: .normal)
         button.setTitleColor(.skinColor, for: .highlighted)
-        button.titleLabel?.font = .regular(size: 14)
+        button.titleLabel?.font = .medium4()
         button.setTitle("+ 投票清單", for: .normal)
         button.addTarget(self, action: #selector(addVoteButtonTapped(_:)), for: .touchUpInside)
         return button

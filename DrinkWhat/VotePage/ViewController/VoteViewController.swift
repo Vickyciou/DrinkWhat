@@ -20,7 +20,7 @@ class VoteViewController: UIViewController {
         setupVC()
     }
     private func setupVC() {
-        view.backgroundColor = .skinColor
+        view.backgroundColor = .white
         setNavController()
         setupTableView()
         guard let userObject = userObject else { return }
@@ -29,7 +29,7 @@ class VoteViewController: UIViewController {
     }
     private func setNavController() {
         let appearance = UINavigationBarAppearance()
-        appearance.backgroundColor = UIColor.skinColor
+        appearance.backgroundColor = UIColor.white
         appearance.titleTextAttributes = [.foregroundColor: UIColor.darkLogoBrown]
         appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.darkLogoBrown]
         appearance.shadowColor = UIColor.clear
@@ -60,7 +60,6 @@ extension VoteViewController {
         tableView.register(VoteCell.self, forCellReuseIdentifier: "VoteCell")
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.separatorStyle = .none
-        tableView.backgroundColor = .lightYellow
         return tableView
     }
 }
