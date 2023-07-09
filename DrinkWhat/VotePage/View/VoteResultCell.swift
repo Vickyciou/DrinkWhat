@@ -24,7 +24,8 @@ class VoteResultCell: UITableViewCell {
             shopNameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
             numberOfVotesLabel.centerYAnchor.constraint(equalTo: shopNameLabel.centerYAnchor),
             numberOfVotesLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            numberOfVotesLabel.widthAnchor.constraint(equalToConstant: 40)
+            numberOfVotesLabel.widthAnchor.constraint(equalToConstant: 45),
+            numberOfVotesLabel.heightAnchor.constraint(equalToConstant: 25)
         ])
     }
     func setupVoteCell(shopName: String, numberOfVote: Int?) {
@@ -42,7 +43,7 @@ extension VoteResultCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
-        label.font = .medium(size: 14)
+        label.font = .regular2()
         label.textColor = UIColor.logoBrown
         return label
     }
@@ -51,9 +52,11 @@ extension VoteResultCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
-        label.font = .medium(size: 14)
-        label.textColor = UIColor.white
-        label.backgroundColor = UIColor.darkBrown
+        label.font = .regular4()
+        label.textColor = UIColor.logoBrown
+        label.backgroundColor = UIColor.white
+        label.layer.borderWidth = 1
+        label.layer.borderColor = UIColor.logoBrown.cgColor
         label.layer.cornerRadius = 6
         label.layer.masksToBounds = true
         label.textAlignment = .center

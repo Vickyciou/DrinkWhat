@@ -46,6 +46,13 @@ class VoteResultViewController: UIViewController {
         setupStartOrderButton()
     }
     private func setNavController() {
+        let appearance = UINavigationBarAppearance()
+        appearance.backgroundColor = UIColor.white
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.darkLogoBrown]
+        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.darkLogoBrown]
+        appearance.shadowColor = UIColor.clear
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
         navigationItem.title = "由\(groupObject.initiatorUserName)發起的投票"
         tabBarController?.tabBar.backgroundColor = .white
         navigationItem.hidesBackButton = true
@@ -93,7 +100,8 @@ class VoteResultViewController: UIViewController {
             startOrderButton.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 20),
             startOrderButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             startOrderButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            startOrderButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20)
+            startOrderButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
+            startOrderButton.heightAnchor.constraint(equalToConstant: 44)
         ])
         startOrderButton.layer.cornerRadius = 10
         startOrderButton.layer.masksToBounds = true
@@ -114,11 +122,13 @@ extension VoteResultViewController {
     private func makeStartOrderButton() -> UIButton {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitleColor(UIColor.lightBrown, for: .normal)
-        button.setTitleColor(UIColor.midiumBrown, for: .highlighted)
-        button.titleLabel?.font = .medium(size: 18)
-        button.backgroundColor = UIColor.darkBrown
-        button.setTitle("開始團購", for: .normal)
+        let normalBackground = UIColor.darkLogoBrown.toImage()
+        let selectedBackground = UIColor.darkLogoBrown.withAlphaComponent(0.7).toImage()
+        button.setBackgroundImage(normalBackground, for: .normal)
+        button.setBackgroundImage(selectedBackground, for: .highlighted)
+        button.titleLabel?.font = .medium2()
+        button.setTitleColor(UIColor.white, for: .normal)
+        button.setTitle("前往點餐", for: .normal)
         button.addTarget(self, action: #selector(startOrderButtonTapped(_:)), for: .touchUpInside)
         return button
     }

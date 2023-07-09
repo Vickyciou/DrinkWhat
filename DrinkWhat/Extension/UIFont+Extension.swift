@@ -99,4 +99,8 @@ extension UIFont {
     static func regular4() -> UIFont? {
         return UIFont.systemFont(ofSize: 14, weight: .regular)
     }
+
+    static func regular5() -> UIFont? {
+        return UIFont.systemFont(ofSize: 12, weight: .regular)
+    }
 }

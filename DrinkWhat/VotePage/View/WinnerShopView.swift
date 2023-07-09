@@ -19,22 +19,23 @@ class WinnerShopView: UIView {
         contents.forEach { self.addSubview($0) }
 
         NSLayoutConstraint.activate([
-            shopImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 50),
+            shopImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 70),
             shopImageView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            shopImageView.heightAnchor.constraint(equalToConstant: 100),
+            shopImageView.heightAnchor.constraint(equalToConstant: 130),
             shopImageView.widthAnchor.constraint(equalTo: shopImageView.heightAnchor),
-            shopNameLabel.topAnchor.constraint(equalTo: shopImageView.bottomAnchor, constant: 4),
+            shopNameLabel.topAnchor.constraint(equalTo: shopImageView.bottomAnchor, constant: 16),
             shopNameLabel.centerXAnchor.constraint(equalTo: shopImageView.centerXAnchor),
-            numberOfVotesLabel.topAnchor.constraint(equalTo: shopNameLabel.bottomAnchor, constant: 6),
+            numberOfVotesLabel.topAnchor.constraint(equalTo: shopNameLabel.bottomAnchor, constant: 12),
             numberOfVotesLabel.centerXAnchor.constraint(equalTo: shopImageView.centerXAnchor),
-            numberOfVotesLabel.widthAnchor.constraint(equalToConstant: 50),
+//            numberOfVotesLabel.widthAnchor.constraint(equalToConstant: 60),
+            numberOfVotesLabel.heightAnchor.constraint(equalToConstant: 30),
             numberOfVotesLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10)])
     }
 
     func setupWinnerView(shopImageURL: String?, shopName: String, numberOfVotes: Int?) {
         shopImageView.loadImage(shopImageURL, placeHolder: UIImage(systemName: "bag")?.setColor(color: .darkBrown))
         shopNameLabel.text = shopName
-        numberOfVotesLabel.text = String("\(numberOfVotes ?? 0)票")
+        numberOfVotesLabel.text = String("*獲得 \(numberOfVotes ?? 0) 票*")
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -46,6 +47,9 @@ extension WinnerShopView {
         imageView.contentMode = .scaleAspectFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.cornerRadius = 10
+        imageView.layer.borderWidth = 3
+        imageView.layer.borderColor = UIColor.darkLogoBrown.cgColor
+        imageView.alpha = 0.9
         imageView.layer.masksToBounds = true
         return imageView
     }
@@ -53,19 +57,21 @@ extension WinnerShopView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
-        label.font = .medium(size: 24)
-        label.textColor = UIColor.darkBrown
+        label.font = .title1()
+        label.textColor = UIColor.darkLogoBrown
         return label
     }
     private func makeNumberOfVotesLabel() -> UILabel {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
-        label.font = .medium(size: 18)
-        label.textColor = UIColor.white
-        label.backgroundColor = UIColor.darkBrown
-        label.layer.cornerRadius = 6
-        label.layer.masksToBounds = true
+        label.font = .medium2()
+        label.textColor = UIColor.orangeBrown
+        label.backgroundColor = UIColor.white
+//        label.layer.borderWidth = 1
+//        label.layer.borderColor = UIColor.darkLogoBrown.cgColor
+//        label.layer.cornerRadius = 6
+//        label.layer.masksToBounds = true
         label.textAlignment = .center
         return label
     }

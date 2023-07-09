@@ -45,6 +45,13 @@ class VotingViewController: UIViewController {
         if isInitiator == false { endVoteButton.isHidden = true }
     }
     private func setNavController() {
+        let appearance = UINavigationBarAppearance()
+        appearance.backgroundColor = UIColor.white
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.darkLogoBrown]
+        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.darkLogoBrown]
+        appearance.shadowColor = UIColor.clear
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
         navigationItem.title = "由\(groupObject.initiatorUserName)發起的投票"
         tabBarController?.tabBar.backgroundColor = .white
         navigationItem.hidesBackButton = true
@@ -75,7 +82,8 @@ class VotingViewController: UIViewController {
             endVoteButton.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 20),
             endVoteButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             endVoteButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            endVoteButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20)
+            endVoteButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
+            endVoteButton.heightAnchor.constraint(equalToConstant: 44)
         ])
         endVoteButton.layer.cornerRadius = 10
         endVoteButton.layer.masksToBounds = true
@@ -96,10 +104,12 @@ extension VotingViewController {
     private func makeEndVoteButton() -> UIButton {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitleColor(UIColor.lightBrown, for: .normal)
-        button.setTitleColor(UIColor.midiumBrown, for: .highlighted)
-        button.titleLabel?.font = .medium(size: 18)
-        button.backgroundColor = UIColor.darkBrown
+        let normalBackground = UIColor.darkLogoBrown.toImage()
+        let selectedBackground = UIColor.darkLogoBrown.withAlphaComponent(0.7).toImage()
+        button.setBackgroundImage(normalBackground, for: .normal)
+        button.setBackgroundImage(selectedBackground, for: .highlighted)
+        button.titleLabel?.font = .medium2()
+        button.setTitleColor(UIColor.white, for: .normal)
         button.setTitle("結束投票", for: .normal)
         button.addTarget(self, action: #selector(endVoteButtonTapped), for: .touchUpInside)
         return button
@@ -121,6 +131,7 @@ extension VotingViewController: UITableViewDataSource {
         let shopID = voteResult.shopID
         guard let shop = shopObjects.first(where: { $0.id == shopID }) else { return cell }
         cell.setupVoteCell(
+            number: "\(indexPath.row + 1)",
             shopImageURL: shop.logoImageURL,
             shopName: shop.name,
             numberOfVote: voteResult.userIDs.count

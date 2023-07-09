@@ -80,6 +80,7 @@ class NotVotedViewController: UIViewController {
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
         ])
+
     }
     private func setupSubmitButton() {
         view.addSubview(submitButton)
@@ -88,7 +89,7 @@ class NotVotedViewController: UIViewController {
             submitButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             submitButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             submitButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
-            submitButton.heightAnchor.constraint(equalToConstant: 40)
+            submitButton.heightAnchor.constraint(equalToConstant: 44)
         ])
         submitButton.layer.cornerRadius = 10
         submitButton.layer.masksToBounds = true
@@ -108,16 +109,14 @@ extension NotVotedViewController {
         return tableView
     }
     private func makeSubmitButton() -> UIButton {
-        let button = UIButton(type: .system)
+        let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitleColor(UIColor.white, for: .normal)
-//        button.setTitleColor(UIColor.midiumBrown, for: .highlighted)
         let normalBackground = UIColor.darkLogoBrown.toImage()
-        let selectedBackground = UIColor.darkLogoBrown.withAlphaComponent(0.5).toImage()
+        let selectedBackground = UIColor.darkLogoBrown.withAlphaComponent(0.7).toImage()
         button.setBackgroundImage(normalBackground, for: .normal)
         button.setBackgroundImage(selectedBackground, for: .highlighted)
-        button.titleLabel?.font = .medium(size: 18)
-//        button.backgroundColor = UIColor.darkLogoBrown
+        button.titleLabel?.font = .medium2()
         button.setTitle("確認送出", for: .normal)
         button.addTarget(self, action: #selector(submitButtonTapped(_:)), for: .touchUpInside)
         return button
@@ -145,6 +144,7 @@ extension NotVotedViewController: UITableViewDataSource {
         let shopID = voteResult.shopID
         guard let shop = shopObjects.first(where: { $0.id == shopID }) else { return cell }
         cell.setupVoteCell(
+            number: "\(indexPath.row + 1)",
             shopImageURL: shop.logoImageURL,
             shopName: shop.name,
             numberOfVote: voteResult.userIDs.count

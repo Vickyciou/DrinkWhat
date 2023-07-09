@@ -20,30 +20,13 @@ class VoteCell: UITableViewCell {
         self.selectionStyle = .none
         contentView.addSubview(view)
         let content = [userNameLabel, voteStateLabel, dateLabel, profileImageView, arrowImageView]
-//        content.forEach { contentView.addSubview($0) }
-//        NSLayoutConstraint.activate([
-//            profileImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
-//            profileImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-//            profileImageView.heightAnchor.constraint(equalToConstant: 50),
-//            profileImageView.widthAnchor.constraint(equalToConstant: 50),
-//            profileImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
-//            userNameLabel.topAnchor.constraint(equalTo: profileImageView.topAnchor),
-//            userNameLabel.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 16),
-//            dateLabel.topAnchor.constraint(equalTo: userNameLabel.bottomAnchor, constant: 2),
-//            dateLabel.leadingAnchor.constraint(equalTo: userNameLabel.leadingAnchor),
-//            voteStateLabel.topAnchor.constraint(equalTo: dateLabel.topAnchor),
-//            voteStateLabel.leadingAnchor.constraint(equalTo: dateLabel.trailingAnchor, constant: 4),
-//            arrowImageView.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor),
-//            arrowImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-//            arrowImageView.heightAnchor.constraint(equalToConstant: 15),
-//            arrowImageView.widthAnchor.constraint(equalToConstant: 15)
-//        ])
+
         content.forEach { view.addSubview($0) }
         NSLayoutConstraint.activate([
             view.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
             view.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
-            view.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
-            view.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
+            view.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            view.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             profileImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 12),
             profileImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             profileImageView.heightAnchor.constraint(equalToConstant: 50),
