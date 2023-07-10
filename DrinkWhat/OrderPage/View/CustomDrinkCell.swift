@@ -22,8 +22,8 @@ class CustomDrinkCell: UITableViewCell {
         let content = [drinkNameLabel, volumeLabel, iceLabel, sugarLabel, addToppingsLabel, noteLabel, priceLabel]
         content.forEach { contentView.addSubview($0) }
         NSLayoutConstraint.activate([
-            drinkNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
-            drinkNameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
+            drinkNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
+            drinkNameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             drinkNameLabel.trailingAnchor.constraint(equalTo: priceLabel.leadingAnchor, constant: -8),
             volumeLabel.topAnchor.constraint(equalTo: drinkNameLabel.bottomAnchor, constant: 8),
             volumeLabel.leadingAnchor.constraint(equalTo: drinkNameLabel.leadingAnchor),
@@ -53,11 +53,12 @@ class CustomDrinkCell: UITableViewCell {
                    addToppings: [String],
                    note: String,
                    price: Int) {
+        let addToppingsString = addToppings.joined(separator: ", ")
         drinkNameLabel.text = drinkName
         volumeLabel.text = "份量：\(volume)"
         iceLabel.text = "冰量：\(ice)"
         sugarLabel.text = "甜度：\(sugar)"
-        addToppingsLabel.text = "加料：\(addToppings)"
+        addToppingsLabel.text = "加料：\(addToppingsString)"
         noteLabel.text = "備註：\(note)"
         priceLabel.text = "$ \(price)"
 
@@ -71,15 +72,15 @@ extension CustomDrinkCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
-        label.font = .bold(size: 16)
-        label.textColor = UIColor.darkBrown
+        label.font = .medium2()
+        label.textColor = UIColor.middleDarkBrown
         return label
     }
     private func makeLabel() -> UILabel {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
-        label.font = .bold(size: 12)
+        label.font = .regular4()
         label.textColor = UIColor.logoBrown
         return label
     }
@@ -88,8 +89,8 @@ extension CustomDrinkCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .right
         label.numberOfLines = 0
-        label.font = .medium(size: 16)
-        label.textColor = UIColor.darkBrown
+        label.font = .medium3()
+        label.textColor = UIColor.darkLogoBrown
         return label
     }
 }

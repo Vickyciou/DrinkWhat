@@ -8,13 +8,14 @@
 import UIKit
 
 protocol OrderSectionHeaderViewDelegate: AnyObject {
-    func didPressedPaidStatusButton(_ view: OrderSectionHeaderView)
+    func didPressedPaidStatusButton(_ view: OrderSectionHeaderView, indexOfSection: Int)
 }
 
 class OrderSectionHeaderView: UIView {
     private lazy var userImageView: UIImageView = makeImageView()
     private lazy var userNameLabel: UILabel = makeUserNameLabel()
     private lazy var paidStatusButton: UIButton = makePaidStatusButton()
+    private var indexOfSection: Int = 0
     weak var delegate: OrderSectionHeaderViewDelegate?
 
     override init(frame: CGRect) {
@@ -24,7 +25,7 @@ class OrderSectionHeaderView: UIView {
         contents.forEach { self.addSubview($0) }
 
         NSLayoutConstraint.activate([
-            userImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 4),
+            userImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 12),
             userImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
             userImageView.heightAnchor.constraint(equalToConstant: 50),
             userImageView.widthAnchor.constraint(equalToConstant: 50),
@@ -32,15 +33,19 @@ class OrderSectionHeaderView: UIView {
             userNameLabel.centerYAnchor.constraint(equalTo: userImageView.centerYAnchor),
             userNameLabel.leadingAnchor.constraint(equalTo: userImageView.trailingAnchor, constant: 16),
             paidStatusButton.centerYAnchor.constraint(equalTo: userImageView.centerYAnchor),
-            paidStatusButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20)
+            paidStatusButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
+            paidStatusButton.heightAnchor.constraint(equalToConstant: 30),
+            paidStatusButton.widthAnchor.constraint(equalToConstant: 65)
         ])
     }
 
-    func setupView(userImageURL: String?, userName: String, isPaid: Bool) {
+    func setupView(userImageURL: String?, userName: String, isPaid: Bool, indexOfSection: Int) {
         userImageView.loadImage(userImageURL,
-                                placeHolder: UIImage(systemName: "person.circle.fill")?.setColor(color: .darkBrown))
+                                placeHolder: UIImage(systemName: "person.circle.fill")?.setColor(color: .darkLogoBrown))
         userNameLabel.text = userName
         paidStatusButton.isEnabled = !isPaid
+        self.indexOfSection = indexOfSection
+
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -59,31 +64,31 @@ extension OrderSectionHeaderView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
-        label.font = .bold(size: 22)
-        label.textColor = UIColor.darkBrown
+        label.font = .title2()
+        label.textColor = UIColor.middleDarkBrown
         return label
     }
     private func makePaidStatusButton() -> UIButton {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitleColor(UIColor.skinColor, for: .disabled)
-        button.setTitleColor(UIColor.darkBrown, for: .normal)
-        button.titleLabel?.font = .medium(size: 16)
-        let normalBackground = UIColor.darkBrown.toImage(size: CGSize(width: 65, height: 25))
-        let selectedBackground = UIColor.white.toImage(size: CGSize(width: 65, height: 25))
-        button.setBackgroundImage(normalBackground, for: .disabled)
-        button.setBackgroundImage(selectedBackground, for: .normal)
-        button.layer.borderColor = UIColor.darkBrown.cgColor
+        button.setTitleColor(UIColor.middleBrown, for: .disabled)
+        button.setTitleColor(UIColor.darkLogoBrown, for: .normal)
+        button.titleLabel?.font = .medium4()
+        let selectedBackground = UIColor.lightGrayBrown.toImage()
+        let normalBackground = UIColor.white.toImage()
+        button.setBackgroundImage(selectedBackground, for: .disabled)
+        button.setBackgroundImage(normalBackground, for: .normal)
+        button.layer.borderColor = UIColor.lightGrayBrown.cgColor
         button.layer.borderWidth = 1
         button.setTitle("未付款", for: .normal)
         button.setTitle("已付款", for: .disabled)
         button.layer.cornerRadius = 5
         button.layer.masksToBounds = true
-        button.addTarget(self, action: #selector(paidStatusButtonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(paidStatusButtonTapped(_:)), for: .touchUpInside)
         return button
     }
-    @objc func paidStatusButtonTapped() {
-        delegate?.didPressedPaidStatusButton(self)
+    @objc func paidStatusButtonTapped(_ sender: UIButton) {
+        delegate?.didPressedPaidStatusButton(self, indexOfSection: indexOfSection)
     }
 
 }

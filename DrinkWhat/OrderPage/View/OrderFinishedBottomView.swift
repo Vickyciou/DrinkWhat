@@ -20,8 +20,8 @@ class OrderFinishedBottomView: UIView {
             borderView.topAnchor.constraint(equalTo: topAnchor),
             borderView.heightAnchor.constraint(equalToConstant: 0.5),
             borderView.widthAnchor.constraint(equalTo: widthAnchor),
-            label.topAnchor.constraint(equalTo: borderView.bottomAnchor, constant: 10),
-            label.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
+            label.topAnchor.constraint(equalTo: borderView.bottomAnchor, constant: 12),
+            label.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12),
             label.centerXAnchor.constraint(equalTo: centerXAnchor)
         ])
     }
@@ -43,8 +43,9 @@ extension OrderFinishedBottomView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
-        label.font = .bold(size: 14)
-        label.textColor = UIColor.darkBrown
+        label.font = .medium3()
+        label.textColor = UIColor.darkGray
+        label.alpha = 0.9
         label.text = "此團購已結束"
         return label
     }

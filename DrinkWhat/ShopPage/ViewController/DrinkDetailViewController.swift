@@ -73,7 +73,8 @@ class DrinkDetailViewController: UIViewController {
             addItemButton.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 20),
             addItemButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             addItemButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            addItemButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20)
+            addItemButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
+            addItemButton.heightAnchor.constraint(equalToConstant: 44)
         ])
         addItemButton.layer.cornerRadius = 10
         addItemButton.layer.masksToBounds = true
@@ -94,12 +95,14 @@ extension DrinkDetailViewController {
         return tableView
     }
     private func makeAddItemButton() -> UIButton {
-        let button = UIButton(type: .system)
+        let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitleColor(UIColor.lightBrown, for: .normal)
-        button.setTitleColor(UIColor.midiumBrown, for: .highlighted)
-        button.titleLabel?.font = .medium(size: 18)
-        button.backgroundColor = UIColor.darkBrown
+        button.setTitleColor(UIColor.lightGrayBrown, for: .normal)
+        let normalBackground = UIColor.darkLogoBrown.toImage()
+        let selectedBackground = UIColor.darkLogoBrown.withAlphaComponent(0.8).toImage()
+        button.setBackgroundImage(normalBackground, for: .normal)
+        button.setBackgroundImage(selectedBackground, for: .highlighted)
+        button.titleLabel?.font = .medium2()
         button.setTitle("加入品項", for: .normal)
         button.addTarget(self, action: #selector(addItemButtonTapped), for: .touchUpInside)
         return button
@@ -241,26 +244,42 @@ extension DrinkDetailViewController: UITableViewDataSource {
 }
 
 extension DrinkDetailViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 32
+    }
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView()
+        headerView.backgroundColor = .lightGrayBrown
+        let titleLabel = UILabel()
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.font = .medium3()
+        titleLabel.textColor = .darkLogoBrown
+        headerView.addSubview(titleLabel)
+        NSLayoutConstraint.activate([
+            titleLabel.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 4),
+            titleLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 16),
+            titleLabel.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -8),
+            titleLabel.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -4)])
+
         switch section {
         case 0:
-            return "容量"
+            titleLabel.text = "容量"
         case 1:
-            return "甜度"
+            titleLabel.text = "甜度"
         case 2:
-            return "冰量"
+            titleLabel.text = "冰量"
         case 3:
             if !shopObject.addToppings.isEmpty {
-                return "加料"
+                titleLabel.text = "加料"
             } else {
-                return nil
+                titleLabel.text = nil
             }
         default:
-            return ""
+            titleLabel.text = nil
         }
-    }
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 60
+
+        return headerView
     }
 
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {

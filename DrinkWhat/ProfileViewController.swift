@@ -33,12 +33,19 @@ class ProfileViewController: UIViewController {
     }
 
     private func setupVC() {
-        view.backgroundColor = .lightYellow
+        view.backgroundColor = .white
         setupLogOUtButton()
         setNavController()
     }
 
     private func setNavController() {
+        let appearance = UINavigationBarAppearance()
+        appearance.backgroundColor = UIColor.white
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.darkLogoBrown]
+        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.darkLogoBrown]
+        appearance.shadowColor = UIColor.clear
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
         navigationItem.title = "個人帳戶"
         tabBarController?.tabBar.backgroundColor = .white
     }
@@ -76,8 +83,8 @@ extension ProfileViewController {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
-        label.font = .bold(size: 24)
-        label.textColor = UIColor.darkBrown
+        label.font = .title1()
+        label.textColor = UIColor.darkLogoBrown
         label.text = userObject?.userName
         return label
     }
@@ -86,8 +93,8 @@ extension ProfileViewController {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
-        label.font = .regular(size: 14)
-        label.textColor = UIColor.darkBrown
+        label.font = .regular4()
+        label.textColor = UIColor.darkLogoBrown
         label.text = userObject?.email
         return label
     }
@@ -128,10 +135,10 @@ extension ProfileViewController {
     private func makeLogOutButton() -> UIButton {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitleColor(UIColor.skinColor, for: .normal)
-        button.titleLabel?.font = .regular(size: 14)
-        let normalBackground = UIColor.logoBrown.toImage(size: CGSize(width: 65, height: 25))
-        let selectedBackground = UIColor.logoBrown.withAlphaComponent(0.5).toImage(size: CGSize(width: 65, height: 25))
+        button.setTitleColor(UIColor.white, for: .normal)
+        button.titleLabel?.font = .regular4()
+        let normalBackground = UIColor.darkLogoBrown.toImage(size: CGSize(width: 65, height: 25))
+        let selectedBackground = UIColor.darkLogoBrown.withAlphaComponent(0.8).toImage(size: CGSize(width: 65, height: 25))
         button.setBackgroundImage(normalBackground, for: .normal)
         button.setBackgroundImage(selectedBackground, for: .highlighted)
         button.layer.cornerRadius = 5

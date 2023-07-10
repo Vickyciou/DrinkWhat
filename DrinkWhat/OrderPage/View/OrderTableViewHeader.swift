@@ -35,8 +35,8 @@ extension OrderTableViewHeader {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
-        label.font = .bold(size: 14)
-        label.textColor = UIColor.darkBrown
+        label.font = .medium4()
+        label.textColor = UIColor.darkLogoBrown
         return label
     }
 }

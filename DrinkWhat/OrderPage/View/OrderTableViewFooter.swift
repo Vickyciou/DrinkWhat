@@ -47,7 +47,7 @@ class OrderTableViewFooter: UIView {
 extension OrderTableViewFooter {
     private func makeImageView() -> UIImageView {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "orderBig")
+        imageView.image = UIImage(named: "orderBig")?.setColor(color: .darkLogoBrown)
         imageView.contentMode = .scaleAspectFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
@@ -57,8 +57,8 @@ extension OrderTableViewFooter {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
-        label.font = .bold(size: 18)
-        label.textColor = UIColor.darkBrown
+        label.font = .title3()
+        label.textColor = UIColor.darkLogoBrown
         return label
     }
     private func makeExitButton() -> UIButton {

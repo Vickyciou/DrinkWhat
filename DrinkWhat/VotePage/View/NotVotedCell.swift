@@ -103,11 +103,9 @@ extension NotVotedCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
-        label.font = .medium4()
-        label.textColor = UIColor.darkLogoBrown
+        label.font = .medium3()
+        label.textColor = UIColor.middleBrown
         label.backgroundColor = UIColor.white
-        label.layer.borderWidth = 1
-        label.layer.borderColor = UIColor.darkLogoBrown.cgColor
         label.layer.cornerRadius = 6
         label.layer.masksToBounds = true
         label.textAlignment = .center
@@ -116,17 +114,17 @@ extension NotVotedCell {
     private func makeChooseButton() -> UIButton {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitleColor(UIColor.darkLogoBrown, for: .normal)
+//        button.setTitleColor(UIColor.darkLogoBrown, for: .normal)
         button.titleLabel?.font = .regular(size: 14)
-        button.setImage(UIImage(systemName: "circle")?.setColor(color: .darkBrown), for: .normal)
-        button.setImage(UIImage(systemName: "circle.inset.filled")?.setColor(color: .darkBrown), for: .selected)
+        button.setImage(UIImage(systemName: "circle")?.setColor(color: .darkLogoBrown), for: .normal)
+        button.setImage(UIImage(systemName: "circle.inset.filled")?.setColor(color: .darkLogoBrown), for: .selected)
         button.addTarget(self, action: #selector(chooseButtonTapped(_:)), for: .touchUpInside)
         return button
     }
     private func makeViewMenuButton() -> UIButton {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitleColor(UIColor.midiumBrown, for: .normal)
+        button.setTitleColor(UIColor.middleBrown, for: .normal)
         button.titleLabel?.font = .regular5()
         button.setTitle("查看菜單 >", for: .normal)
         button.contentVerticalAlignment = .bottom

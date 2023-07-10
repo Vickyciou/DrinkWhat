@@ -31,7 +31,9 @@ class SectionHeaderView: UIView {
             shopNameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
             shopNameLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             shopNameLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            stackView.topAnchor.constraint(equalTo: shopNameLabel.bottomAnchor, constant: 20),
+            addVoteButton.heightAnchor.constraint(equalToConstant: 36),
+            addOrderButton.heightAnchor.constraint(equalToConstant: 36),
+            stackView.topAnchor.constraint(equalTo: shopNameLabel.bottomAnchor, constant: 16),
             stackView.leadingAnchor.constraint(equalTo: shopNameLabel.leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: shopNameLabel.trailingAnchor),
             stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -16)
@@ -52,6 +54,7 @@ extension SectionHeaderView {
         label.numberOfLines = 0
         label.font = .title1()
         label.textColor = UIColor.darkLogoBrown
+        label.textAlignment = .center
         return label
     }
     private func makeAddOrderButton() -> UIButton {
@@ -59,9 +62,12 @@ extension SectionHeaderView {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.layer.cornerRadius = 10
         button.layer.masksToBounds = true
-        button.backgroundColor = .lightBrown
-        button.setTitleColor(.darkLogoBrown, for: .normal)
-        button.setTitleColor(.skinColor, for: .highlighted)
+        button.setTitleColor(.middleDarkBrown, for: .normal)
+        button.setTitleColor(.darkLogoBrown, for: .highlighted)
+        let normalBackground = UIColor.lightBrown.toImage()
+        let selectedBackground = UIColor.lightBrown.withAlphaComponent(0.8).toImage()
+        button.setBackgroundImage(normalBackground, for: .normal)
+        button.setBackgroundImage(selectedBackground, for: .highlighted)
         button.titleLabel?.font = .medium4()
         button.setTitle("+ 團購訂單", for: .normal)
         button.addTarget(self, action: #selector(addOrderButtonTapped(_:)), for: .touchUpInside)
@@ -72,9 +78,12 @@ extension SectionHeaderView {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.layer.cornerRadius = 10
         button.layer.masksToBounds = true
-        button.backgroundColor = .lightBrown
-        button.setTitleColor(.darkBrown, for: .normal)
-        button.setTitleColor(.skinColor, for: .highlighted)
+        button.setTitleColor(.middleDarkBrown, for: .normal)
+        button.setTitleColor(.darkLogoBrown, for: .highlighted)
+        let normalBackground = UIColor.lightBrown.toImage()
+        let selectedBackground = UIColor.lightBrown.withAlphaComponent(0.8).toImage()
+        button.setBackgroundImage(normalBackground, for: .normal)
+        button.setBackgroundImage(selectedBackground, for: .highlighted)
         button.titleLabel?.font = .medium4()
         button.setTitle("+ 投票清單", for: .normal)
         button.addTarget(self, action: #selector(addVoteButtonTapped(_:)), for: .touchUpInside)

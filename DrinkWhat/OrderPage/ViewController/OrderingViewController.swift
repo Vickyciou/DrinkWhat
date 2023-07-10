@@ -64,15 +64,22 @@ class OrderingViewController: UIViewController {
     }
 
     private func setNavController() {
+        let appearance = UINavigationBarAppearance()
+        appearance.backgroundColor = UIColor.white
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.darkLogoBrown]
+        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.darkLogoBrown]
+        appearance.shadowColor = UIColor.clear
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
         navigationItem.title = "\(orderResponse.initiatorUserName)的團購訂單"
         tabBarController?.tabBar.backgroundColor = .white
 
         let closeImage = UIImage(systemName: "xmark")?
             .withConfiguration(UIImage.SymbolConfiguration(pointSize: 18))
-            .setColor(color: .darkBrown)
+            .setColor(color: .darkLogoBrown)
         let shareImage = UIImage(systemName: "square.and.arrow.up")?
             .withConfiguration(UIImage.SymbolConfiguration(pointSize: 18))
-            .setColor(color: .darkBrown)
+            .setColor(color: .darkLogoBrown)
         let closeButton = UIBarButtonItem(image: closeImage,
                                           style: .plain,
                                           target: self,
@@ -180,7 +187,10 @@ extension OrderingViewController: UITableViewDelegate {
         headerView.delegate = self
         let order = orderResults[section]
         if let user = joinUserObjects.first(where: { $0.userID == order.userID }) {
-            headerView.setupView(userImageURL: user.userImageURL, userName: user.userName ?? "", isPaid: order.isPaid)
+            headerView.setupView(userImageURL: user.userImageURL,
+                                 userName: user.userName ?? "",
+                                 isPaid: order.isPaid,
+                                 indexOfSection: section)
         }
         return headerView
     }
@@ -235,22 +245,22 @@ extension OrderingViewController: JoinUsersBottomViewDelegate {
     }
 }
 extension OrderingViewController: OrderSectionHeaderViewDelegate {
-    func didPressedPaidStatusButton(_ view: OrderSectionHeaderView) {
-        if let userObject {
-            let alert = UIAlertController(
-                title: "付款確認",
-                message: "是否已完成付款？",
-                preferredStyle: .alert
-            )
-            let confirmAction = UIAlertAction(title: "是的", style: .default) { [self]_ in
-                orderManager.updatePaidStatus(orderID: orderResponse.orderID,
-                                              userID: userObject.userID)
-            }
-            let cancelAction = UIAlertAction(title: "還沒", style: .cancel)
-            alert.addAction(confirmAction)
-            alert.addAction(cancelAction)
-            present(alert, animated: true)
+    func didPressedPaidStatusButton(_ view: OrderSectionHeaderView, indexOfSection: Int) {
+        let alert = UIAlertController(
+            title: "付款確認",
+            message: "是否已完成付款？",
+            preferredStyle: .alert
+        )
+        let confirmAction = UIAlertAction(title: "是的", style: .default) { [self]_ in
+            let user = orderResults[indexOfSection].userID
+            orderManager.updatePaidStatus(orderID: orderResponse.orderID,
+                                          userID: user)
         }
+        let cancelAction = UIAlertAction(title: "還沒", style: .cancel)
+        alert.addAction(confirmAction)
+        alert.addAction(cancelAction)
+        present(alert, animated: true)
+
     }
 
 
@@ -281,6 +291,9 @@ extension OrderingViewController: UserObjectsAccessible {
     func setUserObjects(_ userObjects: [UserObject]) {
         joinUserObjects = userObjects
         tableView.reloadData()
+        DispatchQueue.main.async { [self] in
+            headerView.setupView(shopName: orderResponse.shopObject.name)
+        }
     }
 }
 
@@ -299,8 +312,6 @@ extension OrderingViewController: OrderResponseAccessible {
         self.orderResponse = orderResponse
         DispatchQueue.main.async { [self] in
             setupBottomView(state: state)
-            headerView.setupView(shopName: orderResponse.shopObject.name)
-
         }
     }
 }

@@ -13,6 +13,7 @@ protocol InitiatorOrderingBottomViewDelegate: AnyObject {
 }
 
 class InitiatorOrderingBottomView: UIView {
+    private lazy var borderView: UIView = makeBorderView()
     private lazy var cancelButton: UIButton = makeCancelButton()
     private lazy var finishButton: UIButton = makeFinishButton()
     weak var delegate: InitiatorOrderingBottomViewDelegate?
@@ -20,13 +21,17 @@ class InitiatorOrderingBottomView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        let contents = [cancelButton, finishButton]
+        let contents = [borderView, cancelButton, finishButton]
         contents.forEach { addSubview($0) }
         NSLayoutConstraint.activate([
-            cancelButton.topAnchor.constraint(equalTo: topAnchor, constant: 4),
+            borderView.topAnchor.constraint(equalTo: topAnchor),
+            borderView.heightAnchor.constraint(equalToConstant: 0.5),
+            borderView.widthAnchor.constraint(equalTo: widthAnchor),
+            cancelButton.topAnchor.constraint(equalTo: topAnchor, constant: 8),
             cancelButton.centerXAnchor.constraint(equalTo: centerXAnchor),
-            cancelButton.widthAnchor.constraint(equalToConstant: 250),
-            cancelButton.heightAnchor.constraint(equalToConstant: 30),
+            cancelButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            cancelButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            cancelButton.heightAnchor.constraint(equalToConstant: 44),
             finishButton.topAnchor.constraint(equalTo: cancelButton.bottomAnchor, constant: 8),
             finishButton.centerXAnchor.constraint(equalTo: cancelButton.centerXAnchor),
             finishButton.widthAnchor.constraint(equalTo: cancelButton.widthAnchor),
@@ -41,14 +46,19 @@ class InitiatorOrderingBottomView: UIView {
 }
 
 extension InitiatorOrderingBottomView {
+    private func makeBorderView() -> UIView {
+        let borderView = UIView(frame: .zero)
+        borderView.translatesAutoresizingMaskIntoConstraints = false
+        borderView.backgroundColor = .lightBrown
+        return borderView
+    }
     private func makeCancelButton() -> UIButton {
         let button = UIButton(type: .custom)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitleColor(UIColor.darkBrown, for: .normal)
-        button.setTitleColor(UIColor.skinColor, for: .highlighted)
+        button.setTitleColor(UIColor.darkLogoBrown, for: .normal)
         button.titleLabel?.font = .medium(size: 16)
-        let normalBackground = UIColor.lightBrown.toImage(size: CGSize(width: 65, height: 25))
-        let highlightedBackground = UIColor.midiumBrown.toImage(size: CGSize(width: 65, height: 25))
+        let normalBackground = UIColor.lightBrown.toImage()
+        let highlightedBackground = UIColor.middleBrown.toImage()
         button.setBackgroundImage(normalBackground, for: .normal)
         button.setBackgroundImage(highlightedBackground, for: .highlighted)
         button.setTitle("取消訂單", for: .normal)
@@ -63,11 +73,11 @@ extension InitiatorOrderingBottomView {
     private func makeFinishButton() -> UIButton {
         let button = UIButton(type: .custom)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitleColor(UIColor.skinColor, for: .normal)
+        button.setTitleColor(UIColor.lightGrayYellow, for: .normal)
         button.setTitleColor(UIColor.lightBrown, for: .highlighted)
         button.titleLabel?.font = .medium(size: 16)
-        let normalBackground = UIColor.darkGray.toImage(size: CGSize(width: 65, height: 25))
-        let highlightedBackground = UIColor.darkBrown.toImage(size: CGSize(width: 65, height: 25))
+        let normalBackground = UIColor.darkGray.toImage()
+        let highlightedBackground = UIColor.darkBrown.toImage()
         button.setBackgroundImage(normalBackground, for: .normal)
         button.setBackgroundImage(highlightedBackground, for: .highlighted)
         button.setTitle("完成訂單", for: .normal)

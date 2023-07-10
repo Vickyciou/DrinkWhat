@@ -26,12 +26,12 @@ class VotingCell: UITableViewCell {
             view.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
             view.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             view.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            numberLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
+            numberLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 4),
             numberLabel.centerYAnchor.constraint(equalTo: shopImageView.centerYAnchor),
             numberLabel.heightAnchor.constraint(equalToConstant: 28),
             numberLabel.widthAnchor.constraint(equalToConstant: 28),
             shopImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 16),
-            shopImageView.leadingAnchor.constraint(equalTo: numberLabel.trailingAnchor, constant: 12),
+            shopImageView.leadingAnchor.constraint(equalTo: numberLabel.trailingAnchor, constant: 16),
             shopImageView.heightAnchor.constraint(equalToConstant: 50),
             shopImageView.widthAnchor.constraint(equalToConstant: 50),
             shopImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
@@ -106,8 +106,8 @@ extension VotingCell {
     private func makeViewMenuButton() -> UIButton {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitleColor(UIColor.midiumBrown, for: .normal)
-        button.titleLabel?.font = .regular(size: 14)
+        button.setTitleColor(UIColor.middleBrown, for: .normal)
+        button.titleLabel?.font = .regular5()
         button.setTitle("查看菜單 >", for: .normal)
         return button
     }
@@ -117,10 +117,13 @@ extension VotingCell {
         view.backgroundColor = .white
         view.layer.cornerRadius = 20
         view.clipsToBounds = false
-        view.layer.shadowColor = UIColor.darkLogoBrown.cgColor
-        view.layer.shadowOpacity = 0.3
-        view.layer.shadowOffset = CGSize(width: 0, height: 1)
-        view.layer.shadowRadius = 4
+//        view.layer.borderColor = UIColor.middleBrown.cgColor
+//        view.layer.borderWidth = 0.5
+        
+//        view.layer.shadowColor = UIColor.darkLogoBrown.cgColor
+//        view.layer.shadowOpacity = 0.3
+//        view.layer.shadowOffset = CGSize(width: 0, height: 1)
+//        view.layer.shadowRadius = 4
         return view
     }
 }

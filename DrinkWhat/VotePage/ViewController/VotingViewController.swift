@@ -97,15 +97,15 @@ extension VotingViewController {
         tableView.dataSource = self
         tableView.register(VotingCell.self, forCellReuseIdentifier: "VotingCell")
         tableView.contentInsetAdjustmentBehavior = .never
-        tableView.separatorStyle = .none
+//        tableView.separatorStyle = .none
         tableView.allowsSelection = false
         return tableView
     }
     private func makeEndVoteButton() -> UIButton {
-        let button = UIButton(type: .system)
+        let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         let normalBackground = UIColor.darkLogoBrown.toImage()
-        let selectedBackground = UIColor.darkLogoBrown.withAlphaComponent(0.7).toImage()
+        let selectedBackground = UIColor.darkLogoBrown.withAlphaComponent(0.8).toImage()
         button.setBackgroundImage(normalBackground, for: .normal)
         button.setBackgroundImage(selectedBackground, for: .highlighted)
         button.titleLabel?.font = .medium2()

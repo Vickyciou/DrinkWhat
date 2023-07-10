@@ -85,39 +85,6 @@ class OrderNavigationController: UINavigationController {
         }
     }
 
-//    private func decideVC(
-//        orderResponse: OrderResponse,
-//        joinUserObject: [UserObject],
-//        userObject: UserObject,
-//        orderResults: [OrderResults]
-//    ) {
-//        DispatchQueue.main.async { [self] in
-//            //        if isEndOrder(orderResponse: orderResponse) {
-//            //            if viewControllers.last is OrderResultsViewController { return }
-//            //            let orderResultVC = OrderResultsViewController(
-//            //                orderResponse: orderResponse,
-//            //                joinUserObject: joinUserObject,
-//            //                orderResults: orderResults
-//            //            )
-//            //            pushViewController(orderResultVC, animated: !viewControllers.isEmpty)
-//            //        } else {
-//            //            if viewControllers.last is OrderingViewController { return }
-//            let orderingVC = OrderingViewController(
-//                orderResponse: orderResponse,
-//                isInitiator: orderResponse.initiatorUserID == userObject.userID
-//            )
-//            orderingVC.setOrderResults(orderResults)
-//            orderingVC.setUserObjects(joinUserObject)
-//            orderingVC.setOrderResponse(orderResponse)
-//            orderingVC.delegate = self
-//            pushViewController(orderingVC, animated: !viewControllers.isEmpty)
-//        }
-//    }
-//    }
-//
-//    private func isEndOrder(orderResponse: OrderResponse) -> Bool {
-//        orderResponse.state == "已完成"
-//    }
 
     private func isInitiator(orderResponse: OrderResponse, userObject: UserObject) -> Bool {
         orderResponse.initiatorUserID == userObject.userID
@@ -137,15 +104,7 @@ extension OrderNavigationController: OrderManagerDelegate {
             try await orderResults
                 .map { $0.userID }
                 .asyncMap(userManager.getUserData)
-//            if let myUserObject = self.userObject {
-//                decideVC(orderResponse: orderResponse,
-//                         joinUserObject: joinUserObjects,
-//                         userObject: myUserObject,
-//                         orderResults: orderResults)
-//            }
         }
-//        if orderResults.isEmpty {
-//        }
     }
 
     func orderManager(_ manager: OrderManager, didFailWith error: Error) {
@@ -169,7 +128,6 @@ extension OrderNavigationController: UserManagerDelegate {
 extension OrderNavigationController: OrderingViewControllerDelegate {
     func didPressAddItemButton(_ vc: OrderingViewController, orderResponse: OrderResponse) {
         orderNavDelegate?.didPressAddItemButton(self, orderResponse: orderResponse)
-//        dismiss(animated: false)
     }
 }
 

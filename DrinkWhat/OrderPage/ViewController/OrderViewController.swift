@@ -33,9 +33,9 @@ class OrderViewController: UIViewController {
 
     private func setNavController() {
         let appearance = UINavigationBarAppearance()
-        appearance.backgroundColor = UIColor.logoBrown
-        appearance.titleTextAttributes = [.foregroundColor: UIColor.lightYellow]
-        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.lightYellow]
+        appearance.backgroundColor = UIColor.white
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.darkLogoBrown]
+        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.darkLogoBrown]
         appearance.shadowColor = UIColor.clear
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance

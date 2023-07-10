@@ -16,12 +16,12 @@ class OrderSectionFooterView: UIView {
         addSubview(borderView)
         addSubview(priceLabel)
         borderView.translatesAutoresizingMaskIntoConstraints = false
-        borderView.backgroundColor = .midiumBrown
+        borderView.backgroundColor = .middleBrown
 
         priceLabel.translatesAutoresizingMaskIntoConstraints = false
         priceLabel.textAlignment = .right
-        priceLabel.textColor = .darkBrown
-        priceLabel.font = .bold(size: 18)
+        priceLabel.textColor = .darkLogoBrown
+        priceLabel.font = .medium2()
         NSLayoutConstraint.activate([
             borderView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             borderView.heightAnchor.constraint(equalToConstant: 0.5),

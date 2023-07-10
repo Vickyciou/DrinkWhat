@@ -32,7 +32,7 @@ class VoteCell: UITableViewCell {
             profileImageView.heightAnchor.constraint(equalToConstant: 50),
             profileImageView.widthAnchor.constraint(equalToConstant: 50),
             profileImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -12),
-            userNameLabel.topAnchor.constraint(equalTo: profileImageView.topAnchor),
+            userNameLabel.topAnchor.constraint(equalTo: profileImageView.topAnchor, constant: 4),
             userNameLabel.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 16),
             dateLabel.topAnchor.constraint(equalTo: userNameLabel.bottomAnchor, constant: 2),
             dateLabel.leadingAnchor.constraint(equalTo: userNameLabel.leadingAnchor),
@@ -46,7 +46,7 @@ class VoteCell: UITableViewCell {
 
     }
     func setupVoteCell(profileImageURL: String?, userName: String, voteState: String, date: String) {
-        profileImageView.loadImage(profileImageURL, placeHolder: UIImage(systemName: "person.circle.fill")?.setColor(color: .darkBrown))
+        profileImageView.loadImage(profileImageURL, placeHolder: UIImage(systemName: "person.circle.fill")?.setColor(color: .middleDarkBrown))
         userNameLabel.text = userName
         voteStateLabel.text = voteState
         dateLabel.text = date
@@ -61,7 +61,7 @@ extension VoteCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
-        label.font = .title2()
+        label.font = .title3()
         label.textColor = UIColor.darkLogoBrown
         return label
     }
@@ -70,7 +70,7 @@ extension VoteCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
         label.font = .regular(size: 14)
-        label.textColor = UIColor.midiumBrown
+        label.textColor = UIColor.middleBrown
         return label
     }
     private func makeProfileImageView() -> UIImageView {
@@ -85,7 +85,7 @@ extension VoteCell {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(systemName: "arrow.right")?.setColor(color: .darkBrown)
+        imageView.image = UIImage(systemName: "arrow.right")?.setColor(color: .middleDarkBrown)
         return imageView
     }
     private func makeBackgroundView() -> UIView {

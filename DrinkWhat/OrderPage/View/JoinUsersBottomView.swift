@@ -27,10 +27,11 @@ class JoinUsersBottomView: UIView {
             borderView.topAnchor.constraint(equalTo: topAnchor),
             borderView.heightAnchor.constraint(equalToConstant: 0.5),
             borderView.widthAnchor.constraint(equalTo: widthAnchor),
-            linePayButton.topAnchor.constraint(equalTo: topAnchor, constant: 4),
+            linePayButton.topAnchor.constraint(equalTo: topAnchor, constant: 8),
             linePayButton.centerXAnchor.constraint(equalTo: centerXAnchor),
-            linePayButton.widthAnchor.constraint(equalToConstant: 250),
-            linePayButton.heightAnchor.constraint(equalToConstant: 30),
+            linePayButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            linePayButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            linePayButton.heightAnchor.constraint(equalToConstant: 44),
             addItemButton.topAnchor.constraint(equalTo: linePayButton.bottomAnchor, constant: 8),
             addItemButton.centerXAnchor.constraint(equalTo: linePayButton.centerXAnchor),
             addItemButton.widthAnchor.constraint(equalTo: linePayButton.widthAnchor),
@@ -52,34 +53,13 @@ extension JoinUsersBottomView {
         return borderView
     }
 
-
-    private func makeAddItemButton() -> UIButton {
-        let button = UIButton(type: .custom)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitleColor(UIColor.skinColor, for: .normal)
-        button.setTitleColor(UIColor.lightBrown, for: .highlighted)
-        button.titleLabel?.font = .medium(size: 16)
-        let normalBackground = UIColor.darkGray.toImage(size: CGSize(width: 65, height: 25))
-        let highlightedBackground = UIColor.darkBrown.toImage(size: CGSize(width: 65, height: 25))
-        button.setBackgroundImage(normalBackground, for: .normal)
-        button.setBackgroundImage(highlightedBackground, for: .highlighted)
-        button.setTitle("新增品項", for: .normal)
-        button.layer.cornerRadius = 5
-        button.layer.masksToBounds = true
-        button.addTarget(self, action: #selector(addItemButtonTapped), for: .touchUpInside)
-        return button
-    }
-    @objc func addItemButtonTapped() {
-        delegate?.addItemButtonTapped(self)
-    }
     private func makeLinePayButton() -> UIButton {
         let button = UIButton(type: .custom)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitleColor(UIColor.darkBrown, for: .normal)
-        button.setTitleColor(UIColor.skinColor, for: .highlighted)
+        button.setTitleColor(UIColor.darkLogoBrown, for: .normal)
         button.titleLabel?.font = .medium(size: 16)
-        let normalBackground = UIColor.lightBrown.toImage(size: CGSize(width: 65, height: 25))
-        let highlightedBackground = UIColor.midiumBrown.toImage(size: CGSize(width: 65, height: 25))
+        let normalBackground = UIColor.lightBrown.toImage()
+        let highlightedBackground = UIColor.middleBrown.toImage()
         button.setBackgroundImage(normalBackground, for: .normal)
         button.setBackgroundImage(highlightedBackground, for: .highlighted)
         button.setTitle("Line Pay 付款去", for: .normal)
@@ -90,5 +70,25 @@ extension JoinUsersBottomView {
     }
     @objc func linePayButtonTapped() {
         delegate?.linePayButtonTapped(self)
+    }
+
+    private func makeAddItemButton() -> UIButton {
+        let button = UIButton(type: .custom)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitleColor(UIColor.lightGrayYellow, for: .normal)
+        button.setTitleColor(UIColor.lightBrown, for: .highlighted)
+        button.titleLabel?.font = .medium(size: 16)
+        let normalBackground = UIColor.darkGray.toImage()
+        let highlightedBackground = UIColor.darkBrown.toImage()
+        button.setBackgroundImage(normalBackground, for: .normal)
+        button.setBackgroundImage(highlightedBackground, for: .highlighted)
+        button.setTitle("新增品項", for: .normal)
+        button.layer.cornerRadius = 5
+        button.layer.masksToBounds = true
+        button.addTarget(self, action: #selector(addItemButtonTapped), for: .touchUpInside)
+        return button
+    }
+    @objc func addItemButtonTapped() {
+        delegate?.addItemButtonTapped(self)
     }
 }

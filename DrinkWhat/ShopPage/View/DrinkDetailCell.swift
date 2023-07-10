@@ -23,12 +23,12 @@ class DrinkDetailCell: UITableViewCell {
             descriptionLabel.trailingAnchor.constraint(equalTo: chooseButton.leadingAnchor, constant: -4),
             addPriceLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 2),
             addPriceLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
-            addPriceLabel.leadingAnchor.constraint(equalTo: descriptionLabel.leadingAnchor),
+            addPriceLabel.leadingAnchor.constraint(equalTo: descriptionLabel.leadingAnchor, constant: 4),
             addPriceLabel.trailingAnchor.constraint(equalTo: descriptionLabel.trailingAnchor),
             chooseButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             chooseButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            chooseButton.heightAnchor.constraint(equalToConstant: 40),
-            chooseButton.widthAnchor.constraint(equalToConstant: 40)
+            chooseButton.heightAnchor.constraint(equalToConstant: 30),
+            chooseButton.widthAnchor.constraint(equalToConstant: 30)
         ])
     }
     func setupCell(description: String, isSelected: Bool) {
@@ -52,15 +52,15 @@ extension DrinkDetailCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
-        label.font = .medium(size: 18)
-        label.textColor = UIColor.darkBrown
+        label.font = .regular3()
+        label.textColor = UIColor.darkLogoBrown
         return label
     }
     private func makePriceLabel() -> UILabel {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
-        label.font = .medium(size: 14)
+        label.font = .regular4()
         label.textColor = UIColor.logoBrown
         return label
     }
@@ -68,10 +68,10 @@ extension DrinkDetailCell {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.isUserInteractionEnabled = false
-        button.setTitleColor(UIColor.midiumBrown, for: .normal)
+        button.setTitleColor(UIColor.middleBrown, for: .normal)
         button.titleLabel?.font = .regular(size: 14)
-        button.setImage(UIImage(systemName: "circle")?.setColor(color: .darkBrown), for: .normal)
-        button.setImage(UIImage(systemName: "circle.inset.filled")?.setColor(color: .darkBrown), for: .selected)
+        button.setImage(UIImage(systemName: "circle")?.setColor(color: .darkLogoBrown), for: .normal)
+        button.setImage(UIImage(systemName: "circle.inset.filled")?.setColor(color: .darkLogoBrown), for: .selected)
         return button
     }
 }

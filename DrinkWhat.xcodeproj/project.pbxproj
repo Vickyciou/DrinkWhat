@@ -53,7 +53,6 @@
 		FA9AABE02A4F1D7600B99FB7 /* OrderingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABDF2A4F1D7600B99FB7 /* OrderingViewController.swift */; };
 		FA9AABE22A4F1DA400B99FB7 /* CustomDrinkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABE12A4F1DA400B99FB7 /* CustomDrinkCell.swift */; };
 		FA9AABE42A4FABFB00B99FB7 /* OrderNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABE32A4FABFB00B99FB7 /* OrderNavigationController.swift */; };
-		FA9AABE62A4FBA1B00B99FB7 /* OrderResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABE52A4FBA1B00B99FB7 /* OrderResultsViewController.swift */; };
 		FA9AABEA2A5030A300B99FB7 /* OrderSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABE92A5030A300B99FB7 /* OrderSectionHeaderView.swift */; };
 		FA9AABEC2A5069B100B99FB7 /* OrderSectionFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABEB2A5069B100B99FB7 /* OrderSectionFooterView.swift */; };
 		FA9AABEE2A51210700B99FB7 /* OrderTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABED2A51210700B99FB7 /* OrderTableViewHeader.swift */; };
@@ -124,7 +123,6 @@
 		FA9AABDF2A4F1D7600B99FB7 /* OrderingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderingViewController.swift; sourceTree = "<group>"; };
 		FA9AABE12A4F1DA400B99FB7 /* CustomDrinkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDrinkCell.swift; sourceTree = "<group>"; };
 		FA9AABE32A4FABFB00B99FB7 /* OrderNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderNavigationController.swift; sourceTree = "<group>"; };
-		FA9AABE52A4FBA1B00B99FB7 /* OrderResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderResultsViewController.swift; sourceTree = "<group>"; };
 		FA9AABE92A5030A300B99FB7 /* OrderSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderSectionHeaderView.swift; sourceTree = "<group>"; };
 		FA9AABEB2A5069B100B99FB7 /* OrderSectionFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderSectionFooterView.swift; sourceTree = "<group>"; };
 		FA9AABED2A51210700B99FB7 /* OrderTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderTableViewHeader.swift; sourceTree = "<group>"; };
@@ -315,7 +313,6 @@
 				FA7179512A3ABC99002C407C /* OrderViewController.swift */,
 				FA9AABE32A4FABFB00B99FB7 /* OrderNavigationController.swift */,
 				FA9AABDF2A4F1D7600B99FB7 /* OrderingViewController.swift */,
-				FA9AABE52A4FBA1B00B99FB7 /* OrderResultsViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -536,7 +533,6 @@
 				FA9AABF42A51480600B99FB7 /* JoinUsersBottomView.swift in Sources */,
 				FAF2AE172A4A8F8400F27B64 /* RootViewController.swift in Sources */,
 				FA7179502A3ABC46002C407C /* VoteViewController.swift in Sources */,
-				FA9AABE62A4FBA1B00B99FB7 /* OrderResultsViewController.swift in Sources */,
 				FA9AABEA2A5030A300B99FB7 /* OrderSectionHeaderView.swift in Sources */,
 				FA98EEFB2A3DEB7C000E6FEE /* VotingViewController.swift in Sources */,
 				FA98EF092A3F3430000E6FEE /* VoteResultCell.swift in Sources */,
