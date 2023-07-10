@@ -9,7 +9,7 @@ import UIKit
 
 protocol NotVotedCellDelegate: AnyObject {
     func didPressedViewMenuButton(_ cell: NotVotedCell, button: UIButton)
-    func didSelectedChooseButton(_ cell: NotVotedCell, button: UIButton)
+//    func didSelectedChooseButton(_ cell: NotVotedCell, button: UIButton)
 }
 
 class NotVotedCell: UITableViewCell {
@@ -118,7 +118,8 @@ extension NotVotedCell {
         button.titleLabel?.font = .regular(size: 14)
         button.setImage(UIImage(systemName: "circle")?.setColor(color: .darkLogoBrown), for: .normal)
         button.setImage(UIImage(systemName: "circle.inset.filled")?.setColor(color: .darkLogoBrown), for: .selected)
-        button.addTarget(self, action: #selector(chooseButtonTapped(_:)), for: .touchUpInside)
+        button.isUserInteractionEnabled = false
+//        button.addTarget(self, action: #selector(chooseButtonTapped(_:)), for: .touchUpInside)
         return button
     }
     private func makeViewMenuButton() -> UIButton {
@@ -144,9 +145,9 @@ extension NotVotedCell {
         view.layer.shadowRadius = 4
         return view
     }
-    @objc func chooseButtonTapped(_ sender: UIButton) {
-        delegate?.didSelectedChooseButton(self, button: sender)
-    }
+//    @objc func chooseButtonTapped(_ sender: UIButton) {
+//        delegate?.didSelectedChooseButton(self, button: sender)
+//    }
     @objc func viewButtonTapped(_ sender: UIButton) {
         delegate?.didPressedViewMenuButton(self, button: sender)
     }

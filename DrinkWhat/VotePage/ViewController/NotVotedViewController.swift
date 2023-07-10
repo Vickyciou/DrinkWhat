@@ -105,7 +105,6 @@ extension NotVotedViewController {
         tableView.register(NotVotedCell.self, forCellReuseIdentifier: "NotVotedCell")
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.separatorStyle = .none
-        tableView.allowsSelection = false
         return tableView
     }
     private func makeSubmitButton() -> UIButton {
@@ -175,6 +174,12 @@ extension NotVotedViewController: UITableViewDelegate {
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        newVoteResults.indices.forEach { newVoteResults[$0].isSelected = false }
+        newVoteResults[indexPath.row].isSelected = true
+        tableView.reloadData()
+    }
 }
 
 
@@ -188,12 +193,12 @@ extension NotVotedViewController: NotVotedCellDelegate {
         }
     }
 
-    func didSelectedChooseButton(_ cell: NotVotedCell, button: UIButton) {
-        guard let indexPath = tableView.indexPath(for: cell) else { return }
-        newVoteResults.indices.forEach { newVoteResults[$0].isSelected = false }
-        newVoteResults[indexPath.row].isSelected = true
-        tableView.reloadData()
-    }
+//    func didSelectedChooseButton(_ cell: NotVotedCell, button: UIButton) {
+//        guard let indexPath = tableView.indexPath(for: cell) else { return }
+//        newVoteResults.indices.forEach { newVoteResults[$0].isSelected = false }
+//        newVoteResults[indexPath.row].isSelected = true
+//        tableView.reloadData()
+//    }
 }
 
 extension NotVotedViewController: VoteResultsAccessible {
