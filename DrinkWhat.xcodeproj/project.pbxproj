@@ -36,6 +36,7 @@
 		FA7CC6192A446106009B599F /* ShopMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7CC6182A446106009B599F /* ShopMenuCell.swift */; };
 		FA7CC61B2A457754009B599F /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7CC61A2A457754009B599F /* SectionHeaderView.swift */; };
 		FA8B17F32A57F52700404DC7 /* FirebaseStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8B17F22A57F52700404DC7 /* FirebaseStorageManager.swift */; };
+		FA8B17F52A5C4DF200404DC7 /* DrinkDetailTableViewFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8B17F42A5C4DF200404DC7 /* DrinkDetailTableViewFooter.swift */; };
 		FA9232222A49896500F045C6 /* SignInWithAppleHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9232212A49896500F045C6 /* SignInWithAppleHelper.swift */; };
 		FA9232242A498F1E00F045C6 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9232232A498F1E00F045C6 /* AuthManager.swift */; };
 		FA98EEFB2A3DEB7C000E6FEE /* VotingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA98EEFA2A3DEB7C000E6FEE /* VotingViewController.swift */; };
@@ -105,6 +106,7 @@
 		FA7CC6182A446106009B599F /* ShopMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopMenuCell.swift; sourceTree = "<group>"; };
 		FA7CC61A2A457754009B599F /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
 		FA8B17F22A57F52700404DC7 /* FirebaseStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStorageManager.swift; sourceTree = "<group>"; };
+		FA8B17F42A5C4DF200404DC7 /* DrinkDetailTableViewFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkDetailTableViewFooter.swift; sourceTree = "<group>"; };
 		FA9232202A49705300F045C6 /* DrinkWhat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DrinkWhat.entitlements; sourceTree = "<group>"; };
 		FA9232212A49896500F045C6 /* SignInWithAppleHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithAppleHelper.swift; sourceTree = "<group>"; };
 		FA9232232A498F1E00F045C6 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
@@ -349,6 +351,7 @@
 				FA7CC6182A446106009B599F /* ShopMenuCell.swift */,
 				FAB2B9D62A4ADDCC00EB449C /* DrinkDetailTopView.swift */,
 				FAB2B9DA2A4AE21600EB449C /* DrinkDetailCell.swift */,
+				FA8B17F42A5C4DF200404DC7 /* DrinkDetailTableViewFooter.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -559,6 +562,7 @@
 				FA7CC60D2A42DDE6009B599F /* UserManager.swift in Sources */,
 				FA9AABEC2A5069B100B99FB7 /* OrderSectionFooterView.swift in Sources */,
 				FA9AABE02A4F1D7600B99FB7 /* OrderingViewController.swift in Sources */,
+				FA8B17F52A5C4DF200404DC7 /* DrinkDetailTableViewFooter.swift in Sources */,
 				FA7179332A3A9DF7002C407C /* AppDelegate.swift in Sources */,
 				FA9AABF22A51472400B99FB7 /* OrderFinishedBottomView.swift in Sources */,
 				FA71794E2A3ABB8A002C407C /* FavoriteViewController.swift in Sources */,
@@ -735,7 +739,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = ll.DrinkWhat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -769,7 +773,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = ll.DrinkWhat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

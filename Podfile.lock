@@ -751,6 +751,7 @@ PODS:
     - gRPC-Core/Interface (= 1.50.1)
   - gRPC-Core/Interface (1.50.1)
   - GTMSessionFetcher/Core (2.3.0)
+  - IQKeyboardManagerSwift (6.5.11)
   - Kingfisher (7.6.2)
   - leveldb-library (1.22.2)
   - LineSDKSwift (5.9.1):
@@ -770,6 +771,7 @@ DEPENDENCIES:
   - FirebaseFirestore (~> 10.11.0)
   - FirebaseFirestoreSwift (~> 10.11.0)
   - FirebaseStorage
+  - IQKeyboardManagerSwift
   - Kingfisher
   - LineSDKSwift (~> 5.0)
   - SwiftLint
@@ -793,6 +795,7 @@ SPEC REPOS:
     - "gRPC-C++"
     - gRPC-Core
     - GTMSessionFetcher
+    - IQKeyboardManagerSwift
     - Kingfisher
     - leveldb-library
     - LineSDKSwift
@@ -818,6 +821,7 @@ SPEC CHECKSUMS:
   "gRPC-C++": 0968bace703459fd3e5dcb0b2bed4c573dbff046
   gRPC-Core: 17108291d84332196d3c8466b48f016fc17d816d
   GTMSessionFetcher: 3a63d75eecd6aa32c2fc79f578064e1214dfdec2
+  IQKeyboardManagerSwift: c7955c0bdbf7b2eb29bb7daaa44e3d90f55a9a85
   Kingfisher: 6c5449c6450c5239166510ba04afe374a98afc4f
   leveldb-library: f03246171cce0484482ec291f88b6d563699ee06
   LineSDKSwift: 0f676fbc3e66129e2dfff706cc319126d8087353
@@ -826,6 +830,6 @@ SPEC CHECKSUMS:
   SwiftLint: 1ac76dac888ca05cb0cf24d0c85887ec1209961d
   Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
 
-PODFILE CHECKSUM: c1137d1b59b95ce1a52b5b6b69448dca15ffe87f
+PODFILE CHECKSUM: 01ce72a52d08d6e3005fd31c01e6207032af8955
 
 COCOAPODS: 1.12.1

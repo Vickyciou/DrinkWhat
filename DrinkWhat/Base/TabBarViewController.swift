@@ -70,7 +70,16 @@ class TabBarViewController: UITabBarController, UIViewControllerTransitioningDel
         Task {
             do {
                 try await orderManager.addUserIntoOrderGroup(userID: userObject.userID, orderID: orderID)
-            } catch ManagerError.itemAlreadyExistsError {
+            } catch ManagerError.hadActiveOrderGroup {
+                let alert = UIAlertController(
+                    title: "加入團購群組失敗",
+                    message: "目前已有進行中的團購群組囉！\n請先完成進行中的群組~",
+                    preferredStyle: .alert
+                )
+                let okAction = UIAlertAction(title: "OK", style: .default)
+                alert.addAction(okAction)
+                present(alert, animated: true)
+            } catch ManagerError.alreadyAddAnotherOrderError {
                 let alert = UIAlertController(
                     title: "加入團購群組失敗",
                     message: "目前已有進行中的團購群組囉！\n請先完成進行中的群組~",

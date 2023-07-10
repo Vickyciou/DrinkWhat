@@ -16,6 +16,7 @@ target 'DrinkWhat' do
     pod 'FirebaseStorage'
     pod 'Kingfisher'
     pod 'Toast-Swift'
+    pod 'IQKeyboardManagerSwift'
 
     post_install do |installer|
       installer.pods_project.targets.each do |target|

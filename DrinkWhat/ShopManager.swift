@@ -522,7 +522,7 @@ extension ShopManager {
             ShopMenu(drinkName: "夏卡爾多多紅茶", drinkPrice: [
                 VolumePrice(volume: "L", price: 65)
             ]),
-            ShopMenu(drinkName: "做嬌玫瑰", drinkPrice: [
+            ShopMenu(drinkName: "傲嬌玫瑰", drinkPrice: [
                 VolumePrice(volume: "L", price: 55)
             ])
         ]

@@ -29,7 +29,7 @@ enum GroupStatus: String {
 }
 
 enum ManagerError: LocalizedError {
-    case serverError, noData, decodingError, encodingError, conversionError, itemAlreadyExistsError, alreadyAddAnotherOrderError, noMatchData
+    case serverError, noData, decodingError, encodingError, conversionError, itemAlreadyExistsError, hadActiveOrderGroup, alreadyAddAnotherOrderError, noMatchData
 
     var errorDescription: String? {
         switch self {
@@ -39,6 +39,7 @@ enum ManagerError: LocalizedError {
         case .encodingError: return "Encoding error"
         case .conversionError: return "Failed to change Object into dictionary"
         case .itemAlreadyExistsError: return "Item Already Exists."
+        case .hadActiveOrderGroup: return "Had active order group"
         case .alreadyAddAnotherOrderError: return "Already add another order"
         case .noMatchData: return "Could not found match data"
         }

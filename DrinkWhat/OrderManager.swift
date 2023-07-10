@@ -123,7 +123,7 @@ class OrderManager {
         if (document.documents.first?.data()) == nil {
             try await orderDocument(orderID: orderID).updateData(["joinUserIDs": FieldValue.arrayUnion([userID])])
         } else if document.documents.first?.data()["initiatorUserID"] as! String == userID {
-            return
+            throw ManagerError.hadActiveOrderGroup
         } else {
             throw ManagerError.alreadyAddAnotherOrderError
         }

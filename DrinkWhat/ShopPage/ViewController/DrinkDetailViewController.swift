@@ -28,6 +28,8 @@ class DrinkDetailViewController: UIViewController {
         let extraPrice = currentAddToppingsIndexes.map { shopObject.addToppings[$0].price }.reduce(0, +)
         return basePrice + extraPrice
     }
+    private let footerView = DrinkDetailTableViewFooter(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+    private var note: String?
 
     init(shopObject: ShopObject, drink: ShopMenu) {
         self.shopObject = shopObject
@@ -66,6 +68,8 @@ class DrinkDetailViewController: UIViewController {
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
         ])
+        tableView.tableFooterView = footerView
+        footerView.delegate = self
     }
     private func setupAddItemButtonButton() {
         view.addSubview(addItemButton)
@@ -154,7 +158,8 @@ extension DrinkDetailViewController {
             volume: drink.drinkPrice[currentVolumeIndex].volume,
             sugar: dataSource.sugar[currentSugarIndex],
             ice: dataSource.ice[currentIceIndex],
-            addToppings: addToppings, note: "")
+            addToppings: addToppings,
+            note: note ?? "")
         Task {
                 do {
                     try await orderManager.addOrderResult(userID: userObject.userID,
@@ -313,6 +318,14 @@ extension DrinkDetailViewController: UITableViewDelegate {
         }
         tableView.reloadData()
     }
+}
+
+extension DrinkDetailViewController: DrinkDetailTableViewFooterDelegate {
+    func textFieldEndEditing(_ view: DrinkDetailTableViewFooter, text: String) {
+        note = text
+    }
+
+
 }
 
 extension Optional where Wrapped == Int {
