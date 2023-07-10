@@ -137,7 +137,7 @@ extension ShopMenuViewController: SectionHeaderViewDelegate {
                         initiatorUserName: userObject.userName ?? "Name").orderID
 
                     let alert = UIAlertController(
-                        title: "開始團購囉",
+                        title: "開啟團購囉",
                         message: "要立刻分享給朋友嗎？",
                         preferredStyle: .alert
                     )

@@ -22,6 +22,12 @@ extension GroupManagerDelegate {
     func groupManager(_ manager: GroupManager, didFailWith error: Error) {}
 }
 
+enum GroupStatus: String {
+    case active = "進行中"
+    case canceled = "已取消"
+    case finished = "已完成"
+}
+
 enum ManagerError: LocalizedError {
     case serverError, noData, decodingError, encodingError, conversionError, itemAlreadyExistsError, alreadyAddAnotherOrderError, noMatchData
 
@@ -66,7 +72,7 @@ class GroupManager {
             .whereFilter(Filter.andFilter(
                 [
                     Filter.whereField("initiatorUserID", isEqualTo: userObject.userID),
-                    Filter.whereField("state", isEqualTo: "進行中")
+                    Filter.whereField("state", isEqualTo: GroupStatus.active.rawValue)
                 ]
             ))
             .getDocuments()
@@ -83,7 +89,7 @@ class GroupManager {
             let groupObject = GroupResponse(
                 groupID: document.documentID,
                 date: Date().timeIntervalSince1970,
-                state: "進行中",
+                state: GroupStatus.active.rawValue,
                 initiatorUserID: userObject.userID,
                 initiatorUserName: userObject.userName ?? "Name",
                 initiatorUserImage: userObject.userImageURL ?? "",
@@ -107,9 +113,9 @@ class GroupManager {
             .updateData(["userIDs": FieldValue.arrayUnion([userID])])
     }
 
-// MARK: - 結束投票
-    func setVoteStateToFinish(groupID: String) {
-        groupCollection().document(groupID).updateData(["state": "已完成"])
+// MARK: - 更新投票群組狀態為完成或取消
+    func setVoteStatus(groupID: String, status: String) {
+        groupCollection().document(groupID).updateData(["state": status])
     }
 
 // MARK: - 刪除投票店家

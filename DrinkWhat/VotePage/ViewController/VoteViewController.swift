@@ -74,10 +74,13 @@ extension VoteViewController: UITableViewDataSource {
 
         switch section {
         case 0:
-            let continueVotes = groupObjects.filter({ $0.state == "進行中" })
+            let continueVotes = groupObjects.filter({ $0.state == GroupStatus.active.rawValue })
             return continueVotes.count
         case 1:
-            let finishedVotes = groupObjects.filter({ $0.state == "已完成" })
+            let finishedVotes = groupObjects.filter(
+                { $0.state == GroupStatus.canceled.rawValue ||
+                    $0.state == GroupStatus.finished.rawValue }
+                )
             return finishedVotes.count
         default:
             return 0
@@ -90,7 +93,7 @@ extension VoteViewController: UITableViewDataSource {
 
         switch indexPath.section {
         case 0:
-            let continueVotes = groupObjects.filter({ $0.state == "進行中" })
+            let continueVotes = groupObjects.filter({ $0.state == GroupStatus.active.rawValue })
             let continueVote = continueVotes[indexPath.row]
             let date = Date(timeIntervalSince1970: continueVote.date)
             let dateString = date.dateToString(date: date)
@@ -100,7 +103,10 @@ extension VoteViewController: UITableViewDataSource {
                                date: dateString)
             return cell
         case 1:
-            let finishedVotes = groupObjects.filter({ $0.state == "已完成" })
+            let finishedVotes = groupObjects.filter(
+                { $0.state == GroupStatus.canceled.rawValue ||
+                    $0.state == GroupStatus.finished.rawValue }
+            )
             let finishedVote = finishedVotes[indexPath.row]
             let date = Date(timeIntervalSince1970: finishedVote.date)
             let dateString = date.dateToString(date: date)
@@ -119,11 +125,14 @@ extension VoteViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.section {
         case 0:
-            let continueVotes = groupObjects.filter({ $0.state == "進行中" })
+            let continueVotes = groupObjects.filter({ $0.state == GroupStatus.active.rawValue })
             let voteNavigationVC = VoteNavigationController(groupID: continueVotes[indexPath.row].groupID)
             present(voteNavigationVC, animated: true)
         case 1:
-            let finishedVotes = groupObjects.filter({ $0.state == "已完成" })
+            let finishedVotes = groupObjects.filter(
+                { $0.state == GroupStatus.canceled.rawValue ||
+                    $0.state == GroupStatus.finished.rawValue }
+                )
             let voteNavigationVC = VoteNavigationController(groupID: finishedVotes[indexPath.row].groupID)
             present(voteNavigationVC, animated: true)
         default:

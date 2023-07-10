@@ -72,6 +72,7 @@ identifier_name:
     - x
     - y
     - z
+    - vc
 
 line_length:
   ignores_urls: true

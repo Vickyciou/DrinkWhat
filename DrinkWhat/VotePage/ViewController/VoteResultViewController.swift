@@ -53,11 +53,11 @@ class VoteResultViewController: UIViewController {
         appearance.shadowColor = UIColor.clear
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
-        navigationItem.title = "由\(groupObject.initiatorUserName)發起的投票"
+        navigationItem.title = "\(groupObject.initiatorUserName)發起的投票"
         tabBarController?.tabBar.backgroundColor = .white
         navigationItem.hidesBackButton = true
         let closeImage = UIImage(systemName: "xmark")?
-            .withConfiguration(UIImage.SymbolConfiguration(pointSize: 20))
+            .withConfiguration(UIImage.SymbolConfiguration(pointSize: 16))
             .withTintColor(UIColor.darkBrown)
             .withRenderingMode(.alwaysOriginal)
         let closeButton = UIBarButtonItem(image: closeImage,

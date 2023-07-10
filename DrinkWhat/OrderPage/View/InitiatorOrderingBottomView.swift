@@ -8,34 +8,34 @@
 import UIKit
 
 protocol InitiatorOrderingBottomViewDelegate: AnyObject {
-    func cancelButtonTapped(_ view: InitiatorOrderingBottomView)
+    func addItemButtonTapped(_ view: InitiatorOrderingBottomView)
     func finishButtonTapped(_ view: InitiatorOrderingBottomView)
 }
 
 class InitiatorOrderingBottomView: UIView {
     private lazy var borderView: UIView = makeBorderView()
-    private lazy var cancelButton: UIButton = makeCancelButton()
+    private lazy var addItemButton: UIButton = makeAddItemButton()
     private lazy var finishButton: UIButton = makeFinishButton()
     weak var delegate: InitiatorOrderingBottomViewDelegate?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        let contents = [borderView, cancelButton, finishButton]
+        let contents = [borderView, addItemButton, finishButton]
         contents.forEach { addSubview($0) }
         NSLayoutConstraint.activate([
             borderView.topAnchor.constraint(equalTo: topAnchor),
             borderView.heightAnchor.constraint(equalToConstant: 0.5),
             borderView.widthAnchor.constraint(equalTo: widthAnchor),
-            cancelButton.topAnchor.constraint(equalTo: topAnchor, constant: 8),
-            cancelButton.centerXAnchor.constraint(equalTo: centerXAnchor),
-            cancelButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            cancelButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
-            cancelButton.heightAnchor.constraint(equalToConstant: 44),
-            finishButton.topAnchor.constraint(equalTo: cancelButton.bottomAnchor, constant: 8),
-            finishButton.centerXAnchor.constraint(equalTo: cancelButton.centerXAnchor),
-            finishButton.widthAnchor.constraint(equalTo: cancelButton.widthAnchor),
-            finishButton.heightAnchor.constraint(equalTo: cancelButton.heightAnchor),
+            addItemButton.topAnchor.constraint(equalTo: topAnchor, constant: 8),
+            addItemButton.centerXAnchor.constraint(equalTo: centerXAnchor),
+            addItemButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            addItemButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            addItemButton.heightAnchor.constraint(equalToConstant: 44),
+            finishButton.topAnchor.constraint(equalTo: addItemButton.bottomAnchor, constant: 8),
+            finishButton.centerXAnchor.constraint(equalTo: addItemButton.centerXAnchor),
+            finishButton.widthAnchor.constraint(equalTo: addItemButton.widthAnchor),
+            finishButton.heightAnchor.constraint(equalTo: addItemButton.heightAnchor),
             finishButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -4)
         ])
     }
@@ -52,7 +52,7 @@ extension InitiatorOrderingBottomView {
         borderView.backgroundColor = .lightBrown
         return borderView
     }
-    private func makeCancelButton() -> UIButton {
+    private func makeAddItemButton() -> UIButton {
         let button = UIButton(type: .custom)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitleColor(UIColor.darkLogoBrown, for: .normal)
@@ -61,14 +61,14 @@ extension InitiatorOrderingBottomView {
         let highlightedBackground = UIColor.middleBrown.toImage()
         button.setBackgroundImage(normalBackground, for: .normal)
         button.setBackgroundImage(highlightedBackground, for: .highlighted)
-        button.setTitle("取消訂單", for: .normal)
-        button.layer.cornerRadius = 5
+        button.setTitle("前往點餐", for: .normal)
+        button.layer.cornerRadius = 10
         button.layer.masksToBounds = true
-        button.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(addItemButtonTapped), for: .touchUpInside)
         return button
     }
-    @objc func cancelButtonTapped() {
-        delegate?.cancelButtonTapped(self)
+    @objc func addItemButtonTapped() {
+        delegate?.addItemButtonTapped(self)
     }
     private func makeFinishButton() -> UIButton {
         let button = UIButton(type: .custom)
@@ -81,7 +81,7 @@ extension InitiatorOrderingBottomView {
         button.setBackgroundImage(normalBackground, for: .normal)
         button.setBackgroundImage(highlightedBackground, for: .highlighted)
         button.setTitle("完成訂單", for: .normal)
-        button.layer.cornerRadius = 5
+        button.layer.cornerRadius = 10
         button.layer.masksToBounds = true
         button.addTarget(self, action: #selector(finishButtonTapped), for: .touchUpInside)
         return button

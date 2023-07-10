@@ -63,7 +63,7 @@ extension JoinUsersBottomView {
         button.setBackgroundImage(normalBackground, for: .normal)
         button.setBackgroundImage(highlightedBackground, for: .highlighted)
         button.setTitle("Line Pay 付款去", for: .normal)
-        button.layer.cornerRadius = 5
+        button.layer.cornerRadius = 10
         button.layer.masksToBounds = true
         button.addTarget(self, action: #selector(linePayButtonTapped), for: .touchUpInside)
         return button
@@ -83,7 +83,7 @@ extension JoinUsersBottomView {
         button.setBackgroundImage(normalBackground, for: .normal)
         button.setBackgroundImage(highlightedBackground, for: .highlighted)
         button.setTitle("新增品項", for: .normal)
-        button.layer.cornerRadius = 5
+        button.layer.cornerRadius = 10
         button.layer.masksToBounds = true
         button.addTarget(self, action: #selector(addItemButtonTapped), for: .touchUpInside)
         return button

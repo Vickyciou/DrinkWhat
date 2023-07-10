@@ -7,17 +7,24 @@
 
 import UIKit
 
+protocol NotVotedViewControllerDelegate: AnyObject {
+    func didPressCancelButton(_ vc: NotVotedViewController)
+}
+
 class NotVotedViewController: UIViewController {
     private lazy var tableView: UITableView = makeTableView()
     private lazy var submitButton: UIButton = makeSubmitButton()
     private let groupObject: GroupResponse
+    private let isInitiator: Bool
     private var shopObjects: [ShopObject] = []
     private var newVoteResults: [(voteResult: VoteResult, isSelected: Bool)] = []
     private let groupManager = GroupManager()
     private let userObject = UserManager.shared.userObject
+    weak var delegate: NotVotedViewControllerDelegate?
 
-    init(groupObject: GroupResponse) {
+    init(groupObject: GroupResponse, isInitiator: Bool) {
         self.groupObject = groupObject
+        self.isInitiator = isInitiator
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -43,15 +50,18 @@ class NotVotedViewController: UIViewController {
         appearance.shadowColor = UIColor.clear
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
-        navigationItem.title = "由\(groupObject.initiatorUserName)發起的投票"
+        navigationItem.title = "\(groupObject.initiatorUserName)發起的投票"
         navigationController?.navigationBar.backgroundColor = .white
         navigationItem.hidesBackButton = true
         let closeImage = UIImage(systemName: "xmark")?
-            .withConfiguration(UIImage.SymbolConfiguration(pointSize: 18))
+            .withConfiguration(UIImage.SymbolConfiguration(pointSize: 16))
             .setColor(color: .darkLogoBrown)
         let shareImage = UIImage(systemName: "square.and.arrow.up")?
-            .withConfiguration(UIImage.SymbolConfiguration(pointSize: 18))
+            .withConfiguration(UIImage.SymbolConfiguration(pointSize: 16))
             .setColor(color: .darkLogoBrown)
+        let trashImage = UIImage(systemName: "trash")?
+            .setColor(color: .darkLogoBrown)
+            .withConfiguration(UIImage.SymbolConfiguration(pointSize: 16))
         let closeButton = UIBarButtonItem(image: closeImage,
                                           style: .plain,
                                           target: self,
@@ -60,17 +70,35 @@ class NotVotedViewController: UIViewController {
                                           style: .plain,
                                           target: self,
                                           action: #selector(shareButtonTapped))
+        let cancelButton = UIBarButtonItem(image: trashImage,
+                                           style: .plain,
+                                          target: self,
+                                          action: #selector(cancelButtonTapped))
+
         navigationItem.setRightBarButtonItems([closeButton, shareButton], animated: false)
+
+        if !isInitiator ||
+            groupObject.state == GroupStatus.canceled.rawValue ||
+            groupObject.state == GroupStatus.finished.rawValue {
+            navigationItem.leftBarButtonItem = nil
+        } else {
+            navigationItem.setLeftBarButton(cancelButton, animated: false)
+        }
     }
+
     @objc private func closeButtonTapped() {
         dismiss(animated: true)
     }
+
     @objc private func shareButtonTapped() {
         let groupID = groupObject.groupID
         let shareURL = URL(string: "drinkWhat://share?groupID=\(groupID)")!
         let aVC = UIActivityViewController(activityItems: [shareURL], applicationActivities: nil)
         present(aVC, animated: true)
+    }
 
+    @objc private func cancelButtonTapped() {
+        delegate?.didPressCancelButton(self)
     }
 
     private func setupTableView() {

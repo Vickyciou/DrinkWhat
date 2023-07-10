@@ -8,7 +8,8 @@
 import UIKit
 
 protocol VotingViewControllerDelegate: AnyObject {
-    func votingViewController(_ vc: VotingViewController, didPressEndVoteButton button: UIButton)
+    func didPressEndVoteButton(_ vc: VotingViewController)
+    func didPressCancelButton(_ vc: VotingViewController)
 }
 
 class VotingViewController: UIViewController {
@@ -17,6 +18,7 @@ class VotingViewController: UIViewController {
     private var groupObject: GroupResponse
     private var voteResults: [VoteResult] = []
     private var shopObjects: [ShopObject] = []
+    private lazy var cancelLabel: UILabel = makeLabel()
     private let isInitiator: Bool
     weak var delegate: VotingViewControllerDelegate?
 
@@ -41,8 +43,13 @@ class VotingViewController: UIViewController {
         view.backgroundColor = .white
         setNavController()
         setupTableView()
-        setupSubmitButton()
-        if isInitiator == false { endVoteButton.isHidden = true }
+        setupEndVoteButton()
+        if !isInitiator { endVoteButton.isHidden = true }
+        if groupObject.state == GroupStatus.canceled.rawValue {
+            endVoteButton.isHidden = true
+            setupCancelLabel()
+        }
+
     }
     private func setNavController() {
         let appearance = UINavigationBarAppearance()
@@ -52,21 +59,56 @@ class VotingViewController: UIViewController {
         appearance.shadowColor = UIColor.clear
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
-        navigationItem.title = "由\(groupObject.initiatorUserName)發起的投票"
+        navigationItem.title = "\(groupObject.initiatorUserName)發起的投票"
         tabBarController?.tabBar.backgroundColor = .white
         navigationItem.hidesBackButton = true
         let closeImage = UIImage(systemName: "xmark")?
-            .withConfiguration(UIImage.SymbolConfiguration(pointSize: 20))
-            .withTintColor(UIColor.darkBrown)
+            .withConfiguration(UIImage.SymbolConfiguration(pointSize: 16))
+            .withTintColor(UIColor.darkLogoBrown)
             .withRenderingMode(.alwaysOriginal)
+        let shareImage = UIImage(systemName: "square.and.arrow.up")?
+            .withConfiguration(UIImage.SymbolConfiguration(pointSize: 16))
+            .setColor(color: .darkLogoBrown)
+        let trashImage = UIImage(systemName: "trash")?
+            .setColor(color: .darkLogoBrown)
+            .withConfiguration(UIImage.SymbolConfiguration(pointSize: 16))
         let closeButton = UIBarButtonItem(image: closeImage,
                                           style: .plain,
                                           target: self,
                                           action: #selector(closeButtonTapped))
-        navigationItem.setRightBarButton(closeButton, animated: false)
+        let shareButton = UIBarButtonItem(image: shareImage,
+                                          style: .plain,
+                                          target: self,
+                                          action: #selector(shareButtonTapped))
+        let cancelButton = UIBarButtonItem(image: trashImage,
+                                           style: .plain,
+                                          target: self,
+                                          action: #selector(cancelButtonTapped))
+
+        navigationItem.setRightBarButtonItems([closeButton, shareButton], animated: false)
+
+        if !isInitiator ||
+            groupObject.state == GroupStatus.canceled.rawValue ||
+            groupObject.state == GroupStatus.finished.rawValue {
+            navigationItem.leftBarButtonItem = nil
+        } else {
+            navigationItem.setLeftBarButton(cancelButton, animated: false)
+        }
+
     }
     @objc private func closeButtonTapped() {
         dismiss(animated: true)
+    }
+
+    @objc private func shareButtonTapped() {
+        let groupID = groupObject.groupID
+        let shareURL = URL(string: "drinkWhat://share?groupID=\(groupID)")!
+        let aVC = UIActivityViewController(activityItems: [shareURL], applicationActivities: nil)
+        present(aVC, animated: true)
+    }
+
+    @objc private func cancelButtonTapped() {
+        delegate?.didPressCancelButton(self)
     }
     private func setupTableView() {
         view.addSubview(tableView)
@@ -76,7 +118,7 @@ class VotingViewController: UIViewController {
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
         ])
     }
-    private func setupSubmitButton() {
+    private func setupEndVoteButton() {
         view.addSubview(endVoteButton)
         NSLayoutConstraint.activate([
             endVoteButton.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 20),
@@ -87,6 +129,16 @@ class VotingViewController: UIViewController {
         ])
         endVoteButton.layer.cornerRadius = 10
         endVoteButton.layer.masksToBounds = true
+    }
+
+    private func setupCancelLabel() {
+        view.addSubview(cancelLabel)
+        NSLayoutConstraint.activate([
+            cancelLabel.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 20),
+            cancelLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            cancelLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            cancelLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20)
+        ])
     }
 
 }
@@ -115,7 +167,18 @@ extension VotingViewController {
         return button
     }
     @objc func endVoteButtonTapped() {
-        delegate?.votingViewController(self, didPressEndVoteButton: endVoteButton)
+        delegate?.didPressEndVoteButton(self)
+    }
+    private func makeLabel() -> UILabel {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
+        label.font = .medium2()
+        label.textColor = UIColor.darkGray
+        label.textAlignment = .center
+        label.alpha = 0.9
+        label.text = "此投票已取消"
+        return label
     }
 }
 

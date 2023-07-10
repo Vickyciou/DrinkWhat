@@ -86,10 +86,14 @@ class VoteNavigationController: UINavigationController {
 
         } else {
             if viewControllers.last is NotVotedViewController { return }
-            let shopListToVoteVC = NotVotedViewController(groupObject: groupObject)
-            shopListToVoteVC.setVoteResults(voteResults)
-            shopListToVoteVC.setShopObjects(shopObjects)
-            return pushViewController(shopListToVoteVC, animated: !viewControllers.isEmpty)
+            let notVotedVC = NotVotedViewController(
+                groupObject: groupObject,
+                isInitiator: groupObject.initiatorUserID == userObject.userID
+            )
+            notVotedVC.setVoteResults(voteResults)
+            notVotedVC.setShopObjects(shopObjects)
+            notVotedVC.delegate = self
+            return pushViewController(notVotedVC, animated: !viewControllers.isEmpty)
         }
     }
 
@@ -129,8 +133,14 @@ extension VoteNavigationController: ShopManagerDelegate {
     }
 }
 
+extension VoteNavigationController: NotVotedViewControllerDelegate {
+    func didPressCancelButton(_ vc: NotVotedViewController) {
+        cancelGroup(vc: vc)
+    }
+}
+
 extension VoteNavigationController: VotingViewControllerDelegate {
-    func votingViewController(_ vc: VotingViewController, didPressEndVoteButton button: UIButton) {
+    func didPressEndVoteButton(_ vc: VotingViewController) {
         guard let voteResult = voteResults.first,
             let userObject else { return }
         let winnerShopID = voteResult.shopID
@@ -142,7 +152,7 @@ extension VoteNavigationController: VotingViewControllerDelegate {
                 orderManager.createOrder(shopObject: shop,
                                          initiatorUserID: userObject.userID,
                                          initiatorUserName: userObject.userName ?? "Name").orderID
-                groupManager.setVoteStateToFinish(groupID: groupID)
+                groupManager.setVoteStatus(groupID: groupID, status: GroupStatus.finished.rawValue)
 
                 if let joinUserIDs = groupObject.flatMap { $0.joinUserIDs } {
                     try await joinUserIDs.asyncMap {
@@ -160,5 +170,25 @@ extension VoteNavigationController: VotingViewControllerDelegate {
                 present(alert, animated: true)
             }
         }
+    }
+    func didPressCancelButton(_ vc: VotingViewController) {
+        cancelGroup(vc: vc)
+    }
+}
+extension VoteNavigationController {
+    func cancelGroup(vc: UIViewController) {
+        let alert = UIAlertController(
+            title: "取消投票",
+            message: "確定要取消此投票群組嗎？",
+            preferredStyle: .alert
+        )
+        let confirmAction = UIAlertAction(title: "確定", style: .default) { [self]_ in
+            groupManager.setVoteStatus(groupID: groupID, status: GroupStatus.canceled.rawValue)
+            vc.dismiss(animated: true)
+        }
+        let cancelAction = UIAlertAction(title: "先不要", style: .cancel)
+        alert.addAction(confirmAction)
+        alert.addAction(cancelAction)
+        present(alert, animated: true)
     }
 }

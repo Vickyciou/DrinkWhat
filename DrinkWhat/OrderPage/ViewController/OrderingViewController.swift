@@ -75,11 +75,14 @@ class OrderingViewController: UIViewController {
         tabBarController?.tabBar.backgroundColor = .white
 
         let closeImage = UIImage(systemName: "xmark")?
-            .withConfiguration(UIImage.SymbolConfiguration(pointSize: 18))
+            .withConfiguration(UIImage.SymbolConfiguration(pointSize: 16))
             .setColor(color: .darkLogoBrown)
         let shareImage = UIImage(systemName: "square.and.arrow.up")?
-            .withConfiguration(UIImage.SymbolConfiguration(pointSize: 18))
+            .withConfiguration(UIImage.SymbolConfiguration(pointSize: 16))
             .setColor(color: .darkLogoBrown)
+        let trashImage = UIImage(systemName: "trash")?
+            .setColor(color: .darkLogoBrown)
+            .withConfiguration(UIImage.SymbolConfiguration(pointSize: 16))
         let closeButton = UIBarButtonItem(image: closeImage,
                                           style: .plain,
                                           target: self,
@@ -88,7 +91,20 @@ class OrderingViewController: UIViewController {
                                           style: .plain,
                                           target: self,
                                           action: #selector(shareButtonTapped))
+        let cancelButton = UIBarButtonItem(image: trashImage,
+                                           style: .plain,
+                                          target: self,
+                                          action: #selector(cancelButtonTapped))
+
         navigationItem.setRightBarButtonItems([closeButton, shareButton], animated: false)
+
+        if !isInitiator ||
+            orderResponse.state == OrderStatus.canceled.rawValue ||
+            orderResponse.state == OrderStatus.finished.rawValue {
+            navigationItem.leftBarButtonItem = nil
+        } else {
+            navigationItem.setLeftBarButton(cancelButton, animated: false)
+        }
     }
     @objc private func closeButtonTapped() {
         dismiss(animated: true)
@@ -98,7 +114,23 @@ class OrderingViewController: UIViewController {
         let shareURL = URL(string: "drinkWhat://share?orderID=\(orderID)")!
         let aVC = UIActivityViewController(activityItems: [shareURL], applicationActivities: nil)
         present(aVC, animated: true)
+    }
+    @objc func cancelButtonTapped() {
+        let alert = UIAlertController(
+            title: "取消團購",
+            message: "確定要取消此團購群組嗎？",
+            preferredStyle: .alert
+        )
+        let confirmAction = UIAlertAction(title: "確定", style: .default) { [self]_ in
+            orderManager.setOrderStatus(orderID: orderResponse.orderID,
+                                       status: OrderStatus.canceled.rawValue)
+            self.dismiss(animated: true)
+        }
+        let cancelAction = UIAlertAction(title: "先不要", style: .cancel)
+        alert.addAction(confirmAction)
+        alert.addAction(cancelAction)
 
+        present(alert, animated: true)
     }
 
     private func setupTableView() {
@@ -202,6 +234,9 @@ extension OrderingViewController: UITableViewDelegate {
         footView.setupView(price: totalPrice)
         return footView
     }
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        orderResponse.state == OrderStatus.active.rawValue ? true : false
+    }
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         let section = indexPath.section
@@ -209,20 +244,22 @@ extension OrderingViewController: UITableViewDelegate {
         let orderObject = order.orderObjects[indexPath.row]
 
         if editingStyle == .delete {
-            orderManager.removeOrderObject(userID: order.userID, orderID: orderResponse.orderID, orderObject: orderObject)
+            orderManager.removeOrderObject(userID: order.userID,
+                                           orderID: orderResponse.orderID,
+                                           orderObject: orderObject)
         }
         orderResults[section].orderObjects.remove(at: indexPath.row)
         tableView.deleteRows(at: [indexPath], with: .fade)
     }
 }
 extension OrderingViewController: InitiatorOrderingBottomViewDelegate {
-    func cancelButtonTapped(_ view: InitiatorOrderingBottomView) {
-        orderManager.setOrderState(orderID: orderResponse.orderID,
-                                   status: OrderStatus.canceled.rawValue)
+    func addItemButtonTapped(_ view: InitiatorOrderingBottomView) {
+        let shopMenuVC = ShopMenuViewController(shopObject: orderResponse.shopObject)
+        present(shopMenuVC, animated: true)
     }
 
     func finishButtonTapped(_ view: InitiatorOrderingBottomView) {
-        orderManager.setOrderState(orderID: orderResponse.orderID,
+        orderManager.setOrderStatus(orderID: orderResponse.orderID,
                                    status: OrderStatus.finished.rawValue)
     }
 }
@@ -260,10 +297,7 @@ extension OrderingViewController: OrderSectionHeaderViewDelegate {
         alert.addAction(confirmAction)
         alert.addAction(cancelAction)
         present(alert, animated: true)
-
     }
-
-
 }
 
 extension OrderingViewController: OrderTableViewFooterDelegate {

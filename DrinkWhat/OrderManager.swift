@@ -135,7 +135,7 @@ class OrderManager {
     }
 
     // MARK: - Closed or cancel order group
-    func setOrderState(orderID: String, status: String) {
+    func setOrderStatus(orderID: String, status: String) {
         orderDocument(orderID: orderID).updateData(["state": status])
     }
 
