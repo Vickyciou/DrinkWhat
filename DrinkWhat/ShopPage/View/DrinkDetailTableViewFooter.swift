@@ -55,7 +55,7 @@ extension DrinkDetailTableViewFooter {
         textField.textColor = .darkLogoBrown
         textField.borderStyle = .roundedRect
         textField.layer.borderColor = UIColor.darkLogoBrown.cgColor
-        textField.font = .regular4()
+        textField.font = .regular3()
         return textField
     }
 

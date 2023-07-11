@@ -20,6 +20,7 @@ class NotVotedViewController: UIViewController {
     private var newVoteResults: [(voteResult: VoteResult, isSelected: Bool)] = []
     private let groupManager = GroupManager()
     private let userObject = UserManager.shared.userObject
+    private lazy var cancelLabel: UILabel = makeLabel()
     weak var delegate: NotVotedViewControllerDelegate?
 
     init(groupObject: GroupResponse, isInitiator: Bool) {
@@ -41,6 +42,10 @@ class NotVotedViewController: UIViewController {
         setNavController()
         setupTableView()
         setupSubmitButton()
+        if groupObject.state == GroupStatus.canceled.rawValue {
+            submitButton.isHidden = true
+            setupCancelLabel()
+        }
     }
     private func setNavController() {
         let appearance = UINavigationBarAppearance()
@@ -123,6 +128,16 @@ class NotVotedViewController: UIViewController {
         submitButton.layer.masksToBounds = true
     }
 
+    private func setupCancelLabel() {
+        view.addSubview(cancelLabel)
+        NSLayoutConstraint.activate([
+            cancelLabel.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 20),
+            cancelLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            cancelLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            cancelLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20)
+        ])
+    }
+
 }
 extension NotVotedViewController {
     private func makeTableView() -> UITableView {
@@ -156,6 +171,18 @@ extension NotVotedViewController {
             shopID: selectedShop.voteResult.shopID,
             userID: userObject.userID
         )
+    }
+
+    private func makeLabel() -> UILabel {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
+        label.font = .medium3()
+        label.textColor = UIColor.darkGray
+        label.textAlignment = .center
+        label.alpha = 0.9
+        label.text = "此投票已取消"
+        return label
     }
 }
 

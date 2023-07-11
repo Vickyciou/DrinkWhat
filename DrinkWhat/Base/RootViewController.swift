@@ -63,7 +63,9 @@ class RootViewController: UIViewController {
                 }
             case (false, _):
                 try await UserManager.shared.loadCurrentUser()
-                return TabBarViewController()
+                let tabBarVC = TabBarViewController()
+                tabBarVC.tabBardelegate = self
+                return tabBarVC
             }
         }()
         displayViewControllerAsMain(myVC)

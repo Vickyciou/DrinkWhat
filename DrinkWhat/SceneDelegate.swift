@@ -21,7 +21,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //            return
 //        }
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        let rootViewController = RootViewController()
+
+        let rootViewController = {
+            if let urlContext = connectionOptions.urlContexts.first {
+                let rootViewController = RootViewController(url: urlContext.url)
+                return rootViewController
+            } else {
+                let rootViewController = RootViewController()
+                return rootViewController
+            }
+        }()
         window = UIWindow(windowScene: windowScene)
         window?.rootViewController = rootViewController
         window?.makeKeyAndVisible()

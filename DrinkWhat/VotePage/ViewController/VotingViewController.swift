@@ -173,7 +173,7 @@ extension VotingViewController {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
-        label.font = .medium2()
+        label.font = .medium3()
         label.textColor = UIColor.darkGray
         label.textAlignment = .center
         label.alpha = 0.9
