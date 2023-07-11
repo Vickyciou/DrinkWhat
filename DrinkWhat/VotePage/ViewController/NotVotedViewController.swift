@@ -212,21 +212,18 @@ extension NotVotedViewController: UITableViewDataSource {
 extension NotVotedViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete, let userObject {
-            guard groupObject.initiatorUserID == userObject.userID else {
-                let alert = UIAlertController(
-                    title: "移除店家失敗",
-                    message: "只有發起人可以移除店家哦！",
-                    preferredStyle: .alert
-                )
-                let okAction = UIAlertAction(title: "OK", style: .default)
-                alert.addAction(okAction)
-                present(alert, animated: true)
-                return
-            }
             groupManager.removeShopFromGroup(groupID: groupObject.groupID,
                                              shopID: shopObjects[indexPath.row].id)
             newVoteResults.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
+        }
+    }
+
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        if let userObject, groupObject.initiatorUserID == userObject.userID {
+            return true
+        } else {
+            return false
         }
     }
 
