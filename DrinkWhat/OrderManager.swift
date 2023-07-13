@@ -62,7 +62,7 @@ class OrderManager {
                 initiatorUserID: initiatorUserID,
                 initiatorUserName: initiatorUserName,
                 shopObject: shopObject,
-                joinUserIDs: []
+                joinUserIDs: [initiatorUserID]
             )
             try orderDocument(orderID: orderID).setData(from: order)
             return order

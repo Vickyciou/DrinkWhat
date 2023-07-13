@@ -27,6 +27,7 @@ class OrderNavigationController: UINavigationController {
     private let orderManager = OrderManager()
     private let userManager = UserManager()
     weak var orderNavDelegate: OrderNavigationControllerDelegate?
+    private let queue = DispatchQueue(label: "123")
     private var orderResponse: OrderResponse {
         didSet {
             viewControllers.forEach {
@@ -95,16 +96,22 @@ extension OrderNavigationController: OrderManagerDelegate {
     func orderManager(_ manager: OrderManager, didGetAllOrderData orderData: [OrderResponse]) {
         if let orderResponse = orderData.first { $0.orderID == self.orderResponse.orderID } {
             self.orderResponse = orderResponse
+            var joinUsers = orderResponse.joinUserIDs
+            Task {
+                try await joinUsers
+                    .asyncMap(userManager.getUserData)
+            }
+
         }
     }
 
     func orderManager (_ manager: OrderManager, didGetOrderResults orderResults: [OrderResults]) {
         self.orderResults = orderResults
-        Task {
-            try await orderResults
-                .map { $0.userID }
-                .asyncMap(userManager.getUserData)
-        }
+//        Task {
+//            try await orderResults
+//                .map { $0.userID }
+//                .asyncMap(userManager.getUserData)
+//        }
     }
 
     func orderManager(_ manager: OrderManager, didFailWith error: Error) {
@@ -114,14 +121,10 @@ extension OrderNavigationController: OrderManagerDelegate {
 
 extension OrderNavigationController: UserManagerDelegate {
     func userManager(_ manager: UserManager, didGet userObject: UserObject) {
-        self.joinUserObjects.append(userObject)
-//
-//        if let myUserObject = self.userObject {
-//            decideVC(orderResponse: orderResponse,
-//                     joinUserObject: joinUserObjects,
-//                     userObject: myUserObject,
-//                     orderResults: orderResults)
-//        }
+
+        queue.async {
+            self.joinUserObjects.append(userObject)
+        }
     }
 }
 

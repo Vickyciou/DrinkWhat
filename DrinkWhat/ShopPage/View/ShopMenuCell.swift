@@ -54,23 +54,6 @@ extension ShopMenuCell {
         imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.cornerRadius = 10
-//        if let originalImage = UIImage(named: "mug4") {
-//            // 設置內邊距
-//            let padding: CGFloat = 2
-//            let paddedRect = CGRect(x: padding, y: padding, width: originalImage.size.width + 2 * padding, height: originalImage.size.height + 2 * padding)
-//
-//            // 創建帶有內邊距的圖像
-//            UIGraphicsBeginImageContextWithOptions(paddedRect.size, false, originalImage.scale)
-//            originalImage.draw(in: paddedRect)
-//            let paddedImage = UIGraphicsGetImageFromCurrentImageContext()
-//            UIGraphicsEndImageContext()
-//
-//            let resizedImage = paddedImage?.resizeImage(paddedImage!, targetSize: CGSize(width: 24, height: 24))
-//            let finalImage = resizedImage?.setColor(color: .darkLogoBrown)
-//
-//            imageView.image = finalImage
-//        }
-
         imageView.image = UIImage(named: "DrinkWhat-icon無字版")
         return imageView
     }

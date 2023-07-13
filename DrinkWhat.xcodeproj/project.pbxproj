@@ -26,6 +26,7 @@
 		FA71795C2A3C0B91002C407C /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA71795B2A3C0B91002C407C /* UIColor+Extension.swift */; };
 		FA71795E2A3C13BB002C407C /* NotVotedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA71795D2A3C13BB002C407C /* NotVotedViewController.swift */; };
 		FA7179602A3C141A002C407C /* NotVotedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA71795F2A3C1419002C407C /* NotVotedCell.swift */; };
+		FA77B7642A5EA6B2006D124B /* LaunchScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA77B7632A5EA6B2006D124B /* LaunchScreenViewController.swift */; };
 		FA7CC6082A41ACC4009B599F /* GroupManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7CC6072A41ACC4009B599F /* GroupManager.swift */; };
 		FA7CC60B2A41B65D009B599F /* GroupResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7CC60A2A41B65D009B599F /* GroupResponse.swift */; };
 		FA7CC60D2A42DDE6009B599F /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7CC60C2A42DDE6009B599F /* UserManager.swift */; };
@@ -96,6 +97,7 @@
 		FA71795B2A3C0B91002C407C /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		FA71795D2A3C13BB002C407C /* NotVotedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotVotedViewController.swift; sourceTree = "<group>"; };
 		FA71795F2A3C1419002C407C /* NotVotedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotVotedCell.swift; sourceTree = "<group>"; };
+		FA77B7632A5EA6B2006D124B /* LaunchScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenViewController.swift; sourceTree = "<group>"; };
 		FA7CC6072A41ACC4009B599F /* GroupManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupManager.swift; sourceTree = "<group>"; };
 		FA7CC60A2A41B65D009B599F /* GroupResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupResponse.swift; sourceTree = "<group>"; };
 		FA7CC60C2A42DDE6009B599F /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
@@ -245,6 +247,7 @@
 				FAF16F332A53F2EF002590D9 /* LoginSheetViewController.swift */,
 				FA7179492A3AB994002C407C /* TabBarViewController.swift */,
 				FAF2AE162A4A8F8400F27B64 /* RootViewController.swift */,
+				FA77B7632A5EA6B2006D124B /* LaunchScreenViewController.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -402,6 +405,7 @@
 				FA71792D2A3A9DF7002C407C /* Resources */,
 				FA7179462A3AA7EA002C407C /* ShellScript */,
 				C02D72AF8DAB8CEEF86F6476 /* [CP] Embed Pods Frameworks */,
+				FA77B7622A5E9E7B006D124B /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -520,6 +524,25 @@
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n${PODS_ROOT}/SwiftLint/swiftlint\n";
 		};
+		FA77B7622A5E9E7B006D124B /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
+				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -585,6 +608,7 @@
 				FA7179522A3ABC99002C407C /* OrderViewController.swift in Sources */,
 				FA9232242A498F1E00F045C6 /* AuthManager.swift in Sources */,
 				FA6C33252A4851FC005CC96E /* URL+Extension.swift in Sources */,
+				FA77B7642A5EA6B2006D124B /* LaunchScreenViewController.swift in Sources */,
 				FAE757C72A3FF40E003245EC /* LoginViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -726,6 +750,7 @@
 				CODE_SIGN_ENTITLEMENTS = DrinkWhat/DrinkWhat.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = NNHJ7Y69AL;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DrinkWhat/Info.plist;

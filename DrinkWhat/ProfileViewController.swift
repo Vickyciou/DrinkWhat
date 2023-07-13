@@ -30,7 +30,18 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupVC()
+        let button = UIButton(type: .roundedRect)
+              button.frame = CGRect(x: 20, y: 100, width: 100, height: 30)
+              button.setTitle("Test Crash", for: [])
+              button.addTarget(self, action: #selector(self.crashButtonTapped(_:)), for: .touchUpInside)
+
+              view.addSubview(button)
     }
+
+    @IBAction func crashButtonTapped(_ sender: AnyObject) {
+         let numbers = [0]
+         let _ = numbers[1]
+     }
 
     private func setupVC() {
         view.backgroundColor = .white
@@ -53,7 +64,6 @@ class ProfileViewController: UIViewController {
     private func setupLogOUtButton() {
         let contents = [nameLabel, emailLabel, imageView, cameraButton, logOutButton, deleteButton]
         contents.forEach { view.addSubview($0)}
-//        imageView.addSubview(cameraButton)
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 80),
             imageView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
