@@ -120,7 +120,7 @@ extension VoteNavigationController: GroupManagerDelegate {
         let sortedVoteResults = voteResults.sorted(by: {$0.userIDs.count > $1.userIDs.count})
         self.voteResults = sortedVoteResults
         let shopIDs = voteResults.map { $0.shopID }
-        shopManager.getShopObjects(shopIDs)
+        shopManager.getShopObjects2(shopIDs)
     }
 }
 

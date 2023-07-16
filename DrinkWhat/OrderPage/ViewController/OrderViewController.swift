@@ -41,7 +41,7 @@ class OrderViewController: UIViewController {
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
         navigationItem.hidesBackButton = true
         navigationItem.title = "團購首頁"
-//        tabBarController?.tabBar.backgroundColor = .white
+        tabBarController?.tabBar.backgroundColor = .white
     }
 
     private func setupTableView() {
@@ -143,6 +143,26 @@ extension OrderViewController: UITableViewDelegate {
         default:
             return ""
         }
+    }
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        let orderResponse = orderResponses[indexPath.row]
+        guard let userObject else { return false }
+
+        if orderResponse.initiatorUserID == userObject.userID {
+            return true
+        } else {
+            return false
+        }
+    }
+
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        let orderResponse = orderResponses[indexPath.row]
+
+        if editingStyle == .delete {
+            orderManager.removeOrder(orderID: orderResponse.orderID)
+        }
+        orderResponses.remove(at: indexPath.row)
+        tableView.deleteRows(at: [indexPath], with: .fade)
     }
 }
 extension OrderViewController: OrderNavigationControllerDelegate {

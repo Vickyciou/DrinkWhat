@@ -27,8 +27,8 @@ class DrinkDetailCell: UITableViewCell {
             addPriceLabel.trailingAnchor.constraint(equalTo: descriptionLabel.trailingAnchor),
             chooseButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             chooseButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            chooseButton.heightAnchor.constraint(equalToConstant: 30),
-            chooseButton.widthAnchor.constraint(equalToConstant: 30)
+            chooseButton.heightAnchor.constraint(equalToConstant: 25),
+            chooseButton.widthAnchor.constraint(equalToConstant: 25)
         ])
     }
     func setupCell(description: String, isSelected: Bool) {

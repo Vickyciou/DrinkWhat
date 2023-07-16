@@ -16,12 +16,13 @@ class JoinUsersBottomView: UIView {
     private lazy var borderView: UIView = makeBorderView()
     private lazy var linePayButton: UIButton = makeLinePayButton()
     private lazy var addItemButton: UIButton = makeAddItemButton()
+    private lazy var endLabel: UILabel = makeLabel()
     weak var delegate: JoinUsersBottomViewDelegate?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        let contents = [borderView, linePayButton, addItemButton]
+        let contents = [borderView, linePayButton, addItemButton, endLabel]
         contents.forEach { addSubview($0) }
         NSLayoutConstraint.activate([
             borderView.topAnchor.constraint(equalTo: topAnchor),
@@ -36,8 +37,15 @@ class JoinUsersBottomView: UIView {
             addItemButton.centerXAnchor.constraint(equalTo: linePayButton.centerXAnchor),
             addItemButton.widthAnchor.constraint(equalTo: linePayButton.widthAnchor),
             addItemButton.heightAnchor.constraint(equalTo: linePayButton.heightAnchor),
-            addItemButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -4)
+            addItemButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -4),
+//            endLabel.topAnchor.constraint(equalTo: linePayButton.bottomAnchor, constant: 16),
+            endLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            endLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12)
         ])
+    }
+    func updateView(isFinished: Bool) {
+        addItemButton.isHidden = isFinished
+        endLabel.isHidden = !isFinished
     }
 
     required init?(coder: NSCoder) {
@@ -90,5 +98,16 @@ extension JoinUsersBottomView {
     }
     @objc func addItemButtonTapped() {
         delegate?.addItemButtonTapped(self)
+    }
+
+    private func makeLabel() -> UILabel {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
+        label.font = .medium3()
+        label.textColor = UIColor.darkGray
+        label.alpha = 0.9
+        label.text = "此團購已結束"
+        return label
     }
 }

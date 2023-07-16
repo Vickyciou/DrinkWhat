@@ -14,10 +14,14 @@ protocol OrderingViewControllerDelegate: AnyObject {
 class OrderingViewController: UIViewController {
 
     enum BottomViewUIState {
-        case isInitialUser
-        case isJoinUser
-        case isFinished
+//        case isInitiator
+//        case isFinished
+        case initialUser
+        case initialUserFinished
+        case joinUser
+        case joinUserFinished
     }
+
     private lazy var tableView: UITableView = makeTableView()
     private let orderManager = OrderManager()
     private var orderResponse: OrderResponse
@@ -27,17 +31,23 @@ class OrderingViewController: UIViewController {
     }
     private var joinUserObjects: [UserObject] = []
     private var isInitiator: Bool
+    private var isFinished: Bool {
+        orderResponse.state == OrderStatus.canceled.rawValue
+            || orderResponse.state == OrderStatus.finished.rawValue
+        ? true : false
+    }
     weak var delegate: OrderingViewControllerDelegate?
     private let footerView = OrderTableViewFooter(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
     private let headerView = OrderTableViewHeader(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
     private var state: BottomViewUIState {
-        if orderResponse.state == OrderStatus.canceled.rawValue
-            || orderResponse.state == OrderStatus.finished.rawValue {
-            return .isFinished
-        } else if isInitiator {
-            return .isInitialUser
+        if isInitiator && isFinished {
+            return BottomViewUIState.initialUserFinished
+        } else if isInitiator && isFinished == false {
+            return BottomViewUIState.initialUser
+        } else if isInitiator == false && isFinished {
+            return BottomViewUIState.joinUserFinished
         } else {
-            return .isJoinUser
+            return BottomViewUIState.joinUser
         }
     }
 
@@ -60,6 +70,7 @@ class OrderingViewController: UIViewController {
         view.backgroundColor = .white
         setNavController()
         setupTableView()
+        setupStateUI()
         setupBottomView(state: state)
     }
 
@@ -80,9 +91,7 @@ class OrderingViewController: UIViewController {
         let shareImage = UIImage(systemName: "square.and.arrow.up")?
             .withConfiguration(UIImage.SymbolConfiguration(pointSize: 16))
             .setColor(color: .darkLogoBrown)
-        let trashImage = UIImage(systemName: "trash")?
-            .setColor(color: .darkLogoBrown)
-            .withConfiguration(UIImage.SymbolConfiguration(pointSize: 16))
+
         let closeButton = UIBarButtonItem(image: closeImage,
                                           style: .plain,
                                           target: self,
@@ -91,20 +100,17 @@ class OrderingViewController: UIViewController {
                                           style: .plain,
                                           target: self,
                                           action: #selector(shareButtonTapped))
-        let cancelButton = UIBarButtonItem(image: trashImage,
-                                           style: .plain,
-                                          target: self,
-                                          action: #selector(cancelButtonTapped))
+
 
         navigationItem.setRightBarButtonItems([closeButton, shareButton], animated: false)
 
-        if !isInitiator ||
-            orderResponse.state == OrderStatus.canceled.rawValue ||
-            orderResponse.state == OrderStatus.finished.rawValue {
-            navigationItem.leftBarButtonItem = nil
-        } else {
-            navigationItem.setLeftBarButton(cancelButton, animated: false)
-        }
+//        if !isInitiator ||
+//            orderResponse.state == OrderStatus.canceled.rawValue ||
+//            orderResponse.state == OrderStatus.finished.rawValue {
+//            navigationItem.leftBarButtonItem = nil
+//        } else {
+//            navigationItem.setLeftBarButton(cancelButton, animated: false)
+//        }
     }
     @objc private func closeButtonTapped() {
         dismiss(animated: true)
@@ -145,21 +151,55 @@ class OrderingViewController: UIViewController {
         tableView.tableFooterView = footerView
     }
 
+    private func setupStateUI() {
+        switch state {
+        case .initialUser:
+            let trashImage = UIImage(systemName: "trash")?
+                .setColor(color: .darkLogoBrown)
+                .withConfiguration(UIImage.SymbolConfiguration(pointSize: 16))
+            let cancelButton = UIBarButtonItem(image: trashImage,
+                                               style: .plain,
+                                               target: self,
+                                               action: #selector(cancelButtonTapped))
+            navigationItem.setLeftBarButton(cancelButton, animated: false)
+        case .joinUser, .initialUserFinished, .joinUserFinished:
+            navigationItem.leftBarButtonItem = nil
+        }
+    }
+
     private func setupBottomView(state: BottomViewUIState) {
-        let bottomView: UIView = {
+        var bottomView: UIView = {
             switch state {
-            case .isFinished:
-                let view = OrderFinishedBottomView(frame: .zero)
-                return view
-            case .isInitialUser:
+            case .initialUser:
                 let view = InitiatorOrderingBottomView(frame: .zero)
+                let trashImage = UIImage(systemName: "trash")?
+                    .setColor(color: .darkLogoBrown)
+                    .withConfiguration(UIImage.SymbolConfiguration(pointSize: 16))
+                let cancelButton = UIBarButtonItem(image: trashImage,
+                                                   style: .plain,
+                                                  target: self,
+                                                  action: #selector(cancelButtonTapped))
+                navigationItem.setLeftBarButton(cancelButton, animated: false)
                 view.delegate = self
                 return view
-            case .isJoinUser:
+            case .joinUser:
                 let view = JoinUsersBottomView(frame: .zero)
+                view.updateView(isFinished: false)
                 view.delegate = self
+                navigationItem.leftBarButtonItem = nil
+                return view
+            case .initialUserFinished:
+                let view = OrderFinishedBottomView(frame: .zero)
+                navigationItem.leftBarButtonItem = nil
+                return view
+            case .joinUserFinished:
+                let view = JoinUsersBottomView(frame: .zero)
+                view.updateView(isFinished: true)
+                view.delegate = self
+                navigationItem.leftBarButtonItem = nil
                 return view
             }
+
         }()
         view.addSubview(bottomView)
         bottomView.translatesAutoresizingMaskIntoConstraints = false
@@ -234,6 +274,7 @@ extension OrderingViewController: UITableViewDelegate {
         footView.setupView(price: totalPrice)
         return footView
     }
+
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         orderResponse.state == OrderStatus.active.rawValue ? true : false
     }
@@ -290,10 +331,14 @@ extension OrderingViewController: OrderSectionHeaderViewDelegate {
         )
         let confirmAction = UIAlertAction(title: "是的", style: .default) { [self]_ in
             let user = orderResults[indexOfSection].userID
-            orderManager.updatePaidStatus(orderID: orderResponse.orderID,
+            orderManager.updatePaidStatusToTrue(orderID: orderResponse.orderID,
                                           userID: user)
         }
-        let cancelAction = UIAlertAction(title: "還沒", style: .cancel)
+        let cancelAction = UIAlertAction(title: "還沒", style: .cancel) { [self]_ in
+            let user = orderResults[indexOfSection].userID
+            orderManager.updatePaidStatusToFalse(orderID: orderResponse.orderID,
+                                          userID: user)
+        }
         alert.addAction(confirmAction)
         alert.addAction(cancelAction)
         present(alert, animated: true)
@@ -338,7 +383,8 @@ extension OrderingViewController: OrderResultsAccessible {
 
         let orderObject = orderResults.map { $0.orderObjects }
         let amount = orderObject.flatMap { $0 }.reduce(0, { $0 + $1.drinkPrice })
-        footerView.setupView(amount: amount, isInitiator: isInitiator)
+        let isJoinUserAndOrderActive = isInitiator == false && isFinished == false
+        footerView.setupView(amount: amount, exitButtonIsHidden: !isJoinUserAndOrderActive)
     }
 }
 extension OrderingViewController: OrderResponseAccessible {

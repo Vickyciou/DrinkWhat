@@ -55,4 +55,23 @@ class UserManager {
     func deleteUser() {
         
     }
+
+    func getUsers(_ userIDs: [String]) async throws -> [UserObject] {
+        let query = try await userCollection.whereField("userID", in: userIDs).getDocuments()
+        var userObjects: [UserObject] = []
+        var errors: [Error] = []
+        for document in query.documents {
+            do {
+                let userObject = try document.data(as: UserObject.self)
+                userObjects.append(userObject)
+            } catch let error {
+                errors.append(error)
+            }
+        }
+        if let firstError = errors.first {
+            throw firstError
+        } else {
+            return userObjects
+        }
+    }
 }

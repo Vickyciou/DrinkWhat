@@ -30,18 +30,7 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupVC()
-        let button = UIButton(type: .roundedRect)
-              button.frame = CGRect(x: 20, y: 100, width: 100, height: 30)
-              button.setTitle("Test Crash", for: [])
-              button.addTarget(self, action: #selector(self.crashButtonTapped(_:)), for: .touchUpInside)
-
-              view.addSubview(button)
     }
-
-    @IBAction func crashButtonTapped(_ sender: AnyObject) {
-         let numbers = [0]
-         let _ = numbers[1]
-     }
 
     private func setupVC() {
         view.backgroundColor = .white
@@ -192,7 +181,7 @@ extension ProfileViewController {
         )
         let okAction = UIAlertAction(title: "確定", style: .default) { _ in
             Task {
-                try await AuthManager.shared.delete()
+//                try await AuthManager.shared.delete()
                 self.delegate?.profileViewControllerDidPressLogOut(self)
             }
         }

@@ -27,7 +27,6 @@ class OrderNavigationController: UINavigationController {
     private let orderManager = OrderManager()
     private let userManager = UserManager()
     weak var orderNavDelegate: OrderNavigationControllerDelegate?
-    private let queue = DispatchQueue(label: "123")
     private var orderResponse: OrderResponse {
         didSet {
             viewControllers.forEach {
@@ -44,17 +43,6 @@ class OrderNavigationController: UINavigationController {
             }
         }
     }
-    private var joinUserObjects: [UserObject] = [] {
-        didSet {
-            DispatchQueue.main.async {
-
-                self.viewControllers.forEach {
-                    let userObjectsAccessible = $0 as? UserObjectsAccessible
-                    userObjectsAccessible?.setUserObjects(self.joinUserObjects)
-                }
-            }
-        }
-    }
     private let userObject = UserManager.shared.userObject
 
     init(orderResponse: OrderResponse) {
@@ -64,7 +52,6 @@ class OrderNavigationController: UINavigationController {
             isInitiator: orderResponse.initiatorUserID == userObject?.userID
         )
         orderingVC.setOrderResults(orderResults)
-        orderingVC.setUserObjects(joinUserObjects)
         orderingVC.setOrderResponse(orderResponse)
         super.init(rootViewController: orderingVC)
         orderingVC.delegate = self
@@ -79,7 +66,6 @@ class OrderNavigationController: UINavigationController {
         view.backgroundColor = .white
         navigationItem.hidesBackButton = true
         orderManager.delegate = self
-        userManager.delegate = self
         orderManager.listenOrderResults(orderID: orderResponse.orderID)
         if let userObject {
             orderManager.listenOrderResponse(userID: userObject.userID)
@@ -96,35 +82,23 @@ extension OrderNavigationController: OrderManagerDelegate {
     func orderManager(_ manager: OrderManager, didGetAllOrderData orderData: [OrderResponse]) {
         if let orderResponse = orderData.first { $0.orderID == self.orderResponse.orderID } {
             self.orderResponse = orderResponse
-            var joinUsers = orderResponse.joinUserIDs
+            let joinUsers = orderResponse.joinUserIDs
             Task {
-                try await joinUsers
-                    .asyncMap(userManager.getUserData)
+                let users = try await userManager.getUsers(joinUsers)
+                self.viewControllers.forEach {
+                    let userObjectsAccessible = $0 as? UserObjectsAccessible
+                    userObjectsAccessible?.setUserObjects(users)
+                }
             }
-
         }
     }
 
     func orderManager (_ manager: OrderManager, didGetOrderResults orderResults: [OrderResults]) {
         self.orderResults = orderResults
-//        Task {
-//            try await orderResults
-//                .map { $0.userID }
-//                .asyncMap(userManager.getUserData)
-//        }
     }
 
     func orderManager(_ manager: OrderManager, didFailWith error: Error) {
         print(error.localizedDescription)
-    }
-}
-
-extension OrderNavigationController: UserManagerDelegate {
-    func userManager(_ manager: UserManager, didGet userObject: UserObject) {
-
-        queue.async {
-            self.joinUserObjects.append(userObject)
-        }
     }
 }
 

@@ -49,7 +49,22 @@ final class AuthManager {
         try Auth.auth().signOut()
     }
 
-    func delete() async throws {
+    func delete(credential: Data, authCodeString: String) async throws {
+//        try await Auth.auth().revokeToken(withAuthorizationCode: authCodeString)
+
+        Auth.auth().currentUser.reauthenticate(with: credential) { (authResult, error) in
+          guard error != nil else { return }
+            Task {
+                do {
+                  try await Auth.auth().revokeToken(withAuthorizationCode: authCodeString)
+                    try await user.delete()
+                  self.updateUI()
+                } catch {
+                  self.displayError(error)
+                }
+              }
+        }
+
         guard let user = Auth.auth().currentUser else {
             throw URLError(.badURL)
         }

@@ -40,7 +40,7 @@ class TabBarViewController: UITabBarController, UIViewControllerTransitioningDel
         delegate = self
 
         let appearance = UITabBarAppearance()
-        appearance.backgroundColor = UIColor.logoBrown
+        appearance.backgroundColor = .white
         tabBarController?.tabBar.standardAppearance = appearance
         tabBarController?.tabBar.scrollEdgeAppearance = appearance
     }

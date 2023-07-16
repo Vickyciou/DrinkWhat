@@ -68,6 +68,10 @@ class OrderManager {
             return order
         }
     }
+    // MARK: - remove order
+    func removeOrder(orderID: String) {
+        orderDocument(orderID: orderID).delete()
+    }
 
     // MARK: - Add order results
     func addOrderResult(userID: String, orderObject: OrderObject, shopID: String) async throws {
@@ -149,8 +153,12 @@ class OrderManager {
         }
     }
     // MARK: - update user paid status
-    func updatePaidStatus(orderID: String, userID: String) {
+    func updatePaidStatusToTrue(orderID: String, userID: String) {
         orderObjectsDocument(orderID: orderID, userID: userID).updateData(["isPaid": true])
+    }
+
+    func updatePaidStatusToFalse(orderID: String, userID: String) {
+        orderObjectsDocument(orderID: orderID, userID: userID).updateData(["isPaid": false])
     }
 
     // MARK: - Load order page

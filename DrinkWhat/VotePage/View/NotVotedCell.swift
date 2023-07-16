@@ -44,17 +44,17 @@ class NotVotedCell: UITableViewCell {
             shopImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             shopNameLabel.topAnchor.constraint(equalTo: shopImageView.topAnchor, constant: 4),
             shopNameLabel.leadingAnchor.constraint(equalTo: shopImageView.trailingAnchor, constant: 8),
-            shopNameLabel.trailingAnchor.constraint(equalTo: numberOfVotesLabel.leadingAnchor, constant: -8),
+            shopNameLabel.trailingAnchor.constraint(equalTo: numberOfVotesLabel.leadingAnchor, constant: -2),
             viewMenuButton.bottomAnchor.constraint(equalTo: shopImageView.bottomAnchor, constant: 2),
             viewMenuButton.leadingAnchor.constraint(equalTo: shopNameLabel.leadingAnchor),
             numberOfVotesLabel.centerYAnchor.constraint(equalTo: shopImageView.centerYAnchor),
-            numberOfVotesLabel.trailingAnchor.constraint(equalTo: chooseButton.leadingAnchor, constant: -4),
+            numberOfVotesLabel.trailingAnchor.constraint(equalTo: chooseButton.leadingAnchor, constant: -2),
             numberOfVotesLabel.widthAnchor.constraint(equalToConstant: 45),
             numberOfVotesLabel.heightAnchor.constraint(equalToConstant: 25),
             chooseButton.centerYAnchor.constraint(equalTo: shopImageView.centerYAnchor),
             chooseButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            chooseButton.heightAnchor.constraint(equalToConstant: 40),
-            chooseButton.widthAnchor.constraint(equalToConstant: 40)
+            chooseButton.heightAnchor.constraint(equalToConstant: 25),
+            chooseButton.widthAnchor.constraint(equalToConstant: 25)
         ])
     }
     func setupVoteCell(number: String, shopImageURL: String?, shopName: String, numberOfVote: Int?) {

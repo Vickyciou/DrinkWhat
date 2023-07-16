@@ -43,7 +43,7 @@ class OrderSectionHeaderView: UIView {
         userImageView.loadImage(userImageURL,
                                 placeHolder: UIImage(systemName: "person.circle.fill")?.setColor(color: .darkLogoBrown))
         userNameLabel.text = userName
-        paidStatusButton.isEnabled = !isPaid
+        paidStatusButton.isSelected = isPaid
         self.indexOfSection = indexOfSection
 
     }
@@ -71,17 +71,17 @@ extension OrderSectionHeaderView {
     private func makePaidStatusButton() -> UIButton {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitleColor(UIColor.middleBrown, for: .disabled)
+        button.setTitleColor(UIColor.middleBrown, for: .selected)
         button.setTitleColor(UIColor.darkLogoBrown, for: .normal)
         button.titleLabel?.font = .medium4()
         let selectedBackground = UIColor.lightGrayBrown.toImage()
         let normalBackground = UIColor.white.toImage()
-        button.setBackgroundImage(selectedBackground, for: .disabled)
+        button.setBackgroundImage(selectedBackground, for: .selected)
         button.setBackgroundImage(normalBackground, for: .normal)
         button.layer.borderColor = UIColor.lightGrayBrown.cgColor
         button.layer.borderWidth = 1
         button.setTitle("未付款", for: .normal)
-        button.setTitle("已付款", for: .disabled)
+        button.setTitle("已付款", for: .selected)
         button.layer.cornerRadius = 5
         button.layer.masksToBounds = true
         button.addTarget(self, action: #selector(paidStatusButtonTapped(_:)), for: .touchUpInside)

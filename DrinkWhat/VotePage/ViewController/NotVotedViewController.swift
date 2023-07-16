@@ -211,7 +211,7 @@ extension NotVotedViewController: UITableViewDataSource {
 
 extension NotVotedViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete, let userObject {
+        if editingStyle == .delete {
             groupManager.removeShopFromGroup(groupID: groupObject.groupID,
                                              shopID: shopObjects[indexPath.row].id)
             newVoteResults.remove(at: indexPath.row)
@@ -244,13 +244,6 @@ extension NotVotedViewController: NotVotedCellDelegate {
             present(shopMenuVC, animated: true)
         }
     }
-
-//    func didSelectedChooseButton(_ cell: NotVotedCell, button: UIButton) {
-//        guard let indexPath = tableView.indexPath(for: cell) else { return }
-//        newVoteResults.indices.forEach { newVoteResults[$0].isSelected = false }
-//        newVoteResults[indexPath.row].isSelected = true
-//        tableView.reloadData()
-//    }
 }
 
 extension NotVotedViewController: VoteResultsAccessible {
