@@ -21,6 +21,7 @@ class LoginViewController: UIViewController {
     private lazy var signInWithAppleButton = ASAuthorizationAppleIDButton(type: .signIn, style: .black)
     private lazy var skipButton: UIButton = makeSkipButton()
     private var currentNonce: String?
+    private let userManager = UserManager()
     weak var delegate: LoginViewControllerDelegate?
 
     init() {
@@ -65,7 +66,7 @@ class LoginViewController: UIViewController {
             do {
                 let helper = SignInWithAppleHelper(viewController: self)
                 let tokens = try await helper.startSignInWithAppleFlow()
-                let authDataResult = try await AuthManager.shared.signInWithApple(tokens: tokens)
+                let authDataResult = try await userManager.signInWithApple(tokens: tokens)
                 let user = UserObject(auth: authDataResult)
                 try await UserManager.shared.createUserData(userObject: user)
                 try await UserManager.shared.loadCurrentUser()

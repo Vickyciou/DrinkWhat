@@ -9,6 +9,7 @@ import UIKit
 
 class RootViewController: UIViewController {
     private var showLoginView: Bool = false
+    private let userManager = UserManager()
     private let url: URL?
 
     init(url: URL? = nil) {
@@ -23,11 +24,10 @@ class RootViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let authUser = try? AuthManager.shared.getAuthenticatedUser()
+        let authUser = try? userManager.checkCurrentUser()
         self.showLoginView = authUser == nil
         Task {
             do {
-//                try AuthManager.shared.signOut()
                 try await decideVC()
             } catch {
                 print("decideVC error")

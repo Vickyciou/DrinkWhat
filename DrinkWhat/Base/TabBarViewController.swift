@@ -15,6 +15,7 @@ class TabBarViewController: UITabBarController, UIViewControllerTransitioningDel
     private let tabs: [Tab] = [.home, .vote, .order, .profile]
     private let groupManager = GroupManager()
     private let orderManager = OrderManager()
+    private let userManager = UserManager()
     private var userObject = UserManager.shared.userObject
     private let groupID: String?
     private let orderID: String?
@@ -164,7 +165,7 @@ extension TabBarViewController: UITabBarControllerDelegate {
             navVC.viewControllers.first is HomeViewController {
             return true
         } else {
-            let authUser = try? AuthManager.shared.getAuthenticatedUser()
+            let authUser = try? userManager.checkCurrentUser()
             if authUser == nil {
                 let loginVC = LoginSheetViewController()
                 loginVC.delegate = self

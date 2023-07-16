@@ -147,12 +147,8 @@ extension ProfileViewController {
         return button
     }
     @objc func logOutButtonTapped() {
-        do {
-            try AuthManager.shared.signOut()
-            delegate?.profileViewControllerDidPressLogOut(self)
-        } catch {
-            print("logOutButtonTapped \(error)")
-        }
+        userManager.signOut()
+        delegate?.profileViewControllerDidPressLogOut(self)
     }
 
     private func makeDeleteButton() -> UIButton {
@@ -179,12 +175,13 @@ extension ProfileViewController {
             message: "確定要刪除帳號嗎？",
             preferredStyle: .alert
         )
-        let okAction = UIAlertAction(title: "確定", style: .default) { _ in
+        let okAction = UIAlertAction(title: "確定", style: .default) { [weak self]_ in
+            guard let self else { return }
             Task {
                 do {
                     let deleteHelper = DeleteWithAppleHelper(viewController: self)
                     let deleteAppleResult = try await deleteHelper.deleteWithAppleFlow()
-                    try await AuthManager.shared.delete(tokens: deleteAppleResult)
+                    try await self.userManager.deleteUser(tokens: deleteAppleResult)
                     self.delegate?.profileViewControllerDidPressLogOut(self)
                 } catch {
                     print("delete user error")

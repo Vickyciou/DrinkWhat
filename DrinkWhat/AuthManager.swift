@@ -23,8 +23,8 @@ struct AuthDataResultModel {
 }
 final class AuthManager {
 
-    static let shared = AuthManager()
-    private init() { }
+//    static let shared = AuthManager()
+//    private init() { }
 
     func getAuthenticatedUser() throws -> AuthDataResultModel {
         guard let user = Auth.auth().currentUser else {

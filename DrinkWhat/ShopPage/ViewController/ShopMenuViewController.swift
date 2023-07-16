@@ -12,6 +12,7 @@ class ShopMenuViewController: UIViewController {
     private lazy var tableView: UITableView = makeTableView()
     private let groupManager = GroupManager()
     private let orderManager = OrderManager()
+    private let userManager = UserManager()
     private var shopObject: ShopObject
     private var groupObject: GroupResponse?
     private var orderResponse: OrderResponse?
@@ -106,7 +107,7 @@ extension ShopMenuViewController: UITableViewDelegate {
 
 extension ShopMenuViewController: SectionHeaderViewDelegate {
     func didPressAddOrderButton(_ view: SectionHeaderView) {
-        let authUser = try? AuthManager.shared.getAuthenticatedUser()
+        let authUser = try? userManager.checkCurrentUser()
         if authUser == nil {
             let alert = UIAlertController(
                 title: "加入失敗",
@@ -172,7 +173,7 @@ extension ShopMenuViewController: SectionHeaderViewDelegate {
     }
 
     func didPressAddVoteButton(_ view: SectionHeaderView) {
-        let authUser = try? AuthManager.shared.getAuthenticatedUser()
+        let authUser = try? userManager.checkCurrentUser()
         if authUser == nil {
             let alert = UIAlertController(
                 title: "加入失敗",

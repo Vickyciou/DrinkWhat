@@ -10,13 +10,27 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 import FirebaseAuth
 
+enum UserManagerError: LocalizedError {
+    case noCurrentUser, failWithSignOut, decodingError
+
+    var errorDescription: String? {
+        switch self {
+        case .noCurrentUser: return "No current user"
+        case .failWithSignOut: return "Fail with sign out"
+        case .decodingError: return "Decoding userObject error"
+        }
+    }
+}
+
+
+
 protocol UserManagerDelegate: AnyObject {
     func userManager(_ manager: UserManager, didGet userObject: UserObject)
 }
 class UserManager {
     static let shared = UserManager()
     var userObject: UserObject?
-
+    let authManager = AuthManager()
     weak var delegate: UserManagerDelegate?
 
     private let userCollection: CollectionReference = Firestore.firestore().collection("Users")
@@ -26,7 +40,7 @@ class UserManager {
     }
 
     func loadCurrentUser() async throws {
-        let authDataResult = try AuthManager.shared.getAuthenticatedUser()
+        let authDataResult = try authManager.getAuthenticatedUser()
         self.userObject = try await getUserData(userId: authDataResult.uid)
     }
 
@@ -45,16 +59,27 @@ class UserManager {
         userDocument(userID: userID).updateData(["userImageURL": imageURL])
     }
 
-    func checkCurrentUser() {
+    func checkCurrentUser() throws -> AuthDataResultModel {
+        guard let user = try? authManager.getAuthenticatedUser() else
+        { throw UserManagerError.noCurrentUser }
+        return user
 
+    }
+
+    func signInWithApple(tokens: SignInWithAppleResult) async throws -> AuthDataResultModel {
+        try await authManager.signInWithApple(tokens: tokens)
     }
 
     func signOut() {
-
+        do {
+            try authManager.signOut()
+        } catch {
+            print(ManagerError.serverError)
+        }
     }
 
-    func deleteUser(tokens: deleteAppleResult) {
-
+    func deleteUser(tokens: DeleteWithAppleResult) async throws {
+        try await authManager.delete(tokens: tokens)
     }
 
     func getUsers(_ userIDs: [String]) async throws -> [UserObject] {
