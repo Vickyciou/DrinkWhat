@@ -181,8 +181,14 @@ extension ProfileViewController {
         )
         let okAction = UIAlertAction(title: "確定", style: .default) { _ in
             Task {
-//                try await AuthManager.shared.delete()
-                self.delegate?.profileViewControllerDidPressLogOut(self)
+                do {
+                    let deleteHelper = DeleteWithAppleHelper(viewController: self)
+                    let deleteAppleResult = try await deleteHelper.deleteWithAppleFlow()
+                    try await AuthManager.shared.delete(tokens: deleteAppleResult)
+                    self.delegate?.profileViewControllerDidPressLogOut(self)
+                } catch {
+                    print("delete user error")
+                }
             }
         }
         let cancelAction = UIAlertAction(title: "取消", style: .cancel)

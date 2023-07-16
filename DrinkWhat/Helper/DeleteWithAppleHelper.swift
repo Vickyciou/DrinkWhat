@@ -9,10 +9,16 @@ import Foundation
 import AuthenticationServices
 import CryptoKit
 
+
+struct DeleteWithAppleResult {
+    let token: String
+    let nonce: String
+    let authCode: String
+}
+
 class DeleteWithAppleHelper: NSObject {
     private var currentNonce: String?
-    private var isDelete: Bool = false
-    private var completionHandler: ((Result<SignInWithAppleResult, Error>) -> Void)? = nil
+    private var completionHandler: ((Result<DeleteWithAppleResult, Error>) -> Void)? = nil
     private let viewController: UIViewController
 
     init(viewController: UIViewController) {
@@ -20,14 +26,12 @@ class DeleteWithAppleHelper: NSObject {
         super.init()
     }
 
-    func startSignInWithAppleFlow(isDelete: Bool = false) async throws -> SignInWithAppleResult {
-        self.isDelete = isDelete
-
+    func deleteWithAppleFlow() async throws -> DeleteWithAppleResult {
         return try await withCheckedThrowingContinuation { continuation in
-            self.startSignInWithAppleFlow { result in
+            self.deleteWithAppleFlow { result in
                 switch result {
-                case .success(let signInAppleResult):
-                    continuation.resume(returning: signInAppleResult)
+                case .success(let deleteWithAppleResult):
+                    continuation.resume(returning: deleteWithAppleResult)
                     return
                 case .failure(let error):
                     continuation.resume(throwing: error)
@@ -37,7 +41,7 @@ class DeleteWithAppleHelper: NSObject {
         }
     }
 
-    func startSignInWithAppleFlow(completion: @escaping (Result<SignInWithAppleResult, Error>) -> Void) {
+    func deleteWithAppleFlow(completion: @escaping (Result<DeleteWithAppleResult, Error>) -> Void) {
 
         let nonce = randomNonceString()
         currentNonce = nonce
@@ -104,31 +108,16 @@ extension DeleteWithAppleHelper: ASAuthorizationControllerDelegate {
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         guard
             let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential,
-            let nonce = currentNonce else {
+            let appleIDToken = appleIDCredential.identityToken,
+            let idTokenString = String(data: appleIDToken, encoding: .utf8),
+            let nonce = currentNonce,
+            let appleAuthCode = appleIDCredential.authorizationCode,
+            let authCodeString = String(data: appleAuthCode, encoding: .utf8) else {
             completionHandler?(.failure(URLError(.badServerResponse)))
             return
         }
-        if isDelete {
-            guard let appleAuthCode = appleIDCredential.authorizationCode,
-                  let authCodeString = String(data: appleAuthCode, encoding: .utf8) else { return }
-            Task {
-                do {
-                    AuthManager.shared.delete(credential: <#T##Data#>, authCodeString: <#T##String#>)
-                  self.updateUI()
-                } catch {
-                  self.displayError(error)
-                }
-              }
-
-        } else {
-            guard let appleIDToken = appleIDCredential.identityToken,
-                  let idTokenString = String(data: appleIDToken, encoding: .utf8) else { return }
-
-            let name = appleIDCredential.fullName?.givenName
-            let email = appleIDCredential.email
-            let tokens = SignInWithAppleResult(token: idTokenString, nonce: nonce, name: name, email: email)
-            completionHandler?(.success(tokens))
-        }
+        let deleteWithAppleResult = DeleteWithAppleResult(token: idTokenString, nonce: nonce, authCode: authCodeString)
+        completionHandler?(.success(deleteWithAppleResult))
     }
 
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {

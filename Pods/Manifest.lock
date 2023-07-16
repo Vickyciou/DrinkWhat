@@ -653,11 +653,12 @@ PODS:
     - "GoogleUtilities/NSData+zlib (~> 7.11)"
     - nanopb (< 2.30910.0, >= 2.30908.0)
   - FirebaseAppCheckInterop (10.11.0)
-  - FirebaseAuth (10.0.0):
+  - FirebaseAuth (10.11.0):
+    - FirebaseAppCheckInterop (~> 10.0)
     - FirebaseCore (~> 10.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.8)
     - GoogleUtilities/Environment (~> 7.8)
-    - GTMSessionFetcher/Core (~> 2.1)
+    - GTMSessionFetcher/Core (< 4.0, >= 2.1)
   - FirebaseAuthInterop (10.11.0)
   - FirebaseCore (10.11.0):
     - FirebaseCoreInternal (~> 10.0)
@@ -817,7 +818,7 @@ PODS:
     - BoringSSL-GRPC (= 0.0.24)
     - gRPC-Core/Interface (= 1.50.1)
   - gRPC-Core/Interface (1.50.1)
-  - GTMSessionFetcher/Core (2.3.0)
+  - GTMSessionFetcher/Core (3.1.1)
   - IQKeyboardManagerSwift (6.5.11)
   - Kingfisher (7.6.2)
   - leveldb-library (1.22.2)
@@ -837,7 +838,7 @@ PODS:
 
 DEPENDENCIES:
   - FirebaseAnalytics
-  - FirebaseAuth (~> 10.0.0)
+  - FirebaseAuth (~> 10.11.0)
   - FirebaseCrashlytics
   - FirebaseFirestore (~> 10.11.0)
   - FirebaseFirestoreSwift (~> 10.11.0)
@@ -887,7 +888,7 @@ SPEC CHECKSUMS:
   BoringSSL-GRPC: 3175b25143e648463a56daeaaa499c6cb86dad33
   FirebaseAnalytics: 6c6bf99e8854475bf1fa342028841be8ecd236da
   FirebaseAppCheckInterop: 255b6c0292fe5da995c8b2df0c02f6a3ca7f61b4
-  FirebaseAuth: 493382cf533cc45e2862b00e9aa4cfe4c98daf71
+  FirebaseAuth: 7aabcb00fbf330db49c207c0d645b8b1b62df0e9
   FirebaseAuthInterop: 44e34efef7145776a107b9e7f79ed44beb4738fa
   FirebaseCore: 62fd4d549f5e3f3bd52b7998721c5fa0557fb355
   FirebaseCoreExtension: cacdad57fdb60e0b86dcbcac058ec78237946759
@@ -904,7 +905,7 @@ SPEC CHECKSUMS:
   GoogleUtilities: 9aa0ad5a7bc171f8bae016300bfcfa3fb8425749
   "gRPC-C++": 0968bace703459fd3e5dcb0b2bed4c573dbff046
   gRPC-Core: 17108291d84332196d3c8466b48f016fc17d816d
-  GTMSessionFetcher: 3a63d75eecd6aa32c2fc79f578064e1214dfdec2
+  GTMSessionFetcher: e8647203b65cee28c5f73d0f473d096653945e72
   IQKeyboardManagerSwift: c7955c0bdbf7b2eb29bb7daaa44e3d90f55a9a85
   Kingfisher: 6c5449c6450c5239166510ba04afe374a98afc4f
   leveldb-library: f03246171cce0484482ec291f88b6d563699ee06
@@ -915,6 +916,6 @@ SPEC CHECKSUMS:
   SwiftLint: 1ac76dac888ca05cb0cf24d0c85887ec1209961d
   Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
 
-PODFILE CHECKSUM: c764356d64af3d2ca5b5e4eab678dfe76ded64ec
+PODFILE CHECKSUM: cb7f6b02df83461175086d84d7b795b72b5275f7
 
 COCOAPODS: 1.12.1

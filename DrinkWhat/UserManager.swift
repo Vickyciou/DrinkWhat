@@ -16,6 +16,7 @@ protocol UserManagerDelegate: AnyObject {
 class UserManager {
     static let shared = UserManager()
     var userObject: UserObject?
+
     weak var delegate: UserManagerDelegate?
 
     private let userCollection: CollectionReference = Firestore.firestore().collection("Users")
@@ -52,8 +53,8 @@ class UserManager {
 
     }
 
-    func deleteUser() {
-        
+    func deleteUser(tokens: deleteAppleResult) {
+
     }
 
     func getUsers(_ userIDs: [String]) async throws -> [UserObject] {

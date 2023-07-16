@@ -10,7 +10,7 @@ target 'DrinkWhat' do
   # Pods for DrinkWhat
     pod 'SwiftLint'
     pod 'LineSDKSwift', '~> 5.0'
-    pod 'FirebaseAuth', '~> 10.0.0'
+    pod 'FirebaseAuth', '~> 10.11.0'
     pod 'FirebaseFirestore', '~> 10.11.0'
     pod 'FirebaseFirestoreSwift', '~> 10.11.0'
     pod 'FirebaseStorage'

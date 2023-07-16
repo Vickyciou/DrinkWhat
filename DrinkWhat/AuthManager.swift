@@ -49,26 +49,24 @@ final class AuthManager {
         try Auth.auth().signOut()
     }
 
-    func delete(credential: Data, authCodeString: String) async throws {
-//        try await Auth.auth().revokeToken(withAuthorizationCode: authCodeString)
-
-        Auth.auth().currentUser.reauthenticate(with: credential) { (authResult, error) in
-          guard error != nil else { return }
-            Task {
-                do {
-                  try await Auth.auth().revokeToken(withAuthorizationCode: authCodeString)
-                    try await user.delete()
-                  self.updateUI()
-                } catch {
-                  self.displayError(error)
-                }
-              }
-        }
-
+    func delete(tokens: DeleteWithAppleResult) async throws {
         guard let user = Auth.auth().currentUser else {
             throw URLError(.badURL)
         }
-
-        try await user.delete()
+        let credential = OAuthProvider.credential(withProviderID: "apple.com", idToken: tokens.token, rawNonce: tokens.nonce)
+        Auth.auth().currentUser?.reauthenticate(with: credential) { (authResult, error) in
+            guard error == nil else
+            { URLError.clientCertificateRejected
+                return }
+            Task {
+                do {
+                    // TODO: delete firestore UserObject
+                    try await Auth.auth().revokeToken(withAuthorizationCode: tokens.authCode)
+                    try await user.delete()
+                } catch {
+                    print("revoke error")
+                }
+              }
+        }
     }
 }
