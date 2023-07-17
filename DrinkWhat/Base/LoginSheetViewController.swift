@@ -90,7 +90,7 @@ extension LoginSheetViewController {
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 20
         imageView.layer.masksToBounds = true
-        imageView.image = UIImage(named: "AppIcon")
+        imageView.image = UIImage(named: "DrinkWhat-icon")
         return imageView
     }
     private func makeRemindLabel() -> UILabel {

@@ -88,7 +88,7 @@ extension LoginViewController {
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 75
         imageView.layer.masksToBounds = true
-        imageView.image = UIImage(named: "AppIcon")
+        imageView.image = UIImage(named: "DrinkWhat-icon")
         return imageView
     }
     private func makeAppNameLabel() -> UILabel {

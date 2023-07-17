@@ -129,7 +129,7 @@ class OrderManager {
         )).whereFilter(Filter.whereField("state", isEqualTo: OrderStatus.active.rawValue)).getDocuments()
 
         if (document.documents.first?.data()) == nil {
-            try await orderDocument(orderID: orderID).updateData(["joinUserIDs": FieldValue.arrayUnion([userID])])
+            try await orderDocument(orderID: orderID).updateData(["joinUserIDs": FieldValue.arrayUnion(userID)])
         } else {
             throw ManagerError.alreadyAddAnotherOrderError
         }

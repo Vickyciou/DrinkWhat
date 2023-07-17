@@ -38,13 +38,15 @@ class TabBarViewController: UITabBarController, UIViewControllerTransitioningDel
                 let userObject = try await userManager.loadCurrentUser()
                 self.userObject = userObject
                 viewControllers = tabs.map { makeViewController(tab: $0, userObject: userObject) }
+                switchToGroupIndex()
+                switchToOrderIndex()
+                delegate = self
             } catch {
                 viewControllers = tabs.map { makeViewController(tab: $0, userObject: nil) }
+                delegate = self
             }
         }
-        switchToGroupIndex()
-        switchToOrderIndex()
-        delegate = self
+
 
         let appearance = UITabBarAppearance()
         appearance.backgroundColor = .white
@@ -65,14 +67,16 @@ class TabBarViewController: UITabBarController, UIViewControllerTransitioningDel
     }
 
     private func switchToGroupIndex() {
-        guard let groupID, let userObject else { return }
+        guard let groupID, let userObject
+        else { return }
         selectedIndex = 1
 
         groupManager.addUserIntoGroup(groupID: groupID, userID: userObject.userID)
 
     }
     private func switchToOrderIndex() {
-        guard let orderID, let userObject else { return }
+        guard let orderID, let userObject
+        else { return }
         selectedIndex = 2
         Task {
             do {
