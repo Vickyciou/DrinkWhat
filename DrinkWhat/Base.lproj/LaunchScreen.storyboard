@@ -20,7 +20,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Uwx-Xy-P0F">
                                 <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DrinkWhatAppIcon" translatesAutoresizingMaskIntoConstraints="NO" id="YTd-xW-QCj">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DrinkWhat-icon無字版" translatesAutoresizingMaskIntoConstraints="NO" id="YTd-xW-QCj">
                                         <rect key="frame" x="96.666666666666686" y="326" width="200" height="200"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="200" id="GpV-HG-VyK"/>
@@ -51,7 +51,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="DrinkWhatAppIcon" width="341.33334350585938" height="341.33334350585938"/>
+        <image name="DrinkWhat-icon無字版" width="1024" height="1024"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

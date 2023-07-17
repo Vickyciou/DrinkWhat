@@ -19,6 +19,7 @@ class LoginSheetViewController: UIViewController {
     private lazy var signInWithAppleButton = ASAuthorizationAppleIDButton(type: .signIn, style: .black)
     private lazy var remindLabel: UILabel = makeRemindLabel()
     private lazy var descriptionLabel: UILabel = makeDescriptionLabel()
+    private lazy var appIconImageView: UIImageView = makeAppIconImageView()
     private lazy var closeButton: UIButton = makeCloseButton()
     private var currentNonce: String?
     private let userManager = UserManager.shared
@@ -42,7 +43,7 @@ class LoginSheetViewController: UIViewController {
     }
 
     private func setupMainView() {
-        let contents = [remindLabel, descriptionLabel, closeButton, signInWithAppleButton]
+        let contents = [remindLabel, descriptionLabel, closeButton, appIconImageView, signInWithAppleButton]
         contents.forEach { view.addSubview($0) }
         signInWithAppleButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -53,7 +54,11 @@ class LoginSheetViewController: UIViewController {
             descriptionLabel.leadingAnchor.constraint(equalTo: remindLabel.leadingAnchor),
             closeButton.topAnchor.constraint(equalTo: remindLabel.topAnchor),
             closeButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
-            signInWithAppleButton.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 50),
+            appIconImageView.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 60),
+            appIconImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            appIconImageView.heightAnchor.constraint(equalToConstant: 100),
+            appIconImageView.widthAnchor.constraint(equalTo: appIconImageView.heightAnchor),
+            signInWithAppleButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -40),
             signInWithAppleButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16.0),
             signInWithAppleButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16.0),
             signInWithAppleButton.heightAnchor.constraint(equalToConstant: 50.0)
@@ -83,25 +88,25 @@ extension LoginSheetViewController {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
-        imageView.layer.cornerRadius = 60
+        imageView.layer.cornerRadius = 20
         imageView.layer.masksToBounds = true
-        imageView.image = UIImage(named: "DrinkWhatAppIcon")
+        imageView.image = UIImage(named: "AppIcon")
         return imageView
     }
     private func makeRemindLabel() -> UILabel {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .bold(size: 24)
-        label.textColor = UIColor.darkBrown
+        label.font = .title2()
+        label.textColor = UIColor.darkLogoBrown
         label.text = "請先登入會員"
         return label
     }
     private func makeDescriptionLabel() -> UILabel {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .regular(size: 18)
-        label.textColor = UIColor.darkBrown
-        label.text = "登入會員即可使用更多服務"
+        label.font = .regular3()
+        label.textColor = UIColor.darkLogoBrown
+        label.text = "登入會員即可使用個人化服務"
         return label
     }
     private func makeCloseButton() -> UIButton {
@@ -109,7 +114,7 @@ extension LoginSheetViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         let closeImage = UIImage(systemName: "xmark")?
             .withConfiguration(UIImage.SymbolConfiguration(pointSize: 18))
-            .setColor(color: .darkBrown)
+            .setColor(color: .darkLogoBrown)
         button.setImage(closeImage, for: .normal)
         button.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
         return button

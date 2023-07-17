@@ -45,16 +45,20 @@ class LoginViewController: UIViewController {
         let contents = [appIconImageView, appNameLabel, signInWithAppleButton, skipButton]
         contents.forEach { view.addSubview($0) }
         NSLayoutConstraint.activate([
-            appIconImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100),
+            appIconImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 150),
             appIconImageView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-            appIconImageView.heightAnchor.constraint(equalToConstant: 120),
-            appIconImageView.widthAnchor.constraint(equalToConstant: 120),
-            appNameLabel.topAnchor.constraint(equalTo: appIconImageView.bottomAnchor, constant: 12),
+            appIconImageView.heightAnchor.constraint(equalToConstant: 150),
+            appIconImageView.widthAnchor.constraint(equalToConstant: 150),
+            appNameLabel.topAnchor.constraint(equalTo: appIconImageView.bottomAnchor, constant: 20),
             appNameLabel.centerXAnchor.constraint(equalTo: appIconImageView.centerXAnchor),
-            signInWithAppleButton.topAnchor.constraint(equalTo: appNameLabel.bottomAnchor, constant: 100),
-            signInWithAppleButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            skipButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50),
-            skipButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor)
+            signInWithAppleButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50),
+            signInWithAppleButton.heightAnchor.constraint(equalToConstant: 50),
+            signInWithAppleButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 32),
+            signInWithAppleButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -32),
+            skipButton.bottomAnchor.constraint(equalTo: signInWithAppleButton.topAnchor, constant: -20),
+            skipButton.trailingAnchor.constraint(equalTo: signInWithAppleButton.trailingAnchor),
+            skipButton.leadingAnchor.constraint(equalTo: signInWithAppleButton.leadingAnchor),
+            skipButton.heightAnchor.constraint(equalTo: signInWithAppleButton.heightAnchor)
         ])
 
         signInWithAppleButton.translatesAutoresizingMaskIntoConstraints = false
@@ -82,25 +86,36 @@ extension LoginViewController {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
-        imageView.layer.cornerRadius = 60
+        imageView.layer.cornerRadius = 75
         imageView.layer.masksToBounds = true
-        imageView.image = UIImage(named: "DrinkWhatAppIcon")
+        imageView.image = UIImage(named: "AppIcon")
         return imageView
     }
     private func makeAppNameLabel() -> UILabel {
         let label = UILabel()
+        let optimaBoldFont = UIFont(name: "Marker Felt Wide", size: 36)
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: optimaBoldFont,
+            .foregroundColor: UIColor.white,
+            .strokeColor: UIColor.logoBrown,
+            .strokeWidth: -5.0
+        ]
+        label.attributedText = NSAttributedString(string: "Drink What", attributes: attributes)
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .medium(size: 20)
-        label.textColor = UIColor.darkBrown
-        label.text = "Drink What?"
+
         return label
     }
     private func makeSkipButton() -> UIButton {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitleColor(.lightGray, for: .normal)
-        button.titleLabel?.font = .regular(size: 16)
-        button.setTitle("稍候再說 >", for: .normal)
+        button.setTitleColor(.darkGray, for: .normal)
+        button.titleLabel?.font = .medium2()
+        button.setTitle("Visitor Entrance", for: .normal)
+        button.backgroundColor = .white
+        button.layer.borderColor = UIColor.darkGray.cgColor
+        button.layer.borderWidth = 2
+        button.layer.cornerRadius = 5
+        button.layer.masksToBounds = true
         button.addTarget(self, action: #selector(skipButtonTapped), for: .touchUpInside)
         return button
     }
