@@ -43,7 +43,7 @@ class VotingCell: UITableViewCell {
             numberOfVotesLabel.centerYAnchor.constraint(equalTo: shopImageView.centerYAnchor),
             numberOfVotesLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             numberOfVotesLabel.widthAnchor.constraint(equalToConstant: 45),
-            numberOfVotesLabel.heightAnchor.constraint(equalToConstant: 25),
+            numberOfVotesLabel.heightAnchor.constraint(equalToConstant: 25)
         ])
     }
     func setupVoteCell(number: String, shopImageURL: String?, shopName: String, numberOfVote: Int?) {
@@ -117,13 +117,6 @@ extension VotingCell {
         view.backgroundColor = .white
         view.layer.cornerRadius = 20
         view.clipsToBounds = false
-//        view.layer.borderColor = UIColor.middleBrown.cgColor
-//        view.layer.borderWidth = 0.5
-        
-//        view.layer.shadowColor = UIColor.darkLogoBrown.cgColor
-//        view.layer.shadowOpacity = 0.3
-//        view.layer.shadowOffset = CGSize(width: 0, height: 1)
-//        view.layer.shadowRadius = 4
         return view
     }
 }

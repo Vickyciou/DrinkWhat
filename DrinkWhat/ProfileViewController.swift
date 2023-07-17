@@ -58,7 +58,7 @@ class ProfileViewController: UIViewController {
 
     private func setupLogOUtButton() {
         let contents = [nameLabel, emailLabel, imageView, cameraButton, logOutButton, deleteButton]
-        contents.forEach { view.addSubview($0)}
+        contents.forEach { view.addSubview($0) }
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 80),
             imageView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
@@ -143,7 +143,9 @@ extension ProfileViewController {
         button.setTitleColor(UIColor.white, for: .normal)
         button.titleLabel?.font = .regular4()
         let normalBackground = UIColor.darkLogoBrown.toImage(size: CGSize(width: 65, height: 25))
-        let selectedBackground = UIColor.darkLogoBrown.withAlphaComponent(0.8).toImage(size: CGSize(width: 65, height: 25))
+        let selectedBackground = UIColor.darkLogoBrown
+            .withAlphaComponent(0.8)
+            .toImage(size: CGSize(width: 65, height: 25))
         button.setBackgroundImage(normalBackground, for: .normal)
         button.setBackgroundImage(selectedBackground, for: .highlighted)
         button.layer.cornerRadius = 5
@@ -218,7 +220,6 @@ extension ProfileViewController: PHPickerViewControllerDelegate {
                         print("Update user image fail: \(error)")
                     }
                 }
-                
                 DispatchQueue.main.async {
                     self.imageView.image = image
                 }

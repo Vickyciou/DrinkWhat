@@ -69,7 +69,7 @@ class LoginViewController: UIViewController {
                 let authDataResult = try await userManager.signInWithApple(tokens: tokens)
                 let user = UserObject(auth: authDataResult)
                 try await UserManager.shared.createUserData(userObject: user)
-                try await UserManager.shared.loadCurrentUser()
+//                try await UserManager.shared.loadCurrentUser()
                 delegate?.loginViewControllerDismissSelf(self)
             } catch {
                 print("startSignInWithAppleFlow error \(error)")

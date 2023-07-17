@@ -22,14 +22,9 @@ enum UserManagerError: LocalizedError {
     }
 }
 
-protocol UserManagerDelegate: AnyObject {
-    func userManager(_ manager: UserManager, didGet userObject: UserObject)
-}
-
 class UserManager {
     static let shared = UserManager()
     let authManager = AuthManager()
-    weak var delegate: UserManagerDelegate?
     private var userObject: UserObject?
 
     private init() {} 
@@ -41,16 +36,19 @@ class UserManager {
     }
 
     func loadCurrentUser() async throws -> UserObject {
-        if let userObject { return userObject }
-        do {
-            let authDataResult = try authManager.getAuthenticatedUser()
-            let userObject = try await getUserData(userId: authDataResult.uid)
-            self.userObject = userObject
+        if let userObject {
             return userObject
-        } catch let error as URLError {
-            throw error
-        } catch {
-            throw UserManagerError.noCurrentUser
+        } else {
+            do {
+                let authDataResult = try authManager.getAuthenticatedUser()
+                let userObject = try await getUserData(userId: authDataResult.uid)
+                self.userObject = userObject
+                return userObject
+            } catch let error as URLError {
+                throw error
+            } catch {
+                throw UserManagerError.noCurrentUser
+            }
         }
     }
 
@@ -60,7 +58,6 @@ class UserManager {
 
     func getUserData(userId: String) async throws -> UserObject {
         let userObject = try await userDocument(userID: userId).getDocument(as: UserObject.self)
-        delegate?.userManager(self, didGet: userObject)
         return userObject
     }
 

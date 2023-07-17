@@ -18,7 +18,6 @@ class OrderTableViewHeader: UIView {
         NSLayoutConstraint.activate([
             shopNameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 4),
             shopNameLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-//            shopNameLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
             shopNameLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -4)
         ])
     }

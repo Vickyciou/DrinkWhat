@@ -38,7 +38,6 @@ class JoinUsersBottomView: UIView {
             addItemButton.widthAnchor.constraint(equalTo: linePayButton.widthAnchor),
             addItemButton.heightAnchor.constraint(equalTo: linePayButton.heightAnchor),
             addItemButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -4),
-//            endLabel.topAnchor.constraint(equalTo: linePayButton.bottomAnchor, constant: 16),
             endLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             endLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12)
         ])

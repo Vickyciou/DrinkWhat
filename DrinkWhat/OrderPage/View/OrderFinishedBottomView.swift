@@ -10,7 +10,6 @@ import UIKit
 class OrderFinishedBottomView: UIView {
     private lazy var borderView: UIView = makeBorderView()
     private lazy var label: UILabel = makeLabel()
-    
 
     override init(frame: CGRect) {
         super.init(frame: frame)

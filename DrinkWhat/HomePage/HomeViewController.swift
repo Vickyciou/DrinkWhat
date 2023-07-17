@@ -75,7 +75,6 @@ extension HomeViewController: UITableViewDataSource {
     }
 }
 
-// 這邊要寫section header
 extension HomeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let shopMenuVC = ShopMenuViewController(shopObject: shopData[indexPath.row])

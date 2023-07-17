@@ -128,14 +128,16 @@ extension VoteViewController: UITableViewDelegate {
         switch indexPath.section {
         case 0:
             let continueVotes = groupObjects.filter({ $0.state == GroupStatus.active.rawValue })
-            let voteNavigationVC = VoteNavigationController(userObject: userObject, groupID: continueVotes[indexPath.row].groupID)
+            let voteNavigationVC = VoteNavigationController(userObject: userObject,
+                                                            groupID: continueVotes[indexPath.row].groupID)
             present(voteNavigationVC, animated: true)
         case 1:
-            let finishedVotes = groupObjects.filter(
-                { $0.state == GroupStatus.canceled.rawValue ||
-                    $0.state == GroupStatus.finished.rawValue }
-                )
-            let voteNavigationVC = VoteNavigationController(userObject: userObject, groupID: finishedVotes[indexPath.row].groupID)
+            let finishedVotes = groupObjects.filter({
+                    $0.state == GroupStatus.canceled.rawValue ||
+                    $0.state == GroupStatus.finished.rawValue
+                })
+            let voteNavigationVC = VoteNavigationController(userObject: userObject,
+                                                            groupID: finishedVotes[indexPath.row].groupID)
             present(voteNavigationVC, animated: true)
         default:
             return

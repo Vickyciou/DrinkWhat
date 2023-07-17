@@ -167,7 +167,7 @@ class OrderingViewController: UIViewController {
     }
 
     private func setupBottomView(state: BottomViewUIState) {
-        var bottomView: UIView = {
+        let bottomView: UIView = {
             switch state {
             case .initialUser:
                 let view = InitiatorOrderingBottomView(frame: .zero)
@@ -223,7 +223,6 @@ extension OrderingViewController {
         tableView.backgroundColor = .white
         return tableView
     }
-    
 }
 
 extension OrderingViewController: UITableViewDataSource {

@@ -32,8 +32,6 @@ class OrderViewController: UIViewController {
         setNavController()
         setupTableView()
         orderManager.delegate = self
-
-//        guard let userObject else { return }
         orderManager.listenOrderResponse(userID: userObject.userID)
 
     }
@@ -83,10 +81,11 @@ extension OrderViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            let continueOrders = orderResponses.filter({ $0.state == "進行中" })
+            let continueOrders = orderResponses.filter({ $0.state == OrderStatus.active.rawValue })
             return continueOrders.count
         case 1:
-            let finishedOrders = orderResponses.filter({ $0.state == "已完成" || $0.state == "已取消"})
+            let finishedOrders = orderResponses.filter({
+                $0.state == OrderStatus.finished.rawValue || $0.state == OrderStatus.canceled.rawValue})
             return finishedOrders.count
         default:
             return 0
@@ -99,7 +98,7 @@ extension OrderViewController: UITableViewDataSource {
 
         switch indexPath.section {
         case 0:
-            let continueOrders = orderResponses.filter({ $0.state == "進行中" })
+            let continueOrders = orderResponses.filter({ $0.state == OrderStatus.active.rawValue })
             let continueOrder = continueOrders[indexPath.row]
             let date = Date(timeIntervalSince1970: continueOrder.date)
             let dateString = date.dateToString(date: date)
@@ -109,7 +108,8 @@ extension OrderViewController: UITableViewDataSource {
                            date: dateString)
             return cell
         case 1:
-            let finishedOrders = orderResponses.filter({ $0.state == "已完成" || $0.state == "已取消"})
+            let finishedOrders = orderResponses.filter({
+                $0.state == OrderStatus.finished.rawValue || $0.state == OrderStatus.canceled.rawValue})
             let finishedOrder = finishedOrders[indexPath.row]
             let date = Date(timeIntervalSince1970: finishedOrder.date)
             let dateString = date.dateToString(date: date)
@@ -128,13 +128,16 @@ extension OrderViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.section {
         case 0:
-            let continueOrders = orderResponses.filter({ $0.state == "進行中" })
-            let orderVC = OrderNavigationController(orderResponse: continueOrders[indexPath.row], userObject: userObject)
+            let continueOrders = orderResponses.filter({ $0.state == OrderStatus.active.rawValue })
+            let orderVC = OrderNavigationController(orderResponse: continueOrders[indexPath.row],
+                                                    userObject: userObject)
             orderVC.orderNavDelegate = self
             present(orderVC, animated: true)
         case 1:
-            let finishedOrders = orderResponses.filter({ $0.state == "已完成" || $0.state == "已取消"})
-            let orderVC = OrderNavigationController(orderResponse: finishedOrders[indexPath.row], userObject: userObject)
+            let finishedOrders = orderResponses.filter({
+                $0.state == OrderStatus.finished.rawValue || $0.state == OrderStatus.canceled.rawValue })
+            let orderVC = OrderNavigationController(orderResponse: finishedOrders[indexPath.row],
+                                                    userObject: userObject)
             present(orderVC, animated: true)
         default:
             return
@@ -153,8 +156,6 @@ extension OrderViewController: UITableViewDelegate {
     }
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         let orderResponse = orderResponses[indexPath.row]
-//        guard let userObject else { return false }
-
         if orderResponse.initiatorUserID == userObject.userID {
             return true
         } else {
@@ -175,10 +176,7 @@ extension OrderViewController: UITableViewDelegate {
 extension OrderViewController: OrderNavigationControllerDelegate {
     func didPressAddItemButton(_ vc: OrderNavigationController, orderResponse: OrderResponse) {
         let shopMenuVC = ShopMenuViewController(shopObject: orderResponse.shopObject)
-//        let navigationController = UINavigationController(rootViewController: shopMenuVC)
-//        navigationController.modalPresentationStyle = .fullScreen
         present(shopMenuVC, animated: true)
-//        show(shopMenuVC, sender: nil)
     }
 }
 

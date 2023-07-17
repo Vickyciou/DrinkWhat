@@ -111,7 +111,7 @@ extension DrinkDetailViewController {
     @objc func addItemButtonTapped() {
         Task {
             if let currentVolumeIndex, let currentSugarIndex, let currentIceIndex {
-                try await addOrderObject(currentVolumeIndex: currentVolumeIndex,
+                await addOrderObject(currentVolumeIndex: currentVolumeIndex,
                                          currentSugarIndex: currentSugarIndex,
                                          currentIceIndex: currentIceIndex)
             } else {

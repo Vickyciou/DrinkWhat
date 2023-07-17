@@ -118,7 +118,4 @@ extension LoginSheetViewController {
     @objc private func closeButtonTapped() {
         dismiss(animated: true)
     }
-
 }
-
-

@@ -29,8 +29,8 @@ class RootViewController: UIViewController {
         decideVC()
     }
 
-    func decideVC()  {
-        let myVC: UIViewController =  {
+    func decideVC() {
+        let myVC: UIViewController = {
             switch (showLoginView, url) {
             case (true, _):
                 let lvc = LoginViewController()

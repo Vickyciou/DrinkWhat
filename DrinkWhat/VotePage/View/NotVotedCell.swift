@@ -9,7 +9,6 @@ import UIKit
 
 protocol NotVotedCellDelegate: AnyObject {
     func didPressedViewMenuButton(_ cell: NotVotedCell, button: UIButton)
-//    func didSelectedChooseButton(_ cell: NotVotedCell, button: UIButton)
 }
 
 class NotVotedCell: UITableViewCell {
@@ -145,9 +144,7 @@ extension NotVotedCell {
         view.layer.shadowRadius = 4
         return view
     }
-//    @objc func chooseButtonTapped(_ sender: UIButton) {
-//        delegate?.didSelectedChooseButton(self, button: sender)
-//    }
+
     @objc func viewButtonTapped(_ sender: UIButton) {
         delegate?.didPressedViewMenuButton(self, button: sender)
     }

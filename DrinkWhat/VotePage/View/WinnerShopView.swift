@@ -68,10 +68,6 @@ extension WinnerShopView {
         label.font = .medium2()
         label.textColor = UIColor.orangeBrown
         label.backgroundColor = UIColor.white
-//        label.layer.borderWidth = 1
-//        label.layer.borderColor = UIColor.darkLogoBrown.cgColor
-//        label.layer.cornerRadius = 6
-//        label.layer.masksToBounds = true
         label.textAlignment = .center
         return label
     }

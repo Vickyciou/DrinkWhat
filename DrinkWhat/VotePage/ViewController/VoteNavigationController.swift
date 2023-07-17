@@ -119,7 +119,7 @@ extension VoteNavigationController: GroupManagerDelegate {
     }
 
     func groupManager(_ manager: GroupManager, didGetVoteResults voteResults: [VoteResult]) {
-        let sortedVoteResults = voteResults.sorted(by: {$0.userIDs.count > $1.userIDs.count})
+        let sortedVoteResults = voteResults.sorted(by: { $0.userIDs.count > $1.userIDs.count })
         self.voteResults = sortedVoteResults
         let shopIDs = voteResults.map { $0.shopID }
         shopManager.getShopObjects2(shopIDs)
@@ -155,11 +155,10 @@ extension VoteNavigationController: VotingViewControllerDelegate {
                                          initiatorUserName: userObject.userName ?? "Name").orderID
                 groupManager.setVoteStatus(groupID: groupID, status: GroupStatus.finished.rawValue)
 
-                if let joinUserIDs = groupObject.flatMap { $0.joinUserIDs } {
-                    try await joinUserIDs.asyncMap {
-                        try await self.orderManager.addUserIntoOrderGroup(userID: $0, orderID: orderID)
+                if let joinUserIDs = groupObject.flatMap({ $0.joinUserIDs }) {
+                    try await orderManager.addUserIntoOrderGroup(userID: joinUserIDs, orderID: orderID)
                     }
-                }
+    
             } catch ManagerError.itemAlreadyExistsError {
                 let alert = UIAlertController(
                     title: "開團失敗",

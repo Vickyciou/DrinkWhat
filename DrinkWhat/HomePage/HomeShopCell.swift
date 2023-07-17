@@ -46,7 +46,6 @@ extension HomeShopCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
         label.font = .title3()
-//        label.font = UIFont(name: "Heiti TC", size: 20)
         label.textColor = UIColor.darkLogoBrown
         return label
     }

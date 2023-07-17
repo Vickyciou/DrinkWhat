@@ -65,7 +65,7 @@ class TabBarViewController: UITabBarController, UIViewControllerTransitioningDel
     }
 
     private func switchToGroupIndex() {
-        guard let groupID , let userObject else { return }
+        guard let groupID, let userObject else { return }
         selectedIndex = 1
 
         groupManager.addUserIntoGroup(groupID: groupID, userID: userObject.userID)
@@ -149,9 +149,11 @@ extension TabBarViewController {
             controller = UINavigationController(rootViewController: HomeViewController())
 //            case .favorite: controller = UINavigationController(rootViewController: FavoriteViewController())
         case .vote:
-            controller = UINavigationController(rootViewController: userObject.map { VoteViewController(userObject: $0) } ?? UIViewController())
+            controller = UINavigationController(
+                rootViewController: userObject.map { VoteViewController(userObject: $0) } ?? UIViewController())
         case .order:
-            controller = UINavigationController(rootViewController: userObject.map { OrderViewController(userObject: $0) } ?? UIViewController())
+            controller = UINavigationController(
+                rootViewController: userObject.map { OrderViewController(userObject: $0) } ?? UIViewController())
         case .profile:
             let rootViewController: UIViewController = {
                 if let userObject {

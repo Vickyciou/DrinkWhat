@@ -23,12 +23,9 @@ struct AuthDataResultModel {
 }
 final class AuthManager {
 
-//    static let shared = AuthManager()
-//    private init() { }
-
     func getAuthenticatedUser() throws -> AuthDataResultModel {
         guard let user = Auth.auth().currentUser else {
-            throw URLError(.badServerResponse)
+            throw UserManagerError.noCurrentUser
         }
         return AuthDataResultModel(user: user, name: user.email, email: user.displayName)
     }
@@ -54,9 +51,9 @@ final class AuthManager {
             throw URLError(.badURL)
         }
         let credential = OAuthProvider.credential(withProviderID: "apple.com", idToken: tokens.token, rawNonce: tokens.nonce)
-        Auth.auth().currentUser?.reauthenticate(with: credential) { (authResult, error) in
+        Auth.auth().currentUser?.reauthenticate(with: credential) { (_, error) in
             guard error == nil else
-            { URLError.clientCertificateRejected
+            { print(URLError.clientCertificateRejected)
                 return }
             Task {
                 do {
@@ -66,7 +63,7 @@ final class AuthManager {
                 } catch {
                     print("revoke error")
                 }
-              }
+            }
         }
     }
 }

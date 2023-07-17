@@ -18,7 +18,6 @@ target 'DrinkWhat' do
     pod 'Toast-Swift'
     pod 'IQKeyboardManagerSwift'
     pod 'FirebaseCrashlytics'
-    pod 'FirebaseAnalytics'
 
     post_install do |installer|
       installer.pods_project.targets.each do |target|

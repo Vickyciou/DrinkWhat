@@ -101,20 +101,7 @@ class OrderManager {
             throw ManagerError.noData
         }
     }
-    // MARK: - add order object to another group
-//    func addOrderResultToAnother(userID: String, orderResponse: OrderResponse, orderObject: OrderObject) async throws {
-//
-//        let orderID = orderResponse.orderID
-//        let orderResultRef = orderObjectsDocument(orderID: orderID, userID: userID)
-//        if let _ = try? await orderResultRef.getDocument().data(as: OrderResults.self) {
-//            let orderObjectDic = try orderObject.toDictionary()
-//            try await orderResultRef.updateData(["orderObjects": FieldValue.arrayUnion([orderObjectDic])])
-//        } else {
-//            let orderResults = OrderResults(userID: userID, isPaid: false, orderObjects: [orderObject])
-//            try orderObjectsDocument(orderID: orderID, userID: userID).setData(from: orderResults)
-//        }
-//
-//    }
+
     // MARK: - User add into order group
     func addUserIntoOrderGroup(userID: String, orderID: String) async throws {
         let document = try await orderCollection.whereFilter(Filter.orFilter(
@@ -128,6 +115,21 @@ class OrderManager {
             try await orderDocument(orderID: orderID).updateData(["joinUserIDs": FieldValue.arrayUnion([userID])])
         } else if document.documents.first?.data()["initiatorUserID"] as! String == userID {
             throw ManagerError.hadActiveOrderGroup
+        } else {
+            throw ManagerError.alreadyAddAnotherOrderError
+        }
+    }
+
+    func addUserIntoOrderGroup(userID: [String], orderID: String) async throws {
+        let document = try await orderCollection.whereFilter(Filter.orFilter(
+            [
+                Filter.whereField("initiatorUserID", isEqualTo: userID),
+                Filter.whereField("joinUserIDs", in: userID)
+            ]
+        )).whereFilter(Filter.whereField("state", isEqualTo: OrderStatus.active.rawValue)).getDocuments()
+
+        if (document.documents.first?.data()) == nil {
+            try await orderDocument(orderID: orderID).updateData(["joinUserIDs": FieldValue.arrayUnion([userID])])
         } else {
             throw ManagerError.alreadyAddAnotherOrderError
         }
@@ -147,7 +149,8 @@ class OrderManager {
     func removeOrderObject(userID: String, orderID: String, orderObject: OrderObject) {
         do {
             let orderObjectDic = try orderObject.toDictionary()
-            orderObjectsDocument(orderID: orderID, userID: userID).updateData(["orderObjects": FieldValue.arrayRemove([orderObjectDic])])
+            orderObjectsDocument(orderID: orderID, userID: userID)
+                .updateData(["orderObjects": FieldValue.arrayRemove([orderObjectDic])])
         } catch {
              print(ManagerError.encodingError)
         }
@@ -160,7 +163,6 @@ class OrderManager {
     func updatePaidStatusToFalse(orderID: String, userID: String) {
         orderObjectsDocument(orderID: orderID, userID: userID).updateData(["isPaid": false])
     }
-
     // MARK: - Load order page
     func listenOrderResponse(userID: String) {
         orderResponseListener = orderCollection.whereFilter(Filter.orFilter(
@@ -183,22 +185,6 @@ class OrderManager {
             }
         })
     }
-//    func getOrderResponse(userID: String) async throws {
-//        let orders = try await orderCollection.whereFilter(Filter.orFilter(
-//            [
-//                Filter.whereField("initiatorUserID", isEqualTo: userID),
-//                Filter.whereField("joinUserIDs", arrayContains: userID)
-//            ]
-//        )).getDocuments()
-//
-//        do {
-//            let orderData: [OrderResponse] =
-//            try orders.documents.compactMap({ try $0.data(as: OrderResponse.self) })
-//            delegate?.orderManager(self, didGetAllOrderData: orderData)
-//        } catch {
-//            print(ManagerError.decodingError)
-//        }
-//    }
 
     // MARK: - Listen to order results
     func listenOrderResults(orderID: String) {
