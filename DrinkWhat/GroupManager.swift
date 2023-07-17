@@ -91,7 +91,7 @@ class GroupManager {
                 initiatorUserID: userObject.userID,
                 initiatorUserName: userObject.userName ?? "Name",
                 initiatorUserImage: userObject.userImageURL ?? "",
-                joinUserIDs: []
+                joinUserIDs: [userObject.userID]
             )
             try document.setData(from: groupObject)
             let voteResultDic = try VoteResult(shopID: shopID, userIDs: []).toDictionary()

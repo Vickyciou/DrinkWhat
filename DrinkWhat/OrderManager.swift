@@ -123,7 +123,7 @@ class OrderManager {
     func addUserIntoOrderGroup(userID: [String], orderID: String) async throws {
         let document = try await orderCollection.whereFilter(Filter.orFilter(
             [
-                Filter.whereField("initiatorUserID", isEqualTo: userID),
+//                Filter.whereField("initiatorUserID", isEqualTo: userID),
                 Filter.whereField("joinUserIDs", in: userID)
             ]
         )).whereFilter(Filter.whereField("state", isEqualTo: OrderStatus.active.rawValue)).getDocuments()
