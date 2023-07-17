@@ -15,9 +15,6 @@ class DrinkDetailViewController: UIViewController {
     private let dataSource = DrinkDetailDataSource()
     private let orderManager = OrderManager()
     private var shopObject: ShopObject
-    private var userObject: UserObject? {
-        UserManager.shared.userObject
-    }
     private var drink: ShopMenu
     private var currentVolumeIndex: Int?
     private var currentSugarIndex: Int?
@@ -130,8 +127,31 @@ extension DrinkDetailViewController {
             }
         }
     }
-    private func addOrderObject(currentVolumeIndex: Int, currentSugarIndex: Int, currentIceIndex: Int) async throws {
-        guard let userObject else {
+    private func addOrderObject(currentVolumeIndex: Int, currentSugarIndex: Int, currentIceIndex: Int) async {
+        var addToppings: [AddTopping] = []
+        currentAddToppingsIndexes.forEach { index in
+            let topping = shopObject.addToppings[index].topping
+            let price = shopObject.addToppings[index].price
+            let addTopping = AddTopping(topping: topping, price: price)
+            addToppings.append(addTopping)
+        }
+        let orderObject = OrderObject(
+            drinkName: drink.drinkName,
+            drinkPrice: drinkPrice,
+            volume: drink.drinkPrice[currentVolumeIndex].volume,
+            sugar: dataSource.sugar[currentSugarIndex],
+            ice: dataSource.ice[currentIceIndex],
+            addToppings: addToppings,
+            note: note ?? "")
+        do {
+            let userObject = try await UserManager.shared.loadCurrentUser()
+            try await orderManager.addOrderResult(
+                userID: userObject.userID,
+                orderObject: orderObject,
+                shopID: shopObject.id)
+            makeAlertToast(message: "\(drink.drinkName)", title: "已成功加入", duration: 2)
+            dismiss(animated: true)
+        } catch UserManagerError.noCurrentUser {
             let alert = UIAlertController(
                 title: "加入失敗",
                 message: "請先登入會員",
@@ -143,50 +163,26 @@ extension DrinkDetailViewController {
             alert.addAction(cancelAction)
             present(alert, animated: true)
             return
-        }
-        var addToppings: [AddTopping] = []
-        currentAddToppingsIndexes.forEach { index in
-            let topping = shopObject.addToppings[index].topping
-            let price = shopObject.addToppings[index].price
-            let addTopping = AddTopping(topping: topping, price: price)
-            addToppings.append(addTopping)
-        }
-
-        let orderObject = OrderObject(
-            drinkName: drink.drinkName,
-            drinkPrice: drinkPrice,
-            volume: drink.drinkPrice[currentVolumeIndex].volume,
-            sugar: dataSource.sugar[currentSugarIndex],
-            ice: dataSource.ice[currentIceIndex],
-            addToppings: addToppings,
-            note: note ?? "")
-        Task {
-                do {
-                    try await orderManager.addOrderResult(userID: userObject.userID,
-                                                          orderObject: orderObject, shopID: shopObject.id)
-                    makeAlertToast(message: "\(drink.drinkName)", title: "已成功加入", duration: 2)
-                    dismiss(animated: true)
-                } catch ManagerError.noData {
-                    let alert = UIAlertController(
-                        title: "加入失敗",
-                        message: "尚未加入任何團購群組哦！",
-                        preferredStyle: .alert
-                    )
-                    let okAction = UIAlertAction(title: "OK", style: .default)
-                    alert.addAction(okAction)
-                    present(alert, animated: true)
-                } catch ManagerError.noMatchData {
-                    let alert = UIAlertController(
-                        title: "加入失敗",
-                        message: "查無此商店進行中的團購哦！",
-                        preferredStyle: .alert
-                    )
-                    let okAction = UIAlertAction(title: "OK", style: .default)
-                    alert.addAction(okAction)
-                    present(alert, animated: true)
-                } catch {
-                    print("加入品項失敗：\(error)")
-                }
+        } catch ManagerError.noData {
+            let alert = UIAlertController(
+                title: "加入失敗",
+                message: "尚未加入任何團購群組哦！",
+                preferredStyle: .alert
+            )
+            let okAction = UIAlertAction(title: "OK", style: .default)
+            alert.addAction(okAction)
+            present(alert, animated: true)
+        } catch ManagerError.noMatchData {
+            let alert = UIAlertController(
+                title: "加入失敗",
+                message: "查無此商店進行中的團購哦！",
+                preferredStyle: .alert
+            )
+            let okAction = UIAlertAction(title: "OK", style: .default)
+            alert.addAction(okAction)
+            present(alert, animated: true)
+        } catch {
+            print("加入品項失敗：\(error)")
         }
     }
 }

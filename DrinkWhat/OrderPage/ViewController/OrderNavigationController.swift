@@ -25,7 +25,7 @@ protocol UserObjectsAccessible {
 
 class OrderNavigationController: UINavigationController {
     private let orderManager = OrderManager()
-    private let userManager = UserManager()
+    private let userObject: UserObject
     weak var orderNavDelegate: OrderNavigationControllerDelegate?
     private var orderResponse: OrderResponse {
         didSet {
@@ -43,13 +43,13 @@ class OrderNavigationController: UINavigationController {
             }
         }
     }
-    private let userObject = UserManager.shared.userObject
-
-    init(orderResponse: OrderResponse) {
+    init(orderResponse: OrderResponse, userObject: UserObject) {
         self.orderResponse = orderResponse
+        self.userObject = userObject
         let orderingVC = OrderingViewController(
+            userObject: userObject,
             orderResponse: orderResponse,
-            isInitiator: orderResponse.initiatorUserID == userObject?.userID
+            isInitiator: orderResponse.initiatorUserID == userObject.userID
         )
         orderingVC.setOrderResults(orderResults)
         orderingVC.setOrderResponse(orderResponse)
@@ -67,11 +67,8 @@ class OrderNavigationController: UINavigationController {
         navigationItem.hidesBackButton = true
         orderManager.delegate = self
         orderManager.listenOrderResults(orderID: orderResponse.orderID)
-        if let userObject {
-            orderManager.listenOrderResponse(userID: userObject.userID)
-        }
+        orderManager.listenOrderResponse(userID: userObject.userID)
     }
-
 
     private func isInitiator(orderResponse: OrderResponse, userObject: UserObject) -> Bool {
         orderResponse.initiatorUserID == userObject.userID
@@ -84,7 +81,7 @@ extension OrderNavigationController: OrderManagerDelegate {
             self.orderResponse = orderResponse
             let joinUsers = orderResponse.joinUserIDs
             Task {
-                let users = try await userManager.getUsers(joinUsers)
+                let users = try await UserManager.shared.getUsers(joinUsers)
                 self.viewControllers.forEach {
                     let userObjectsAccessible = $0 as? UserObjectsAccessible
                     userObjectsAccessible?.setUserObjects(users)

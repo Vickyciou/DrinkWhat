@@ -21,7 +21,7 @@ class LoginViewController: UIViewController {
     private lazy var signInWithAppleButton = ASAuthorizationAppleIDButton(type: .signIn, style: .black)
     private lazy var skipButton: UIButton = makeSkipButton()
     private var currentNonce: String?
-    private let userManager = UserManager()
+    private let userManager = UserManager.shared
     weak var delegate: LoginViewControllerDelegate?
 
     init() {

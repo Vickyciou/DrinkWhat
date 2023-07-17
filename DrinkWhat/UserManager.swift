@@ -22,16 +22,17 @@ enum UserManagerError: LocalizedError {
     }
 }
 
-
-
 protocol UserManagerDelegate: AnyObject {
     func userManager(_ manager: UserManager, didGet userObject: UserObject)
 }
+
 class UserManager {
     static let shared = UserManager()
-    var userObject: UserObject?
     let authManager = AuthManager()
     weak var delegate: UserManagerDelegate?
+    private var userObject: UserObject?
+
+    private init() {} 
 
     private let userCollection: CollectionReference = Firestore.firestore().collection("Users")
 
@@ -39,9 +40,18 @@ class UserManager {
         userCollection.document(userID)
     }
 
-    func loadCurrentUser() async throws {
-        let authDataResult = try authManager.getAuthenticatedUser()
-        self.userObject = try await getUserData(userId: authDataResult.uid)
+    func loadCurrentUser() async throws -> UserObject {
+        if let userObject { return userObject }
+        do {
+            let authDataResult = try authManager.getAuthenticatedUser()
+            let userObject = try await getUserData(userId: authDataResult.uid)
+            self.userObject = userObject
+            return userObject
+        } catch let error as URLError {
+            throw error
+        } catch {
+            throw UserManagerError.noCurrentUser
+        }
     }
 
     func createUserData(userObject: UserObject) async throws {
@@ -50,7 +60,6 @@ class UserManager {
 
     func getUserData(userId: String) async throws -> UserObject {
         let userObject = try await userDocument(userID: userId).getDocument(as: UserObject.self)
-        self.userObject = userObject
         delegate?.userManager(self, didGet: userObject)
         return userObject
     }
@@ -73,6 +82,7 @@ class UserManager {
     func signOut() {
         do {
             try authManager.signOut()
+            userObject = nil
         } catch {
             print(ManagerError.serverError)
         }

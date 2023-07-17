@@ -39,7 +39,8 @@ class ShopManager {
             if let error = error {
                 print("Error getting shops documents: \(error)")
             } else {
-                for document in querySnapshot!.documents {
+                guard let querySnapshot else { return }
+                for document in querySnapshot.documents {
                     do {
                         let shopObject = try document.data(as: ShopObject.self)
                         shopData.append(shopObject)

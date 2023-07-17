@@ -12,20 +12,16 @@ class ShopMenuViewController: UIViewController {
     private lazy var tableView: UITableView = makeTableView()
     private let groupManager = GroupManager()
     private let orderManager = OrderManager()
-    private let userManager = UserManager()
+    private let userManager = UserManager.shared
     private var shopObject: ShopObject
     private var groupObject: GroupResponse?
     private var orderResponse: OrderResponse?
-    private var userObject: UserObject? {
-        UserManager.shared.userObject
-    }
 
     init(shopObject: ShopObject, orderResponse: OrderResponse? = nil) {
         self.shopObject = shopObject
         self.orderResponse = orderResponse
         super.init(nibName: nil, bundle: nil)
     }
-
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -107,67 +103,61 @@ extension ShopMenuViewController: UITableViewDelegate {
 
 extension ShopMenuViewController: SectionHeaderViewDelegate {
     func didPressAddOrderButton(_ view: SectionHeaderView) {
-        let authUser = try? userManager.checkCurrentUser()
-        if authUser == nil {
-            let alert = UIAlertController(
-                title: "加入失敗",
-                message: "請先登入會員",
-                preferredStyle: .alert
-            )
-            let loginAction = UIAlertAction(title: "前往登入", style: .default) { _ in
-                let loginVC = LoginSheetViewController()
-                loginVC.delegate = self
-                loginVC.modalPresentationStyle = .pageSheet
-                if let sheet = loginVC.sheetPresentationController {
-                    sheet.detents = [.medium()]
-                }
-                self.present(loginVC, animated: true, completion: nil)
-            }
-            let cancelAction = UIAlertAction(title: "稍後再說", style: .cancel)
-            alert.addAction(loginAction)
-            alert.addAction(cancelAction)
-            present(alert, animated: true)
-            return
-        } else {
-            guard let userObject else { return }
-            Task {
-                do {
-                    let orderID = try await orderManager.createOrder(
-                        shopObject: shopObject,
-                        initiatorUserID: userObject.userID,
-                        initiatorUserName: userObject.userName ?? "Name").orderID
+        Task {
+            do {
+                let userObject = try await userManager.loadCurrentUser()
+                let orderID = try await orderManager.createOrder(
+                    shopObject: shopObject,
+                    initiatorUserID: userObject.userID,
+                    initiatorUserName: userObject.userName ?? "Name").orderID
 
-                    let alert = UIAlertController(
-                        title: "開啟團購囉",
-                        message: "要立刻分享給朋友嗎？",
-                        preferredStyle: .alert
-                    )
-                    DispatchQueue.main.async {
-                        let shareAction = UIAlertAction(title: "分享", style: .default) { _ in
-                            let orderID = orderID
-                            let shareURL = URL(string: "drinkWhat://share?orderID=\(orderID)")!
-                            let aVC = UIActivityViewController(activityItems: [shareURL], applicationActivities: nil)
-                            self.present(aVC, animated: true)
-
-                        }
-                        let cancelAction = UIAlertAction(title: "先不要", style: .cancel)
-                        alert.addAction(shareAction)
-                        alert.addAction(cancelAction)
-                        self.present(alert, animated: true)
+                let alert = UIAlertController(
+                    title: "開啟團購囉",
+                    message: "要立刻分享給朋友嗎？",
+                    preferredStyle: .alert
+                )
+                DispatchQueue.main.async {
+                    let shareAction = UIAlertAction(title: "分享", style: .default) { _ in
+                        let orderID = orderID
+                        let shareURL = URL(string: "drinkWhat://share?orderID=\(orderID)")!
+                        let aVC = UIActivityViewController(activityItems: [shareURL], applicationActivities: nil)
+                        self.present(aVC, animated: true)
                     }
-
-                } catch ManagerError.itemAlreadyExistsError {
-                    let alert = UIAlertController(
-                        title: "加入失敗",
-                        message: "目前已有進行中的團購囉！",
-                        preferredStyle: .alert
-                    )
-                    let okAction = UIAlertAction(title: "OK", style: .default)
-                    alert.addAction(okAction)
-                    present(alert, animated: true)
-                } catch {
-                    print("error \(error)")
+                    let cancelAction = UIAlertAction(title: "先不要", style: .cancel)
+                    alert.addAction(shareAction)
+                    alert.addAction(cancelAction)
+                    self.present(alert, animated: true)
                 }
+            } catch UserManagerError.noCurrentUser {
+                let alert = UIAlertController(
+                    title: "加入失敗",
+                    message: "請先登入會員",
+                    preferredStyle: .alert
+                )
+                let loginAction = UIAlertAction(title: "前往登入", style: .default) { _ in
+                    let loginVC = LoginSheetViewController()
+                    loginVC.delegate = self
+                    loginVC.modalPresentationStyle = .pageSheet
+                    if let sheet = loginVC.sheetPresentationController {
+                        sheet.detents = [.medium()]
+                    }
+                    self.present(loginVC, animated: true, completion: nil)
+                }
+                let cancelAction = UIAlertAction(title: "稍後再說", style: .cancel)
+                alert.addAction(loginAction)
+                alert.addAction(cancelAction)
+                present(alert, animated: true)
+            } catch ManagerError.itemAlreadyExistsError {
+                let alert = UIAlertController(
+                    title: "加入失敗",
+                    message: "目前已有進行中的團購囉！",
+                    preferredStyle: .alert
+                )
+                let okAction = UIAlertAction(title: "OK", style: .default)
+                alert.addAction(okAction)
+                present(alert, animated: true)
+            } catch {
+                print("error \(error)")
             }
         }
     }
@@ -229,7 +219,10 @@ extension ShopMenuViewController: GroupManagerDelegate {
 }
 
 extension ShopMenuViewController: LoginSheetViewControllerDelegate {
-    func loginSheetViewControllerLoginSuccess(_ viewController: LoginSheetViewController) {
+    func loginSheetViewControllerLoginSuccess(_ viewController: LoginSheetViewController, withUser userObject: UserObject) {
         makeAlertToast(message: "登入成功", title: nil, duration: 2)
+
+        // let TabBarViewController reload viewcontrollers
+        // Better put "Init LoginSheetVC" as a delegate event to HomeVC -> TabBarVC
     }
 }

@@ -10,10 +10,17 @@ import UIKit
 class OrderViewController: UIViewController {
     private lazy var tableView: UITableView = makeTableView()
     private let orderManager = OrderManager()
-    private var userObject: UserObject? {
-        UserManager.shared.userObject
-    }
+    private var userObject: UserObject
     private var orderResponses: [OrderResponse] = []
+
+    init(userObject: UserObject) {
+        self.userObject = userObject
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,7 +33,7 @@ class OrderViewController: UIViewController {
         setupTableView()
         orderManager.delegate = self
 
-        guard let userObject else { return }
+//        guard let userObject else { return }
         orderManager.listenOrderResponse(userID: userObject.userID)
 
     }
@@ -122,12 +129,12 @@ extension OrderViewController: UITableViewDelegate {
         switch indexPath.section {
         case 0:
             let continueOrders = orderResponses.filter({ $0.state == "進行中" })
-            let orderVC = OrderNavigationController(orderResponse: continueOrders[indexPath.row])
+            let orderVC = OrderNavigationController(orderResponse: continueOrders[indexPath.row], userObject: userObject)
             orderVC.orderNavDelegate = self
             present(orderVC, animated: true)
         case 1:
             let finishedOrders = orderResponses.filter({ $0.state == "已完成" || $0.state == "已取消"})
-            let orderVC = OrderNavigationController(orderResponse: finishedOrders[indexPath.row])
+            let orderVC = OrderNavigationController(orderResponse: finishedOrders[indexPath.row], userObject: userObject)
             present(orderVC, animated: true)
         default:
             return
@@ -146,7 +153,7 @@ extension OrderViewController: UITableViewDelegate {
     }
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         let orderResponse = orderResponses[indexPath.row]
-        guard let userObject else { return false }
+//        guard let userObject else { return false }
 
         if orderResponse.initiatorUserID == userObject.userID {
             return true

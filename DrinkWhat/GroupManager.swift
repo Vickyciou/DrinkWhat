@@ -50,9 +50,6 @@ class GroupManager {
     private let db = Firestore.firestore()
     weak var delegate: GroupManagerDelegate?
 // 用computer property的方式可以在一開始雖為nil，但後面取到值後還是可以將值傳入
-    private var userObject: UserObject? {
-        UserManager.shared.userObject
-    }
 
     private func groupCollection() -> CollectionReference {
         db.collection("Groups")
@@ -68,7 +65,7 @@ class GroupManager {
 
 // MARK: - 加飲料店進投票清單
     func addShopIntoGroup(shopID: String) async throws {
-        guard let userObject else { throw ManagerError.noData }
+        let userObject = try await UserManager.shared.loadCurrentUser()
         let snapshot = try await groupCollection()
             .whereFilter(Filter.andFilter(
                 [
@@ -144,6 +141,26 @@ class GroupManager {
                 }
             })
     }
+
+//    func listenGroupChangeEvent(userID: String) async throws -> [GroupResponse] {
+//        return try await withCheckedThrowingContinuation { continuation in
+//            groupListener = groupCollection()
+//                .whereFilter(Filter.orFilter([
+//                    Filter.whereField("initiatorUserID", isEqualTo: userID),
+//                    Filter.whereField("joinUserIDs", arrayContains: userID)
+//                ]))
+//                .addSnapshotListener { snapshot, error in
+//                    if let error = error {
+//                        continuation.resume(throwing: error)
+//                    } else if let snapshot = snapshot {
+//                        let groupData: [GroupResponse] = snapshot.documents.compactMap {
+//                            try? $0.data(as: GroupResponse.self)
+//                        }
+//                        continuation.resume(returning: groupData)
+//                    }
+//                }
+//        }
+//    }
 
 // MARK: - 監聽投票狀況
     func getGroupObject(groupID: String) {

@@ -26,9 +26,7 @@ class OrderingViewController: UIViewController {
     private let orderManager = OrderManager()
     private var orderResponse: OrderResponse
     private var orderResults: [OrderResults] = []
-    private var userObject: UserObject? {
-        UserManager.shared.userObject
-    }
+    private let userObject: UserObject
     private var joinUserObjects: [UserObject] = []
     private var isInitiator: Bool
     private var isFinished: Bool {
@@ -51,7 +49,8 @@ class OrderingViewController: UIViewController {
         }
     }
 
-    init(orderResponse: OrderResponse, isInitiator: Bool) {
+    init(userObject: UserObject, orderResponse: OrderResponse, isInitiator: Bool) {
+        self.userObject = userObject
         self.orderResponse = orderResponse
         self.isInitiator = isInitiator
         super.init(nibName: nil, bundle: nil)
@@ -353,9 +352,7 @@ extension OrderingViewController: OrderTableViewFooterDelegate {
             preferredStyle: .alert
         )
         let leaveAction = UIAlertAction(title: "離開", style: .default) { [self] _ in
-            if let userObject {
-                orderManager.removeUserFromOrder(userID: userObject.userID, orderID: orderResponse.orderID)
-            }
+            orderManager.removeUserFromOrder(userID: userObject.userID, orderID: orderResponse.orderID)
             dismiss(animated: true)
         }
         let cancelAction = UIAlertAction(title: "先不要", style: .cancel)

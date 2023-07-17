@@ -19,14 +19,20 @@ class ProfileViewController: UIViewController {
     private lazy var cameraButton: UIButton = makeCameraButton()
     private lazy var logOutButton: UIButton = makeLogOutButton()
     private lazy var deleteButton: UIButton = makeDeleteButton()
-    private var userObject: UserObject? {
-        UserManager.shared.userObject
-    }
+    private var userObject: UserObject
 
     weak var delegate: ProfileViewControllerDelegate?
     private let firebaseStorageManager = FirebaseStorageManager()
-    private let userManager = UserManager()
+    private let userManager = UserManager.shared
 
+    init(userObject: UserObject) {
+        self.userObject = userObject
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         setupVC()
@@ -84,7 +90,7 @@ extension ProfileViewController {
         label.numberOfLines = 0
         label.font = .title1()
         label.textColor = UIColor.darkLogoBrown
-        label.text = userObject?.userName
+        label.text = userObject.userName
         return label
     }
 
@@ -94,7 +100,7 @@ extension ProfileViewController {
         label.numberOfLines = 0
         label.font = .regular4()
         label.textColor = UIColor.darkLogoBrown
-        label.text = userObject?.email
+        label.text = userObject.email
         return label
     }
 
@@ -104,7 +110,7 @@ extension ProfileViewController {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.cornerRadius = 60
         imageView.layer.masksToBounds = true
-        imageView.loadImage(userObject?.userImageURL,
+        imageView.loadImage(userObject.userImageURL,
                             placeHolder: UIImage(systemName: "person.circle.fill")?.setColor(color: .darkBrown))
 
         return imageView
@@ -203,11 +209,11 @@ extension ProfileViewController: PHPickerViewControllerDelegate {
         let itemProviders = results.map(\.itemProvider)
         if let itemProvider = itemProviders.first, itemProvider.canLoadObject(ofClass: UIImage.self) {
             itemProvider.loadObject(ofClass: UIImage.self) {[weak self] (image, error) in
-                guard let self = self, let userObject = self.userObject, let image = image as? UIImage else { return }
+                guard let self = self, let image = image as? UIImage else { return }
                 self.firebaseStorageManager.uploadPhoto(image: image) { result in
                     switch result {
                     case .success(let url):
-                        self.userManager.updateUserImage(userID: userObject.userID, imageURL: url.absoluteString)
+                        self.userManager.updateUserImage(userID: self.userObject.userID, imageURL: url.absoluteString)
                     case .failure(let error):
                         print("Update user image fail: \(error)")
                     }

@@ -15,11 +15,11 @@ class TabBarViewController: UITabBarController, UIViewControllerTransitioningDel
     private let tabs: [Tab] = [.home, .vote, .order, .profile]
     private let groupManager = GroupManager()
     private let orderManager = OrderManager()
-    private let userManager = UserManager()
-    private var userObject = UserManager.shared.userObject
+    private let userManager = UserManager.shared
+    private(set) var userObject: UserObject?
     private let groupID: String?
     private let orderID: String?
-    weak var tabBardelegate: TabBarViewControllerDelegate?
+    weak var tabBarDelegate: TabBarViewControllerDelegate?
 
     init(groupID: String? = nil, orderID: String? = nil) {
         self.groupID = groupID
@@ -33,11 +33,17 @@ class TabBarViewController: UITabBarController, UIViewControllerTransitioningDel
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewControllers = tabs.map { $0.makeViewController() }
+        Task {
+            do {
+                let userObject = try await userManager.loadCurrentUser()
+                self.userObject = userObject
+                viewControllers = tabs.map { makeViewController(tab: $0, userObject: userObject) }
+            } catch {
+                viewControllers = tabs.map { makeViewController(tab: $0, userObject: nil) }
+            }
+        }
         switchToGroupIndex()
         switchToOrderIndex()
-        let profileVC = (viewControllers?.last as? UINavigationController)?.viewControllers.first as? ProfileViewController
-        profileVC?.delegate = self
         delegate = self
 
         let appearance = UITabBarAppearance()
@@ -59,11 +65,11 @@ class TabBarViewController: UITabBarController, UIViewControllerTransitioningDel
     }
 
     private func switchToGroupIndex() {
-        guard let groupID else { return }
+        guard let groupID , let userObject else { return }
         selectedIndex = 1
-        userObject.map {
-            groupManager.addUserIntoGroup(groupID: groupID, userID: "\($0.userID)")
-        }
+
+        groupManager.addUserIntoGroup(groupID: groupID, userID: userObject.userID)
+
     }
     private func switchToOrderIndex() {
         guard let orderID, let userObject else { return }
@@ -103,22 +109,7 @@ extension TabBarViewController {
         case order
         case profile
 
-        func makeViewController() -> UIViewController {
-            let controller: UIViewController
-            let userManager = UserManager()
-            switch self {
-            case .home: controller = UINavigationController(rootViewController: HomeViewController())
-//            case .favorite: controller = UINavigationController(rootViewController: FavoriteViewController())
-            case .vote: controller = UINavigationController(rootViewController: VoteViewController())
-            case .order: controller = UINavigationController(rootViewController: OrderViewController())
-            case .profile: controller = UINavigationController(rootViewController: ProfileViewController())
-
-            }
-            controller.tabBarItem = makeTabBarItem()
-            controller.tabBarItem.imageInsets = UIEdgeInsets(top: 6.0, left: 0.0, bottom: -6.0, right: 0.0)
-            return controller
-        }
-        private func makeTabBarItem() -> UITabBarItem {
+        func makeTabBarItem() -> UITabBarItem {
             return UITabBarItem(title: nil, image: normalImage, selectedImage: selectedImage)
         }
         private var normalImage: UIImage? {
@@ -150,23 +141,48 @@ extension TabBarViewController {
             }
         }
     }
+
+    private func makeViewController(tab: Tab, userObject: UserObject?) -> UIViewController {
+        let controller: UIViewController
+        switch tab {
+        case .home:
+            controller = UINavigationController(rootViewController: HomeViewController())
+//            case .favorite: controller = UINavigationController(rootViewController: FavoriteViewController())
+        case .vote:
+            controller = UINavigationController(rootViewController: userObject.map { VoteViewController(userObject: $0) } ?? UIViewController())
+        case .order:
+            controller = UINavigationController(rootViewController: userObject.map { OrderViewController(userObject: $0) } ?? UIViewController())
+        case .profile:
+            let rootViewController: UIViewController = {
+                if let userObject {
+                    let profileViewController = ProfileViewController(userObject: userObject)
+                    profileViewController.delegate = self
+                    return profileViewController
+                } else {
+                    return UIViewController()
+                }
+            }()
+            controller = UINavigationController(rootViewController: rootViewController)
+        }
+        controller.tabBarItem = tab.makeTabBarItem()
+        controller.tabBarItem.imageInsets = UIEdgeInsets(top: 6.0, left: 0.0, bottom: -6.0, right: 0.0)
+        return controller
+    }
 }
 
 extension TabBarViewController: ProfileViewControllerDelegate {
     func profileViewControllerDidPressLogOut(_ viewController: ProfileViewController) {
-        tabBardelegate?.getProfileViewControllerDidPressLogOut(self)
+        tabBarDelegate?.getProfileViewControllerDidPressLogOut(self)
     }
 }
 
 extension TabBarViewController: UITabBarControllerDelegate {
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
-        if
-            let navVC = viewController as? UINavigationController,
-            navVC.viewControllers.first is HomeViewController {
+        if let navVC = viewController as? UINavigationController,
+           navVC.viewControllers.first is HomeViewController {
             return true
         } else {
-            let authUser = try? userManager.checkCurrentUser()
-            if authUser == nil {
+            if userObject == nil {
                 let loginVC = LoginSheetViewController()
                 loginVC.delegate = self
                 loginVC.modalPresentationStyle = .pageSheet
@@ -183,9 +199,9 @@ extension TabBarViewController: UITabBarControllerDelegate {
 }
 
 extension TabBarViewController: LoginSheetViewControllerDelegate {
-    func loginSheetViewControllerLoginSuccess(_ viewController: LoginSheetViewController) {
+    func loginSheetViewControllerLoginSuccess(_ viewController: LoginSheetViewController, withUser userObject: UserObject) {
+        self.userObject = userObject
+        viewControllers = tabs.map { makeViewController(tab: $0, userObject: userObject) }
         makeAlertToast(message: "登入成功", title: nil, duration: 2)
     }
-
-
 }

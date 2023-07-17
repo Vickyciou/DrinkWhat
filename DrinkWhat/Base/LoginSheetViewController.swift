@@ -12,7 +12,7 @@ import CryptoKit
 import FirebaseAuth
 
 protocol LoginSheetViewControllerDelegate: AnyObject {
-    func loginSheetViewControllerLoginSuccess(_ viewController: LoginSheetViewController)
+    func loginSheetViewControllerLoginSuccess(_ viewController: LoginSheetViewController, withUser userObject: UserObject)
 }
 
 class LoginSheetViewController: UIViewController {
@@ -21,7 +21,7 @@ class LoginSheetViewController: UIViewController {
     private lazy var descriptionLabel: UILabel = makeDescriptionLabel()
     private lazy var closeButton: UIButton = makeCloseButton()
     private var currentNonce: String?
-    private let userManager = UserManager()
+    private let userManager = UserManager.shared
     weak var delegate: LoginSheetViewControllerDelegate?
 
     init() {
@@ -44,6 +44,7 @@ class LoginSheetViewController: UIViewController {
     private func setupMainView() {
         let contents = [remindLabel, descriptionLabel, closeButton, signInWithAppleButton]
         contents.forEach { view.addSubview($0) }
+        signInWithAppleButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             remindLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
             remindLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
@@ -53,10 +54,10 @@ class LoginSheetViewController: UIViewController {
             closeButton.topAnchor.constraint(equalTo: remindLabel.topAnchor),
             closeButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             signInWithAppleButton.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 50),
-            signInWithAppleButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            signInWithAppleButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16.0),
+            signInWithAppleButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16.0),
+            signInWithAppleButton.heightAnchor.constraint(equalToConstant: 50.0)
         ])
-
-        signInWithAppleButton.translatesAutoresizingMaskIntoConstraints = false
         signInWithAppleButton.addTarget(self, action: #selector(startSignInWithAppleFlow), for: .touchUpInside)
     }
 
@@ -68,8 +69,8 @@ class LoginSheetViewController: UIViewController {
                 let authDataResult = try await userManager.signInWithApple(tokens: tokens)
                 let user = UserObject(auth: authDataResult)
                 try await UserManager.shared.createUserData(userObject: user)
-                try await UserManager.shared.loadCurrentUser()
-                delegate?.loginSheetViewControllerLoginSuccess(self)
+                let userObject = try await UserManager.shared.loadCurrentUser()
+                delegate?.loginSheetViewControllerLoginSuccess(self, withUser: userObject)
                 dismiss(animated: true)
             } catch {
                 print("startSignInWithAppleFlow error \(error)")

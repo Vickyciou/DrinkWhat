@@ -19,11 +19,12 @@ class NotVotedViewController: UIViewController {
     private var shopObjects: [ShopObject] = []
     private var newVoteResults: [(voteResult: VoteResult, isSelected: Bool)] = []
     private let groupManager = GroupManager()
-    private let userObject = UserManager.shared.userObject
+    private let userObject: UserObject
     private lazy var cancelLabel: UILabel = makeLabel()
     weak var delegate: NotVotedViewControllerDelegate?
 
-    init(groupObject: GroupResponse, isInitiator: Bool) {
+    init(userObject: UserObject, groupObject: GroupResponse, isInitiator: Bool) {
+        self.userObject = userObject
         self.groupObject = groupObject
         self.isInitiator = isInitiator
         super.init(nibName: nil, bundle: nil)
@@ -164,8 +165,7 @@ extension NotVotedViewController {
         return button
     }
     @objc func submitButtonTapped(_ sender: UIButton) {
-        guard let selectedShop = newVoteResults.first(where: { $0.isSelected == true }),
-              let userObject = userObject else { return }
+        guard let selectedShop = newVoteResults.first(where: { $0.isSelected == true }) else { return }
         groupManager.addVoteResults(
             groupID: groupObject.groupID,
             shopID: selectedShop.voteResult.shopID,
@@ -220,11 +220,7 @@ extension NotVotedViewController: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        if let userObject, groupObject.initiatorUserID == userObject.userID {
-            return true
-        } else {
-            return false
-        }
+        return groupObject.initiatorUserID == userObject.userID
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

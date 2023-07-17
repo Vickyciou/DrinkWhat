@@ -10,11 +10,18 @@ import UIKit
 class VoteViewController: UIViewController {
     private lazy var tableView: UITableView = makeTableView()
     private let groupManager = GroupManager()
-    private var userObject: UserObject? {
-        UserManager.shared.userObject
-    }
+//    private var userManager: UserManager
+    private var userObject: UserObject
     private var groupObjects: [GroupResponse] = []
+    private var groupObjects2: [GroupResponse] = []
+    init(userObject: UserObject) {
+        self.userObject = userObject
+        super.init(nibName: nil, bundle: nil)
+    }
 
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         setupVC()
@@ -23,7 +30,6 @@ class VoteViewController: UIViewController {
         view.backgroundColor = .white
         setNavController()
         setupTableView()
-        guard let userObject = userObject else { return }
         groupManager.listenGroupChangeEvent(userID: userObject.userID)
         groupManager.delegate = self
     }
@@ -38,7 +44,6 @@ class VoteViewController: UIViewController {
         navigationItem.hidesBackButton = true
 
         navigationItem.title = "投票首頁"
-//        tabBarController?.tabBar.backgroundColor = .lightYellow
     }
     private func setupTableView() {
         view.addSubview(tableView)
@@ -70,17 +75,14 @@ extension VoteViewController: UITableViewDataSource {
         2
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
-
         switch section {
         case 0:
             let continueVotes = groupObjects.filter({ $0.state == GroupStatus.active.rawValue })
             return continueVotes.count
         case 1:
-            let finishedVotes = groupObjects.filter(
-                { $0.state == GroupStatus.canceled.rawValue ||
-                    $0.state == GroupStatus.finished.rawValue }
-                )
+            let finishedVotes = groupObjects.filter {
+                $0.state == GroupStatus.canceled.rawValue || $0.state == GroupStatus.finished.rawValue
+            }
             return finishedVotes.count
         default:
             return 0
@@ -126,14 +128,14 @@ extension VoteViewController: UITableViewDelegate {
         switch indexPath.section {
         case 0:
             let continueVotes = groupObjects.filter({ $0.state == GroupStatus.active.rawValue })
-            let voteNavigationVC = VoteNavigationController(groupID: continueVotes[indexPath.row].groupID)
+            let voteNavigationVC = VoteNavigationController(userObject: userObject, groupID: continueVotes[indexPath.row].groupID)
             present(voteNavigationVC, animated: true)
         case 1:
             let finishedVotes = groupObjects.filter(
                 { $0.state == GroupStatus.canceled.rawValue ||
                     $0.state == GroupStatus.finished.rawValue }
                 )
-            let voteNavigationVC = VoteNavigationController(groupID: finishedVotes[indexPath.row].groupID)
+            let voteNavigationVC = VoteNavigationController(userObject: userObject, groupID: finishedVotes[indexPath.row].groupID)
             present(voteNavigationVC, animated: true)
         default:
             return

@@ -37,9 +37,10 @@ class VoteNavigationController: UINavigationController {
             }
         }
     }
-    private let userObject = UserManager.shared.userObject
+    private let userObject: UserObject
 
-    init(groupID: String) {
+    init(userObject: UserObject, groupID: String) {
+        self.userObject = userObject
         self.groupID = groupID
         super.init(nibName: nil, bundle: nil)
     }
@@ -87,6 +88,7 @@ class VoteNavigationController: UINavigationController {
         } else {
             if viewControllers.last is NotVotedViewController { return }
             let notVotedVC = NotVotedViewController(
+                userObject: userObject,
                 groupObject: groupObject,
                 isInitiator: groupObject.initiatorUserID == userObject.userID
             )
@@ -127,7 +129,7 @@ extension VoteNavigationController: GroupManagerDelegate {
 extension VoteNavigationController: ShopManagerDelegate {
     func shopManager(_ manager: ShopManager, didGetShopData shopData: [ShopObject]) {
         shopObjects = shopData
-        if let groupObject, let userObject {
+        if let groupObject {
             decideVC(groupObject: groupObject, userObject: userObject, voteResults: voteResults, shopObjects: shopData)
         }
     }
@@ -141,8 +143,7 @@ extension VoteNavigationController: NotVotedViewControllerDelegate {
 
 extension VoteNavigationController: VotingViewControllerDelegate {
     func didPressEndVoteButton(_ vc: VotingViewController) {
-        guard let voteResult = voteResults.first,
-            let userObject else { return }
+        guard let voteResult = voteResults.first else { return }
         let winnerShopID = voteResult.shopID
         guard let shop = shopObjects.first(where: { $0.id == winnerShopID }) else { return }
 
