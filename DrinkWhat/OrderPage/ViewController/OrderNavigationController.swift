@@ -7,10 +7,6 @@
 
 import UIKit
 
-protocol OrderNavigationControllerDelegate: AnyObject {
-    func didPressAddItemButton(_ vc: OrderNavigationController, orderResponse: OrderResponse)
-}
-
 protocol OrderResultsAccessible {
     func setOrderResults(_ orderResults: [OrderResults])
 }
@@ -26,7 +22,6 @@ protocol UserObjectsAccessible {
 class OrderNavigationController: UINavigationController {
     private let orderManager = OrderManager()
     private let userObject: UserObject
-    weak var orderNavDelegate: OrderNavigationControllerDelegate?
     private var orderResponse: OrderResponse {
         didSet {
             viewControllers.forEach {
@@ -54,7 +49,6 @@ class OrderNavigationController: UINavigationController {
         orderingVC.setOrderResults(orderResults)
         orderingVC.setOrderResponse(orderResponse)
         super.init(rootViewController: orderingVC)
-        orderingVC.delegate = self
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -99,25 +93,19 @@ extension OrderNavigationController: OrderManagerDelegate {
     }
 }
 
-extension OrderNavigationController: OrderingViewControllerDelegate {
-    func didPressAddItemButton(_ vc: OrderingViewController, orderResponse: OrderResponse) {
-        orderNavDelegate?.didPressAddItemButton(self, orderResponse: orderResponse)
-    }
-}
-
-extension Array {
-    func asyncMap<T>(_ transform: @escaping (Element) async throws -> T) async throws -> [T] {
-        var results: [T] = []
-        try await withThrowingTaskGroup(of: T.self) { group in
-            for element in self {
-                group.addTask {
-                    try await transform(element)
-                }
-            }
-            for try await result in group {
-                results.append(result)
-            }
-        }
-        return results
-    }
-}
+//extension Array {
+//    func asyncMap<T>(_ transform: @escaping (Element) async throws -> T) async throws -> [T] {
+//        var results: [T] = []
+//        try await withThrowingTaskGroup(of: T.self) { group in
+//            for element in self {
+//                group.addTask {
+//                    try await transform(element)
+//                }
+//            }
+//            for try await result in group {
+//                results.append(result)
+//            }
+//        }
+//        return results
+//    }
+//}

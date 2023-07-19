@@ -149,16 +149,19 @@ extension VoteNavigationController: VotingViewControllerDelegate {
 
         Task {
             do {
-                let orderID = try await
-                orderManager.createOrder(shopObject: shop,
-                                         initiatorUserID: userObject.userID,
-                                         initiatorUserName: userObject.userName ?? "Name").orderID
+                let orderID = try await orderManager.createOrder(
+                    shopObject: shop,
+                    initiatorUserID: userObject.userID,
+                    initiatorUserName: userObject.userName ?? "Name"
+                ).orderID
                 groupManager.setVoteStatus(groupID: groupID, status: GroupStatus.finished.rawValue)
 
                 if let joinUserIDs = groupObject.flatMap({ $0.joinUserIDs }) {
-                    try await orderManager.addUserIntoOrderGroup(userID: joinUserIDs, orderID: orderID)
-                    }
-    
+                    try await orderManager.addUsers(
+                        userIDs: joinUserIDs,
+                        toJoinOrder: orderID
+                    )
+                }
             } catch ManagerError.itemAlreadyExistsError {
                 let alert = UIAlertController(
                     title: "開團失敗",

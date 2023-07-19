@@ -173,12 +173,6 @@ extension OrderViewController: UITableViewDelegate {
         tableView.deleteRows(at: [indexPath], with: .fade)
     }
 }
-extension OrderViewController: OrderNavigationControllerDelegate {
-    func didPressAddItemButton(_ vc: OrderNavigationController, orderResponse: OrderResponse) {
-        let shopMenuVC = ShopMenuViewController(shopObject: orderResponse.shopObject)
-        present(shopMenuVC, animated: true)
-    }
-}
 
 extension OrderViewController: OrderManagerDelegate {
     func orderManager(_ manager: OrderManager, didGetAllOrderData orderData: [OrderResponse]) {

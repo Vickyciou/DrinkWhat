@@ -7,10 +7,6 @@
 
 import UIKit
 
-protocol OrderingViewControllerDelegate: AnyObject {
-    func didPressAddItemButton(_ vc: OrderingViewController, orderResponse: OrderResponse)
-}
-
 class OrderingViewController: UIViewController {
 
     enum BottomViewUIState {
@@ -34,7 +30,6 @@ class OrderingViewController: UIViewController {
             || orderResponse.state == OrderStatus.finished.rawValue
         ? true : false
     }
-    weak var delegate: OrderingViewControllerDelegate?
     private let footerView = OrderTableViewFooter(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
     private let headerView = OrderTableViewHeader(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
     private var state: BottomViewUIState {
@@ -315,9 +310,8 @@ extension OrderingViewController: JoinUsersBottomViewDelegate {
     }
 
     func addItemButtonTapped(_ view: JoinUsersBottomView) {
-        dismiss(animated: true) { [self] in
-            delegate?.didPressAddItemButton(self, orderResponse: orderResponse)
-        }
+        let shopMenuVC = ShopMenuViewController(shopObject: orderResponse.shopObject)
+        present(shopMenuVC, animated: true)
     }
 }
 extension OrderingViewController: OrderSectionHeaderViewDelegate {

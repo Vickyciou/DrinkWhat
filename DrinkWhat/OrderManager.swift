@@ -120,18 +120,32 @@ class OrderManager {
         }
     }
 
-    func addUserIntoOrderGroup(userID: [String], orderID: String) async throws {
-        let document = try await orderCollection.whereFilter(Filter.orFilter(
-            [
-//                Filter.whereField("initiatorUserID", isEqualTo: userID),
-                Filter.whereField("joinUserIDs", in: userID)
-            ]
-        )).whereFilter(Filter.whereField("state", isEqualTo: OrderStatus.active.rawValue)).getDocuments()
+    func addUsers(userIDs: [String], toJoinOrder orderID: String) async throws {
+        let usersQuery = try await orderCollection
+            .whereField("joinUserIDs", arrayContainsAny: userIDs)
+            .whereFilter(Filter.whereField("state", isEqualTo: OrderStatus.active.rawValue))
+            .getDocuments()
+        var orders: [OrderResponse] = []
+        var errors: [Error] = []
+        for document in usersQuery.documents {
+            do {
+                let order = try document.data(as: OrderResponse.self)
+                orders.append(order)
+            } catch {
+                errors.append(error)
+            }
+        }
 
-        if (document.documents.first?.data()) == nil {
-            try await orderDocument(orderID: orderID).updateData(["joinUserIDs": FieldValue.arrayUnion(userID)])
-        } else {
-            throw ManagerError.alreadyAddAnotherOrderError
+        let queryOrderUserIDs = Set(orders.flatMap { $0.joinUserIDs })
+        let alreadyInActiveUserIDs = queryOrderUserIDs.intersection(Set(userIDs)) // 交集
+        let notActiveUserIDs = Set(userIDs).symmetricDifference(alreadyInActiveUserIDs) // 剩下的
+
+        // Join to order
+        try await orderDocument(orderID: orderID)
+            .updateData(["joinUserIDs": FieldValue.arrayUnion(Array(notActiveUserIDs))])
+
+        Array(alreadyInActiveUserIDs).forEach {
+            print("\($0) is already in active order.")
         }
     }
 
