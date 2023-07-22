@@ -12,25 +12,12 @@ class DrinkDetailViewController: UIViewController {
     private let topView = DrinkDetailTopView(frame: .zero)
     private lazy var tableView: UITableView = makeTableView()
     private lazy var addItemButton: UIButton = makeAddItemButton()
-    private let dataSource = DrinkDetailDataSource()
-    private let orderManager = OrderManager()
-    private var shopObject: ShopObject
-    private var drink: ShopMenu
-    private var currentVolumeIndex: Int?
-    private var currentSugarIndex: Int?
-    private var currentIceIndex: Int?
-    private var currentAddToppingsIndexes: Set<Int> = []
-    private var drinkPrice: Int {
-        let basePrice = currentVolumeIndex.map { drink.drinkPrice[$0].price } ?? drink.drinkPrice[0].price
-        let extraPrice = currentAddToppingsIndexes.map { shopObject.addToppings[$0].price }.reduce(0, +)
-        return basePrice + extraPrice
-    }
     private let footerView = DrinkDetailTableViewFooter(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-    private var note: String?
+
+    private let viewModel: DrinkDetailViewModel
 
     init(shopObject: ShopObject, drink: ShopMenu) {
-        self.shopObject = shopObject
-        self.drink = drink
+        self.viewModel = DrinkDetailViewModel(drink: drink, shopObject: shopObject)
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -41,6 +28,7 @@ class DrinkDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupVC()
+        viewModel.delegate = self
     }
     private func setupVC() {
         view.backgroundColor = .white
@@ -56,7 +44,7 @@ class DrinkDetailViewController: UIViewController {
             topView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             topView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
         ])
-        topView.setupTopView(drinkName: drink.drinkName, price: drinkPrice)
+        topView.setupTopView(drinkName: viewModel.getDrink().drinkName, price: viewModel.calculateDrinkPrice())
     }
     private func setupTableView() {
         view.addSubview(tableView)
@@ -109,13 +97,14 @@ extension DrinkDetailViewController {
         return button
     }
     @objc func addItemButtonTapped() {
+        view.endEditing(true)
         Task {
-            if let currentVolumeIndex, let currentSugarIndex, let currentIceIndex {
-                await addOrderObject(currentVolumeIndex: currentVolumeIndex,
-                                         currentSugarIndex: currentSugarIndex,
-                                         currentIceIndex: currentIceIndex)
-            } else {
-                // 如果沒有選取儲存格，執行相應的處理
+            do {
+                try await viewModel.addOrderObject()
+
+                makeAlertToast(message: "\(viewModel.getDrink().drinkName)", title: "已成功加入", duration: 2)
+                dismiss(animated: true)
+            } catch OrderManagerError.selectionMissingError {
                 let alert = UIAlertController(
                     title: "加入失敗",
                     message: "容量、甜度、冰量都需要選取哦！",
@@ -124,65 +113,41 @@ extension DrinkDetailViewController {
                 let okAction = UIAlertAction(title: "OK", style: .default)
                 alert.addAction(okAction)
                 present(alert, animated: true)
+
+            } catch UserManagerError.noCurrentUser {
+                let alert = UIAlertController(
+                    title: "加入失敗",
+                    message: "請先登入會員",
+                    preferredStyle: .alert
+                )
+                let loginAction = UIAlertAction(title: "前往登入", style: .default)
+                let cancelAction = UIAlertAction(title: "稍後再說", style: .cancel)
+                alert.addAction(loginAction)
+                alert.addAction(cancelAction)
+                present(alert, animated: true)
+
+            } catch OrderManagerError.noData {
+                let alert = UIAlertController(
+                    title: "加入失敗",
+                    message: "尚未加入任何團購群組哦！",
+                    preferredStyle: .alert
+                )
+                let okAction = UIAlertAction(title: "OK", style: .default)
+                alert.addAction(okAction)
+                present(alert, animated: true)
+
+            } catch OrderManagerError.noMatchData {
+                let alert = UIAlertController(
+                    title: "加入失敗",
+                    message: "查無此商店進行中的團購哦！",
+                    preferredStyle: .alert
+                )
+                let okAction = UIAlertAction(title: "OK", style: .default)
+                alert.addAction(okAction)
+                present(alert, animated: true)
+            } catch {
+                print("Fail with add OrderObject \(error)")
             }
-        }
-    }
-    private func addOrderObject(currentVolumeIndex: Int, currentSugarIndex: Int, currentIceIndex: Int) async {
-        var addToppings: [AddTopping] = []
-        currentAddToppingsIndexes.forEach { index in
-            let topping = shopObject.addToppings[index].topping
-            let price = shopObject.addToppings[index].price
-            let addTopping = AddTopping(topping: topping, price: price)
-            addToppings.append(addTopping)
-        }
-        let orderObject = OrderObject(
-            drinkName: drink.drinkName,
-            drinkPrice: drinkPrice,
-            volume: drink.drinkPrice[currentVolumeIndex].volume,
-            sugar: dataSource.sugar[currentSugarIndex],
-            ice: dataSource.ice[currentIceIndex],
-            addToppings: addToppings,
-            note: note ?? "")
-        do {
-            let userObject = try await UserManager.shared.loadCurrentUser()
-            try await orderManager.addOrderResult(
-                userID: userObject.userID,
-                orderObject: orderObject,
-                shopID: shopObject.id)
-            makeAlertToast(message: "\(drink.drinkName)", title: "已成功加入", duration: 2)
-            dismiss(animated: true)
-        } catch UserManagerError.noCurrentUser {
-            let alert = UIAlertController(
-                title: "加入失敗",
-                message: "請先登入會員",
-                preferredStyle: .alert
-            )
-            let loginAction = UIAlertAction(title: "前往登入", style: .default)
-            let cancelAction = UIAlertAction(title: "稍後再說", style: .cancel)
-            alert.addAction(loginAction)
-            alert.addAction(cancelAction)
-            present(alert, animated: true)
-            return
-        } catch ManagerError.noData {
-            let alert = UIAlertController(
-                title: "加入失敗",
-                message: "尚未加入任何團購群組哦！",
-                preferredStyle: .alert
-            )
-            let okAction = UIAlertAction(title: "OK", style: .default)
-            alert.addAction(okAction)
-            present(alert, animated: true)
-        } catch ManagerError.noMatchData {
-            let alert = UIAlertController(
-                title: "加入失敗",
-                message: "查無此商店進行中的團購哦！",
-                preferredStyle: .alert
-            )
-            let okAction = UIAlertAction(title: "OK", style: .default)
-            alert.addAction(okAction)
-            present(alert, animated: true)
-        } catch {
-            print("加入品項失敗：\(error)")
         }
     }
 }
@@ -193,19 +158,9 @@ extension DrinkDetailViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-        case 0:
-            return drink.drinkPrice.count
-        case 1:
-            return dataSource.sugar.count
-        case 2:
-            return dataSource.ice.count
-        case 3:
-            return shopObject.addToppings.count
-        default:
-            return 0
-        }
+        viewModel.numberOfRowsInSection(section: section)
     }
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "DrinkDetailCell", for: indexPath)
                 as? DrinkDetailCell else { fatalError("Cannot created DrinkDetailCell") }
@@ -214,28 +169,28 @@ extension DrinkDetailViewController: UITableViewDataSource {
         switch section {
         case 0:
             cell.setupCell(
-                description: drink.drinkPrice[indexPath.row].volume,
-                isSelected: currentVolumeIndex == indexPath.row
+                description: viewModel.getDrink().drinkPrice[indexPath.row].volume,
+                isSelected: viewModel.currentVolumeIndexSelected(index: indexPath.row)
             )
             return cell
         case 1:
             cell.setupCell(
-                description: dataSource.sugar[indexPath.row],
-                isSelected: currentSugarIndex == indexPath.row
+                description: viewModel.getDataSource().sugar[indexPath.row],
+                isSelected: viewModel.currentSugarIndexSelected(index: indexPath.row)
             )
             return cell
         case 2:
             cell.setupCell(
-                description: dataSource.ice[indexPath.row],
-                isSelected: currentIceIndex == indexPath.row
+                description: viewModel.getDataSource().ice[indexPath.row],
+                isSelected: viewModel.currentIceIndexSelected(index: indexPath.row)
             )
             return cell
         case 3:
-            let addToppings = shopObject.addToppings[indexPath.row]
+            let addToppings = viewModel.getShopObject().addToppings[indexPath.row]
             cell.setupAddToppingCell(
                 description: addToppings.topping,
                 addPrice: addToppings.price,
-                isSelected: currentAddToppingsIndexes.contains(indexPath.row)
+                isSelected: viewModel.currentAddToppingsIndexesSelected(index: indexPath.row)
             )
             return cell
         default:
@@ -271,7 +226,7 @@ extension DrinkDetailViewController: UITableViewDelegate {
         case 2:
             titleLabel.text = "冰量"
         case 3:
-            if !shopObject.addToppings.isEmpty {
+            if !viewModel.getShopObject().addToppings.isEmpty {
                 titleLabel.text = "加料"
             } else {
                 titleLabel.text = nil
@@ -297,18 +252,13 @@ extension DrinkDetailViewController: UITableViewDelegate {
         let section = indexPath.section
         switch section {
         case 0:
-            currentVolumeIndex.toggleValue(indexPath.row)
-            currentVolumeIndex = indexPath.row
-            topView.setupTopView(drinkName: drink.drinkName, price: drinkPrice)
+            viewModel.setCurrentVolumeIndex(index: indexPath.row)
         case 1:
-            currentSugarIndex.toggleValue(indexPath.row)
-            currentSugarIndex = indexPath.row
+            viewModel.setCurrentSugarIndex(index: indexPath.row)
         case 2:
-            currentIceIndex.toggleValue(indexPath.row)
-            currentIceIndex = indexPath.row
+            viewModel.setCurrentIceIndex(index: indexPath.row)
         case 3:
-            currentAddToppingsIndexes.toggle(with: indexPath.row)
-            topView.setupTopView(drinkName: drink.drinkName, price: drinkPrice)
+            viewModel.setCurrentAddToppingIndexes(index: indexPath.row)
         default:
             return
         }
@@ -318,28 +268,13 @@ extension DrinkDetailViewController: UITableViewDelegate {
 
 extension DrinkDetailViewController: DrinkDetailTableViewFooterDelegate {
     func textFieldEndEditing(_ view: DrinkDetailTableViewFooter, text: String) {
-        note = text
-    }
-
-
-}
-
-extension Optional where Wrapped == Int {
-    mutating func toggleValue(_ value: Int) {
-        if let unwrappedValue = self, unwrappedValue == value {
-            self = nil
-        } else {
-            self = value
-        }
+        viewModel.setNote(note: text)
     }
 }
 
-extension Set {
-    mutating func toggle(with value: Element) {
-        if contains(value) {
-            remove(value)
-        } else {
-            insert(value)
-        }
+extension DrinkDetailViewController: DrinkDetailViewModelDelegate {
+    func topViewNeedToReloadData(_ viewModel: DrinkDetailViewModel) {
+        topView.setupTopView(drinkName: viewModel.getDrink().drinkName,
+                             price: viewModel.calculateDrinkPrice())
     }
 }

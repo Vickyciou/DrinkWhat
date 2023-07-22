@@ -13,7 +13,7 @@ class VoteViewController: UIViewController {
 //    private var userManager: UserManager
     private var userObject: UserObject
     private var groupObjects: [GroupResponse] = []
-    private var groupObjects2: [GroupResponse] = []
+//    private var groupObjects2: [GroupResponse] = []
     init(userObject: UserObject) {
         self.userObject = userObject
         super.init(nibName: nil, bundle: nil)

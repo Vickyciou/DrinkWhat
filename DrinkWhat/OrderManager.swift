@@ -20,6 +20,22 @@ enum OrderStatus: String {
     case canceled = "已取消"
     case finished = "已完成"
 }
+enum OrderManagerError: LocalizedError {
+    case noData, encodingError, itemAlreadyExistsError, selectionMissingError,
+         hadActiveOrderGroup, alreadyAddAnotherOrderError, noMatchData
+
+    var errorDescription: String? {
+        switch self {
+        case .noData: return "No data error"
+        case .encodingError: return "Encoding error"
+        case .itemAlreadyExistsError: return "Item Already Exists."
+        case .selectionMissingError: return "Selection is missing."
+        case .hadActiveOrderGroup: return "Had active order group"
+        case .alreadyAddAnotherOrderError: return "Already add another order"
+        case .noMatchData: return "Could not found match data"
+        }
+    }
+}
 
 class OrderManager {
     weak var delegate: OrderManagerDelegate?
@@ -52,7 +68,7 @@ class OrderManager {
         )).whereFilter(Filter.whereField("state", isEqualTo: OrderStatus.active.rawValue)).getDocuments()
 
         if (document.documents.first?.data()) != nil {
-            throw ManagerError.itemAlreadyExistsError
+            throw OrderManagerError.itemAlreadyExistsError
         } else {
             let orderID = orderCollection.document().documentID
             let order = OrderResponse(
@@ -95,10 +111,10 @@ class OrderManager {
                 }
 
             } else {
-                throw ManagerError.noMatchData
+                throw OrderManagerError.noMatchData
             }
         } else {
-            throw ManagerError.noData
+            throw OrderManagerError.noData
         }
     }
 
@@ -114,9 +130,9 @@ class OrderManager {
         if (document.documents.first?.data()) == nil {
             try await orderDocument(orderID: orderID).updateData(["joinUserIDs": FieldValue.arrayUnion([userID])])
         } else if document.documents.first?.data()["initiatorUserID"] as! String == userID {
-            throw ManagerError.hadActiveOrderGroup
+            throw OrderManagerError.hadActiveOrderGroup
         } else {
-            throw ManagerError.alreadyAddAnotherOrderError
+            throw OrderManagerError.alreadyAddAnotherOrderError
         }
     }
 
@@ -166,7 +182,7 @@ class OrderManager {
             orderObjectsDocument(orderID: orderID, userID: userID)
                 .updateData(["orderObjects": FieldValue.arrayRemove([orderObjectDic])])
         } catch {
-             print(ManagerError.encodingError)
+             print(OrderManagerError.encodingError)
         }
     }
     // MARK: - update user paid status

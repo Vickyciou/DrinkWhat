@@ -10,8 +10,6 @@ import UIKit
 class OrderingViewController: UIViewController {
 
     enum BottomViewUIState {
-//        case isInitiator
-//        case isFinished
         case initialUser
         case initialUserFinished
         case joinUser
@@ -97,14 +95,6 @@ class OrderingViewController: UIViewController {
 
 
         navigationItem.setRightBarButtonItems([closeButton, shareButton], animated: false)
-
-//        if !isInitiator ||
-//            orderResponse.state == OrderStatus.canceled.rawValue ||
-//            orderResponse.state == OrderStatus.finished.rawValue {
-//            navigationItem.leftBarButtonItem = nil
-//        } else {
-//            navigationItem.setLeftBarButton(cancelButton, animated: false)
-//        }
     }
     @objc private func closeButtonTapped() {
         dismiss(animated: true)

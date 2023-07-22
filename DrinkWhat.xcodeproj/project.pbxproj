@@ -10,6 +10,7 @@
 		F6E573017D9A86AE4188F657 /* Pods_DrinkWhat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FB21740431A239E7B61383D /* Pods_DrinkWhat.framework */; };
 		FA2820B12A406E98009FDAD2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA2820B02A406E98009FDAD2 /* GoogleService-Info.plist */; };
 		FA2820BE2A4158BD009FDAD2 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2820BD2A4158BD009FDAD2 /* UIImage+Extension.swift */; };
+		FA28534E2A6A79B800DD40CB /* DrinkDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA28534D2A6A79B800DD40CB /* DrinkDetailViewModel.swift */; };
 		FA6C33252A4851FC005CC96E /* URL+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6C33242A4851FC005CC96E /* URL+Extension.swift */; };
 		FA7179332A3A9DF7002C407C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7179322A3A9DF7002C407C /* AppDelegate.swift */; };
 		FA7179352A3A9DF7002C407C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7179342A3A9DF7002C407C /* SceneDelegate.swift */; };
@@ -80,6 +81,7 @@
 		DEE07C5BA30E83A3E151349C /* Pods-DrinkWhat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DrinkWhat.debug.xcconfig"; path = "Target Support Files/Pods-DrinkWhat/Pods-DrinkWhat.debug.xcconfig"; sourceTree = "<group>"; };
 		FA2820B02A406E98009FDAD2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FA2820BD2A4158BD009FDAD2 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
+		FA28534D2A6A79B800DD40CB /* DrinkDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkDetailViewModel.swift; sourceTree = "<group>"; };
 		FA6C33242A4851FC005CC96E /* URL+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Extension.swift"; sourceTree = "<group>"; };
 		FA71792F2A3A9DF7002C407C /* DrinkWhat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DrinkWhat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA7179322A3A9DF7002C407C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -174,6 +176,14 @@
 				30934C47FEC6CC2DA01CFD4E /* Pods-DrinkWhat.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		FA28534C2A6A798D00DD40CB /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				FA28534D2A6A79B800DD40CB /* DrinkDetailViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		FA7179262A3A9DF7002C407C = {
@@ -309,6 +319,7 @@
 			isa = PBXGroup;
 			children = (
 				FAB2B9DC2A4AE4F000EB449C /* DrinkDetailDataSource.swift */,
+				FA28534C2A6A798D00DD40CB /* ViewModel */,
 				FAB2B9D92A4AE1C200EB449C /* ViewController */,
 				FAB2B9D82A4AE1AF00EB449C /* View */,
 			);
@@ -328,8 +339,8 @@
 		FA9AABE82A502AE300B99FB7 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				FA9AABE12A4F1DA400B99FB7 /* CustomDrinkCell.swift */,
 				FA9AABDD2A4EC45300B99FB7 /* MainOrderCell.swift */,
+				FA9AABE12A4F1DA400B99FB7 /* CustomDrinkCell.swift */,
 				FA9AABE92A5030A300B99FB7 /* OrderSectionHeaderView.swift */,
 				FA9AABEB2A5069B100B99FB7 /* OrderSectionFooterView.swift */,
 				FA9AABED2A51210700B99FB7 /* OrderTableViewHeader.swift */,
@@ -563,6 +574,7 @@
 				FAF2AE172A4A8F8400F27B64 /* RootViewController.swift in Sources */,
 				FA7179502A3ABC46002C407C /* VoteViewController.swift in Sources */,
 				FA9AABEA2A5030A300B99FB7 /* OrderSectionHeaderView.swift in Sources */,
+				FA28534E2A6A79B800DD40CB /* DrinkDetailViewModel.swift in Sources */,
 				FA98EEFB2A3DEB7C000E6FEE /* VotingViewController.swift in Sources */,
 				FA98EF092A3F3430000E6FEE /* VoteResultCell.swift in Sources */,
 				FA9AABDC2A4D810800B99FB7 /* ToastSwiftWrapper.swift in Sources */,

@@ -131,7 +131,6 @@ extension OrderViewController: UITableViewDelegate {
             let continueOrders = orderResponses.filter({ $0.state == OrderStatus.active.rawValue })
             let orderVC = OrderNavigationController(orderResponse: continueOrders[indexPath.row],
                                                     userObject: userObject)
-            orderVC.orderNavDelegate = self
             present(orderVC, animated: true)
         case 1:
             let finishedOrders = orderResponses.filter({
