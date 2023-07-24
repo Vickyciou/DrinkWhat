@@ -14,7 +14,7 @@ protocol DrinkDetailViewModelDelegate: AnyObject {
 class DrinkDetailViewModel {
     private let drink: ShopMenu
     private let shopObject: ShopObject
-    private let dataSource = DrinkDetailDataSource()
+    private let dataSource: DrinkDetailDataSourceProtocol
     private let orderManager = OrderManager()
     weak var delegate: DrinkDetailViewModelDelegate?
     private var note: String?
@@ -26,9 +26,10 @@ class DrinkDetailViewModel {
         calculateDrinkPrice()
     }
 
-    init(drink: ShopMenu, shopObject: ShopObject) {
+    init(drink: ShopMenu, shopObject: ShopObject, dataSource: DrinkDetailDataSourceProtocol) {
         self.drink = drink
         self.shopObject = shopObject
+        self.dataSource = dataSource
     }
 
     func getDrink() -> ShopMenu {
@@ -39,7 +40,7 @@ class DrinkDetailViewModel {
         return shopObject
     }
 
-    func getDataSource() -> DrinkDetailDataSource {
+    func getDataSource() -> DrinkDetailDataSourceProtocol {
         return dataSource
     }
 
@@ -125,25 +126,26 @@ class DrinkDetailViewModel {
         currentSugarIndex == index
     }
 
-    func setCurrentVolumeIndex(index: Int) {
+    func setCurrentVolumeIndex(index: Int?) {
         guard currentVolumeIndex != index else { return }
         currentVolumeIndex = index
             delegate?.topViewNeedToReloadData(self)
     }
 
-    func setCurrentSugarIndex(index: Int) {
+    func setCurrentSugarIndex(index: Int?) {
         guard currentSugarIndex != index else { return }
         currentSugarIndex = index
             delegate?.topViewNeedToReloadData(self)
     }
 
-    func setCurrentIceIndex(index: Int) {
+    func setCurrentIceIndex(index: Int?) {
         guard currentIceIndex != index else { return }
         currentIceIndex = index
             delegate?.topViewNeedToReloadData(self)
     }
 
-    func setCurrentAddToppingIndexes(index: Int) {
+    func setCurrentAddToppingIndexes(index: Int?) {
+        guard let index else { return }
         currentAddToppingsIndexes.toggle(with: index)
         delegate?.topViewNeedToReloadData(self)
     }

@@ -16,8 +16,8 @@ class DrinkDetailViewController: UIViewController {
 
     private let viewModel: DrinkDetailViewModel
 
-    init(shopObject: ShopObject, drink: ShopMenu) {
-        self.viewModel = DrinkDetailViewModel(drink: drink, shopObject: shopObject)
+    init(shopObject: ShopObject, drink: ShopMenu, dataSource: DrinkDetailDataSourceProtocol) {
+        self.viewModel = DrinkDetailViewModel(drink: drink, shopObject: shopObject, dataSource: dataSource)
         super.init(nibName: nil, bundle: nil)
     }
 

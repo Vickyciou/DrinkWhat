@@ -7,7 +7,12 @@
 
 import Foundation
 
-class DrinkDetailDataSource {
+protocol DrinkDetailDataSourceProtocol {
+    var sugar: [String] { get }
+    var ice: [String] { get }
+}
+
+class DrinkDetailDataSource: DrinkDetailDataSourceProtocol {
 
     let sugar = ["正常糖", "少糖", "半糖", "微糖", "無糖"]
     let ice = ["正常冰", "少冰", "微冰", "去冰", "溫", "熱"]

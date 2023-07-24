@@ -89,7 +89,8 @@ extension ShopMenuViewController: UITableViewDataSource {
 extension ShopMenuViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let drink = shopObject.menu[indexPath.row]
-        let drinkDetailVC = DrinkDetailViewController(shopObject: shopObject, drink: drink)
+        let dataSource = DrinkDetailDataSource()
+        let drinkDetailVC = DrinkDetailViewController(shopObject: shopObject, drink: drink, dataSource: dataSource)
         show(drinkDetailVC, sender: nil)
     }
 
