@@ -10,6 +10,25 @@ import XCTest
 
 final class DrinkDetailViewModelTests: XCTestCase {
 
+    let drink = ShopMenu(drinkName: "Mock Drink",
+                         drinkPrice: [
+                            VolumePrice(volume: "S", price: 100),
+                            VolumePrice(volume: "M", price: 150),
+                            VolumePrice(volume: "L", price: 200)])
+    let logoImageURL = "https://example.com/logo.png"
+    let mainImageURL = "https://example.com/main.png"
+    let shopName = "Coffee Shop"
+    let shopID = "123456"
+
+
+    let addToppings: [AddToppings] = [
+        AddToppings(topping: "Whipped Cream", price: 30),
+        AddToppings(topping: "Chocolate Syrup", price: 40)
+    ]
+
+    let dataSource = DrinkDetailDataSource()
+
+
     func testCalculateDrinkPriceWithValidCurrentVolumeIndex() {
         // Arrange
         let drink = ShopMenu(drinkName: "Mock Drink",
@@ -121,4 +140,116 @@ final class DrinkDetailViewModelTests: XCTestCase {
         XCTAssertEqual(sut.numberOfRowsInSection(section: 3), 2)
         XCTAssertEqual(sut.numberOfRowsInSection(section: 4), 0)
     }
+
+    func testSetCurrentSugarIndexWithDiffIndex() {
+        let menu: [ShopMenu] = [drink]
+        let shopObject = ShopObject(logoImageURL: logoImageURL,
+                                    mainImageURL: mainImageURL,
+                                    name: shopName,
+                                    id: shopID,
+                                    menu: menu,
+                                    addToppings: addToppings)
+        let sut = DrinkDetailViewModel(drink: drink, shopObject: shopObject, dataSource: dataSource)
+
+        sut.setCurrentSugarIndex(index: 1)
+        let mockDelegate = MockDrinkDetailViewModelDelegate()
+        sut.delegate = mockDelegate
+
+        sut.setCurrentSugarIndex(index: 2)
+
+        XCTAssertTrue(sut.currentSugarIndexSelected(index: 2))
+        XCTAssertTrue(mockDelegate.reloadDataCalled)
+
+    }
+
+    func testSetCurrentSugarIndexWithSameIndex() {
+        let menu: [ShopMenu] = [drink]
+        let shopObject = ShopObject(logoImageURL: logoImageURL,
+                                    mainImageURL: mainImageURL,
+                                    name: shopName,
+                                    id: shopID,
+                                    menu: menu,
+                                    addToppings: addToppings)
+        let sut = DrinkDetailViewModel(drink: drink, shopObject: shopObject, dataSource: dataSource)
+
+        sut.setCurrentSugarIndex(index: 1)
+        let mockDelegate = MockDrinkDetailViewModelDelegate()
+        sut.delegate = mockDelegate
+
+        sut.setCurrentSugarIndex(index: 1)
+
+        XCTAssertTrue(sut.currentSugarIndexSelected(index: 1))
+        XCTAssertFalse(mockDelegate.reloadDataCalled)
+
+    }
+
+    func testSetCurrentIceIndexWithDiffIndex() {
+        let menu: [ShopMenu] = [drink]
+        let shopObject = ShopObject(logoImageURL: logoImageURL,
+                                    mainImageURL: mainImageURL,
+                                    name: shopName,
+                                    id: shopID,
+                                    menu: menu,
+                                    addToppings: addToppings)
+        let sut = DrinkDetailViewModel(drink: drink, shopObject: shopObject, dataSource: dataSource)
+
+        sut.setCurrentIceIndex(index: 1)
+        let mockDelegate = MockDrinkDetailViewModelDelegate()
+        sut.delegate = mockDelegate
+
+        sut.setCurrentIceIndex(index: 2)
+
+        XCTAssertTrue(sut.currentIceIndexSelected(index: 2))
+        XCTAssertTrue(mockDelegate.reloadDataCalled)
+
+    }
+
+    func testSetCurrentIceIndexWithSameIndex() {
+        let menu: [ShopMenu] = [drink]
+        let shopObject = ShopObject(logoImageURL: logoImageURL,
+                                    mainImageURL: mainImageURL,
+                                    name: shopName,
+                                    id: shopID,
+                                    menu: menu,
+                                    addToppings: addToppings)
+        let sut = DrinkDetailViewModel(drink: drink, shopObject: shopObject, dataSource: dataSource)
+
+        sut.setCurrentIceIndex(index: 1)
+        let mockDelegate = MockDrinkDetailViewModelDelegate()
+        sut.delegate = mockDelegate
+
+        sut.setCurrentIceIndex(index: 1)
+
+        XCTAssertTrue(sut.currentIceIndexSelected(index: 1))
+        XCTAssertFalse(mockDelegate.reloadDataCalled)
+
+    }
+
+    func testSetCurrentAddToppingsIndexWithSameIndex() {
+        let menu: [ShopMenu] = [drink]
+        let shopObject = ShopObject(logoImageURL: logoImageURL,
+                                    mainImageURL: mainImageURL,
+                                    name: shopName,
+                                    id: shopID,
+                                    menu: menu,
+                                    addToppings: addToppings)
+        let sut = DrinkDetailViewModel(drink: drink, shopObject: shopObject, dataSource: dataSource)
+
+        sut.setCurrentAddToppingIndexes(index: nil)
+        let mockDelegate = MockDrinkDetailViewModelDelegate()
+        sut.delegate = mockDelegate
+
+        XCTAssertFalse(mockDelegate.reloadDataCalled)
+
+    }
+}
+
+class MockDrinkDetailViewModelDelegate: DrinkDetailViewModelDelegate {
+    var reloadDataCalled = false
+
+    func topViewNeedToReloadData(_ viewModel: DrinkWhat.DrinkDetailViewModel) {
+        reloadDataCalled = true
+    }
+
+
 }
