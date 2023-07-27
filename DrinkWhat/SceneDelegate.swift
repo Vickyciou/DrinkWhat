@@ -66,8 +66,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         guard let urlContext = URLContexts.first else { return }
         switch urlContext.url.scheme {
-        case "line3rdp.ll.drinkwhat":
-            _ = LoginManager.shared.application(.shared, open: urlContext.url)
         case "drinkWhat":
             guard let windowScene = (scene as? UIWindowScene) else { return }
             let rootViewController = RootViewController(url: urlContext.url)
