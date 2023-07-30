@@ -113,12 +113,10 @@ extension NotVotedCell {
     private func makeChooseButton() -> UIButton {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-//        button.setTitleColor(UIColor.darkLogoBrown, for: .normal)
         button.titleLabel?.font = .regular(size: 14)
         button.setImage(UIImage(systemName: "circle")?.setColor(color: .darkLogoBrown), for: .normal)
         button.setImage(UIImage(systemName: "circle.inset.filled")?.setColor(color: .darkLogoBrown), for: .selected)
         button.isUserInteractionEnabled = false
-//        button.addTarget(self, action: #selector(chooseButtonTapped(_:)), for: .touchUpInside)
         return button
     }
     private func makeViewMenuButton() -> UIButton {

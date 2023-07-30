@@ -13,10 +13,12 @@ extension UIImage {
             .withRenderingMode(.alwaysOriginal)
     }
 
-    func resizeImage(_ image: UIImage, targetSize: CGSize) -> UIImage? {
+    convenience init?(imageName: String, targetSize: CGSize) {
+        self.init(named: imageName)
         let renderer = UIGraphicsImageRenderer(size: targetSize)
-        return renderer.image { _ in
-            image.draw(in: CGRect(origin: .zero, size: targetSize))
+        renderer.image { _ in
+            self.draw(in: CGRect(origin: .zero, size: targetSize))
         }
+
     }
 }

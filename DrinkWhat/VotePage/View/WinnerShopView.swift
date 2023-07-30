@@ -27,7 +27,6 @@ class WinnerShopView: UIView {
             shopNameLabel.centerXAnchor.constraint(equalTo: shopImageView.centerXAnchor),
             numberOfVotesLabel.topAnchor.constraint(equalTo: shopNameLabel.bottomAnchor, constant: 12),
             numberOfVotesLabel.centerXAnchor.constraint(equalTo: shopImageView.centerXAnchor),
-//            numberOfVotesLabel.widthAnchor.constraint(equalToConstant: 60),
             numberOfVotesLabel.heightAnchor.constraint(equalToConstant: 30),
             numberOfVotesLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10)])
     }

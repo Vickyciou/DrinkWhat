@@ -145,7 +145,8 @@ extension VoteNavigationController: VotingViewControllerDelegate {
     func didPressEndVoteButton(_ vc: VotingViewController) {
         guard let voteResult = voteResults.first else { return }
         let winnerShopID = voteResult.shopID
-        guard let shop = shopObjects.first(where: { $0.id == winnerShopID }) else { return }
+        guard let shop = shopObjects.first(where: { $0.id == winnerShopID }) else {
+            return }
 
         Task {
             do {
@@ -162,7 +163,7 @@ extension VoteNavigationController: VotingViewControllerDelegate {
                         toJoinOrder: orderID
                     )
                 }
-            } catch ManagerError.itemAlreadyExistsError {
+            } catch OrderManagerError.itemAlreadyExistsError {
                 let alert = UIAlertController(
                     title: "開團失敗",
                     message: "目前已有進行中的團購群組囉！\n請先完成進行中的群組~",

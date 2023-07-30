@@ -16,9 +16,9 @@ class LaunchScreenViewController: UIViewController {
         let imageView = UIImageView()
         view.addSubview(imageView)
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(named: "DrinkWhat-icon無字版")?
-            .resizeImage(UIImage(named: "DrinkWhat-icon無字版")!,
-                         targetSize: CGSize(width: 100, height: 100))
+        imageView.image = UIImage(imageName: "DrinkWhat-icon無字版",
+                                   targetSize: CGSize(width: 100, height: 100))
+
         NSLayoutConstraint.activate([
             imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             imageView.centerYAnchor.constraint(equalTo: view.centerYAnchor)])

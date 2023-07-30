@@ -148,7 +148,7 @@ extension ShopMenuViewController: SectionHeaderViewDelegate {
                 alert.addAction(loginAction)
                 alert.addAction(cancelAction)
                 present(alert, animated: true)
-            } catch ManagerError.itemAlreadyExistsError {
+            } catch OrderManagerError.itemAlreadyExistsError {
                 let alert = UIAlertController(
                     title: "加入失敗",
                     message: "目前已有進行中的團購囉！",
