@@ -20,6 +20,16 @@ class HomeViewController: UIViewController {
         shopManager.delegate = self
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print("viewWillAppear")
+    }
+
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        print("viewWillLayoutSubviews")
+    }
+
     private func setupVC() {
         view.backgroundColor = .white
         setNavController()

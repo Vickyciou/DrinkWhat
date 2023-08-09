@@ -31,14 +31,15 @@ class OrderingViewController: UIViewController {
     private let footerView = OrderTableViewFooter(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
     private let headerView = OrderTableViewHeader(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
     private var state: BottomViewUIState {
-        if isInitiator && isFinished {
-            return BottomViewUIState.initialUserFinished
-        } else if isInitiator && isFinished == false {
-            return BottomViewUIState.initialUser
-        } else if isInitiator == false && isFinished {
-            return BottomViewUIState.joinUserFinished
-        } else {
-            return BottomViewUIState.joinUser
+        switch (isInitiator, isFinished) {
+        case (true, true):
+            return .initialUserFinished
+        case (true, false):
+            return .initialUser
+        case (false, true):
+            return .joinUserFinished
+        case (false, false):
+            return .joinUser
         }
     }
 
@@ -62,7 +63,6 @@ class OrderingViewController: UIViewController {
         view.backgroundColor = .white
         setNavController()
         setupTableView()
-        setupStateUI()
         setupBottomView(state: state)
     }
 
@@ -133,22 +133,6 @@ class OrderingViewController: UIViewController {
         footerView.delegate = self
         tableView.tableHeaderView = headerView
         tableView.tableFooterView = footerView
-    }
-
-    private func setupStateUI() {
-        switch state {
-        case .initialUser:
-            let trashImage = UIImage(systemName: "trash")?
-                .setColor(color: .darkLogoBrown)
-                .withConfiguration(UIImage.SymbolConfiguration(pointSize: 16))
-            let cancelButton = UIBarButtonItem(image: trashImage,
-                                               style: .plain,
-                                               target: self,
-                                               action: #selector(cancelButtonTapped))
-            navigationItem.setLeftBarButton(cancelButton, animated: false)
-        case .joinUser, .initialUserFinished, .joinUserFinished:
-            navigationItem.leftBarButtonItem = nil
-        }
     }
 
     private func setupBottomView(state: BottomViewUIState) {
