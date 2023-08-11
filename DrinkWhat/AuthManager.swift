@@ -48,12 +48,12 @@ final class AuthManager {
 
     func delete(tokens: DeleteWithAppleResult) async throws {
         guard let user = Auth.auth().currentUser else {
-            throw URLError(.badURL)
+            throw UserManagerError.noCurrentUser
         }
         let credential = OAuthProvider.credential(withProviderID: "apple.com", idToken: tokens.token, rawNonce: tokens.nonce)
         Auth.auth().currentUser?.reauthenticate(with: credential) { (_, error) in
-            guard error == nil else
-            { print(URLError.clientCertificateRejected)
+            guard error == nil else {
+                print(URLError.clientCertificateRejected)
                 return }
             Task {
                 do {
@@ -61,7 +61,7 @@ final class AuthManager {
                     try await Auth.auth().revokeToken(withAuthorizationCode: tokens.authCode)
                     try await user.delete()
                 } catch {
-                    print("revoke error")
+                    print("revoke Apple ID error")
                 }
             }
         }

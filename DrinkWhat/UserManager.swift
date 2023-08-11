@@ -58,16 +58,20 @@ class UserManager {
 
     func getUserData(userId: String) async throws -> UserObject {
         let userObject = try await userDocument(userID: userId).getDocument(as: UserObject.self)
+        self.userObject = userObject
         return userObject
     }
 
     func updateUserImage(userID: String, imageURL: String) {
         userDocument(userID: userID).updateData(["userImageURL": imageURL])
+        Task {
+            try await self.getUserData(userId: userID)
+        }
     }
 
     func checkCurrentUser() throws -> AuthDataResultModel {
-        guard let user = try? authManager.getAuthenticatedUser() else
-        { throw UserManagerError.noCurrentUser }
+        guard let user = try? authManager.getAuthenticatedUser() else { throw UserManagerError.noCurrentUser
+        }
         return user
 
     }

@@ -19,7 +19,6 @@
 		FA71793C2A3A9DF8002C407C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA71793B2A3A9DF8002C407C /* Assets.xcassets */; };
 		FA71793F2A3A9DF8002C407C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA71793D2A3A9DF8002C407C /* LaunchScreen.storyboard */; };
 		FA71794A2A3AB994002C407C /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7179492A3AB994002C407C /* TabBarViewController.swift */; };
-		FA71794E2A3ABB8A002C407C /* FavoriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA71794D2A3ABB8A002C407C /* FavoriteViewController.swift */; };
 		FA7179502A3ABC46002C407C /* VoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA71794F2A3ABC46002C407C /* VoteViewController.swift */; };
 		FA7179522A3ABC99002C407C /* OrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7179512A3ABC99002C407C /* OrderViewController.swift */; };
 		FA7179542A3ABD01002C407C /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7179532A3ABD01002C407C /* ProfileViewController.swift */; };
@@ -104,7 +103,6 @@
 		FA71793E2A3A9DF8002C407C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FA7179402A3A9DF8002C407C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FA7179492A3AB994002C407C /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
-		FA71794D2A3ABB8A002C407C /* FavoriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewController.swift; sourceTree = "<group>"; };
 		FA71794F2A3ABC46002C407C /* VoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteViewController.swift; sourceTree = "<group>"; };
 		FA7179512A3ABC99002C407C /* OrderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderViewController.swift; sourceTree = "<group>"; };
 		FA7179532A3ABD01002C407C /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -250,7 +248,6 @@
 				FA7CC6152A444B1C009B599F /* ShopPage */,
 				FA71795A2A3AED81002C407C /* VotePage */,
 				FAB2B9D32A4ADC1A00EB449C /* OrderPage */,
-				FA71794D2A3ABB8A002C407C /* FavoriteViewController.swift */,
 				FA7179532A3ABD01002C407C /* ProfileViewController.swift */,
 				FA71793B2A3A9DF8002C407C /* Assets.xcassets */,
 				FA71793D2A3A9DF8002C407C /* LaunchScreen.storyboard */,
@@ -672,7 +669,6 @@
 				FA8B17F52A5C4DF200404DC7 /* DrinkDetailTableViewFooter.swift in Sources */,
 				FA7179332A3A9DF7002C407C /* AppDelegate.swift in Sources */,
 				FA9AABF22A51472400B99FB7 /* OrderFinishedBottomView.swift in Sources */,
-				FA71794E2A3ABB8A002C407C /* FavoriteViewController.swift in Sources */,
 				FA7179352A3A9DF7002C407C /* SceneDelegate.swift in Sources */,
 				FA98EF032A3EB991000E6FEE /* VoteResultViewController.swift in Sources */,
 				FA2820BE2A4158BD009FDAD2 /* UIImage+Extension.swift in Sources */,
@@ -727,7 +723,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = NNHJ7Y69AL;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = ll.DrinkDetailViewModelTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -746,7 +742,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = NNHJ7Y69AL;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = ll.DrinkDetailViewModelTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -807,7 +803,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -861,7 +857,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

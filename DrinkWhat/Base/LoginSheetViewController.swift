@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import LineSDK
 import AuthenticationServices
 import CryptoKit
 import FirebaseAuth

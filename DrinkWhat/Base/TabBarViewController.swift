@@ -21,9 +21,10 @@ class TabBarViewController: UITabBarController, UIViewControllerTransitioningDel
     private let orderID: String?
     weak var tabBarDelegate: TabBarViewControllerDelegate?
 
-    init(groupID: String? = nil, orderID: String? = nil) {
+    init(userObject: UserObject? = nil, groupID: String? = nil, orderID: String? = nil) {
         self.groupID = groupID
         self.orderID = orderID
+        self.userObject = userObject
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -33,20 +34,15 @@ class TabBarViewController: UITabBarController, UIViewControllerTransitioningDel
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        Task {
-            do {
-                let userObject = try await userManager.loadCurrentUser()
-                self.userObject = userObject
-                viewControllers = tabs.map { makeViewController(tab: $0, userObject: userObject) }
-                switchToGroupIndex()
-                switchToOrderIndex()
-                delegate = self
-            } catch {
-                viewControllers = tabs.map { makeViewController(tab: $0, userObject: nil) }
-                delegate = self
-            }
+        if userObject == nil {
+            viewControllers = tabs.map { makeViewController(tab: $0, userObject: nil) }
+            delegate = self
+        } else {
+            viewControllers = tabs.map { makeViewController(tab: $0, userObject: userObject) }
+            switchToGroupIndex()
+            switchToOrderIndex()
+            delegate = self
         }
-
 
         let appearance = UITabBarAppearance()
         appearance.backgroundColor = .white
@@ -58,6 +54,10 @@ class TabBarViewController: UITabBarController, UIViewControllerTransitioningDel
         super.viewWillAppear(animated)
 
         navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -104,11 +104,9 @@ class TabBarViewController: UITabBarController, UIViewControllerTransitioningDel
     }
 }
 
-
 extension TabBarViewController {
     private enum Tab {
         case home
-//        case favorite
         case vote
         case order
         case profile
@@ -120,8 +118,6 @@ extension TabBarViewController {
             switch self {
             case .home:
                 return UIImage(systemName: "house")?.setColor(color: .darkLogoBrown)
-//            case .favorite:
-//                return UIImage(systemName: "heart")?.setColor(color: .darkBrown)
             case .vote:
                 return UIImage(systemName: "hand.tap")?.setColor(color: .darkLogoBrown)
             case .order:
@@ -134,8 +130,6 @@ extension TabBarViewController {
             switch self {
             case .home:
                 return UIImage(systemName: "house.fill")?.setColor(color: .darkLogoBrown)
-//            case .favorite:
-//                return UIImage(systemName: "heart.fill")?.setColor(color: .darkBrown)
             case .vote:
                 return UIImage(systemName: "hand.tap.fill")?.setColor(color: .darkLogoBrown)
             case .order:
@@ -151,7 +145,6 @@ extension TabBarViewController {
         switch tab {
         case .home:
             controller = UINavigationController(rootViewController: HomeViewController())
-//            case .favorite: controller = UINavigationController(rootViewController: FavoriteViewController())
         case .vote:
             controller = UINavigationController(
                 rootViewController: userObject.map { VoteViewController(userObject: $0) } ?? UIViewController())

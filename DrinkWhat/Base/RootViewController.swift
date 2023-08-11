@@ -26,10 +26,18 @@ class RootViewController: UIViewController {
         super.viewDidLoad()
         let authUser = try? userManager.checkCurrentUser()
         self.showLoginView = authUser == nil
-        decideVC()
+        if showLoginView == false {
+            Task {
+                let userObject = try await userManager.loadCurrentUser()
+                decideVC(userObject: userObject)
+            }
+        } else {
+            decideVC(userObject: nil)
+        }
+
     }
 
-    func decideVC() {
+    func decideVC(userObject: UserObject?) {
         let myVC: UIViewController = {
             switch (showLoginView, url) {
             case (true, _):
@@ -38,20 +46,20 @@ class RootViewController: UIViewController {
                 return lvc
             case let (false, url?):
                 if let groupID = groupID(url) {
-                    let tabBarVC = TabBarViewController(groupID: groupID)
+                    let tabBarVC = TabBarViewController(userObject: userObject, groupID: groupID)
                     tabBarVC.tabBarDelegate = self
                     return tabBarVC
                 } else if let orderID = orderID(url) {
-                    let tabBarVC = TabBarViewController(orderID: orderID)
+                    let tabBarVC = TabBarViewController(userObject: userObject, orderID: orderID)
                     tabBarVC.tabBarDelegate = self
                     return tabBarVC
                 } else {
-                    let tabBarVC = TabBarViewController()
+                    let tabBarVC = TabBarViewController(userObject: userObject)
                     tabBarVC.tabBarDelegate = self
                     return tabBarVC
                 }
             case (false, _):
-                let tabBarVC = TabBarViewController()
+                let tabBarVC = TabBarViewController(userObject: userObject)
                 tabBarVC.tabBarDelegate = self
                 return tabBarVC
             }
@@ -76,27 +84,26 @@ class RootViewController: UIViewController {
 }
 
 extension RootViewController: LoginViewControllerDelegate {
-    func loginViewControllerDismissSelf(_ viewController: LoginViewController) {
+    func loginViewControllerDismissSelf(_ viewController: LoginViewController, userObject: UserObject?) {
         viewController.willMove(toParent: nil)
         viewController.view.removeFromSuperview()
         viewController.removeFromParent()
         let tabBarVC = {
             if let url, let groupID = groupID(url) {
-                let tabBarVC = TabBarViewController(groupID: groupID)
+                let tabBarVC = TabBarViewController(userObject: userObject, groupID: groupID)
                 tabBarVC.tabBarDelegate = self
                 return tabBarVC
             } else if let url, let orderID = orderID(url) {
-                let tabBarVC = TabBarViewController(orderID: orderID)
+                let tabBarVC = TabBarViewController(userObject: userObject, orderID: orderID)
                 tabBarVC.tabBarDelegate = self
                 return tabBarVC
             } else {
-                let tabBarVC = TabBarViewController()
+                let tabBarVC = TabBarViewController(userObject: userObject)
                 tabBarVC.tabBarDelegate = self
                 return tabBarVC
             }
         }()
         displayViewControllerAsMain(tabBarVC)
-//        tabBarVC.tabBarDelegate = self
     }
 }
 extension RootViewController: TabBarViewControllerDelegate {

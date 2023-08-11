@@ -6,13 +6,12 @@
 //
 
 import UIKit
-import LineSDK
 import AuthenticationServices
 import CryptoKit
 import FirebaseAuth
 
 protocol LoginViewControllerDelegate: AnyObject {
-    func loginViewControllerDismissSelf(_ viewController: LoginViewController)
+    func loginViewControllerDismissSelf(_ viewController: LoginViewController, userObject: UserObject?)
 }
 
 class LoginViewController: UIViewController {
@@ -73,8 +72,8 @@ class LoginViewController: UIViewController {
                 let authDataResult = try await userManager.signInWithApple(tokens: tokens)
                 let user = UserObject(auth: authDataResult)
                 try await UserManager.shared.createUserData(userObject: user)
-//                try await UserManager.shared.loadCurrentUser()
-                delegate?.loginViewControllerDismissSelf(self)
+                let userObject = try await UserManager.shared.loadCurrentUser()
+                delegate?.loginViewControllerDismissSelf(self, userObject: userObject)
             } catch {
                 print("startSignInWithAppleFlow error \(error)")
             }
@@ -95,7 +94,7 @@ extension LoginViewController {
         let label = UILabel()
         let optimaBoldFont = UIFont(name: "Marker Felt Wide", size: 36)
         let attributes: [NSAttributedString.Key: Any] = [
-            .font: optimaBoldFont,
+            .font: optimaBoldFont as Any,
             .foregroundColor: UIColor.white,
             .strokeColor: UIColor.logoBrown,
             .strokeWidth: -5.0
@@ -120,7 +119,7 @@ extension LoginViewController {
         return button
     }
     @objc func skipButtonTapped() {
-        delegate?.loginViewControllerDismissSelf(self)
+        delegate?.loginViewControllerDismissSelf(self, userObject: nil)
     }
 
 }

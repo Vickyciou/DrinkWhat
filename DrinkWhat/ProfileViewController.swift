@@ -210,7 +210,7 @@ extension ProfileViewController: PHPickerViewControllerDelegate {
 
         let itemProviders = results.map(\.itemProvider)
         if let itemProvider = itemProviders.first, itemProvider.canLoadObject(ofClass: UIImage.self) {
-            itemProvider.loadObject(ofClass: UIImage.self) {[weak self] (image, error) in
+            itemProvider.loadObject(ofClass: UIImage.self) { [weak self] (image, error) in
                 guard let self = self, let image = image as? UIImage else { return }
                 self.firebaseStorageManager.uploadPhoto(image: image) { result in
                     switch result {
