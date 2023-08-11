@@ -235,7 +235,7 @@ extension NotVotedViewController: NotVotedCellDelegate {
     func didPressedViewMenuButton(_ cell: NotVotedCell, button: UIButton) {
         guard let index = tableView.indexPath(for: cell) else { return }
         let shopID = newVoteResults[index.row].voteResult.shopID
-        if let shopObject = shopObjects.first { $0.id == shopID } {
+        if let shopObject = shopObjects.first(where: { $0.id == shopID }) {
             let shopMenuVC = ShopMenuViewController(shopObject: shopObject)
             present(shopMenuVC, animated: true)
         }

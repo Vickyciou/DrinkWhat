@@ -153,8 +153,8 @@ class OrderManager {
         }
 
         let queryOrderUserIDs = Set(orders.flatMap { $0.joinUserIDs })
-        let alreadyInActiveUserIDs = queryOrderUserIDs.intersection(Set(userIDs)) // 交集
-        let notActiveUserIDs = Set(userIDs).symmetricDifference(alreadyInActiveUserIDs) // 剩下的
+        let alreadyInActiveUserIDs = queryOrderUserIDs.intersection(Set(userIDs)) // 交集 (已有進行中的order group)
+        let notActiveUserIDs = Set(userIDs).symmetricDifference(alreadyInActiveUserIDs) // 剩下的 (目前無進行中的order group)
 
         // Join to order
         try await orderDocument(orderID: orderID)
@@ -200,17 +200,14 @@ class OrderManager {
                 Filter.whereField("initiatorUserID", isEqualTo: userID),
                 Filter.whereField("joinUserIDs", arrayContains: userID)
             ]
-        )).addSnapshotListener ({ [weak self] snapshot, error in
+        )).addSnapshotListener({ [weak self] snapshot, error in
             guard let self else { return }
             if let error = error {
                 self.delegate?.orderManager(self, didFailWith: error)
             } else if let snapshot {
                 let orderData: [OrderResponse] =
-                    snapshot.documents.compactMap
-                {
-                    try? $0.data(as: OrderResponse.self)
-
-                }
+                snapshot.documents.compactMap {
+                    try? $0.data(as: OrderResponse.self)}
                 self.delegate?.orderManager(self, didGetAllOrderData: orderData)
             }
         })
@@ -230,5 +227,9 @@ class OrderManager {
                 self.delegate?.orderManager(self, didGetOrderResults: results)
             }
         }
+    }
+    // MARK: - remove orderResponseListener
+    func removeOrderResponseListener() {
+        orderResponseListener?.remove()
     }
 }

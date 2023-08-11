@@ -1,12 +1,12 @@
 # Drink What
 
 ## About Drink What
-An app designed to facilitate gatherings by allowing users to vote, choose beverage stores, and track ordered items and payment statuses.
+An app created to unite friends for beverage orders, enabling user voting, store selection, and monitoring of order details and payment status.
 
-The main features include:
-- Initiating voting groups for beverage choices.
-- Consolidating the beverage preferences of each individual.
-- Tracking payment status.
+The primary features encompass:
+- Initiating voting groups for selecting beverages.
+- Aggregating individual beverage preferences.
+- Monitoring payment statuses.
 
 
 ## Features

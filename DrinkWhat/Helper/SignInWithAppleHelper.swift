@@ -18,7 +18,7 @@ struct SignInWithAppleResult {
 
 class SignInWithAppleHelper: NSObject {
     private var currentNonce: String?
-    private var completionHandler: ((Result<SignInWithAppleResult, Error>) -> Void)? = nil
+    private var completionHandler: ((Result<SignInWithAppleResult, Error>) -> Void)?
     private let viewController: UIViewController
 
     init(viewController: UIViewController) {

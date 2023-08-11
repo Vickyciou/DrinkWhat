@@ -212,14 +212,17 @@ extension ProfileViewController: PHPickerViewControllerDelegate {
         if let itemProvider = itemProviders.first, itemProvider.canLoadObject(ofClass: UIImage.self) {
             itemProvider.loadObject(ofClass: UIImage.self) { [weak self] (image, error) in
                 guard let self = self, let image = image as? UIImage else { return }
-                self.firebaseStorageManager.uploadPhoto(image: image) { result in
-                    switch result {
-                    case .success(let url):
+                Task {
+                    do {
+                        let url = try await self.firebaseStorageManager.uploadPhoto(image: image)
                         self.userManager.updateUserImage(userID: self.userObject.userID, imageURL: url.absoluteString)
-                    case .failure(let error):
-                        print("Update user image fail: \(error)")
+                    } catch UploadError.dataConversionFailed {
+                        print(UploadError.dataConversionFailed.errorDescription as Any)
+                    } catch {
+                        print("Profile image error: \(error)")
                     }
                 }
+
                 DispatchQueue.main.async {
                     self.imageView.image = image
                 }

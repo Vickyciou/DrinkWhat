@@ -33,7 +33,6 @@ class OrderViewController: UIViewController {
         setupTableView()
         orderManager.delegate = self
         orderManager.listenOrderResponse(userID: userObject.userID)
-
     }
 
     private func setNavController() {

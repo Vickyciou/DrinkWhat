@@ -14,7 +14,7 @@ extension URL {
             return nil
         }
 
-        var parameters = [String: String]()
+        var parameters: [String: String] = [:]
         for queryItem in queryItems {
             parameters[queryItem.name] = queryItem.value
         }

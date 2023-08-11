@@ -71,7 +71,7 @@ class OrderNavigationController: UINavigationController {
 
 extension OrderNavigationController: OrderManagerDelegate {
     func orderManager(_ manager: OrderManager, didGetAllOrderData orderData: [OrderResponse]) {
-        if let orderResponse = orderData.first { $0.orderID == self.orderResponse.orderID } {
+        if let orderResponse = orderData.first(where: { $0.orderID == self.orderResponse.orderID }) {
             self.orderResponse = orderResponse
             let joinUsers = orderResponse.joinUserIDs
             Task {

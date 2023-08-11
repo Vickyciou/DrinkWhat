@@ -105,10 +105,8 @@ extension VoteViewController: UITableViewDataSource {
                                date: dateString)
             return cell
         case 1:
-            let finishedVotes = groupObjects.filter(
-                { $0.state == GroupStatus.canceled.rawValue ||
-                    $0.state == GroupStatus.finished.rawValue }
-            )
+            let finishedVotes = groupObjects.filter({
+                $0.state == GroupStatus.canceled.rawValue || $0.state == GroupStatus.finished.rawValue })
             let finishedVote = finishedVotes[indexPath.row]
             let date = Date(timeIntervalSince1970: finishedVote.date)
             let dateString = date.dateToString(date: date)

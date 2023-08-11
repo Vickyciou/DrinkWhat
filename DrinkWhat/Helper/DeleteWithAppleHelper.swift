@@ -18,7 +18,7 @@ struct DeleteWithAppleResult {
 
 class DeleteWithAppleHelper: NSObject {
     private var currentNonce: String?
-    private var completionHandler: ((Result<DeleteWithAppleResult, Error>) -> Void)? = nil
+    private var completionHandler: ((Result<DeleteWithAppleResult, Error>) -> Void)?
     private let viewController: UIViewController
 
     init(viewController: UIViewController) {
