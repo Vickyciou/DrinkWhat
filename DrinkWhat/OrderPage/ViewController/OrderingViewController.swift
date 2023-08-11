@@ -111,8 +111,9 @@ class OrderingViewController: UIViewController {
             message: "確定要取消此團購群組嗎？",
             preferredStyle: .alert
         )
-        let confirmAction = UIAlertAction(title: "確定", style: .default) { [self]_ in
-            orderManager.setOrderStatus(orderID: orderResponse.orderID,
+        let confirmAction = UIAlertAction(title: "確定", style: .default) { [weak self]_ in
+            guard let self else { return }
+            self.orderManager.setOrderStatus(orderID: self.orderResponse.orderID,
                                        status: OrderStatus.canceled.rawValue)
             self.dismiss(animated: true)
         }
@@ -295,14 +296,16 @@ extension OrderingViewController: OrderSectionHeaderViewDelegate {
             message: "是否已完成付款？",
             preferredStyle: .alert
         )
-        let confirmAction = UIAlertAction(title: "是的", style: .default) { [self]_ in
-            let user = orderResults[indexOfSection].userID
-            orderManager.updatePaidStatusToTrue(orderID: orderResponse.orderID,
+        let confirmAction = UIAlertAction(title: "是的", style: .default) { [weak self]_ in
+            guard let self else { return }
+            let user = self.orderResults[indexOfSection].userID
+            self.orderManager.updatePaidStatusToTrue(orderID: self.orderResponse.orderID,
                                           userID: user)
         }
-        let cancelAction = UIAlertAction(title: "還沒", style: .cancel) { [self]_ in
-            let user = orderResults[indexOfSection].userID
-            orderManager.updatePaidStatusToFalse(orderID: orderResponse.orderID,
+        let cancelAction = UIAlertAction(title: "還沒", style: .cancel) { [weak self]_ in
+            guard let self else { return }
+            let user = self.orderResults[indexOfSection].userID
+            self.orderManager.updatePaidStatusToFalse(orderID: self.orderResponse.orderID,
                                           userID: user)
         }
         alert.addAction(confirmAction)
@@ -318,9 +321,10 @@ extension OrderingViewController: OrderTableViewFooterDelegate {
             message: "確定要離開嗎？",
             preferredStyle: .alert
         )
-        let leaveAction = UIAlertAction(title: "離開", style: .default) { [self] _ in
-            orderManager.removeUserFromOrder(userID: userObject.userID, orderID: orderResponse.orderID)
-            dismiss(animated: true)
+        let leaveAction = UIAlertAction(title: "離開", style: .default) { [weak self]_ in
+            guard let self else { return }
+            self.orderManager.removeUserFromOrder(userID: self.userObject.userID, orderID: self.orderResponse.orderID)
+            self.dismiss(animated: true)
         }
         let cancelAction = UIAlertAction(title: "先不要", style: .cancel)
         alert.addAction(leaveAction)

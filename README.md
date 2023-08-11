@@ -19,7 +19,7 @@ The main features include:
 ### - On the beverage store page, users can choose to either initiate a group order or start voting.
 ![image](https://github.com/Vickyciou/DrinkWhat/blob/main/DrinkWhat.media/Demo-03-%E5%8A%A0%E5%9C%98%E8%B3%BC%E6%88%96%E6%8A%95%E7%A5%A8.gif)
 
-### - Share voting or group buying groups with friends.
+### - Share voting or buying groups with friends.
 ![image](https://github.com/Vickyciou/DrinkWhat/blob/main/DrinkWhat.media/Demo-04-share%20extension.gif)
 
 ### - Real-time voting process.

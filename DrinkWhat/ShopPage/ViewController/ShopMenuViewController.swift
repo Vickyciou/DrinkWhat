@@ -118,7 +118,8 @@ extension ShopMenuViewController: SectionHeaderViewDelegate {
                     preferredStyle: .alert
                 )
                 DispatchQueue.main.async {
-                    let shareAction = UIAlertAction(title: "分享", style: .default) { _ in
+                    let shareAction = UIAlertAction(title: "分享", style: .default) { [weak self]_ in
+                        guard let self else { return }
                         let orderID = orderID
                         let shareURL = URL(string: "drinkWhat://share?orderID=\(orderID)")!
                         let aVC = UIActivityViewController(activityItems: [shareURL], applicationActivities: nil)
@@ -135,7 +136,8 @@ extension ShopMenuViewController: SectionHeaderViewDelegate {
                     message: "請先登入會員",
                     preferredStyle: .alert
                 )
-                let loginAction = UIAlertAction(title: "前往登入", style: .default) { _ in
+                let loginAction = UIAlertAction(title: "前往登入", style: .default) { [weak self]_ in
+                    guard let self else { return }
                     let loginVC = LoginSheetViewController()
                     loginVC.delegate = self
                     loginVC.modalPresentationStyle = .pageSheet
@@ -175,7 +177,8 @@ extension ShopMenuViewController: SectionHeaderViewDelegate {
                     message: "請先登入會員",
                     preferredStyle: .alert
                 )
-                let loginAction = UIAlertAction(title: "前往登入", style: .default) { _ in
+                let loginAction = UIAlertAction(title: "前往登入", style: .default) { [weak self]_ in
+                    guard let self else { return }
                     let loginVC = LoginSheetViewController()
                     loginVC.delegate = self
                     loginVC.modalPresentationStyle = .pageSheet
