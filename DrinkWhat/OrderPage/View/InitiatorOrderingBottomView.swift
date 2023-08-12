@@ -56,7 +56,7 @@ extension InitiatorOrderingBottomView {
         let button = UIButton(type: .custom)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitleColor(UIColor.darkLogoBrown, for: .normal)
-        button.titleLabel?.font = .medium(size: 16)
+        button.titleLabel?.font = .medium3()
         let normalBackground = UIColor.lightBrown.toImage()
         let highlightedBackground = UIColor.middleBrown.toImage()
         button.setBackgroundImage(normalBackground, for: .normal)
@@ -75,7 +75,7 @@ extension InitiatorOrderingBottomView {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitleColor(UIColor.lightGrayYellow, for: .normal)
         button.setTitleColor(UIColor.lightBrown, for: .highlighted)
-        button.titleLabel?.font = .medium(size: 16)
+        button.titleLabel?.font = .medium3()
         let normalBackground = UIColor.darkGray.toImage()
         let highlightedBackground = UIColor.darkBrown.toImage()
         button.setBackgroundImage(normalBackground, for: .normal)

@@ -75,7 +75,7 @@ extension VotingCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
-        label.font = .medium(size: 18)
+        label.font = .medium2()
         label.textColor = UIColor.darkLogoBrown
         return label
     }

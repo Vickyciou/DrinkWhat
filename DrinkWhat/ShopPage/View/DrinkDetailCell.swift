@@ -69,7 +69,7 @@ extension DrinkDetailCell {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.isUserInteractionEnabled = false
         button.setTitleColor(UIColor.middleBrown, for: .normal)
-        button.titleLabel?.font = .regular(size: 14)
+        button.titleLabel?.font = .regular4()
         button.setImage(UIImage(systemName: "circle")?.setColor(color: .darkLogoBrown), for: .normal)
         button.setImage(UIImage(systemName: "circle.inset.filled")?.setColor(color: .darkLogoBrown), for: .selected)
         return button

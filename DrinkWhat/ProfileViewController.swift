@@ -164,7 +164,7 @@ extension ProfileViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitleColor(UIColor.red, for: .normal)
         button.setTitleColor(UIColor.systemPink, for: .highlighted)
-        button.titleLabel?.font = .regular(size: 14)
+        button.titleLabel?.font = .regular4()
         let normalBackground = UIColor.white.toImage(size: CGSize(width: 65, height: 25))
         let selectedBackground = UIColor.lightBrown.withAlphaComponent(0.5).toImage(size: CGSize(width: 65, height: 25))
         button.setBackgroundImage(normalBackground, for: .normal)

@@ -67,7 +67,7 @@ extension MainOrderCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
-        label.font = .regular(size: 14)
+        label.font = .regular4()
         label.textColor = UIColor.middleBrown
         return label
     }

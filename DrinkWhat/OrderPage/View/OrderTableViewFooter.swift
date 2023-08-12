@@ -66,7 +66,7 @@ extension OrderTableViewFooter {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitleColor(UIColor.red, for: .normal)
         button.setTitleColor(UIColor.red.withAlphaComponent(0.5), for: .highlighted)
-        button.titleLabel?.font = .regular(size: 16)
+        button.titleLabel?.font = .regular3()
         button.setTitle("離開此團購", for: .normal)
         button.layer.cornerRadius = 5
         button.layer.masksToBounds = true

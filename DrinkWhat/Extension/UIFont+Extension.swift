@@ -13,18 +13,6 @@ private enum DWTFontName: String {
 
 extension UIFont {
 
-    static func medium(size: CGFloat) -> UIFont? {
-        return UIFont.systemFont(ofSize: size, weight: .medium)
-    }
-
-    static func bold(size: CGFloat) -> UIFont? {
-        return UIFont.systemFont(ofSize: size, weight: .bold)
-    }
-
-    static func regular(size: CGFloat) -> UIFont? {
-        return UIFont(name: DWTFontName.regular.rawValue, size: size)
-    }
-
     static func title1() -> UIFont? {
         return UIFont.systemFont(ofSize: 24, weight: .bold)
     }
