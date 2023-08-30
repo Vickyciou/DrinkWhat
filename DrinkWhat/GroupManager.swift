@@ -74,6 +74,7 @@ class GroupManager {
                 ]
             ))
             .getDocuments()
+        // 發起人目前有發起進行中的投票群組，檢查群組中是否已有該店家，進行對應處理
         if let group = try snapshot.documents.first?.data(as: GroupResponse.self) {
             let shopRef = voteResultsCollection(groupID: group.groupID).document(shopID)
             if let _ = try? await shopRef.getDocument().data(as: VoteResult.self) {
@@ -82,6 +83,7 @@ class GroupManager {
                 let voteResultDic = try VoteResult(shopID: shopID, userIDs: []).toDictionary()
                 try await shopRef.setData(voteResultDic)
             }
+        // 發起人目前無發起進行中的群組，建立新的投票群組
         } else {
             let document = groupCollection().document()
             let groupObject = GroupResponse(
@@ -143,7 +145,7 @@ class GroupManager {
     }
 
 // MARK: - 監聽投票狀況
-    func getGroupObject(groupID: String) {
+    func listenGroupObject(groupID: String) {
         groupCollection().document(groupID).addSnapshotListener { [self] (documentSnapshot, error) in
             guard let document = documentSnapshot else {
                 self.delegate?.groupManager(self, didFailWith: ManagerError.noData)

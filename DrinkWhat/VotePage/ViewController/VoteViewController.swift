@@ -127,7 +127,8 @@ extension VoteViewController: UITableViewDelegate {
         case 0:
             let continueVotes = groupObjects.filter({ $0.state == GroupStatus.active.rawValue })
             let voteNavigationVC = VoteNavigationController(userObject: userObject,
-                                                            groupID: continueVotes[indexPath.row].groupID)
+                                                            groupID: continueVotes[indexPath.row].groupID,
+                                                            groupObject: continueVotes[indexPath.row])
             present(voteNavigationVC, animated: true)
         case 1:
             let finishedVotes = groupObjects.filter({
@@ -135,7 +136,8 @@ extension VoteViewController: UITableViewDelegate {
                     $0.state == GroupStatus.finished.rawValue
                 })
             let voteNavigationVC = VoteNavigationController(userObject: userObject,
-                                                            groupID: finishedVotes[indexPath.row].groupID)
+                                                            groupID: finishedVotes[indexPath.row].groupID,
+                                                            groupObject: finishedVotes[indexPath.row])
             present(voteNavigationVC, animated: true)
         default:
             return

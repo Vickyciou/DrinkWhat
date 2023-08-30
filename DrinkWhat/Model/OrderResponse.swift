@@ -15,12 +15,10 @@ struct OrderResponse: Codable {
     let initiatorUserName: String
     let shopObject: ShopObject
     var joinUserIDs: [String]
-//    let amountPrice: Int
 }
 
 struct OrderResults: Codable {
     let userID: String
-//    let totalPrice: Int
     var isPaid: Bool
     var orderObjects: [OrderObject]
 }

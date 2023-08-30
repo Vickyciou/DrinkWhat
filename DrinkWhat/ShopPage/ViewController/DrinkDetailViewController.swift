@@ -66,7 +66,7 @@ class DrinkDetailViewController: UIViewController {
             addItemButton.heightAnchor.constraint(equalToConstant: 44)
         ])
         addItemButton.layer.cornerRadius = 10
-        addItemButton.layer.masksToBounds = true
+        addItemButton.clipsToBounds = true
     }
 
 }

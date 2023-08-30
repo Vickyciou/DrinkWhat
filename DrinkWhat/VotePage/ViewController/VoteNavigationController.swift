@@ -17,15 +17,17 @@ protocol VoteResultsAccessible {
 
 class VoteNavigationController: UINavigationController {
     private let groupID: String
+    private var shopIDs: [String]?
     private let groupManager = GroupManager()
     private let shopManager = ShopManager()
     private let orderManager = OrderManager()
-    private var groupObject: GroupResponse?
+    private var groupObject: GroupResponse
+    private let userObject: UserObject
     private var shopObjects: [ShopObject] = [] {
         didSet {
             viewControllers.forEach {
-                let voteResultsAccessible = $0 as? ShopObjectsAccessible
-                voteResultsAccessible?.setShopObjects(shopObjects)
+                let shopObjectsAccessible = $0 as? ShopObjectsAccessible
+                shopObjectsAccessible?.setShopObjects(shopObjects)
             }
         }
     }
@@ -37,11 +39,11 @@ class VoteNavigationController: UINavigationController {
             }
         }
     }
-    private let userObject: UserObject
 
-    init(userObject: UserObject, groupID: String) {
+    init(userObject: UserObject, groupID: String, groupObject: GroupResponse) {
         self.userObject = userObject
         self.groupID = groupID
+        self.groupObject = groupObject
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -55,7 +57,7 @@ class VoteNavigationController: UINavigationController {
         navigationItem.hidesBackButton = true
         groupManager.delegate = self
         shopManager.delegate = self
-        groupManager.getGroupObject(groupID: groupID)
+        groupManager.listenGroupObject(groupID: groupID)
     }
 
     private func decideVC(
@@ -72,6 +74,10 @@ class VoteNavigationController: UINavigationController {
                 voteResults: voteResults,
                 shopObjects: shopObjects
             )
+            if !viewControllers.isEmpty {
+                viewControllers.removeLast()
+            }
+
             pushViewController(voteResultVC, animated: !viewControllers.isEmpty)
         } else
         if isVoted(voteResults: voteResults, userObject: userObject) {
@@ -83,6 +89,11 @@ class VoteNavigationController: UINavigationController {
             votingVC.setVoteResults(voteResults)
             votingVC.setShopObjects(shopObjects)
             votingVC.delegate = self
+
+            if !viewControllers.isEmpty {
+                viewControllers.removeLast()
+            }
+
             pushViewController(votingVC, animated: !viewControllers.isEmpty)
 
         } else {
@@ -121,17 +132,25 @@ extension VoteNavigationController: GroupManagerDelegate {
     func groupManager(_ manager: GroupManager, didGetVoteResults voteResults: [VoteResult]) {
         let sortedVoteResults = voteResults.sorted(by: { $0.userIDs.count > $1.userIDs.count })
         self.voteResults = sortedVoteResults
-        let shopIDs = voteResults.map { $0.shopID }
-        shopManager.getShopObjects2(shopIDs)
+        let shopIDs = sortedVoteResults.map { $0.shopID }
+        if shopObjects.map({ $0.id }) == shopIDs {
+            decideVC(groupObject: groupObject,
+                     userObject: userObject,
+                     voteResults: sortedVoteResults,
+                     shopObjects: shopObjects)
+        } else {
+            shopManager.getShopObjects(shopIDs)
+        }
     }
 }
 
 extension VoteNavigationController: ShopManagerDelegate {
     func shopManager(_ manager: ShopManager, didGetShopData shopData: [ShopObject]) {
         shopObjects = shopData
-        if let groupObject {
-            decideVC(groupObject: groupObject, userObject: userObject, voteResults: voteResults, shopObjects: shopData)
-        }
+        decideVC(groupObject: groupObject, userObject: userObject, voteResults: voteResults, shopObjects: shopObjects)
+    }
+    func shopManager(_ manager: ShopManager, didFailWith error: Error) {
+        print("Decode error in the vote group shops with: \(error)")
     }
 }
 
@@ -157,12 +176,12 @@ extension VoteNavigationController: VotingViewControllerDelegate {
                 ).orderID
                 groupManager.setVoteStatus(groupID: groupID, status: GroupStatus.finished.rawValue)
 
-                if let joinUserIDs = groupObject.flatMap({ $0.joinUserIDs }) {
-                    try await orderManager.addUsers(
-                        userIDs: joinUserIDs,
-                        toJoinOrder: orderID
-                    )
-                }
+                let joinUserIDs = groupObject.joinUserIDs
+                try await orderManager.addUsers(
+                    userIDs: joinUserIDs,
+                    toJoinOrder: orderID
+                )
+
             } catch OrderManagerError.itemAlreadyExistsError {
                 let alert = UIAlertController(
                     title: "開團失敗",

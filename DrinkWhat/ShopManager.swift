@@ -11,13 +11,7 @@ import FirebaseFirestoreSwift
 
 protocol ShopManagerDelegate: AnyObject {
     func shopManager(_ manager: ShopManager, didGetShopData shopData: [ShopObject])
-    func shopManager(_ manager: ShopManager, didGetShopObject shopObject: ShopObject)
     func shopManager(_ manager: ShopManager, didFailWith error: Error)
-}
-extension ShopManagerDelegate {
-    func shopManager(_ manager: ShopManager, didGetShopData shopData: [ShopObject]) {}
-    func shopManager(_ manager: ShopManager, didGetShopObject shopObject: ShopObject) {}
-    func shopManager(_ manager: ShopManager, didFailWith error: Error) {}
 }
 
 class ShopManager {
@@ -52,55 +46,8 @@ class ShopManager {
             }
         }
     }
-    // MARK: - Get one shop object
-    func getShopObject(shopID: String) {
-        let docRef = db.collection("Shops").document(shopID)
-
-        docRef.getDocument { [self] (document, error) in
-            if let document = document, document.exists {
-                do {
-                    let shopObject = try document.data(as: ShopObject.self)
-                    delegate?.shopManager(self, didGetShopObject: shopObject)
-                } catch {
-                    delegate?.shopManager(self, didFailWith: error)
-                    print("Error get shop from Firestore: \(error)")
-                }
-            } else {
-                print("Shop\(shopID) document does not exist")
-            }
-        }
-    }
-
+    // MARK: - Get vote group shops
     func getShopObjects(_ shopIDs: [String]) {
-        var results: [ShopObject] = []
-        let group = DispatchGroup()
-        for shopID in shopIDs {
-            group.enter()
-            db.collection("Shops").document(shopID).getDocument { [weak self] snapshot, error in
-                guard let self else {
-                    group.leave()
-                    return
-                }
-                if let error {
-                    self.delegate?.shopManager(self, didFailWith: error)
-                } else if let snapshot {
-                    do {
-                        let shop = try snapshot.data(as: ShopObject.self)
-                        results.append(shop)
-                    } catch {
-                        self.delegate?.shopManager(self, didFailWith: error)
-                    }
-                }
-                group.leave()
-            }
-        }
-        group.notify(queue: .main) { [weak self] in
-            guard let self else { return }
-            self.delegate?.shopManager(self, didGetShopData: results)
-        }
-    }
-
-    func getShopObjects2(_ shopIDs: [String]) {
         let ref = db.collection("Shops")
         ref.whereField("id", in: shopIDs).getDocuments { query, error in
             if let error {

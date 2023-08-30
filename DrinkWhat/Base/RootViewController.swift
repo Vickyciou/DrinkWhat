@@ -26,39 +26,42 @@ class RootViewController: UIViewController {
         super.viewDidLoad()
         let authUser = try? userManager.checkCurrentUser()
         self.showLoginView = authUser == nil
-        if showLoginView == false {
-            Task {
-                let userObject = try await userManager.loadCurrentUser()
-                decideVC(userObject: userObject)
-            }
-        } else {
-            decideVC(userObject: nil)
-        }
 
+        Task {
+//            do {
+                try await decideVC()
+//            } catch {
+//                print("Failed to decide VC")
+//            }
+        }
     }
 
-    func decideVC(userObject: UserObject?) {
-        let myVC: UIViewController = {
+    func decideVC() async throws {
+        let myVC: UIViewController = try await {
             switch (showLoginView, url) {
             case (true, _):
                 let lvc = LoginViewController()
                 lvc.delegate = self
                 return lvc
             case let (false, url?):
-                if let groupID = groupID(url) {
+                if let groupID = getGroupID(url) {
+                    let userObject = try await userManager.loadCurrentUser()
                     let tabBarVC = TabBarViewController(userObject: userObject, groupID: groupID)
                     tabBarVC.tabBarDelegate = self
                     return tabBarVC
-                } else if let orderID = orderID(url) {
+                } else if let orderID = getOrderID(url) {
+                    let userObject = try await userManager.loadCurrentUser()
                     let tabBarVC = TabBarViewController(userObject: userObject, orderID: orderID)
                     tabBarVC.tabBarDelegate = self
                     return tabBarVC
                 } else {
+                    let userObject = try await userManager.loadCurrentUser()
                     let tabBarVC = TabBarViewController(userObject: userObject)
                     tabBarVC.tabBarDelegate = self
                     return tabBarVC
                 }
             case (false, _):
+                let userObject = try await userManager.loadCurrentUser()
                 let tabBarVC = TabBarViewController(userObject: userObject)
                 tabBarVC.tabBarDelegate = self
                 return tabBarVC
@@ -67,14 +70,14 @@ class RootViewController: UIViewController {
         displayViewControllerAsMain(myVC)
     }
 
-    private func groupID(_ url: URL) -> String? {
+    private func getGroupID(_ url: URL) -> String? {
         if url.host == "share" {
             return url.queryParameters?["groupID"]
         } else {
             return nil
         }
     }
-    private func orderID(_ url: URL) -> String? {
+    private func getOrderID(_ url: URL) -> String? {
         if url.host == "share" {
             return url.queryParameters?["orderID"]
         } else {
@@ -89,11 +92,11 @@ extension RootViewController: LoginViewControllerDelegate {
         viewController.view.removeFromSuperview()
         viewController.removeFromParent()
         let tabBarVC = {
-            if let url, let groupID = groupID(url) {
+            if let url, let groupID = getGroupID(url) {
                 let tabBarVC = TabBarViewController(userObject: userObject, groupID: groupID)
                 tabBarVC.tabBarDelegate = self
                 return tabBarVC
-            } else if let url, let orderID = orderID(url) {
+            } else if let url, let orderID = getOrderID(url) {
                 let tabBarVC = TabBarViewController(userObject: userObject, orderID: orderID)
                 tabBarVC.tabBarDelegate = self
                 return tabBarVC
