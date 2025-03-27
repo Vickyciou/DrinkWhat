@@ -1,13 +1,13 @@
 //
 //  ShareTargetSelectingTableCell.swift
 //
-//  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
+//  Copyright (c) 2016-present, LY Corporation. All rights reserved.
 //
 //  You are hereby granted a non-exclusive, worldwide, royalty-free license to use,
 //  copy and distribute this software in source code or binary form for use
-//  in connection with the web services and APIs provided by LINE Corporation.
+//  in connection with the web services and APIs provided by LY Corporation.
 //
-//  As with any software that integrates with the LINE Corporation platform, your use of this software
+//  As with any software that integrates with the LY Corporation platform, your use of this software
 //  is subject to the LINE Developers Agreement [http://terms2.line.me/LINE_Developers_Agreement].
 //  This copyright notice shall be included in all copies or substantial portions of the software.
 //
@@ -34,16 +34,16 @@ final class ShareTargetSelectingTableCell: UITableViewCell {
         static var displayNameLeading:  CGFloat { return 10.0 }
         static var displayNameTrailing: CGFloat { return 10.0 }
 
-        static var displayNameTextColor: UIColor { return .LineSDKLabel }
+        static var displayNameTextColor: UIColor { return .label }
         static var displayNameFont:      UIFont  { return .systemFont(ofSize: 16) }
         static var displayNameHighlightedNameColor: UIColor {
             return .compatibleColor(light: 0x13C84D, dark: 0x14DE54)
         }
 
         static var separatorInset: UIEdgeInsets { return .init(top: 0, left: 96, bottom: 0, right: 0) }
-        static var backgroundColor: UIColor { return .LineSDKSystemBackground }
+        static var backgroundColor: UIColor { return .systemBackground }
         static var selectionTickColor: UIColor {
-            return .compatibleColor(light: .init(hex6: 0xEFF1F6), dark: .LineSDKTertiarySystemBackground)
+            return .compatibleColor(light: .init(hex6: 0xEFF1F6), dark: .tertiarySystemBackground)
         }
     }
 

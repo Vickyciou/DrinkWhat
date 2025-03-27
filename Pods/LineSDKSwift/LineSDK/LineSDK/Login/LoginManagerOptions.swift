@@ -1,13 +1,13 @@
 //
 //  LoginManagerOptions.swift
 //
-//  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
+//  Copyright (c) 2016-present, LY Corporation. All rights reserved.
 //
 //  You are hereby granted a non-exclusive, worldwide, royalty-free license to use,
 //  copy and distribute this software in source code or binary form for use
-//  in connection with the web services and APIs provided by LINE Corporation.
+//  in connection with the web services and APIs provided by LY Corporation.
 //
-//  As with any software that integrates with the LINE Corporation platform, your use of this software
+//  As with any software that integrates with the LY Corporation platform, your use of this software
 //  is subject to the LINE Developers Agreement [http://terms2.line.me/LINE_Developers_Agreement].
 //  This copyright notice shall be included in all copies or substantial portions of the software.
 //
@@ -45,15 +45,15 @@ public struct LoginManagerOptions: OptionSet {
     
     /// - Warning: Deprecated. Use `LoginManager.Parameters.botPromptStyle` instead.
     ///
-    /// Includes an option to add a bot as friend on the consent screen. If `.botPromptNormal` and
+    /// Includes an option to add a LINE Official Account as friend on the consent screen. If `.botPromptNormal` and
     /// `.botPromptAggressive` are set at the same time, `.botPromptAggressive` will be used.
     @available(*, deprecated, message: "Use `LoginManager.Parameters.botPromptStyle` instead.")
     public static let botPromptNormal = LoginManagerOptions(rawValue: 1 << 1)
     
     /// - Warning: Deprecated. Use `LoginManager.Parameters.botPromptStyle` instead.
     ///
-    /// Opens a new screen to add a bot as a friend after the user agrees to the permissions on the consent
-    /// screen. If `.botPromptNormal` and `.botPromptAggressive` is set at the same time,
+    /// Opens a new screen to add a LINE Official Account as a friend after the user agrees to the permissions on the
+    /// consent screen. If `.botPromptNormal` and `.botPromptAggressive` is set at the same time,
     /// `.botPromptAggressive` will be used.
     @available(*, deprecated, message: "Use `LoginManager.Parameters.botPromptStyle` instead.")
     public static let botPromptAggressive = LoginManagerOptions(rawValue: 1 << 2)

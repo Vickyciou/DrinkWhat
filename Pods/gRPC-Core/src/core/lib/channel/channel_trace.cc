@@ -1,37 +1,38 @@
-/*
- *
- * Copyright 2017 gRPC authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- */
+//
+//
+// Copyright 2017 gRPC authors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+//
 
 #include <grpc/support/port_platform.h>
 
 #include "src/core/lib/channel/channel_trace.h"
 
-#include <algorithm>
-#include <map>
-#include <string>
+#include <memory>
 #include <utility>
 
+#include "absl/strings/str_cat.h"
+
 #include <grpc/support/alloc.h>
+#include <grpc/support/json.h>
 
 #include "src/core/lib/channel/channelz.h"
 #include "src/core/lib/gpr/string.h"
 #include "src/core/lib/gprpp/time.h"
+#include "src/core/lib/slice/slice.h"
 #include "src/core/lib/slice/slice_internal.h"
-#include "src/core/lib/slice/slice_refcount.h"
 
 namespace grpc_core {
 namespace channelz {
@@ -52,7 +53,7 @@ ChannelTrace::TraceEvent::TraceEvent(Severity severity, const grpc_slice& data)
       next_(nullptr),
       memory_usage_(sizeof(TraceEvent) + grpc_slice_memory_usage(data)) {}
 
-ChannelTrace::TraceEvent::~TraceEvent() { grpc_slice_unref_internal(data_); }
+ChannelTrace::TraceEvent::~TraceEvent() { CSliceUnref(data_); }
 
 ChannelTrace::ChannelTrace(size_t max_event_memory)
     : num_events_logged_(0),
@@ -103,7 +104,7 @@ void ChannelTrace::AddTraceEventHelper(TraceEvent* new_trace_event) {
 
 void ChannelTrace::AddTraceEvent(Severity severity, const grpc_slice& data) {
   if (max_event_memory_ == 0) {
-    grpc_slice_unref_internal(data);
+    CSliceUnref(data);
     return;  // tracing is disabled if max_event_memory_ == 0
   }
   AddTraceEventHelper(new TraceEvent(severity, data));
@@ -113,7 +114,7 @@ void ChannelTrace::AddTraceEventWithReference(
     Severity severity, const grpc_slice& data,
     RefCountedPtr<BaseNode> referenced_entity) {
   if (max_event_memory_ == 0) {
-    grpc_slice_unref_internal(data);
+    CSliceUnref(data);
     return;  // tracing is disabled if max_event_memory_ == 0
   }
   // create and fill up the new event
@@ -141,21 +142,21 @@ const char* severity_string(ChannelTrace::Severity severity) {
 Json ChannelTrace::TraceEvent::RenderTraceEvent() const {
   char* description = grpc_slice_to_c_string(data_);
   Json::Object object = {
-      {"description", description},
-      {"severity", severity_string(severity_)},
-      {"timestamp", gpr_format_timespec(timestamp_)},
+      {"description", Json::FromString(description)},
+      {"severity", Json::FromString(severity_string(severity_))},
+      {"timestamp", Json::FromString(gpr_format_timespec(timestamp_))},
   };
   gpr_free(description);
   if (referenced_entity_ != nullptr) {
     const bool is_channel =
         (referenced_entity_->type() == BaseNode::EntityType::kTopLevelChannel ||
          referenced_entity_->type() == BaseNode::EntityType::kInternalChannel);
-    object[is_channel ? "channelRef" : "subchannelRef"] = Json::Object{
+    object[is_channel ? "channelRef" : "subchannelRef"] = Json::FromObject({
         {(is_channel ? "channelId" : "subchannelId"),
-         std::to_string(referenced_entity_->uuid())},
-    };
+         Json::FromString(absl::StrCat(referenced_entity_->uuid()))},
+    });
   }
-  return object;
+  return Json::FromObject(std::move(object));
 }
 
 Json ChannelTrace::RenderJson() const {
@@ -164,10 +165,12 @@ Json ChannelTrace::RenderJson() const {
     return Json();  // JSON null
   }
   Json::Object object = {
-      {"creationTimestamp", gpr_format_timespec(time_created_)},
+      {"creationTimestamp",
+       Json::FromString(gpr_format_timespec(time_created_))},
   };
   if (num_events_logged_ > 0) {
-    object["numEventsLogged"] = std::to_string(num_events_logged_);
+    object["numEventsLogged"] =
+        Json::FromString(absl::StrCat(num_events_logged_));
   }
   // Only add in the event list if it is non-empty.
   if (head_trace_ != nullptr) {
@@ -175,9 +178,9 @@ Json ChannelTrace::RenderJson() const {
     for (TraceEvent* it = head_trace_; it != nullptr; it = it->next()) {
       array.emplace_back(it->RenderTraceEvent());
     }
-    object["events"] = std::move(array);
+    object["events"] = Json::FromArray(std::move(array));
   }
-  return object;
+  return Json::FromObject(std::move(object));
 }
 
 }  // namespace channelz

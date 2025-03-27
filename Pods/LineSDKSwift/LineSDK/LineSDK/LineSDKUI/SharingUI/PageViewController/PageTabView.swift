@@ -1,13 +1,13 @@
 //
 //  PageTabView.swift
 //
-//  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
+//  Copyright (c) 2016-present, LY Corporation. All rights reserved.
 //
 //  You are hereby granted a non-exclusive, worldwide, royalty-free license to use,
 //  copy and distribute this software in source code or binary form for use
-//  in connection with the web services and APIs provided by LINE Corporation.
+//  in connection with the web services and APIs provided by LY Corporation.
 //
-//  As with any software that integrates with the LINE Corporation platform, your use of this software
+//  As with any software that integrates with the LY Corporation platform, your use of this software
 //  is subject to the LINE Developers Agreement [http://terms2.line.me/LINE_Developers_Agreement].
 //  This copyright notice shall be included in all copies or substantial portions of the software.
 //
@@ -30,7 +30,7 @@ class PageTabView: UIView {
     class TabView: UIControl {
         enum Design {
             static var titleColor: UIColor { return .systemGray }
-            static var selectedTitleColor: UIColor { return .LineSDKLabel }
+            static var selectedTitleColor: UIColor { return .label }
 
             static var titleFont: UIFont { return .systemFont(ofSize: 15) }
             static var selectedTitleFont: UIFont { return .systemFont(ofSize: 15, weight: .semibold) }
@@ -82,7 +82,7 @@ class PageTabView: UIView {
         enum Design {
             static var height: CGFloat { return 3 }
             static var widthMargin: CGFloat { return 4 }
-            static var color: UIColor { return .LineSDKLabel }
+            static var color: UIColor { return .label }
         }
 
         private let underline: UIView = {
@@ -138,7 +138,7 @@ class PageTabView: UIView {
 
     weak var delegate: PageTabViewDelegate?
 
-    private (set) var selectedIndex: Int = 0
+    private(set) var selectedIndex: Int = 0
 
     private let countOfTabs: Int
 

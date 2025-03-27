@@ -1,13 +1,13 @@
 //
 //  GetBotFriendshipStatus.swift
 //
-//  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
+//  Copyright (c) 2016-present, LY Corporation. All rights reserved.
 //
 //  You are hereby granted a non-exclusive, worldwide, royalty-free license to use,
 //  copy and distribute this software in source code or binary form for use
-//  in connection with the web services and APIs provided by LINE Corporation.
+//  in connection with the web services and APIs provided by LY Corporation.
 //
-//  As with any software that integrates with the LINE Corporation platform, your use of this software
+//  As with any software that integrates with the LY Corporation platform, your use of this software
 //  is subject to the LINE Developers Agreement [http://terms2.line.me/LINE_Developers_Agreement].
 //  This copyright notice shall be included in all copies or substantial portions of the software.
 //
@@ -21,8 +21,8 @@
 
 import Foundation
 
-/// Represents a request for getting the friendship status of the user and the bot linked to your LINE Login
-/// channel.
+/// Represents a request for getting the friendship status of the user and the LINE Official Account linked to your
+/// LINE Login channel.
 public struct GetBotFriendshipStatusRequest: Request {
     
     /// :nodoc:
@@ -34,11 +34,12 @@ public struct GetBotFriendshipStatusRequest: Request {
     /// :nodoc:
     public init() {}
     
-    /// Represents a response to a request for getting the friendship status of the user and the bot linked to
-    /// your LINE Login channel.
+    /// Represents a response to a request for getting the friendship status of the user and the LINE Official Account
+    /// linked to your LINE Login channel.
     public struct Response: Codable {
-        /// Indicates the friendship status. `true` if the bot is a friend of the user and the user has not
-        /// blocked the bot. `false` if the bot is not a friend of the user or the user has blocked the bot. 
+        /// Indicates the friendship status. `true` if the LINE Official Account is a friend of the user and the user
+        /// has not blocked the LINE Official Account. `false` if the LINE Official Account is not a friend of the user
+        /// or the user has blocked the LINE Official Account.
         public let friendFlag: Bool
     }
 }

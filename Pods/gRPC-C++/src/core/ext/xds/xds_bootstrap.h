@@ -14,8 +14,8 @@
 // limitations under the License.
 //
 
-#ifndef GRPC_CORE_EXT_XDS_XDS_BOOTSTRAP_H
-#define GRPC_CORE_EXT_XDS_XDS_BOOTSTRAP_H
+#ifndef GRPC_SRC_CORE_EXT_XDS_XDS_BOOTSTRAP_H
+#define GRPC_SRC_CORE_EXT_XDS_XDS_BOOTSTRAP_H
 
 #include <grpc/support/port_platform.h>
 
@@ -46,13 +46,18 @@ class XdsBootstrap {
     virtual ~XdsServer() = default;
 
     virtual const std::string& server_uri() const = 0;
-    virtual bool ShouldUseV3() const = 0;
     virtual bool IgnoreResourceDeletion() const = 0;
 
     virtual bool Equals(const XdsServer& other) const = 0;
 
+    // Returns a key to be used for uniquely identifying this XdsServer.
+    virtual std::string Key() const = 0;
+
     friend bool operator==(const XdsServer& a, const XdsServer& b) {
       return a.Equals(b);
+    }
+    friend bool operator!=(const XdsServer& a, const XdsServer& b) {
+      return !a.Equals(b);
     }
   };
 
@@ -78,12 +83,8 @@ class XdsBootstrap {
   // Returns a pointer to the specified authority, or null if it does
   // not exist in this bootstrap config.
   virtual const Authority* LookupAuthority(const std::string& name) const = 0;
-
-  // If the server exists in the bootstrap config, returns a pointer to
-  // the XdsServer instance in the config.  Otherwise, returns null.
-  virtual const XdsServer* FindXdsServer(const XdsServer& server) const = 0;
 };
 
 }  // namespace grpc_core
 
-#endif  // GRPC_CORE_EXT_XDS_XDS_BOOTSTRAP_H
+#endif  // GRPC_SRC_CORE_EXT_XDS_XDS_BOOTSTRAP_H

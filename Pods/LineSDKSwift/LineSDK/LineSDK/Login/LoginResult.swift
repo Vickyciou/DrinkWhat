@@ -1,13 +1,13 @@
 //
 //  LoginResult.swift
 //
-//  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
+//  Copyright (c) 2016-present, LY Corporation. All rights reserved.
 //
 //  You are hereby granted a non-exclusive, worldwide, royalty-free license to use,
 //  copy and distribute this software in source code or binary form for use
-//  in connection with the web services and APIs provided by LINE Corporation.
+//  in connection with the web services and APIs provided by LY Corporation.
 //
-//  As with any software that integrates with the LINE Corporation platform, your use of this software
+//  As with any software that integrates with the LY Corporation platform, your use of this software
 //  is subject to the LINE Developers Agreement [http://terms2.line.me/LINE_Developers_Agreement].
 //  This copyright notice shall be included in all copies or substantial portions of the software.
 //
@@ -23,6 +23,7 @@ import Foundation
 
 /// Represents a successful login.
 public struct LoginResult {
+
     /// The access token obtained by the login process.
     public let accessToken: AccessToken
     /// The permissions bound to the `accessToken` object by the authorization process.
@@ -30,10 +31,10 @@ public struct LoginResult {
     /// Contains the user profile including the user ID, display name, and so on. The value exists only when the
     /// `.profile` permission is set in the authorization request.
     public let userProfile: UserProfile?
-    /// Indicates that the friendship status between the user and the bot changed during the login. This value is
-    /// non-`nil` only if the `.botPromptNormal` or `.botPromptAggressive` are specified as part of the
-    /// `LoginManagerOption` object when the user logs in. For more information, see Linking a bot with your LINE 
-    /// Login channel at https://developers.line.biz/en/docs/line-login/web/link-a-bot/.
+    /// Indicates that the friendship status between the user and the LINE Official Account changed during the login.
+    /// This value is non-`nil` only if the `.botPromptNormal` or `.botPromptAggressive` are specified as part of the
+    /// `LoginManagerOption` object when the user logs in. For more information, see "Add a LINE Official Account as
+    /// a friend when logged in (bot link)" at https://developers.line.biz/en/docs/line-login/web/link-a-bot/
     public let friendshipStatusChanged: Bool?
     /// The `nonce` value when requesting ID Token during login process. Use this value as a parameter when you
     /// verify the ID Token against the LINE server. This value is `nil` if `.openID` permission is not requested.
@@ -48,6 +49,7 @@ extension LoginResult: Encodable {
         case userProfile
         case friendshipStatusChanged
         case IDTokenNonce
+        case loginRoute
     }
 
     /// :nodoc:

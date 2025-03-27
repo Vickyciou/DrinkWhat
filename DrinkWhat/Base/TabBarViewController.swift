@@ -10,9 +10,10 @@ import UIKit
 protocol TabBarViewControllerDelegate: AnyObject {
     func getProfileViewControllerDidPressLogOut(_ viewController: TabBarViewController)
 }
+
 class TabBarViewController: UITabBarController, UIViewControllerTransitioningDelegate {
 
-    private let tabs: [Tab] = [.home, .vote, .order, .profile]
+    private let customTabs: [Tab] = [.home, .vote, .order, .profile]
     private let groupManager = GroupManager()
     private let orderManager = OrderManager()
     private let userManager = UserManager.shared
@@ -35,10 +36,10 @@ class TabBarViewController: UITabBarController, UIViewControllerTransitioningDel
     override func viewDidLoad() {
         super.viewDidLoad()
         if userObject == nil {
-            viewControllers = tabs.map { makeViewController(tab: $0, userObject: nil) }
+            viewControllers = customTabs.map { makeViewController(tab: $0, userObject: nil) }
             delegate = self
         } else {
-            viewControllers = tabs.map { makeViewController(tab: $0, userObject: userObject) }
+            viewControllers = customTabs.map { makeViewController(tab: $0, userObject: userObject) }
             switchToGroupIndex()
             switchToOrderIndex()
             delegate = self
@@ -200,7 +201,7 @@ extension TabBarViewController: UITabBarControllerDelegate {
 extension TabBarViewController: LoginSheetViewControllerDelegate {
     func loginSheetViewControllerLoginSuccess(_ viewController: LoginSheetViewController, withUser userObject: UserObject) {
         self.userObject = userObject
-        viewControllers = tabs.map { makeViewController(tab: $0, userObject: userObject) }
+        viewControllers = customTabs.map { makeViewController(tab: $0, userObject: userObject) }
         makeAlertToast(message: "登入成功", title: nil, duration: 2)
     }
 }

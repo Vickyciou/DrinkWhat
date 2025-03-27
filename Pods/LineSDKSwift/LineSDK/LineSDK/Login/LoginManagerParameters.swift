@@ -1,13 +1,13 @@
 //
 //  LoginManagerParameters.swift
 //
-//  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
+//  Copyright (c) 2016-present, LY Corporation. All rights reserved.
 //
 //  You are hereby granted a non-exclusive, worldwide, royalty-free license to use,
 //  copy and distribute this software in source code or binary form for use
-//  in connection with the web services and APIs provided by LINE Corporation.
+//  in connection with the web services and APIs provided by LY Corporation.
 //
-//  As with any software that integrates with the LINE Corporation platform, your use of this software
+//  As with any software that integrates with the LY Corporation platform, your use of this software
 //  is subject to the LINE Developers Agreement [http://terms2.line.me/LINE_Developers_Agreement].
 //  This copyright notice shall be included in all copies or substantial portions of the software.
 //
@@ -29,7 +29,7 @@ extension LoginManager {
         /// Forces the use of web authentication flow instead of LINE app-to-app authentication flow.
         public var onlyWebLogin: Bool = false
         
-        /// The style for showing the "Add bot as friend" prompt on the consent screen.
+        /// The style for showing the "Add LINE Official Account as friend" prompt on the consent screen.
         public var botPromptStyle: BotPrompt? = nil
         
         /// Sets the preferred language used when logging in with the web authorization flow.
@@ -42,6 +42,10 @@ extension LoginManager {
         ///   LINE and the login screen are always displayed in the user's device language.
         ///
         public var preferredWebPageLanguage: WebPageLanguage? = nil
+
+        /// :nodoc:
+        // Not yet public available.
+        public var promptBotID: String? = nil
         
         /// Sets the nonce value for ID token verification. This value is used when requesting user authorization
         /// with `.openID` permission to prevent replay attacks to your backend server. If not set, LINE SDK will
@@ -59,6 +63,11 @@ extension LoginManager {
         #else
         public var allowRecreatingLoginProcess = false
         #endif
+
+        /// Specifies the initial web authentication method to be used when starting the login process.
+        /// 
+        /// By default, `.email` is used to provide input boxes for email and password.
+        public var initialWebAuthenticationMethod: WebAuthenticationMethod = .email
         
         /// Creates a default `LoginManager.Parameters` value.
         public init() {}
@@ -77,15 +86,21 @@ extension LoginManager {
 
 extension LoginManager {
     
-    /// The style for showing the "Add bot as friend" prompt on the consent screen.
+    /// The style for showing the "Add LINE Official Account as friend" prompt on the consent screen.
     public enum BotPrompt: String {
-        /// Includes an option to add a bot as friend on the consent screen.
+        /// Includes an option to add a LINE Official Account as friend on the consent screen.
         case normal
-        /// Opens a new screen to add a bot as a friend after the user agrees to the permissions on the consent
-        /// screen.
+        /// Opens a new screen to add a LINE Official Account as a friend after the user agrees to the permissions on the
+        /// consent screen.
         case aggressive
     }
-    
+
+    /// The method used for the authentication when using the web authentication flow.
+    public enum WebAuthenticationMethod: String {
+        case email
+        case qrCode
+    }
+
     /// Represents the language used in the web page.
     public struct WebPageLanguage {
         /// :nodoc:
