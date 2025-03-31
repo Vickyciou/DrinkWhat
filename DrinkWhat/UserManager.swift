@@ -79,6 +79,10 @@ class UserManager {
     func signInWithApple(tokens: SignInWithAppleResult) async throws -> AuthDataResultModel {
         try await authManager.signInWithApple(tokens: tokens)
     }
+    
+    func signInWithAuth0(tokens: SignInWithAuth0Result) async throws -> AuthDataResultModel {
+        try await authManager.signInWithAuth0(tokens: tokens)
+    }
 
     func signOut() {
         do {

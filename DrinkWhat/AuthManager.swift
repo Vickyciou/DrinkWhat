@@ -36,6 +36,14 @@ final class AuthManager {
             credential: credential, name: tokens.name, email: tokens.email
         )
     }
+    
+    func signInWithAuth0(tokens: SignInWithAuth0Result) async throws -> AuthDataResultModel {
+        let credential = OAuthProvider.credential(withProviderID: "oidc.auth0", idToken: tokens.token, rawNonce: nil)
+        
+        return try await signIn(
+            credential: credential, name: tokens.name, email: tokens.email
+        )
+    }
 
     func signIn(credential: AuthCredential, name: String?, email: String?) async throws -> AuthDataResultModel {
         let authDataResult = try await Auth.auth().signIn(with: credential)
@@ -57,7 +65,6 @@ final class AuthManager {
                 return }
             Task {
                 do {
-                    // TODO: delete firestore UserObject
                     try await Auth.auth().revokeToken(withAuthorizationCode: tokens.authCode)
                     try await user.delete()
                 } catch {

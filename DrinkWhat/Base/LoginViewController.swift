@@ -7,6 +7,7 @@
 
 import UIKit
 import AuthenticationServices
+import Auth0
 import CryptoKit
 import FirebaseAuth
 
@@ -19,6 +20,7 @@ class LoginViewController: UIViewController {
     private lazy var appNameLabel: UILabel = makeAppNameLabel()
     private lazy var signInWithAppleButton = ASAuthorizationAppleIDButton(type: .signIn, style: .black)
     private lazy var skipButton: UIButton = makeSkipButton()
+    private lazy var signInWithAuth0Button: UIButton = makeAuth0Button()
     private var currentNonce: String?
     private let userManager = UserManager.shared
     weak var delegate: LoginViewControllerDelegate?
@@ -34,6 +36,11 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupVC()
+        
+        let helper = SignInWithAuth0Helper()
+        Task {
+            try await helper.clearSessionWithAuth0()
+        }
     }
     private func setupVC() {
         view.backgroundColor = .white
@@ -41,30 +48,40 @@ class LoginViewController: UIViewController {
     }
 
     private func setupMainView() {
-        let contents = [appIconImageView, appNameLabel, signInWithAppleButton, skipButton]
+        let contents = [appIconImageView, appNameLabel, skipButton, signInWithAppleButton, signInWithAuth0Button]
         contents.forEach { view.addSubview($0) }
         NSLayoutConstraint.activate([
             appIconImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 150),
             appIconImageView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             appIconImageView.heightAnchor.constraint(equalToConstant: 150),
             appIconImageView.widthAnchor.constraint(equalToConstant: 150),
+            
             appNameLabel.topAnchor.constraint(equalTo: appIconImageView.bottomAnchor, constant: 20),
             appNameLabel.centerXAnchor.constraint(equalTo: appIconImageView.centerXAnchor),
-            signInWithAppleButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50),
-            signInWithAppleButton.heightAnchor.constraint(equalToConstant: 50),
-            signInWithAppleButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 32),
-            signInWithAppleButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -32),
+            
+            signInWithAuth0Button.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50),
+            signInWithAuth0Button.heightAnchor.constraint(equalToConstant: 50),
+            signInWithAuth0Button.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 32),
+            signInWithAuth0Button.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -32),
+            
+            signInWithAppleButton.bottomAnchor.constraint(equalTo: signInWithAuth0Button.topAnchor, constant: -20),
+            signInWithAppleButton.trailingAnchor.constraint(equalTo: signInWithAuth0Button.trailingAnchor),
+            signInWithAppleButton.leadingAnchor.constraint(equalTo: signInWithAuth0Button.leadingAnchor),
+            signInWithAppleButton.heightAnchor.constraint(equalTo: signInWithAuth0Button.heightAnchor),
+            
             skipButton.bottomAnchor.constraint(equalTo: signInWithAppleButton.topAnchor, constant: -20),
-            skipButton.trailingAnchor.constraint(equalTo: signInWithAppleButton.trailingAnchor),
-            skipButton.leadingAnchor.constraint(equalTo: signInWithAppleButton.leadingAnchor),
-            skipButton.heightAnchor.constraint(equalTo: signInWithAppleButton.heightAnchor)
+            skipButton.trailingAnchor.constraint(equalTo: signInWithAuth0Button.trailingAnchor),
+            skipButton.leadingAnchor.constraint(equalTo: signInWithAuth0Button.leadingAnchor),
+            skipButton.heightAnchor.constraint(equalTo: signInWithAuth0Button.heightAnchor),
+            
         ])
 
         signInWithAppleButton.translatesAutoresizingMaskIntoConstraints = false
         signInWithAppleButton.addTarget(self, action: #selector(startSignInWithAppleFlow), for: .touchUpInside)
+        
     }
 
-    @objc func startSignInWithAppleFlow() {
+    @objc private func startSignInWithAppleFlow() {
         Task {
             do {
                 let helper = SignInWithAppleHelper(viewController: self)
@@ -76,6 +93,22 @@ class LoginViewController: UIViewController {
                 delegate?.loginViewControllerDismissSelf(self, userObject: userObject)
             } catch {
                 print("startSignInWithAppleFlow error \(error)")
+            }
+        }
+    }
+    
+    @objc private func startSignInWithAuth0Flow() {
+        Task {
+            do {
+                let helper = SignInWithAuth0Helper()
+                let tokens = try await helper.loginWithAuth0()
+                let authDataResult = try await userManager.signInWithAuth0(tokens: tokens)
+                let user = UserObject(auth: authDataResult)
+                try await userManager.createUserData(userObject: user)
+                let userObject = try await userManager.loadCurrentUser()
+                delegate?.loginViewControllerDismissSelf(self, userObject: userObject)
+            } catch {
+                print("startSignInWithAuth0Flow error \(error)")
             }
         }
     }
@@ -122,4 +155,18 @@ extension LoginViewController {
         delegate?.loginViewControllerDismissSelf(self, userObject: nil)
     }
 
+    private func makeAuth0Button() -> UIButton {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitleColor(.darkGray, for: .normal)
+        button.titleLabel?.font = .medium2()
+        button.setTitle("Sign in With Auth0", for: .normal)
+        button.backgroundColor = .white
+        button.layer.borderColor = UIColor.darkGray.cgColor
+        button.layer.borderWidth = 2
+        button.layer.cornerRadius = 5
+        button.layer.masksToBounds = true
+        button.addTarget(self, action: #selector(startSignInWithAuth0Flow), for: .touchUpInside)
+        return button
+    }
 }

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		98B2D8782D967C9800EF6A17 /* Auth0.plist in Resources */ = {isa = PBXBuildFile; fileRef = 98B2D8772D967C9800EF6A17 /* Auth0.plist */; };
+		98B2D87B2D967CE600EF6A17 /* Auth0 in Frameworks */ = {isa = PBXBuildFile; productRef = 98B2D87A2D967CE600EF6A17 /* Auth0 */; };
+		98B2D87D2D96853700EF6A17 /* SignInWithAuth0Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B2D87C2D96853700EF6A17 /* SignInWithAuth0Helper.swift */; };
 		F6E573017D9A86AE4188F657 /* Pods_DrinkWhat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FB21740431A239E7B61383D /* Pods_DrinkWhat.framework */; };
 		FA2820B12A406E98009FDAD2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA2820B02A406E98009FDAD2 /* GoogleService-Info.plist */; };
 		FA2820BE2A4158BD009FDAD2 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2820BD2A4158BD009FDAD2 /* UIImage+Extension.swift */; };
@@ -88,6 +91,8 @@
 /* Begin PBXFileReference section */
 		30934C47FEC6CC2DA01CFD4E /* Pods-DrinkWhat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DrinkWhat.release.xcconfig"; path = "Target Support Files/Pods-DrinkWhat/Pods-DrinkWhat.release.xcconfig"; sourceTree = "<group>"; };
 		5FB21740431A239E7B61383D /* Pods_DrinkWhat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DrinkWhat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		98B2D8772D967C9800EF6A17 /* Auth0.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Auth0.plist; path = "../../../Downloads/sample-01/Auth0.plist"; sourceTree = "<group>"; };
+		98B2D87C2D96853700EF6A17 /* SignInWithAuth0Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithAuth0Helper.swift; sourceTree = "<group>"; };
 		DEE07C5BA30E83A3E151349C /* Pods-DrinkWhat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DrinkWhat.debug.xcconfig"; path = "Target Support Files/Pods-DrinkWhat/Pods-DrinkWhat.debug.xcconfig"; sourceTree = "<group>"; };
 		FA2820B02A406E98009FDAD2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FA2820BD2A4158BD009FDAD2 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
@@ -173,6 +178,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F6E573017D9A86AE4188F657 /* Pods_DrinkWhat.framework in Frameworks */,
+				98B2D87B2D967CE600EF6A17 /* Auth0 in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -253,6 +259,7 @@
 				FA71793D2A3A9DF8002C407C /* LaunchScreen.storyboard */,
 				FA7179402A3A9DF8002C407C /* Info.plist */,
 				FA2820B02A406E98009FDAD2 /* GoogleService-Info.plist */,
+				98B2D8772D967C9800EF6A17 /* Auth0.plist */,
 			);
 			path = DrinkWhat;
 			sourceTree = "<group>";
@@ -296,6 +303,7 @@
 			children = (
 				FAAFA1A52A63865E00713CA2 /* DeleteWithAppleHelper.swift */,
 				FA9232212A49896500F045C6 /* SignInWithAppleHelper.swift */,
+				98B2D87C2D96853700EF6A17 /* SignInWithAuth0Helper.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -472,6 +480,7 @@
 			);
 			name = DrinkWhat;
 			packageProductDependencies = (
+				98B2D87A2D967CE600EF6A17 /* Auth0 */,
 			);
 			productName = DrinkWhat;
 			productReference = FA71792F2A3A9DF7002C407C /* DrinkWhat.app */;
@@ -506,6 +515,7 @@
 			);
 			mainGroup = FA7179262A3A9DF7002C407C;
 			packageReferences = (
+				98B2D8792D967CE600EF6A17 /* XCRemoteSwiftPackageReference "Auth0" */,
 			);
 			productRefGroup = FA7179302A3A9DF7002C407C /* Products */;
 			projectDirPath = "";
@@ -529,6 +539,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				98B2D8782D967C9800EF6A17 /* Auth0.plist in Resources */,
 				FA71793F2A3A9DF8002C407C /* LaunchScreen.storyboard in Resources */,
 				FA2820B12A406E98009FDAD2 /* GoogleService-Info.plist in Resources */,
 				FA71793C2A3A9DF8002C407C /* Assets.xcassets in Resources */,
@@ -639,6 +650,7 @@
 				FAF2AE172A4A8F8400F27B64 /* RootViewController.swift in Sources */,
 				FA7179502A3ABC46002C407C /* VoteViewController.swift in Sources */,
 				FA9AABEA2A5030A300B99FB7 /* OrderSectionHeaderView.swift in Sources */,
+				98B2D87D2D96853700EF6A17 /* SignInWithAuth0Helper.swift in Sources */,
 				FA28534E2A6A79B800DD40CB /* DrinkDetailViewModel.swift in Sources */,
 				FA98EEFB2A3DEB7C000E6FEE /* VotingViewController.swift in Sources */,
 				FA98EF092A3F3430000E6FEE /* VoteResultCell.swift in Sources */,
@@ -975,6 +987,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		98B2D8792D967CE600EF6A17 /* XCRemoteSwiftPackageReference "Auth0" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/auth0/Auth0.swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.10.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		98B2D87A2D967CE600EF6A17 /* Auth0 */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 98B2D8792D967CE600EF6A17 /* XCRemoteSwiftPackageReference "Auth0" */;
+			productName = Auth0;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = FA7179272A3A9DF7002C407C /* Project object */;
 }
