@@ -17,7 +17,7 @@ class ProfileViewController: UIViewController {
     private lazy var emailLabel: UILabel = makeEmailLabel()
     private lazy var imageView: UIImageView = makeImageView()
     private lazy var cameraButton: UIButton = makeCameraButton()
-    private lazy var logOutButton: UIButton = makeLogOutButton()
+    private lazy var logoutButton: UIButton = makeLogoutButton()
     private lazy var deleteButton: UIButton = makeDeleteButton()
     private var userObject: UserObject
 
@@ -40,7 +40,7 @@ class ProfileViewController: UIViewController {
 
     private func setupVC() {
         view.backgroundColor = .white
-        setupLogOUtButton()
+        setupLogoutButton()
         setNavController()
     }
 
@@ -56,8 +56,8 @@ class ProfileViewController: UIViewController {
         tabBarController?.tabBar.backgroundColor = .white
     }
 
-    private func setupLogOUtButton() {
-        let contents = [nameLabel, emailLabel, imageView, cameraButton, logOutButton, deleteButton]
+    private func setupLogoutButton() {
+        let contents = [nameLabel, emailLabel, imageView, cameraButton, logoutButton, deleteButton]
         contents.forEach { view.addSubview($0) }
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 80),
@@ -72,11 +72,11 @@ class ProfileViewController: UIViewController {
             nameLabel.centerXAnchor.constraint(equalTo: imageView.centerXAnchor),
             emailLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8),
             emailLabel.centerXAnchor.constraint(equalTo: imageView.centerXAnchor),
-            logOutButton.topAnchor.constraint(equalTo: emailLabel.bottomAnchor, constant: 150),
-            logOutButton.widthAnchor.constraint(equalToConstant: 150),
-            logOutButton.heightAnchor.constraint(equalToConstant: 40),
-            logOutButton.centerXAnchor.constraint(equalTo: imageView.centerXAnchor),
-            deleteButton.topAnchor.constraint(equalTo: logOutButton.bottomAnchor, constant: 25),
+            logoutButton.topAnchor.constraint(equalTo: emailLabel.bottomAnchor, constant: 150),
+            logoutButton.widthAnchor.constraint(equalToConstant: 150),
+            logoutButton.heightAnchor.constraint(equalToConstant: 40),
+            logoutButton.centerXAnchor.constraint(equalTo: imageView.centerXAnchor),
+            deleteButton.topAnchor.constraint(equalTo: logoutButton.bottomAnchor, constant: 25),
             deleteButton.centerXAnchor.constraint(equalTo: imageView.centerXAnchor),
             deleteButton.widthAnchor.constraint(equalToConstant: 150),
             deleteButton.heightAnchor.constraint(equalToConstant: 40)
@@ -137,7 +137,7 @@ extension ProfileViewController {
         present(picker, animated: true)
     }
 
-    private func makeLogOutButton() -> UIButton {
+    private func makeLogoutButton() -> UIButton {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitleColor(UIColor.white, for: .normal)
@@ -151,10 +151,10 @@ extension ProfileViewController {
         button.layer.cornerRadius = 5
         button.layer.masksToBounds = true
         button.setTitle("登出", for: .normal)
-        button.addTarget(self, action: #selector(logOutButtonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
         return button
     }
-    @objc func logOutButtonTapped() {
+    @objc func logoutButtonTapped() {
         userManager.signOut()
         delegate?.profileViewControllerDidPressLogOut(self)
     }

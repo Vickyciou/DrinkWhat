@@ -28,11 +28,7 @@ class RootViewController: UIViewController {
         self.showLoginView = authUser == nil
 
         Task {
-//            do {
-                try await decideVC()
-//            } catch {
-//                print("Failed to decide VC")
-//            }
+            try await decideVC()
         }
     }
 

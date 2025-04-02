@@ -18,7 +18,7 @@ protocol LoginViewControllerDelegate: AnyObject {
 class LoginViewController: UIViewController {
     private lazy var appIconImageView: UIImageView = makeAppIconImageView()
     private lazy var appNameLabel: UILabel = makeAppNameLabel()
-    private lazy var signInWithAppleButton = ASAuthorizationAppleIDButton(type: .signIn, style: .black)
+//    private lazy var signInWithAppleButton = ASAuthorizationAppleIDButton(type: .signIn, style: .black)
     private lazy var skipButton: UIButton = makeSkipButton()
     private lazy var signInWithAuth0Button: UIButton = makeAuth0Button()
     private var currentNonce: String?
@@ -48,7 +48,7 @@ class LoginViewController: UIViewController {
     }
 
     private func setupMainView() {
-        let contents = [appIconImageView, appNameLabel, skipButton, signInWithAppleButton, signInWithAuth0Button]
+        let contents = [appIconImageView, appNameLabel, signInWithAuth0Button, skipButton]
         contents.forEach { view.addSubview($0) }
         NSLayoutConstraint.activate([
             appIconImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 150),
@@ -59,43 +59,38 @@ class LoginViewController: UIViewController {
             appNameLabel.topAnchor.constraint(equalTo: appIconImageView.bottomAnchor, constant: 20),
             appNameLabel.centerXAnchor.constraint(equalTo: appIconImageView.centerXAnchor),
             
-            signInWithAuth0Button.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50),
-            signInWithAuth0Button.heightAnchor.constraint(equalToConstant: 50),
-            signInWithAuth0Button.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 32),
-            signInWithAuth0Button.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -32),
+            skipButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50),
+            skipButton.heightAnchor.constraint(equalToConstant: 50),
+            skipButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 32),
+            skipButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -32),
             
-            signInWithAppleButton.bottomAnchor.constraint(equalTo: signInWithAuth0Button.topAnchor, constant: -20),
-            signInWithAppleButton.trailingAnchor.constraint(equalTo: signInWithAuth0Button.trailingAnchor),
-            signInWithAppleButton.leadingAnchor.constraint(equalTo: signInWithAuth0Button.leadingAnchor),
-            signInWithAppleButton.heightAnchor.constraint(equalTo: signInWithAuth0Button.heightAnchor),
-            
-            skipButton.bottomAnchor.constraint(equalTo: signInWithAppleButton.topAnchor, constant: -20),
-            skipButton.trailingAnchor.constraint(equalTo: signInWithAuth0Button.trailingAnchor),
-            skipButton.leadingAnchor.constraint(equalTo: signInWithAuth0Button.leadingAnchor),
-            skipButton.heightAnchor.constraint(equalTo: signInWithAuth0Button.heightAnchor),
+            signInWithAuth0Button.bottomAnchor.constraint(equalTo: skipButton.topAnchor, constant: -20),
+            signInWithAuth0Button.trailingAnchor.constraint(equalTo: skipButton.trailingAnchor),
+            signInWithAuth0Button.leadingAnchor.constraint(equalTo: skipButton.leadingAnchor),
+            signInWithAuth0Button.heightAnchor.constraint(equalTo: skipButton.heightAnchor),
             
         ])
 
-        signInWithAppleButton.translatesAutoresizingMaskIntoConstraints = false
-        signInWithAppleButton.addTarget(self, action: #selector(startSignInWithAppleFlow), for: .touchUpInside)
+//        signInWithAppleButton.translatesAutoresizingMaskIntoConstraints = false
+//        signInWithAppleButton.addTarget(self, action: #selector(startSignInWithAppleFlow), for: .touchUpInside)
         
     }
 
-    @objc private func startSignInWithAppleFlow() {
-        Task {
-            do {
-                let helper = SignInWithAppleHelper(viewController: self)
-                let tokens = try await helper.startSignInWithAppleFlow()
-                let authDataResult = try await userManager.signInWithApple(tokens: tokens)
-                let user = UserObject(auth: authDataResult)
-                try await userManager.createUserData(userObject: user)
-                let userObject = try await userManager.loadCurrentUser()
-                delegate?.loginViewControllerDismissSelf(self, userObject: userObject)
-            } catch {
-                print("startSignInWithAppleFlow error \(error)")
-            }
-        }
-    }
+//    @objc private func startSignInWithAppleFlow() {
+//        Task {
+//            do {
+//                let helper = SignInWithAppleHelper(viewController: self)
+//                let tokens = try await helper.startSignInWithAppleFlow()
+//                let authDataResult = try await userManager.signInWithApple(tokens: tokens)
+//                let user = UserObject(auth: authDataResult)
+//                try await userManager.createUserData(userObject: user)
+//                let userObject = try await userManager.loadCurrentUser()
+//                delegate?.loginViewControllerDismissSelf(self, userObject: userObject)
+//            } catch {
+//                print("startSignInWithAppleFlow error \(error)")
+//            }
+//        }
+//    }
     
     @objc private func startSignInWithAuth0Flow() {
         Task {
@@ -158,10 +153,10 @@ extension LoginViewController {
     private func makeAuth0Button() -> UIButton {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitleColor(.darkGray, for: .normal)
+        button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = .medium2()
         button.setTitle("Sign in With Auth0", for: .normal)
-        button.backgroundColor = .white
+        button.backgroundColor = .black
         button.layer.borderColor = UIColor.darkGray.cgColor
         button.layer.borderWidth = 2
         button.layer.cornerRadius = 5

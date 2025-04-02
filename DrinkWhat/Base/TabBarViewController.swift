@@ -202,6 +202,7 @@ extension TabBarViewController: LoginSheetViewControllerDelegate {
     func loginSheetViewControllerLoginSuccess(_ viewController: LoginSheetViewController, withUser userObject: UserObject) {
         self.userObject = userObject
         viewControllers = customTabs.map { makeViewController(tab: $0, userObject: userObject) }
+        viewController.dismiss(animated: true)
         makeAlertToast(message: "登入成功", title: nil, duration: 2)
     }
 }
