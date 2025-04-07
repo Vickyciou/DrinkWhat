@@ -68,18 +68,24 @@ class NotVotedViewController: UIViewController {
         let trashImage = UIImage(systemName: "trash")?
             .setColor(color: .darkLogoBrown)
             .withConfiguration(UIImage.SymbolConfiguration(pointSize: 16))
-        let closeButton = UIBarButtonItem(image: closeImage,
-                                          style: .plain,
-                                          target: self,
-                                          action: #selector(closeButtonTapped))
-        let shareButton = UIBarButtonItem(image: shareImage,
-                                          style: .plain,
-                                          target: self,
-                                          action: #selector(shareButtonTapped))
-        let cancelButton = UIBarButtonItem(image: trashImage,
-                                           style: .plain,
-                                          target: self,
-                                          action: #selector(cancelButtonTapped))
+        let closeButton = UIBarButtonItem(
+            image: closeImage,
+            style: .plain,
+            target: self,
+            action: #selector(closeButtonTapped)
+        )
+        let shareButton = UIBarButtonItem(
+            image: shareImage,
+            style: .plain,
+            target: self,
+            action: #selector(shareButtonTapped)
+        )
+        let cancelButton = UIBarButtonItem(
+            image: trashImage,
+            style: .plain,
+            target: self,
+            action: #selector(cancelButtonTapped)
+        )
 
         navigationItem.setRightBarButtonItems([closeButton, shareButton], animated: false)
 
@@ -212,8 +218,10 @@ extension NotVotedViewController: UITableViewDataSource {
 extension NotVotedViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            groupManager.removeShopFromGroup(groupID: groupObject.groupID,
-                                             shopID: shopObjects[indexPath.row].id)
+            groupManager.removeShopFromGroup(
+                groupID: groupObject.groupID,
+                shopID: shopObjects[indexPath.row].id
+            )
             newVoteResults.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         }

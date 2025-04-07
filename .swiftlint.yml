@@ -9,6 +9,7 @@ disabled_rules:
   - orphaned_doc_comment
   - todo
   - unused_capture_list
+  - trailing_comma
 
 analyzer_rules:
   - unused_import
@@ -40,6 +41,8 @@ opt_in_rules:
   - strict_fileprivate
   - toggle_bool
   - yoda_condition
+  - multiline_arguments
+  - attributes
 
 
 custom_rules:
@@ -87,7 +90,7 @@ private_over_fileprivate:
   validate_extensions: true
 
 trailing_whitespace:
-  ignores_empty_lines: false
+  ignores_empty_lines: true
   ignores_comments: true
 
 vertical_whitespace:

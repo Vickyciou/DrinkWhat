@@ -274,7 +274,9 @@ extension DrinkDetailViewController: DrinkDetailTableViewFooterDelegate {
 
 extension DrinkDetailViewController: DrinkDetailViewModelDelegate {
     func topViewNeedToReloadData(_ viewModel: DrinkDetailViewModel) {
-        topView.setupTopView(drinkName: viewModel.getDrink().drinkName,
-                             price: viewModel.calculateDrinkPrice())
+        topView.setupTopView(
+            drinkName: viewModel.getDrink().drinkName,
+            price: viewModel.calculateDrinkPrice()
+        )
     }
 }

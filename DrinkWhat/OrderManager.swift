@@ -207,7 +207,8 @@ class OrderManager {
             } else if let snapshot {
                 let orderData: [OrderResponse] =
                 snapshot.documents.compactMap {
-                    try? $0.data(as: OrderResponse.self)}
+                    try? $0.data(as: OrderResponse.self)
+                }
                 self.delegate?.orderManager(self, didGetAllOrderData: orderData)
             }
         })
@@ -215,8 +216,8 @@ class OrderManager {
 
     // MARK: - Listen to order results
     func listenOrderResults(orderID: String) {
-        orderResultsListener = orderResultsSubCollection(orderID: orderID).addSnapshotListener {
-            [weak self] documentSnapshot, error in
+        orderResultsListener = orderResultsSubCollection(orderID: orderID)
+            .addSnapshotListener { [weak self] documentSnapshot, error in
             guard let self else { return }
             if let error {
                 self.delegate?.orderManager(self, didFailWith: error)
@@ -226,7 +227,7 @@ class OrderManager {
                 }
                 self.delegate?.orderManager(self, didGetOrderResults: results)
             }
-        }
+            }
     }
     // MARK: - remove orderResponseListener
     func removeOrderResponseListener() {

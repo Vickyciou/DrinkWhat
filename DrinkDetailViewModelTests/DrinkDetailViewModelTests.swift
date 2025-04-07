@@ -10,11 +10,13 @@ import XCTest
 
 final class DrinkDetailViewModelTests: XCTestCase {
 
-    private let drink = ShopMenu(drinkName: "Mock Drink",
-                         drinkPrice: [
-                            VolumePrice(volume: "S", price: 100),
-                            VolumePrice(volume: "M", price: 150),
-                            VolumePrice(volume: "L", price: 200)])
+    private let drink = ShopMenu(
+        drinkName: "Mock Drink",
+        drinkPrice: [
+            VolumePrice(volume: "S", price: 100),
+            VolumePrice(volume: "M", price: 150),
+            VolumePrice(volume: "L", price: 200)]
+    )
     private let logoImageURL = "https://example.com/logo.png"
     private let mainImageURL = "https://example.com/main.png"
     private let shopName = "Coffee Shop"
@@ -26,12 +28,14 @@ final class DrinkDetailViewModelTests: XCTestCase {
         AddToppings(topping: "Chocolate Syrup", price: 40)
     ]
 
-    private lazy var shopObject = ShopObject(logoImageURL: logoImageURL,
-                                mainImageURL: mainImageURL,
-                                name: shopName,
-                                id: shopID,
-                                menu: [drink],
-                                addToppings: addToppings)
+    private lazy var shopObject = ShopObject(
+        logoImageURL: logoImageURL,
+        mainImageURL: mainImageURL,
+        name: shopName,
+        id: shopID,
+        menu: [drink],
+        addToppings: addToppings
+    )
 
     struct DataSource: DrinkDetailDataSourceProtocol {
         let sugar = ["Regular", "Less Sugar", "No Sugar"]

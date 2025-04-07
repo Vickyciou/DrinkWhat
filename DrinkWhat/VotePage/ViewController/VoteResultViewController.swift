@@ -60,10 +60,12 @@ class VoteResultViewController: UIViewController {
             .withConfiguration(UIImage.SymbolConfiguration(pointSize: 16))
             .withTintColor(UIColor.darkBrown)
             .withRenderingMode(.alwaysOriginal)
-        let closeButton = UIBarButtonItem(image: closeImage,
-                                          style: .plain,
-                                          target: self,
-                                          action: #selector(closeButtonTapped))
+        let closeButton = UIBarButtonItem(
+            image: closeImage,
+            style: .plain,
+            target: self,
+            action: #selector(closeButtonTapped)
+        )
         navigationItem.setRightBarButton(closeButton, animated: false)
     }
     @objc private func closeButtonTapped() {

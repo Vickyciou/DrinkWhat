@@ -9,6 +9,8 @@ import Foundation
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
+// swiftlint:disable file_length
+
 protocol ShopManagerDelegate: AnyObject {
     func shopManager(_ manager: ShopManager, didGetShopData shopData: [ShopObject])
     func shopManager(_ manager: ShopManager, didFailWith error: Error)
@@ -77,6 +79,7 @@ class ShopManager {
         }
     }
 }
+// swiftlint:disable function_body_length
 extension ShopManager {
     func set50嵐Shop() {
 
@@ -906,3 +909,5 @@ extension ShopManager {
 
 
 }
+// swiftlint:enable function_body_length
+// swiftlint:enable file_length

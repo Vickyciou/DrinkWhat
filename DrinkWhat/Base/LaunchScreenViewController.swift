@@ -8,7 +8,7 @@
 import UIKit
 
 class LaunchScreenViewController: UIViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.storyboard?.instantiateInitialViewController()
@@ -16,12 +16,14 @@ class LaunchScreenViewController: UIViewController {
         let imageView = UIImageView()
         view.addSubview(imageView)
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(imageName: "DrinkWhat-icon無字版",
-                                   targetSize: CGSize(width: 100, height: 100))
-
+        imageView.image = UIImage(
+            imageName: "DrinkWhat-icon無字版",
+            targetSize: CGSize(width: 100, height: 100)
+        )
+        
         NSLayoutConstraint.activate([
             imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             imageView.centerYAnchor.constraint(equalTo: view.centerYAnchor)])
     }
-
+    
 }

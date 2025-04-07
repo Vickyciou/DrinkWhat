@@ -84,14 +84,18 @@ class OrderingViewController: UIViewController {
             .withConfiguration(UIImage.SymbolConfiguration(pointSize: 16))
             .setColor(color: .darkLogoBrown)
 
-        let closeButton = UIBarButtonItem(image: closeImage,
-                                          style: .plain,
-                                          target: self,
-                                          action: #selector(closeButtonTapped))
-        let shareButton = UIBarButtonItem(image: shareImage,
-                                          style: .plain,
-                                          target: self,
-                                          action: #selector(shareButtonTapped))
+        let closeButton = UIBarButtonItem(
+            image: closeImage,
+            style: .plain,
+            target: self,
+            action: #selector(closeButtonTapped)
+        )
+        let shareButton = UIBarButtonItem(
+            image: shareImage,
+            style: .plain,
+            target: self,
+            action: #selector(shareButtonTapped)
+        )
 
 
         navigationItem.setRightBarButtonItems([closeButton, shareButton], animated: false)
@@ -112,9 +116,13 @@ class OrderingViewController: UIViewController {
             preferredStyle: .alert
         )
         let confirmAction = UIAlertAction(title: "確定", style: .default) { [weak self]_ in
-            guard let self else { return }
-            self.orderManager.setOrderStatus(orderID: self.orderResponse.orderID,
-                                       status: OrderStatus.canceled.rawValue)
+            guard let self else {
+                return
+            }
+            self.orderManager.setOrderStatus(
+                orderID: self.orderResponse.orderID,
+                status: OrderStatus.canceled.rawValue
+            )
             self.dismiss(animated: true)
         }
         let cancelAction = UIAlertAction(title: "先不要", style: .cancel)
@@ -144,10 +152,12 @@ class OrderingViewController: UIViewController {
                 let trashImage = UIImage(systemName: "trash")?
                     .setColor(color: .darkLogoBrown)
                     .withConfiguration(UIImage.SymbolConfiguration(pointSize: 16))
-                let cancelButton = UIBarButtonItem(image: trashImage,
-                                                   style: .plain,
-                                                  target: self,
-                                                  action: #selector(cancelButtonTapped))
+                let cancelButton = UIBarButtonItem(
+                    image: trashImage,
+                    style: .plain,
+                    target: self,
+                    action: #selector(cancelButtonTapped)
+                )
                 navigationItem.setLeftBarButton(cancelButton, animated: false)
                 view.delegate = self
                 return view
@@ -207,13 +217,15 @@ extension OrderingViewController: UITableViewDataSource {
         let orderResult = orderResults[indexPath.section]
         let orderObject = orderResult.orderObjects[indexPath.row]
         let toppings = orderObject.addToppings.compactMap { "\($0.topping)" + "+ $\($0.price)" }
-        cell.setupCell(drinkName: orderObject.drinkName,
-                       volume: orderObject.volume,
-                       ice: orderObject.ice,
-                       sugar: orderObject.sugar,
-                       addToppings: toppings,
-                       note: orderObject.note,
-                       price: orderObject.drinkPrice)
+        cell.setupCell(
+            drinkName: orderObject.drinkName,
+            volume: orderObject.volume,
+            ice: orderObject.ice,
+            sugar: orderObject.sugar,
+            addToppings: toppings,
+            note: orderObject.note,
+            price: orderObject.drinkPrice
+        )
 
         return cell
     }
@@ -227,10 +239,12 @@ extension OrderingViewController: UITableViewDelegate {
         headerView.delegate = self
         let order = orderResults[section]
         if let user = joinUserObjects.first(where: { $0.userID == order.userID }) {
-            headerView.setupView(userImageURL: user.userImageURL,
-                                 userName: user.userName ?? "",
-                                 isPaid: order.isPaid,
-                                 indexOfSection: section)
+            headerView.setupView(
+                userImageURL: user.userImageURL,
+                userName: user.userName ?? "",
+                isPaid: order.isPaid,
+                indexOfSection: section
+            )
         }
         return headerView
     }
@@ -251,11 +265,13 @@ extension OrderingViewController: UITableViewDelegate {
         let section = indexPath.section
         let order = orderResults[section]
         let orderObject = order.orderObjects[indexPath.row]
-
+        
         if editingStyle == .delete {
-            orderManager.removeOrderObject(userID: order.userID,
-                                           orderID: orderResponse.orderID,
-                                           orderObject: orderObject)
+            orderManager.removeOrderObject(
+                userID: order.userID,
+                orderID: orderResponse.orderID,
+                orderObject: orderObject
+            )
         }
         orderResults[section].orderObjects.remove(at: indexPath.row)
         tableView.deleteRows(at: [indexPath], with: .fade)
@@ -268,8 +284,10 @@ extension OrderingViewController: InitiatorOrderingBottomViewDelegate {
     }
 
     func finishButtonTapped(_ view: InitiatorOrderingBottomView) {
-        orderManager.setOrderStatus(orderID: orderResponse.orderID,
-                                   status: OrderStatus.finished.rawValue)
+        orderManager.setOrderStatus(
+            orderID: orderResponse.orderID,
+            status: OrderStatus.finished.rawValue
+        )
     }
 }
 extension OrderingViewController: JoinUsersBottomViewDelegate {
@@ -299,14 +317,18 @@ extension OrderingViewController: OrderSectionHeaderViewDelegate {
         let confirmAction = UIAlertAction(title: "是的", style: .default) { [weak self]_ in
             guard let self else { return }
             let user = self.orderResults[indexOfSection].userID
-            self.orderManager.updatePaidStatusToTrue(orderID: self.orderResponse.orderID,
-                                          userID: user)
+            self.orderManager.updatePaidStatusToTrue(
+                orderID: self.orderResponse.orderID,
+                userID: user
+            )
         }
         let cancelAction = UIAlertAction(title: "還沒", style: .cancel) { [weak self]_ in
             guard let self else { return }
             let user = self.orderResults[indexOfSection].userID
-            self.orderManager.updatePaidStatusToFalse(orderID: self.orderResponse.orderID,
-                                          userID: user)
+            self.orderManager.updatePaidStatusToFalse(
+                orderID: self.orderResponse.orderID,
+                userID: user
+            )
         }
         alert.addAction(confirmAction)
         alert.addAction(cancelAction)

@@ -99,10 +99,12 @@ extension VoteViewController: UITableViewDataSource {
             let continueVote = continueVotes[indexPath.row]
             let date = Date(timeIntervalSince1970: continueVote.date)
             let dateString = date.dateToString(date: date)
-            cell.setupVoteCell(profileImageURL: continueVote.initiatorUserImage,
-                               userName: continueVote.initiatorUserName,
-                               voteState: continueVote.state,
-                               date: dateString)
+            cell.setupVoteCell(
+                profileImageURL: continueVote.initiatorUserImage,
+                userName: continueVote.initiatorUserName,
+                voteState: continueVote.state,
+                date: dateString
+            )
             return cell
         case 1:
             let finishedVotes = groupObjects.filter({
@@ -110,10 +112,12 @@ extension VoteViewController: UITableViewDataSource {
             let finishedVote = finishedVotes[indexPath.row]
             let date = Date(timeIntervalSince1970: finishedVote.date)
             let dateString = date.dateToString(date: date)
-            cell.setupVoteCell(profileImageURL: finishedVote.initiatorUserImage,
+            cell.setupVoteCell(
+                profileImageURL: finishedVote.initiatorUserImage,
                                userName: finishedVote.initiatorUserName,
                                voteState: finishedVote.state,
-                               date: dateString)
+                               date: dateString
+            )
             return cell
         default:
             return cell
@@ -126,18 +130,22 @@ extension VoteViewController: UITableViewDelegate {
         switch indexPath.section {
         case 0:
             let continueVotes = groupObjects.filter({ $0.state == GroupStatus.active.rawValue })
-            let voteNavigationVC = VoteNavigationController(userObject: userObject,
-                                                            groupID: continueVotes[indexPath.row].groupID,
-                                                            groupObject: continueVotes[indexPath.row])
+            let voteNavigationVC = VoteNavigationController(
+                userObject: userObject,
+                groupID: continueVotes[indexPath.row].groupID,
+                groupObject: continueVotes[indexPath.row]
+            )
             present(voteNavigationVC, animated: true)
         case 1:
             let finishedVotes = groupObjects.filter({
-                    $0.state == GroupStatus.canceled.rawValue ||
-                    $0.state == GroupStatus.finished.rawValue
-                })
-            let voteNavigationVC = VoteNavigationController(userObject: userObject,
-                                                            groupID: finishedVotes[indexPath.row].groupID,
-                                                            groupObject: finishedVotes[indexPath.row])
+                $0.state == GroupStatus.canceled.rawValue ||
+                $0.state == GroupStatus.finished.rawValue
+            })
+            let voteNavigationVC = VoteNavigationController(
+                userObject: userObject,
+                groupID: finishedVotes[indexPath.row].groupID,
+                groupObject: finishedVotes[indexPath.row]
+            )
             present(voteNavigationVC, animated: true)
         default:
             return

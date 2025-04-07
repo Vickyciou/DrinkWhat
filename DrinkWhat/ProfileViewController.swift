@@ -110,8 +110,10 @@ extension ProfileViewController {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.cornerRadius = 60
         imageView.layer.masksToBounds = true
-        imageView.loadImage(userObject.userImageURL,
-                            placeHolder: UIImage(systemName: "person.circle.fill")?.setColor(color: .darkBrown))
+        imageView.loadImage(
+            userObject.userImageURL,
+            placeHolder: UIImage(systemName: "person.circle.fill")?.setColor(color: .darkBrown)
+        )
 
         return imageView
     }
@@ -215,7 +217,9 @@ extension ProfileViewController: PHPickerViewControllerDelegate {
                 Task {
                     do {
                         let url = try await self.firebaseStorageManager.uploadPhoto(image: image)
-                        self.userManager.updateUserImage(userID: self.userObject.userID, imageURL: url.absoluteString)
+                        await self.userManager.updateUserImage(
+                            userID: self.userObject.userID, imageURL: url.absoluteString
+                        )
                     } catch UploadError.dataConversionFailed {
                         print(UploadError.dataConversionFailed.errorDescription as Any)
                     } catch {

@@ -40,8 +40,10 @@ class OrderSectionHeaderView: UIView {
     }
 
     func setupView(userImageURL: String?, userName: String, isPaid: Bool, indexOfSection: Int) {
-        userImageView.loadImage(userImageURL,
-                                placeHolder: UIImage(systemName: "person.circle.fill")?.setColor(color: .darkLogoBrown))
+        userImageView.loadImage(
+            userImageURL,
+            placeHolder: UIImage(systemName: "person.circle.fill")?.setColor(color: .darkLogoBrown)
+        )
         userNameLabel.text = userName
         paidStatusButton.isSelected = isPaid
         self.indexOfSection = indexOfSection

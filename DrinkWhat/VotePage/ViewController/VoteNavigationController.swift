@@ -134,10 +134,12 @@ extension VoteNavigationController: GroupManagerDelegate {
         self.voteResults = sortedVoteResults
         let shopIDs = sortedVoteResults.map { $0.shopID }
         if shopObjects.map({ $0.id }) == shopIDs {
-            decideVC(groupObject: groupObject,
-                     userObject: userObject,
-                     voteResults: sortedVoteResults,
-                     shopObjects: shopObjects)
+            decideVC(
+                groupObject: groupObject,
+                userObject: userObject,
+                voteResults: sortedVoteResults,
+                shopObjects: shopObjects
+            )
         } else {
             shopManager.getShopObjects(shopIDs)
         }

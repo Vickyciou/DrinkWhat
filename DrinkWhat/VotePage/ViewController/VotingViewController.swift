@@ -72,19 +72,25 @@ class VotingViewController: UIViewController {
         let trashImage = UIImage(systemName: "trash")?
             .setColor(color: .darkLogoBrown)
             .withConfiguration(UIImage.SymbolConfiguration(pointSize: 16))
-        let closeButton = UIBarButtonItem(image: closeImage,
-                                          style: .plain,
-                                          target: self,
-                                          action: #selector(closeButtonTapped))
-        let shareButton = UIBarButtonItem(image: shareImage,
-                                          style: .plain,
-                                          target: self,
-                                          action: #selector(shareButtonTapped))
-        let cancelButton = UIBarButtonItem(image: trashImage,
-                                           style: .plain,
-                                          target: self,
-                                          action: #selector(cancelButtonTapped))
-
+        let closeButton = UIBarButtonItem(
+            image: closeImage,
+            style: .plain,
+            target: self,
+            action: #selector(closeButtonTapped)
+        )
+        let shareButton = UIBarButtonItem(
+            image: shareImage,
+            style: .plain,
+            target: self,
+            action: #selector(shareButtonTapped)
+        )
+        let cancelButton = UIBarButtonItem(
+            image: trashImage,
+            style: .plain,
+            target: self,
+            action: #selector(cancelButtonTapped)
+        )
+        
         navigationItem.setRightBarButtonItems([closeButton, shareButton], animated: false)
 
         if !isInitiator ||

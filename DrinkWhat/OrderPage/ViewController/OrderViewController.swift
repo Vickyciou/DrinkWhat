@@ -12,21 +12,21 @@ class OrderViewController: UIViewController {
     private let orderManager = OrderManager()
     private var userObject: UserObject
     private var orderResponses: [OrderResponse] = []
-
+    
     init(userObject: UserObject) {
         self.userObject = userObject
         super.init(nibName: nil, bundle: nil)
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupVC()
     }
-
+    
     private func setupVC() {
         view.backgroundColor = .skinColor
         setNavController()
@@ -34,7 +34,7 @@ class OrderViewController: UIViewController {
         orderManager.delegate = self
         orderManager.listenOrderResponse(userID: userObject.userID)
     }
-
+    
     private func setNavController() {
         let appearance = UINavigationBarAppearance()
         appearance.backgroundColor = UIColor.white
@@ -47,7 +47,7 @@ class OrderViewController: UIViewController {
         navigationItem.title = "團購首頁"
         tabBarController?.tabBar.backgroundColor = .white
     }
-
+    
     private func setupTableView() {
         view.addSubview(tableView)
         NSLayoutConstraint.activate([
@@ -73,7 +73,7 @@ extension OrderViewController {
 }
 
 extension OrderViewController: UITableViewDataSource {
-
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         2
     }
@@ -89,22 +89,24 @@ extension OrderViewController: UITableViewDataSource {
         default:
             return 0
         }
-
+        
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "MainOrderCell", for: indexPath)
                 as? MainOrderCell else { fatalError("Cannot created MainOrderCell") }
-
+        
         switch indexPath.section {
         case 0:
             let continueOrders = orderResponses.filter({ $0.state == OrderStatus.active.rawValue })
             let continueOrder = continueOrders[indexPath.row]
             let date = Date(timeIntervalSince1970: continueOrder.date)
             let dateString = date.dateToString(date: date)
-            cell.setupCell(shopImageURL: continueOrder.shopObject.logoImageURL,
-                           shopName: continueOrder.shopObject.name,
-                           description: "由\(continueOrder.initiatorUserName)發起的團購",
-                           date: dateString)
+            cell.setupCell(
+                shopImageURL: continueOrder.shopObject.logoImageURL,
+                shopName: continueOrder.shopObject.name,
+                description: "由\(continueOrder.initiatorUserName)發起的團購",
+                date: dateString
+            )
             return cell
         case 1:
             let finishedOrders = orderResponses.filter({
@@ -112,10 +114,12 @@ extension OrderViewController: UITableViewDataSource {
             let finishedOrder = finishedOrders[indexPath.row]
             let date = Date(timeIntervalSince1970: finishedOrder.date)
             let dateString = date.dateToString(date: date)
-            cell.setupCell(shopImageURL: finishedOrder.shopObject.logoImageURL,
-                           shopName: finishedOrder.shopObject.name,
-                           description: "由\(finishedOrder.initiatorUserName)發起的團購",
-                           date: dateString)
+            cell.setupCell(
+                shopImageURL: finishedOrder.shopObject.logoImageURL,
+                shopName: finishedOrder.shopObject.name,
+                description: "由\(finishedOrder.initiatorUserName)發起的團購",
+                date: dateString
+            )
             return cell
         default:
             return cell
@@ -128,20 +132,24 @@ extension OrderViewController: UITableViewDelegate {
         switch indexPath.section {
         case 0:
             let continueOrders = orderResponses.filter({ $0.state == OrderStatus.active.rawValue })
-            let orderVC = OrderNavigationController(orderResponse: continueOrders[indexPath.row],
-                                                    userObject: userObject)
+            let orderVC = OrderNavigationController(
+                orderResponse: continueOrders[indexPath.row],
+                userObject: userObject
+            )
             present(orderVC, animated: true)
         case 1:
             let finishedOrders = orderResponses.filter({
                 $0.state == OrderStatus.finished.rawValue || $0.state == OrderStatus.canceled.rawValue })
-            let orderVC = OrderNavigationController(orderResponse: finishedOrders[indexPath.row],
-                                                    userObject: userObject)
+            let orderVC = OrderNavigationController(
+                orderResponse: finishedOrders[indexPath.row],
+                userObject: userObject
+            )
             present(orderVC, animated: true)
         default:
             return
         }
     }
-
+    
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
         case 0:
@@ -160,10 +168,10 @@ extension OrderViewController: UITableViewDelegate {
             return false
         }
     }
-
+    
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         let orderResponse = orderResponses[indexPath.row]
-
+        
         if editingStyle == .delete {
             orderManager.removeOrder(orderID: orderResponse.orderID)
         }
@@ -180,11 +188,11 @@ extension OrderViewController: OrderManagerDelegate {
             self.tableView.reloadData()
         }
     }
-
+    
     func orderManager(_ manager: OrderManager, didGetOrderResults orderResults: [OrderResults]) {
         return
     }
-
+    
     func orderManager(_ manager: OrderManager, didFailWith error: Error) {
         print(error.localizedDescription)
     }
