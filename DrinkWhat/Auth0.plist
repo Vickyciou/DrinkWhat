@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<!--
-   Auth0.plist
-   DrinkWhat
-
-   Created by Vicky on 2025/3/28.
-   Copyright (c) 2025 ___ORGANIZATIONNAME___. All rights reserved.
--->
 <plist version="1.0">
-<dict/>
+<dict>
+	<key>Domain</key>
+	<string>dev-4da241uz4q5w7j11.us.auth0.com</string>
+	<key>ClientId</key>
+	<string>pUlVMS8sJVme5i7wAhEFCj8QrYsOwK5o</string>
+</dict>
 </plist>

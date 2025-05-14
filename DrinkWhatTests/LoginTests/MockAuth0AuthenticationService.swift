@@ -30,11 +30,13 @@ class MockAuth0AuthenticationService: Auth0AuthenticationService {
 // Mock Credentials for testing
 extension Credentials {
     static func mockCredentials(idToken: String) -> Credentials {
-        return Credentials(accessToken: "mock_access_token",
-                         tokenType: "Bearer",
-                         idToken: idToken,
-                         refreshToken: nil,
-                         expiresIn: Date().addingTimeInterval(3600),
-                         scope: "openid profile email")
+        return Credentials(
+            accessToken: "mock_access_token",
+            tokenType: "Bearer",
+            idToken: idToken,
+            refreshToken: nil,
+            expiresIn: Date().addingTimeInterval(3600),
+            scope: "openid profile email"
+        )
     }
-} 
+}

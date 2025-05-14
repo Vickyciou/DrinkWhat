@@ -3,81 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		987ACE592DBB6B83005E9467 /* MockAuth0AuthenticationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987ACE562DBB6B83005E9467 /* MockAuth0AuthenticationService.swift */; };
-		987ACE5A2DBB6B83005E9467 /* SignInWithAuth0HelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987ACE572DBB6B83005E9467 /* SignInWithAuth0HelperTests.swift */; };
-		98B2D8782D967C9800EF6A17 /* Auth0.plist in Resources */ = {isa = PBXBuildFile; fileRef = 98B2D8772D967C9800EF6A17 /* Auth0.plist */; };
 		98B2D87B2D967CE600EF6A17 /* Auth0 in Frameworks */ = {isa = PBXBuildFile; productRef = 98B2D87A2D967CE600EF6A17 /* Auth0 */; };
-		98B2D87D2D96853700EF6A17 /* SignInWithAuth0Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B2D87C2D96853700EF6A17 /* SignInWithAuth0Helper.swift */; };
 		F6E573017D9A86AE4188F657 /* Pods_DrinkWhat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FB21740431A239E7B61383D /* Pods_DrinkWhat.framework */; };
-		FA2820B12A406E98009FDAD2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA2820B02A406E98009FDAD2 /* GoogleService-Info.plist */; };
-		FA2820BE2A4158BD009FDAD2 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2820BD2A4158BD009FDAD2 /* UIImage+Extension.swift */; };
-		FA28534E2A6A79B800DD40CB /* DrinkDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA28534D2A6A79B800DD40CB /* DrinkDetailViewModel.swift */; };
-		FA2853562A6BC99200DD40CB /* DrinkDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2853552A6BC99200DD40CB /* DrinkDetailViewModelTests.swift */; };
-		FA6C33252A4851FC005CC96E /* URL+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6C33242A4851FC005CC96E /* URL+Extension.swift */; };
-		FA7179332A3A9DF7002C407C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7179322A3A9DF7002C407C /* AppDelegate.swift */; };
-		FA7179352A3A9DF7002C407C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7179342A3A9DF7002C407C /* SceneDelegate.swift */; };
-		FA7179372A3A9DF7002C407C /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7179362A3A9DF7002C407C /* HomeViewController.swift */; };
-		FA71793C2A3A9DF8002C407C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA71793B2A3A9DF8002C407C /* Assets.xcassets */; };
-		FA71793F2A3A9DF8002C407C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA71793D2A3A9DF8002C407C /* LaunchScreen.storyboard */; };
-		FA71794A2A3AB994002C407C /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7179492A3AB994002C407C /* TabBarViewController.swift */; };
-		FA7179502A3ABC46002C407C /* VoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA71794F2A3ABC46002C407C /* VoteViewController.swift */; };
-		FA7179522A3ABC99002C407C /* OrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7179512A3ABC99002C407C /* OrderViewController.swift */; };
-		FA7179542A3ABD01002C407C /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7179532A3ABD01002C407C /* ProfileViewController.swift */; };
-		FA7179562A3AE557002C407C /* VoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7179552A3AE557002C407C /* VoteCell.swift */; };
-		FA7179592A3AEBDA002C407C /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7179582A3AEBDA002C407C /* UIFont+Extension.swift */; };
-		FA71795C2A3C0B91002C407C /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA71795B2A3C0B91002C407C /* UIColor+Extension.swift */; };
-		FA71795E2A3C13BB002C407C /* NotVotedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA71795D2A3C13BB002C407C /* NotVotedViewController.swift */; };
-		FA7179602A3C141A002C407C /* NotVotedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA71795F2A3C1419002C407C /* NotVotedCell.swift */; };
-		FA77B7642A5EA6B2006D124B /* LaunchScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA77B7632A5EA6B2006D124B /* LaunchScreenViewController.swift */; };
-		FA7CC6082A41ACC4009B599F /* GroupManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7CC6072A41ACC4009B599F /* GroupManager.swift */; };
-		FA7CC60B2A41B65D009B599F /* GroupResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7CC60A2A41B65D009B599F /* GroupResponse.swift */; };
-		FA7CC60D2A42DDE6009B599F /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7CC60C2A42DDE6009B599F /* UserManager.swift */; };
-		FA7CC60F2A4403B5009B599F /* ShopManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7CC60E2A4403B5009B599F /* ShopManager.swift */; };
-		FA7CC6112A44460B009B599F /* HomeShopCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7CC6102A44460B009B599F /* HomeShopCell.swift */; };
-		FA7CC6142A44493B009B599F /* KingFisherWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7CC6132A44493B009B599F /* KingFisherWrapper.swift */; };
-		FA7CC6172A444B81009B599F /* ShopMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7CC6162A444B81009B599F /* ShopMenuViewController.swift */; };
-		FA7CC6192A446106009B599F /* ShopMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7CC6182A446106009B599F /* ShopMenuCell.swift */; };
-		FA7CC61B2A457754009B599F /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7CC61A2A457754009B599F /* SectionHeaderView.swift */; };
-		FA8B17F32A57F52700404DC7 /* FirebaseStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8B17F22A57F52700404DC7 /* FirebaseStorageManager.swift */; };
-		FA8B17F52A5C4DF200404DC7 /* DrinkDetailTableViewFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8B17F42A5C4DF200404DC7 /* DrinkDetailTableViewFooter.swift */; };
-		FA9232222A49896500F045C6 /* SignInWithAppleHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9232212A49896500F045C6 /* SignInWithAppleHelper.swift */; };
-		FA9232242A498F1E00F045C6 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9232232A498F1E00F045C6 /* AuthManager.swift */; };
-		FA98EEFB2A3DEB7C000E6FEE /* VotingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA98EEFA2A3DEB7C000E6FEE /* VotingViewController.swift */; };
-		FA98EEFD2A3DEBA3000E6FEE /* VotingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA98EEFC2A3DEBA3000E6FEE /* VotingCell.swift */; };
-		FA98EEFF2A3E03D0000E6FEE /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA98EEFE2A3E03D0000E6FEE /* Date+Extension.swift */; };
-		FA98EF012A3EAF0E000E6FEE /* VoteNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA98EF002A3EAF0E000E6FEE /* VoteNavigationController.swift */; };
-		FA98EF032A3EB991000E6FEE /* VoteResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA98EF022A3EB991000E6FEE /* VoteResultViewController.swift */; };
-		FA98EF092A3F3430000E6FEE /* VoteResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA98EF082A3F3430000E6FEE /* VoteResultCell.swift */; };
-		FA98EF0B2A3F39B0000E6FEE /* WinnerShopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA98EF0A2A3F39B0000E6FEE /* WinnerShopView.swift */; };
-		FA9AABD62A4D247500B99FB7 /* OrderResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABD52A4D247500B99FB7 /* OrderResponse.swift */; };
-		FA9AABD82A4D25A300B99FB7 /* Encodable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABD72A4D25A300B99FB7 /* Encodable+Extension.swift */; };
-		FA9AABDA2A4D34D200B99FB7 /* OrderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABD92A4D34D200B99FB7 /* OrderManager.swift */; };
-		FA9AABDC2A4D810800B99FB7 /* ToastSwiftWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABDB2A4D810800B99FB7 /* ToastSwiftWrapper.swift */; };
-		FA9AABDE2A4EC45300B99FB7 /* MainOrderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABDD2A4EC45300B99FB7 /* MainOrderCell.swift */; };
-		FA9AABE02A4F1D7600B99FB7 /* OrderingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABDF2A4F1D7600B99FB7 /* OrderingViewController.swift */; };
-		FA9AABE22A4F1DA400B99FB7 /* CustomDrinkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABE12A4F1DA400B99FB7 /* CustomDrinkCell.swift */; };
-		FA9AABE42A4FABFB00B99FB7 /* OrderNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABE32A4FABFB00B99FB7 /* OrderNavigationController.swift */; };
-		FA9AABEA2A5030A300B99FB7 /* OrderSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABE92A5030A300B99FB7 /* OrderSectionHeaderView.swift */; };
-		FA9AABEC2A5069B100B99FB7 /* OrderSectionFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABEB2A5069B100B99FB7 /* OrderSectionFooterView.swift */; };
-		FA9AABEE2A51210700B99FB7 /* OrderTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABED2A51210700B99FB7 /* OrderTableViewHeader.swift */; };
-		FA9AABF02A51378400B99FB7 /* InitiatorOrderingBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABEF2A51378400B99FB7 /* InitiatorOrderingBottomView.swift */; };
-		FA9AABF22A51472400B99FB7 /* OrderFinishedBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABF12A51472400B99FB7 /* OrderFinishedBottomView.swift */; };
-		FA9AABF42A51480600B99FB7 /* JoinUsersBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABF32A51480600B99FB7 /* JoinUsersBottomView.swift */; };
-		FA9AABF62A51687500B99FB7 /* OrderTableViewFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9AABF52A51687500B99FB7 /* OrderTableViewFooter.swift */; };
-		FAA10A512A471079001F9CC0 /* UserObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA10A502A471079001F9CC0 /* UserObject.swift */; };
-		FAA10A532A4710B7001F9CC0 /* ShopObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA10A522A4710B7001F9CC0 /* ShopObject.swift */; };
-		FAAFA1A62A63865E00713CA2 /* DeleteWithAppleHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAFA1A52A63865E00713CA2 /* DeleteWithAppleHelper.swift */; };
-		FAB2B9D52A4ADC7800EB449C /* DrinkDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB2B9D42A4ADC7800EB449C /* DrinkDetailViewController.swift */; };
-		FAB2B9D72A4ADDCC00EB449C /* DrinkDetailTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB2B9D62A4ADDCC00EB449C /* DrinkDetailTopView.swift */; };
-		FAB2B9DB2A4AE21600EB449C /* DrinkDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB2B9DA2A4AE21600EB449C /* DrinkDetailCell.swift */; };
-		FAB2B9DD2A4AE4F000EB449C /* DrinkDetailDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB2B9DC2A4AE4F000EB449C /* DrinkDetailDataSource.swift */; };
-		FAE757C72A3FF40E003245EC /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE757C62A3FF40E003245EC /* LoginViewController.swift */; };
-		FAF16F342A53F2EF002590D9 /* LoginSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF16F332A53F2EF002590D9 /* LoginSheetViewController.swift */; };
-		FAF2AE172A4A8F8400F27B64 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF2AE162A4A8F8400F27B64 /* RootViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,81 +24,25 @@
 /* Begin PBXFileReference section */
 		30934C47FEC6CC2DA01CFD4E /* Pods-DrinkWhat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DrinkWhat.release.xcconfig"; path = "Target Support Files/Pods-DrinkWhat/Pods-DrinkWhat.release.xcconfig"; sourceTree = "<group>"; };
 		5FB21740431A239E7B61383D /* Pods_DrinkWhat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DrinkWhat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		987ACE562DBB6B83005E9467 /* MockAuth0AuthenticationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAuth0AuthenticationService.swift; sourceTree = "<group>"; };
-		987ACE572DBB6B83005E9467 /* SignInWithAuth0HelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithAuth0HelperTests.swift; sourceTree = "<group>"; };
-		98B2D8772D967C9800EF6A17 /* Auth0.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Auth0.plist; path = "../../../Downloads/sample-01/Auth0.plist"; sourceTree = "<group>"; };
-		98B2D87C2D96853700EF6A17 /* SignInWithAuth0Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithAuth0Helper.swift; sourceTree = "<group>"; };
 		DEE07C5BA30E83A3E151349C /* Pods-DrinkWhat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DrinkWhat.debug.xcconfig"; path = "Target Support Files/Pods-DrinkWhat/Pods-DrinkWhat.debug.xcconfig"; sourceTree = "<group>"; };
-		FA2820B02A406E98009FDAD2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		FA2820BD2A4158BD009FDAD2 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
-		FA28534D2A6A79B800DD40CB /* DrinkDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkDetailViewModel.swift; sourceTree = "<group>"; };
 		FA2853532A6BC99100DD40CB /* DrinkDetailViewModelTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DrinkDetailViewModelTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		FA2853552A6BC99200DD40CB /* DrinkDetailViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkDetailViewModelTests.swift; sourceTree = "<group>"; };
-		FA6C33242A4851FC005CC96E /* URL+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Extension.swift"; sourceTree = "<group>"; };
 		FA71792F2A3A9DF7002C407C /* DrinkWhat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DrinkWhat.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		FA7179322A3A9DF7002C407C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		FA7179342A3A9DF7002C407C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		FA7179362A3A9DF7002C407C /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		FA71793B2A3A9DF8002C407C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		FA71793E2A3A9DF8002C407C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		FA7179402A3A9DF8002C407C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FA7179492A3AB994002C407C /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
-		FA71794F2A3ABC46002C407C /* VoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteViewController.swift; sourceTree = "<group>"; };
-		FA7179512A3ABC99002C407C /* OrderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderViewController.swift; sourceTree = "<group>"; };
-		FA7179532A3ABD01002C407C /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
-		FA7179552A3AE557002C407C /* VoteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteCell.swift; sourceTree = "<group>"; };
-		FA7179582A3AEBDA002C407C /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
-		FA71795B2A3C0B91002C407C /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
-		FA71795D2A3C13BB002C407C /* NotVotedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotVotedViewController.swift; sourceTree = "<group>"; };
-		FA71795F2A3C1419002C407C /* NotVotedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotVotedCell.swift; sourceTree = "<group>"; };
-		FA77B7632A5EA6B2006D124B /* LaunchScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenViewController.swift; sourceTree = "<group>"; };
-		FA7CC6072A41ACC4009B599F /* GroupManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupManager.swift; sourceTree = "<group>"; };
-		FA7CC60A2A41B65D009B599F /* GroupResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupResponse.swift; sourceTree = "<group>"; };
-		FA7CC60C2A42DDE6009B599F /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
-		FA7CC60E2A4403B5009B599F /* ShopManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopManager.swift; sourceTree = "<group>"; };
-		FA7CC6102A44460B009B599F /* HomeShopCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeShopCell.swift; sourceTree = "<group>"; };
-		FA7CC6132A44493B009B599F /* KingFisherWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KingFisherWrapper.swift; sourceTree = "<group>"; };
-		FA7CC6162A444B81009B599F /* ShopMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopMenuViewController.swift; sourceTree = "<group>"; };
-		FA7CC6182A446106009B599F /* ShopMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopMenuCell.swift; sourceTree = "<group>"; };
-		FA7CC61A2A457754009B599F /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
-		FA8B17F22A57F52700404DC7 /* FirebaseStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStorageManager.swift; sourceTree = "<group>"; };
-		FA8B17F42A5C4DF200404DC7 /* DrinkDetailTableViewFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkDetailTableViewFooter.swift; sourceTree = "<group>"; };
-		FA9232202A49705300F045C6 /* DrinkWhat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DrinkWhat.entitlements; sourceTree = "<group>"; };
-		FA9232212A49896500F045C6 /* SignInWithAppleHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithAppleHelper.swift; sourceTree = "<group>"; };
-		FA9232232A498F1E00F045C6 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
-		FA98EEFA2A3DEB7C000E6FEE /* VotingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VotingViewController.swift; sourceTree = "<group>"; };
-		FA98EEFC2A3DEBA3000E6FEE /* VotingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VotingCell.swift; sourceTree = "<group>"; };
-		FA98EEFE2A3E03D0000E6FEE /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
-		FA98EF002A3EAF0E000E6FEE /* VoteNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteNavigationController.swift; sourceTree = "<group>"; };
-		FA98EF022A3EB991000E6FEE /* VoteResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteResultViewController.swift; sourceTree = "<group>"; };
-		FA98EF082A3F3430000E6FEE /* VoteResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteResultCell.swift; sourceTree = "<group>"; };
-		FA98EF0A2A3F39B0000E6FEE /* WinnerShopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinnerShopView.swift; sourceTree = "<group>"; };
-		FA9AABD52A4D247500B99FB7 /* OrderResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderResponse.swift; sourceTree = "<group>"; };
-		FA9AABD72A4D25A300B99FB7 /* Encodable+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+Extension.swift"; sourceTree = "<group>"; };
-		FA9AABD92A4D34D200B99FB7 /* OrderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderManager.swift; sourceTree = "<group>"; };
-		FA9AABDB2A4D810800B99FB7 /* ToastSwiftWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastSwiftWrapper.swift; sourceTree = "<group>"; };
-		FA9AABDD2A4EC45300B99FB7 /* MainOrderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainOrderCell.swift; sourceTree = "<group>"; };
-		FA9AABDF2A4F1D7600B99FB7 /* OrderingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderingViewController.swift; sourceTree = "<group>"; };
-		FA9AABE12A4F1DA400B99FB7 /* CustomDrinkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDrinkCell.swift; sourceTree = "<group>"; };
-		FA9AABE32A4FABFB00B99FB7 /* OrderNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderNavigationController.swift; sourceTree = "<group>"; };
-		FA9AABE92A5030A300B99FB7 /* OrderSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderSectionHeaderView.swift; sourceTree = "<group>"; };
-		FA9AABEB2A5069B100B99FB7 /* OrderSectionFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderSectionFooterView.swift; sourceTree = "<group>"; };
-		FA9AABED2A51210700B99FB7 /* OrderTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderTableViewHeader.swift; sourceTree = "<group>"; };
-		FA9AABEF2A51378400B99FB7 /* InitiatorOrderingBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitiatorOrderingBottomView.swift; sourceTree = "<group>"; };
-		FA9AABF12A51472400B99FB7 /* OrderFinishedBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderFinishedBottomView.swift; sourceTree = "<group>"; };
-		FA9AABF32A51480600B99FB7 /* JoinUsersBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinUsersBottomView.swift; sourceTree = "<group>"; };
-		FA9AABF52A51687500B99FB7 /* OrderTableViewFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderTableViewFooter.swift; sourceTree = "<group>"; };
-		FAA10A502A471079001F9CC0 /* UserObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserObject.swift; sourceTree = "<group>"; };
-		FAA10A522A4710B7001F9CC0 /* ShopObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopObject.swift; sourceTree = "<group>"; };
-		FAAFA1A52A63865E00713CA2 /* DeleteWithAppleHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteWithAppleHelper.swift; sourceTree = "<group>"; };
-		FAB2B9D42A4ADC7800EB449C /* DrinkDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkDetailViewController.swift; sourceTree = "<group>"; };
-		FAB2B9D62A4ADDCC00EB449C /* DrinkDetailTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkDetailTopView.swift; sourceTree = "<group>"; };
-		FAB2B9DA2A4AE21600EB449C /* DrinkDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkDetailCell.swift; sourceTree = "<group>"; };
-		FAB2B9DC2A4AE4F000EB449C /* DrinkDetailDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkDetailDataSource.swift; sourceTree = "<group>"; };
-		FAE757C62A3FF40E003245EC /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		FAF16F332A53F2EF002590D9 /* LoginSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginSheetViewController.swift; sourceTree = "<group>"; };
-		FAF2AE162A4A8F8400F27B64 /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		9863AAC12DD4322500A79807 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = FA71792E2A3A9DF7002C407C /* DrinkWhat */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		9863AA7D2DD4322500A79807 /* DrinkWhat */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (9863AAC12DD4322500A79807 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = DrinkWhat; sourceTree = "<group>"; };
+		9863AAC72DD436C500A79807 /* DrinkWhatTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = DrinkWhatTests; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		FA2853502A6BC99100DD40CB /* Frameworks */ = {
@@ -206,45 +81,11 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		987ACE582DBB6B83005E9467 /* DrinkWhatTests */ = {
-			isa = PBXGroup;
-			children = (
-				987ACE5B2DBF1503005E9467 /* LoginTests */,
-				FA2853542A6BC99200DD40CB /* DrinkDetailViewModelTests */,
-			);
-			path = DrinkWhatTests;
-			sourceTree = "<group>";
-		};
-		987ACE5B2DBF1503005E9467 /* LoginTests */ = {
-			isa = PBXGroup;
-			children = (
-				987ACE562DBB6B83005E9467 /* MockAuth0AuthenticationService.swift */,
-				987ACE572DBB6B83005E9467 /* SignInWithAuth0HelperTests.swift */,
-			);
-			path = LoginTests;
-			sourceTree = "<group>";
-		};
-		FA28534C2A6A798D00DD40CB /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				FA28534D2A6A79B800DD40CB /* DrinkDetailViewModel.swift */,
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		FA2853542A6BC99200DD40CB /* DrinkDetailViewModelTests */ = {
-			isa = PBXGroup;
-			children = (
-				FA2853552A6BC99200DD40CB /* DrinkDetailViewModelTests.swift */,
-			);
-			path = DrinkDetailViewModelTests;
-			sourceTree = "<group>";
-		};
 		FA7179262A3A9DF7002C407C = {
 			isa = PBXGroup;
 			children = (
-				FA7179312A3A9DF7002C407C /* DrinkWhat */,
-				987ACE582DBB6B83005E9467 /* DrinkWhatTests */,
+				9863AA7D2DD4322500A79807 /* DrinkWhat */,
+				9863AAC72DD436C500A79807 /* DrinkWhatTests */,
 				FA7179302A3A9DF7002C407C /* Products */,
 				5B5BC68516A741A3245C0504 /* Pods */,
 				3AD0BE5E59915E3EB1FDE8E8 /* Frameworks */,
@@ -258,209 +99,6 @@
 				FA2853532A6BC99100DD40CB /* DrinkDetailViewModelTests.xctest */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		FA7179312A3A9DF7002C407C /* DrinkWhat */ = {
-			isa = PBXGroup;
-			children = (
-				FA9232202A49705300F045C6 /* DrinkWhat.entitlements */,
-				FA7179322A3A9DF7002C407C /* AppDelegate.swift */,
-				FA7179342A3A9DF7002C407C /* SceneDelegate.swift */,
-				FA7CC6122A4448F0009B599F /* ThirdPartyWrappers */,
-				FA7179642A3D4C66002C407C /* Helper */,
-				FA7CC6062A41AC90009B599F /* Manager */,
-				FA7CC6092A41B630009B599F /* Model */,
-				FA7179612A3C543D002C407C /* Base */,
-				FA7179572A3AEB22002C407C /* Extension */,
-				FA7CC6052A41AC24009B599F /* HomePage */,
-				FA7CC6152A444B1C009B599F /* ShopPage */,
-				FA71795A2A3AED81002C407C /* VotePage */,
-				FAB2B9D32A4ADC1A00EB449C /* OrderPage */,
-				FA7179532A3ABD01002C407C /* ProfileViewController.swift */,
-				FA71793B2A3A9DF8002C407C /* Assets.xcassets */,
-				FA71793D2A3A9DF8002C407C /* LaunchScreen.storyboard */,
-				FA7179402A3A9DF8002C407C /* Info.plist */,
-				FA2820B02A406E98009FDAD2 /* GoogleService-Info.plist */,
-				98B2D8772D967C9800EF6A17 /* Auth0.plist */,
-			);
-			path = DrinkWhat;
-			sourceTree = "<group>";
-		};
-		FA7179572A3AEB22002C407C /* Extension */ = {
-			isa = PBXGroup;
-			children = (
-				FA7179582A3AEBDA002C407C /* UIFont+Extension.swift */,
-				FA71795B2A3C0B91002C407C /* UIColor+Extension.swift */,
-				FA98EEFE2A3E03D0000E6FEE /* Date+Extension.swift */,
-				FA2820BD2A4158BD009FDAD2 /* UIImage+Extension.swift */,
-				FA6C33242A4851FC005CC96E /* URL+Extension.swift */,
-				FA9AABD72A4D25A300B99FB7 /* Encodable+Extension.swift */,
-			);
-			path = Extension;
-			sourceTree = "<group>";
-		};
-		FA71795A2A3AED81002C407C /* VotePage */ = {
-			isa = PBXGroup;
-			children = (
-				FAE757C42A3FF2A0003245EC /* ViewController */,
-				FAE757C52A3FF2BC003245EC /* View */,
-			);
-			path = VotePage;
-			sourceTree = "<group>";
-		};
-		FA7179612A3C543D002C407C /* Base */ = {
-			isa = PBXGroup;
-			children = (
-				FAE757C62A3FF40E003245EC /* LoginViewController.swift */,
-				FAF16F332A53F2EF002590D9 /* LoginSheetViewController.swift */,
-				FA7179492A3AB994002C407C /* TabBarViewController.swift */,
-				FAF2AE162A4A8F8400F27B64 /* RootViewController.swift */,
-				FA77B7632A5EA6B2006D124B /* LaunchScreenViewController.swift */,
-			);
-			path = Base;
-			sourceTree = "<group>";
-		};
-		FA7179642A3D4C66002C407C /* Helper */ = {
-			isa = PBXGroup;
-			children = (
-				FAAFA1A52A63865E00713CA2 /* DeleteWithAppleHelper.swift */,
-				FA9232212A49896500F045C6 /* SignInWithAppleHelper.swift */,
-				98B2D87C2D96853700EF6A17 /* SignInWithAuth0Helper.swift */,
-			);
-			path = Helper;
-			sourceTree = "<group>";
-		};
-		FA7CC6052A41AC24009B599F /* HomePage */ = {
-			isa = PBXGroup;
-			children = (
-				FA7179362A3A9DF7002C407C /* HomeViewController.swift */,
-				FA7CC6102A44460B009B599F /* HomeShopCell.swift */,
-			);
-			path = HomePage;
-			sourceTree = "<group>";
-		};
-		FA7CC6062A41AC90009B599F /* Manager */ = {
-			isa = PBXGroup;
-			children = (
-				FA7CC6072A41ACC4009B599F /* GroupManager.swift */,
-				FA7CC60C2A42DDE6009B599F /* UserManager.swift */,
-				FA7CC60E2A4403B5009B599F /* ShopManager.swift */,
-				FA9232232A498F1E00F045C6 /* AuthManager.swift */,
-				FA9AABD92A4D34D200B99FB7 /* OrderManager.swift */,
-				FA8B17F22A57F52700404DC7 /* FirebaseStorageManager.swift */,
-			);
-			name = Manager;
-			sourceTree = "<group>";
-		};
-		FA7CC6092A41B630009B599F /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				FA7CC60A2A41B65D009B599F /* GroupResponse.swift */,
-				FAA10A502A471079001F9CC0 /* UserObject.swift */,
-				FAA10A522A4710B7001F9CC0 /* ShopObject.swift */,
-				FA9AABD52A4D247500B99FB7 /* OrderResponse.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		FA7CC6122A4448F0009B599F /* ThirdPartyWrappers */ = {
-			isa = PBXGroup;
-			children = (
-				FA7CC6132A44493B009B599F /* KingFisherWrapper.swift */,
-				FA9AABDB2A4D810800B99FB7 /* ToastSwiftWrapper.swift */,
-			);
-			path = ThirdPartyWrappers;
-			sourceTree = "<group>";
-		};
-		FA7CC6152A444B1C009B599F /* ShopPage */ = {
-			isa = PBXGroup;
-			children = (
-				FAB2B9DC2A4AE4F000EB449C /* DrinkDetailDataSource.swift */,
-				FA28534C2A6A798D00DD40CB /* ViewModel */,
-				FAB2B9D92A4AE1C200EB449C /* ViewController */,
-				FAB2B9D82A4AE1AF00EB449C /* View */,
-			);
-			path = ShopPage;
-			sourceTree = "<group>";
-		};
-		FA9AABE72A502AD600B99FB7 /* ViewController */ = {
-			isa = PBXGroup;
-			children = (
-				FA7179512A3ABC99002C407C /* OrderViewController.swift */,
-				FA9AABE32A4FABFB00B99FB7 /* OrderNavigationController.swift */,
-				FA9AABDF2A4F1D7600B99FB7 /* OrderingViewController.swift */,
-			);
-			path = ViewController;
-			sourceTree = "<group>";
-		};
-		FA9AABE82A502AE300B99FB7 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				FA9AABDD2A4EC45300B99FB7 /* MainOrderCell.swift */,
-				FA9AABE12A4F1DA400B99FB7 /* CustomDrinkCell.swift */,
-				FA9AABE92A5030A300B99FB7 /* OrderSectionHeaderView.swift */,
-				FA9AABEB2A5069B100B99FB7 /* OrderSectionFooterView.swift */,
-				FA9AABED2A51210700B99FB7 /* OrderTableViewHeader.swift */,
-				FA9AABF52A51687500B99FB7 /* OrderTableViewFooter.swift */,
-				FA9AABEF2A51378400B99FB7 /* InitiatorOrderingBottomView.swift */,
-				FA9AABF32A51480600B99FB7 /* JoinUsersBottomView.swift */,
-				FA9AABF12A51472400B99FB7 /* OrderFinishedBottomView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		FAB2B9D32A4ADC1A00EB449C /* OrderPage */ = {
-			isa = PBXGroup;
-			children = (
-				FA9AABE72A502AD600B99FB7 /* ViewController */,
-				FA9AABE82A502AE300B99FB7 /* View */,
-			);
-			path = OrderPage;
-			sourceTree = "<group>";
-		};
-		FAB2B9D82A4AE1AF00EB449C /* View */ = {
-			isa = PBXGroup;
-			children = (
-				FA7CC61A2A457754009B599F /* SectionHeaderView.swift */,
-				FA7CC6182A446106009B599F /* ShopMenuCell.swift */,
-				FAB2B9D62A4ADDCC00EB449C /* DrinkDetailTopView.swift */,
-				FAB2B9DA2A4AE21600EB449C /* DrinkDetailCell.swift */,
-				FA8B17F42A5C4DF200404DC7 /* DrinkDetailTableViewFooter.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		FAB2B9D92A4AE1C200EB449C /* ViewController */ = {
-			isa = PBXGroup;
-			children = (
-				FA7CC6162A444B81009B599F /* ShopMenuViewController.swift */,
-				FAB2B9D42A4ADC7800EB449C /* DrinkDetailViewController.swift */,
-			);
-			path = ViewController;
-			sourceTree = "<group>";
-		};
-		FAE757C42A3FF2A0003245EC /* ViewController */ = {
-			isa = PBXGroup;
-			children = (
-				FA71794F2A3ABC46002C407C /* VoteViewController.swift */,
-				FA98EF002A3EAF0E000E6FEE /* VoteNavigationController.swift */,
-				FA71795D2A3C13BB002C407C /* NotVotedViewController.swift */,
-				FA98EEFA2A3DEB7C000E6FEE /* VotingViewController.swift */,
-				FA98EF022A3EB991000E6FEE /* VoteResultViewController.swift */,
-			);
-			path = ViewController;
-			sourceTree = "<group>";
-		};
-		FAE757C52A3FF2BC003245EC /* View */ = {
-			isa = PBXGroup;
-			children = (
-				FA7179552A3AE557002C407C /* VoteCell.swift */,
-				FA71795F2A3C1419002C407C /* NotVotedCell.swift */,
-				FA98EEFC2A3DEBA3000E6FEE /* VotingCell.swift */,
-				FA98EF082A3F3430000E6FEE /* VoteResultCell.swift */,
-				FA98EF0A2A3F39B0000E6FEE /* WinnerShopView.swift */,
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -478,6 +116,9 @@
 			);
 			dependencies = (
 				FA2853582A6BC99200DD40CB /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				9863AAC72DD436C500A79807 /* DrinkWhatTests */,
 			);
 			name = DrinkDetailViewModelTests;
 			productName = DrinkDetailViewModelTests;
@@ -499,6 +140,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				9863AA7D2DD4322500A79807 /* DrinkWhat */,
 			);
 			name = DrinkWhat;
 			packageProductDependencies = (
@@ -561,10 +205,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				98B2D8782D967C9800EF6A17 /* Auth0.plist in Resources */,
-				FA71793F2A3A9DF8002C407C /* LaunchScreen.storyboard in Resources */,
-				FA2820B12A406E98009FDAD2 /* GoogleService-Info.plist in Resources */,
-				FA71793C2A3A9DF8002C407C /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -579,9 +219,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-DrinkWhat/Pods-DrinkWhat-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-DrinkWhat/Pods-DrinkWhat-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -654,9 +298,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				987ACE592DBB6B83005E9467 /* MockAuth0AuthenticationService.swift in Sources */,
-				987ACE5A2DBB6B83005E9467 /* SignInWithAuth0HelperTests.swift in Sources */,
-				FA2853562A6BC99200DD40CB /* DrinkDetailViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -664,68 +305,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FA9AABDA2A4D34D200B99FB7 /* OrderManager.swift in Sources */,
-				FAB2B9DD2A4AE4F000EB449C /* DrinkDetailDataSource.swift in Sources */,
-				FA9AABD82A4D25A300B99FB7 /* Encodable+Extension.swift in Sources */,
-				FA7179562A3AE557002C407C /* VoteCell.swift in Sources */,
-				FA9AABE42A4FABFB00B99FB7 /* OrderNavigationController.swift in Sources */,
-				FA71794A2A3AB994002C407C /* TabBarViewController.swift in Sources */,
-				FA9AABF42A51480600B99FB7 /* JoinUsersBottomView.swift in Sources */,
-				FAF2AE172A4A8F8400F27B64 /* RootViewController.swift in Sources */,
-				FA7179502A3ABC46002C407C /* VoteViewController.swift in Sources */,
-				FA9AABEA2A5030A300B99FB7 /* OrderSectionHeaderView.swift in Sources */,
-				98B2D87D2D96853700EF6A17 /* SignInWithAuth0Helper.swift in Sources */,
-				FA28534E2A6A79B800DD40CB /* DrinkDetailViewModel.swift in Sources */,
-				FA98EEFB2A3DEB7C000E6FEE /* VotingViewController.swift in Sources */,
-				FA98EF092A3F3430000E6FEE /* VoteResultCell.swift in Sources */,
-				FA9AABDC2A4D810800B99FB7 /* ToastSwiftWrapper.swift in Sources */,
-				FA71795E2A3C13BB002C407C /* NotVotedViewController.swift in Sources */,
-				FA7179602A3C141A002C407C /* NotVotedCell.swift in Sources */,
-				FA98EF0B2A3F39B0000E6FEE /* WinnerShopView.swift in Sources */,
-				FA9AABEE2A51210700B99FB7 /* OrderTableViewHeader.swift in Sources */,
-				FA9AABD62A4D247500B99FB7 /* OrderResponse.swift in Sources */,
-				FA9232222A49896500F045C6 /* SignInWithAppleHelper.swift in Sources */,
-				FA9AABDE2A4EC45300B99FB7 /* MainOrderCell.swift in Sources */,
-				FAAFA1A62A63865E00713CA2 /* DeleteWithAppleHelper.swift in Sources */,
-				FA71795C2A3C0B91002C407C /* UIColor+Extension.swift in Sources */,
-				FA7CC6172A444B81009B599F /* ShopMenuViewController.swift in Sources */,
-				FA98EEFD2A3DEBA3000E6FEE /* VotingCell.swift in Sources */,
-				FA9AABE22A4F1DA400B99FB7 /* CustomDrinkCell.swift in Sources */,
-				FAA10A512A471079001F9CC0 /* UserObject.swift in Sources */,
-				FA98EF012A3EAF0E000E6FEE /* VoteNavigationController.swift in Sources */,
-				FA98EEFF2A3E03D0000E6FEE /* Date+Extension.swift in Sources */,
-				FA7CC6082A41ACC4009B599F /* GroupManager.swift in Sources */,
-				FA7CC60F2A4403B5009B599F /* ShopManager.swift in Sources */,
-				FA9AABF02A51378400B99FB7 /* InitiatorOrderingBottomView.swift in Sources */,
-				FA9AABF62A51687500B99FB7 /* OrderTableViewFooter.swift in Sources */,
-				FA7179372A3A9DF7002C407C /* HomeViewController.swift in Sources */,
-				FA7CC60D2A42DDE6009B599F /* UserManager.swift in Sources */,
-				FA9AABEC2A5069B100B99FB7 /* OrderSectionFooterView.swift in Sources */,
-				FA9AABE02A4F1D7600B99FB7 /* OrderingViewController.swift in Sources */,
-				FA8B17F52A5C4DF200404DC7 /* DrinkDetailTableViewFooter.swift in Sources */,
-				FA7179332A3A9DF7002C407C /* AppDelegate.swift in Sources */,
-				FA9AABF22A51472400B99FB7 /* OrderFinishedBottomView.swift in Sources */,
-				FA7179352A3A9DF7002C407C /* SceneDelegate.swift in Sources */,
-				FA98EF032A3EB991000E6FEE /* VoteResultViewController.swift in Sources */,
-				FA2820BE2A4158BD009FDAD2 /* UIImage+Extension.swift in Sources */,
-				FA7CC6192A446106009B599F /* ShopMenuCell.swift in Sources */,
-				FA7CC60B2A41B65D009B599F /* GroupResponse.swift in Sources */,
-				FAB2B9D72A4ADDCC00EB449C /* DrinkDetailTopView.swift in Sources */,
-				FAA10A532A4710B7001F9CC0 /* ShopObject.swift in Sources */,
-				FAB2B9D52A4ADC7800EB449C /* DrinkDetailViewController.swift in Sources */,
-				FAB2B9DB2A4AE21600EB449C /* DrinkDetailCell.swift in Sources */,
-				FA7179542A3ABD01002C407C /* ProfileViewController.swift in Sources */,
-				FA7CC6112A44460B009B599F /* HomeShopCell.swift in Sources */,
-				FAF16F342A53F2EF002590D9 /* LoginSheetViewController.swift in Sources */,
-				FA7179592A3AEBDA002C407C /* UIFont+Extension.swift in Sources */,
-				FA7CC6142A44493B009B599F /* KingFisherWrapper.swift in Sources */,
-				FA8B17F32A57F52700404DC7 /* FirebaseStorageManager.swift in Sources */,
-				FA7CC61B2A457754009B599F /* SectionHeaderView.swift in Sources */,
-				FA7179522A3ABC99002C407C /* OrderViewController.swift in Sources */,
-				FA9232242A498F1E00F045C6 /* AuthManager.swift in Sources */,
-				FA6C33252A4851FC005CC96E /* URL+Extension.swift in Sources */,
-				FA77B7642A5EA6B2006D124B /* LaunchScreenViewController.swift in Sources */,
-				FAE757C72A3FF40E003245EC /* LoginViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -738,17 +317,6 @@
 			targetProxy = FA2853572A6BC99200DD40CB /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		FA71793D2A3A9DF8002C407C /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				FA71793E2A3A9DF8002C407C /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		FA28535A2A6BC99200DD40CB /* Debug */ = {
