@@ -218,15 +218,15 @@ class OrderManager {
     func listenOrderResults(orderID: String) {
         orderResultsListener = orderResultsSubCollection(orderID: orderID)
             .addSnapshotListener { [weak self] documentSnapshot, error in
-            guard let self else { return }
-            if let error {
-                self.delegate?.orderManager(self, didFailWith: error)
-            } else if let documentSnapshot {
-                let results = documentSnapshot.documents.compactMap {
-                    try? $0.data(as: OrderResults.self)
+                guard let self else { return }
+                if let error {
+                    self.delegate?.orderManager(self, didFailWith: error)
+                } else if let documentSnapshot {
+                    let results = documentSnapshot.documents.compactMap {
+                        try? $0.data(as: OrderResults.self)
+                    }
+                    self.delegate?.orderManager(self, didGetOrderResults: results)
                 }
-                self.delegate?.orderManager(self, didGetOrderResults: results)
-            }
             }
     }
     // MARK: - remove orderResponseListener

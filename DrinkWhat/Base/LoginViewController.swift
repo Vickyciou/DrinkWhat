@@ -38,9 +38,9 @@ class LoginViewController: UIViewController {
         setupVC()
         
         let helper = SignInWithAuth0Helper()
-        Task {
-            try await helper.clearSessionWithAuth0()
-        }
+//        Task {
+//            try await helper.clearSessionWithAuth0()
+//        }
     }
     private func setupVC() {
         view.backgroundColor = .white

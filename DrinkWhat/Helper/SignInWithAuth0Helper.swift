@@ -9,6 +9,22 @@ import Foundation
 import Auth0
 import JWTDecode
 
+protocol Auth0AuthenticationService {
+    func login() async throws -> Credentials
+    func clearSession() async throws
+}
+
+// Default implementation using Auth0.swift
+class DefaultDrinkWhatAuthenticationService: Auth0AuthenticationService {
+    func login() async throws -> Credentials {
+        return try await Auth0.webAuth().start()
+    }
+    
+    func clearSession() async throws {
+        try await Auth0.webAuth().clearSession()
+    }
+}
+
 struct SignInWithAuth0Result {
     let token: String
     let name: String
@@ -17,17 +33,20 @@ struct SignInWithAuth0Result {
 }
 
 class SignInWithAuth0Helper: NSObject {
+    private let authenticationService: Auth0AuthenticationService
+    
+    init(authenticationService: Auth0AuthenticationService? = nil) {
+        self.authenticationService = authenticationService ?? DefaultDrinkWhatAuthenticationService()
+    }
     
     func clearSessionWithAuth0() async throws {
-        try await Auth0.webAuth().clearSession()
+        try await authenticationService.clearSession()
     }
     
     func loginWithAuth0() async throws -> SignInWithAuth0Result {
-        let credentials = try await Auth0
-            .webAuth()
-            .start()
+        let credentials = try await authenticationService.login()
         guard let result = SignInWithAuth0Result(from: credentials.idToken) else {
-            throw AuthenticationError.failedToCreateResult
+            throw Auth0AuthenticationError.failedToCreateResult
         }
         return result
     }
@@ -36,18 +55,16 @@ class SignInWithAuth0Helper: NSObject {
 extension SignInWithAuth0Result {
     init?(from idToken: String) {
         guard let jwt = try? decode(jwt: idToken),
-//              let name = jwt["name"].string,
-//              let email = jwt["email"].string,
-              let picture = jwt["picture"].string  else {
+              let picture = jwt["picture"].string else {
             return nil
         }
-        self.token = jwt.string
+        self.token = idToken
         self.name = jwt["name"].string ?? ""
         self.email = jwt["email"].string ?? ""
         self.picture = picture
     }
 }
 
-enum AuthenticationError: Error {
+enum Auth0AuthenticationError: Error {
     case failedToCreateResult
 }
